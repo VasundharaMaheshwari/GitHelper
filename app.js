@@ -18,12 +18,15 @@ let db;
 app.post('/api/login',async (req,res) => {
   try{
     const usernamelg = req.body.username;
-    const passwordlg = req.body.password;
-    const user = await GHUser.findOne({ username: usernamelg, password: passwordlg })
+    const passwordlg = req.body.encryptedpassword;
+    const user = await GHUser.findOne({ username: usernamelg})
     if(user == null){
         res.send('Please register')
     }else{
-      return res.redirect('/register')
+      if(passwordlg != user.password){
+        res.send('Wrong password')
+      } else {
+      return res.redirect('/register')}
     } } catch (err) {
       console.log(err)
   }
@@ -31,10 +34,11 @@ app.post('/api/login',async (req,res) => {
 
 app.post('/api/register',async (req,res) => {
   try{
+    console.log(req.body)
     const trial2 = new GHUser({
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.encryptedpassword
     })
     await trial2.save()
 return res.redirect('/login')
