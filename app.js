@@ -16,6 +16,10 @@ app.get('/login',(req,res) => {
   res.render('login.hbs')
 })
 
+app.get('/register',(req,res) => {
+  res.render('register.hbs')
+})
+
 app.listen(3000, async () => {
     await connectDB();
     console.log(`http://localhost:3000`);
