@@ -21,6 +21,7 @@ app.post('/api/login',async (req,res) => {
     const usernamelg = req.body.username;
     const passwordlg = req.body.encryptedpassword;
     const user = await GHUser.findOne({ username: usernamelg})
+    const keyr = await GHUser.findOne({ meow: "meow" })
     if(user == null){
         res.send('Please register')
     }else{
@@ -36,6 +37,7 @@ app.post('/api/login',async (req,res) => {
 app.post('/api/register',async (req,res) => {
   try{
     console.log(req.body)
+    const keyr = await GHUser.findOne({ meow: "meow" })
     const trial2 = new GHUser({
         username: req.body.username,
         email: req.body.email,
