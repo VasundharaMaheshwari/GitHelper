@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const body = require('body-parser')
 const app = express()
 const { MongoClient } = require('mongodb')
-const { User } = require('./model')
+const { GHUser } = require('./model')
 
 const handlebars = require("express-handlebars");
 app.set("view engine", "handlebars");
@@ -15,12 +15,32 @@ app.use(express.json())
 
 let db;
 
-app.post('/api/login',(req,res) => {
-
+app.post('/api/login',async (req,res) => {
+  try{
+    const usernamelg = req.body.username;
+    const passwordlg = req.body.password;
+    const user = await GHUser.findOne({ username: usernamelg, password: passwordlg })
+    if(user == null){
+        res.send('Please register')
+    }else{
+      return res.redirect('/register')
+    } } catch (err) {
+      console.log(err)
+  }
 })
 
-app.post('/api/register',(req,res) => {
-  
+app.post('/api/register',async (req,res) => {
+  try{
+    const trial2 = new GHUser({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password
+    })
+    await trial2.save()
+return res.redirect('/login')
+} catch(err) {
+    console.log(err)
+}
 })
 
 app.get('/login',(req,res) => {
