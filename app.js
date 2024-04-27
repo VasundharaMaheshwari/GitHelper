@@ -6,6 +6,8 @@ const app = express()
 const { MongoClient } = require('mongodb')
 const { GHUser } = require('./model')
 
+const CryptoJS = require('crypto-js')
+
 const handlebars = require("express-handlebars");
 app.set("view engine", "handlebars");
 app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
@@ -25,7 +27,8 @@ app.post('/api/login',async (req,res) => {
     if(user == null){
         res.send('Please register')
     }else{
-      if(passwordlg != user.password){
+      const decrypted = CryptoJS.AES.decrypt(user.password, keyr.password).toString(CryptoJS.enc.Utf8);
+      if(passwordlg != decrypted){
         res.send('Wrong password')
       } else {
       return res.redirect('/register')}
@@ -36,15 +39,22 @@ app.post('/api/login',async (req,res) => {
 
 app.post('/api/register',async (req,res) => {
   try{
+    const user = await GHUser.findOne({username: req.body.username})
+    if(user == null){
     console.log(req.body)
     const keyr = await GHUser.findOne({ meow: "meow" })
+    const encrypted = CryptoJS.AES.encrypt(req.body.encryptedpassword, keyr.password).toString();
+    console.log(encrypted)
     const trial2 = new GHUser({
         username: req.body.username,
         email: req.body.email,
-        password: req.body.encryptedpassword
+        password: encrypted
     })
     await trial2.save()
 return res.redirect('/login')
+  }else{
+    res.send('Username taken')
+  }
 } catch(err) {
     console.log(err)
 }
