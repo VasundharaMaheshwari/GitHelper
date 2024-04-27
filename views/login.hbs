@@ -90,7 +90,7 @@
 <body>
   <div class="login-container">
     <h2>Login</h2>
-    <form id="login-form">
+    <form id="login-form" action="api/login" method="post">
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
@@ -109,18 +109,17 @@
   
   <script>
     document.getElementById("login-form").addEventListener("submit", function(event) {
-    event.preventDefault();
     
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
     
     if (username.trim() === "" || password.trim() === "") {
       document.getElementById("error-message").innerText = "Username and password are required";
+      event.preventDefault();
     } else {
       
       document.getElementById("error-message").innerText = "";
-      
-      alert("Login successful!");
+
     }
   });
   </script>

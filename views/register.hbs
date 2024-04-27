@@ -91,7 +91,7 @@
 <body>
   <div class="register-container">
     <h2>Register</h2>
-    <form id="register-form">
+    <form id="register-form" action="api/register" method="post">
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
@@ -118,7 +118,6 @@
   
   <script>
     document.getElementById("register-form").addEventListener("submit", function(event) {
-    event.preventDefault();
     
     var username = document.getElementById("username").value;
     var email = document.getElementById("email").value;
@@ -127,6 +126,7 @@
     
     if (password !== confirmPassword) {
       document.getElementById("error-message").innerText = "Passwords do not match";
+          event.preventDefault();
       return;
     }
     
@@ -134,22 +134,24 @@
     
     if (!emailPattern.test(email)) {
       document.getElementById("error-message").innerText = "Invalid email address";
+          event.preventDefault();
       return;
     }
     
     if (password.length < 8) {
       document.getElementById("error-message").innerText = "Password must be at least 8 characters long";
+          event.preventDefault();
       return;
     }
     
     if (username.trim() === "" || email.trim() === "" || password.trim() === "") {
       document.getElementById("error-message").innerText = "All fields are required";
+          event.preventDefault();
       return;
     }
     
     document.getElementById("error-message").innerText = "";
     
-    alert("Registration successful!\n\nUsername: " + username + "\nEmail: " + email);
   });
   </script>
 </body>
