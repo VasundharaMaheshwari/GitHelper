@@ -17,6 +17,7 @@ let db;
 
 app.post('/api/login',async (req,res) => {
   try{
+    console.log(req.body)
     const usernamelg = req.body.username;
     const passwordlg = req.body.encryptedpassword;
     const user = await GHUser.findOne({ username: usernamelg})
