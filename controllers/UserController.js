@@ -64,4 +64,12 @@ const login = async (req,res) => {
     }
   }
 
-module.exports = { login,register }
+const load = (req,res) => {
+  const {username,email} = req.query
+  res.render('main.hbs',{layout: "user.hbs",
+  username: username,
+  email: email
+  })
+}
+
+module.exports = { login,register,load }

@@ -1,6 +1,6 @@
 const express = require('express')
 const UserRouter = express.Router()
-const { login,register } = require('../controllers/UserController')
+const { login,register,load } = require('../controllers/UserController')
 
 UserRouter.post('/login', login)
 
@@ -14,12 +14,6 @@ UserRouter.get('/register',(req,res) => {
     res.render('register.hbs')
 })
 
-UserRouter.get('/user',(req,res) => {
-    const {username,email} = req.query
-    res.render('main.hbs',{layout: "user.hbs",
-    username: username,
-    email: email
-    })
-})
+UserRouter.get('/user', load)
 
 module.exports = UserRouter
