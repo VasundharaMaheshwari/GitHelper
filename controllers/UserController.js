@@ -64,12 +64,19 @@ const login = async (req,res) => {
     }
   }
 
-const load = (req,res) => {
+const load = async (req,res) => {
   const {username,email} = req.query
+  const user = await GHUser.findOne({username: username, email: email})
+  if(user){
   res.render('main.hbs',{layout: "user.hbs",
   username: username,
   email: email
   })
+} else {
+  res.render('main.hbs',{layout: "error.hbs",
+      error_message: "Not Allowed"
+    })
+}
 }
 
 module.exports = { login,register,load }
