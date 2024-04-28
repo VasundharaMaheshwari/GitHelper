@@ -13,16 +13,14 @@ app.set("view engine", "handlebars");
 app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json())
-
-let db;
+app.use(express.json());
 
 app.post('/api/login',async (req,res) => {
   try{
-    console.log(req.body)
+    //console.log(req.body)
     const usernamelg = req.body.username;
     const passwordlg = req.body.encryptedpassword;
-    const user = await GHUser.findOne({ username: usernamelg})
+    const user = await GHUser.findOne({ username: usernamelg })
     const keyr = await GHUser.findOne({ meow: "meow" })
     if(user == null){
         res.send('Please register')
@@ -51,7 +49,7 @@ app.post('/api/register',async (req,res) => {
   try{
     const user = await GHUser.findOne({username: req.body.username})
     if(user == null){
-    console.log(req.body)
+    //console.log(req.body)
     const keyr = await GHUser.findOne({ meow: "meow" })
     const encrypted = CryptoJS.AES.encrypt(req.body.encryptedpassword, keyr.password).toString();
     //console.log(encrypted)
