@@ -50,16 +50,10 @@ const login = async (req,res) => {
       error_message: "Wrong Password"
     })
         } else {
-          if(user.role == "User"){
             const email = user.email
         return res.redirect(`/api/user?username=${username}&email=${email}`)}
-        else{
-          if(user.role == "Admin"){
-          return res.render('admin.hbs')
-          }
-        }
       }
-      } } catch (err) {
+      }  catch (err) {
         console.log(err)
     }
   }
@@ -67,15 +61,18 @@ const login = async (req,res) => {
 const load = async (req,res) => {
   const {username,email} = req.query
   const user = await GHUser.findOne({username: username, email: email})
-  if(user){
+  if(user && user.role == "User"){
   res.render('main.hbs',{layout: "user.hbs",
   username: username,
   email: email
   })
 } else {
+  if(user && user.role == "Admin"){
+    res.render('admin.hbs')
+  } else {
   res.render('main.hbs',{layout: "error.hbs",
       error_message: "Not Allowed"
-    })
+    }) }
 }
 }
 
