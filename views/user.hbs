@@ -63,7 +63,7 @@
     <p>Email: {{email}}</p>
     <p>This is your user page. You can access your account information here.</p>
     <div class="button-container">
-      <form id="query-form" action="/query/create" method="POST">
+      <form id="query-form" action="/query/create" method="get">
       <button type="button" id="open-query-btn">Open Query</button>
       <input type="text" name="username" id="username" value={{username}} required readonly hidden>
     </form>

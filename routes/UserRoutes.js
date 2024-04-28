@@ -14,4 +14,12 @@ UserRouter.get('/register',(req,res) => {
     res.render('register.hbs')
 })
 
+UserRouter.get('/user',(req,res) => {
+    const {username,email} = req.query
+    res.render('main.hbs',{layout: "user.hbs",
+    username: username,
+    email: email
+    })
+})
+
 module.exports = UserRouter

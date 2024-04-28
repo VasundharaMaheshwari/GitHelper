@@ -2,7 +2,7 @@ const { Issue } = require('../models/Issue')
 const { GHUser } = require('../models/GHUser')
 
 const create = async (req,res) => {
-    const {username} = req.body
+    const {username} = req.query
     
     const user = await GHUser.findOne({ username: username })
     if(user != null){
@@ -33,7 +33,8 @@ const save = async (req,res) => {
           description: description
       })
       await trial.save()
-  return res.redirect('/api/login')}
+      const email = user.email
+  return res.redirect(`/api/user?username=${username}&email=${email}`)}
   else {
     return res.render('main.hbs',{layout: "error.hbs",
     error_message: "Query Already Created"

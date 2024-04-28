@@ -51,10 +51,8 @@ const login = async (req,res) => {
     })
         } else {
           if(user.role == "User"){
-        return res.render('main.hbs',{layout: "user.hbs",
-        username: user.username,
-        email: user.email
-      })}
+            const email = user.email
+        return res.redirect(`/api/user?username=${username}&email=${email}`)}
         else{
           if(user.role == "Admin"){
           return res.render('admin.hbs')
