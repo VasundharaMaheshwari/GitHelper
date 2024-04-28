@@ -15,6 +15,10 @@ app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
 app.use('/api',UserRouter)
 app.use('/query',APIRouter)
 
+app.get('/', (req,res) => {
+  return res.redirect('/api/login')
+})
+
 app.listen(3000, async () => {
     db = await connectDB();
     console.log(`http://localhost:3000`);
