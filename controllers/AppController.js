@@ -53,8 +53,10 @@ const save = async (req,res) => {
     const { username } = req.query;
     
     try {
-      const issues = await Issue.find({ username: username }).exec();
-      res.send(issues);
+      const issues = await Issue.find({ username: username }).lean().exec();
+      res.render('main.hbs',{layout: "issues.hbs",
+      issues: issues
+    });
     } catch (error) {
       console.error(error);
       res.status(500).send("An error occurred while fetching issues.");

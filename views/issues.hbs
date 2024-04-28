@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Issues</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #6c5b7b, #000000);
+    }
+
+    .issues-container {
+      background-color: #f0e9ff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      text-align: justify;
+      max-width: 800px;
+      width: 100%; 
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .issue {
+      padding: 20px;
+      border-bottom: 3px solid #ccc;
+    }
+
+    .issue:last-child {
+      border-bottom: none; 
+    }
+
+    p {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="issues-container" style="width: 70%;">
+    <h2>User Issues</h2>
+    <div class="issue-list">
+      {{#if issues.length}}
+        {{#each issues}}
+          <div class="issue">
+            <p><strong>Username:</strong> {{username}}</p>
+            <p><strong>Contact Info:</strong> {{contact_info}}</p>
+            <p><strong>Skillset:</strong> {{skillset}}</p>
+            <p><strong>GitHub ID:</strong> {{github_id}}</p>
+            <p><strong>Repository Link:</strong> {{repo_link}}</p>
+            <p><strong>Description:</strong> {{description}}</p>
+          </div>
+        {{/each}}
+      {{else}}
+        <p>No issues found for this user.</p>
+      {{/if}}
+    </div>
+  </div>
+</body>
+</html>
