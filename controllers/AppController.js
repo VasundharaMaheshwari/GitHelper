@@ -3,9 +3,9 @@ const { GHUser } = require('../models/GHUser')
 
 const create = async (req,res) => {
     const {username} = req.body
+    
     const user = await GHUser.findOne({ username: username })
     if(user != null){
-    //console.log(req.body)
     return res.render('main.hbs',{layout: 'create.hbs',
     username: username
   })} else {
