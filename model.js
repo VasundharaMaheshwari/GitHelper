@@ -9,6 +9,9 @@ const GHUser_Schema = new Schema({
     },
     password: {
         type: String
+    },
+    role: {
+        type: String
     }
 })
 

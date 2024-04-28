@@ -31,7 +31,17 @@ app.post('/api/login',async (req,res) => {
       if(passwordlg != decrypted){
         res.send('Wrong password')
       } else {
-      return res.redirect('/register')}
+        if(user.role == "User"){
+      return res.render('main.hbs',{layout: "user.hbs",
+      username: user.username,
+      email: user.email
+    })}
+      else{
+        if(user.role == "Admin"){
+        return res.redirect('/admin')
+        }
+      }
+    }
     } } catch (err) {
       console.log(err)
   }
@@ -44,11 +54,12 @@ app.post('/api/register',async (req,res) => {
     console.log(req.body)
     const keyr = await GHUser.findOne({ meow: "meow" })
     const encrypted = CryptoJS.AES.encrypt(req.body.encryptedpassword, keyr.password).toString();
-    console.log(encrypted)
+    //console.log(encrypted)
     const trial2 = new GHUser({
         username: req.body.username,
         email: req.body.email,
-        password: encrypted
+        password: encrypted,
+        role: "User"
     })
     await trial2.save()
 return res.redirect('/login')
@@ -58,6 +69,10 @@ return res.redirect('/login')
 } catch(err) {
     console.log(err)
 }
+})
+
+app.get('/admin',(req,res) => {
+  res.render('admin.hbs')
 })
 
 app.get('/login',(req,res) => {
