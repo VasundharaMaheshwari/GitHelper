@@ -38,8 +38,13 @@
       margin-bottom: 20px;
     }
 
-    button,
-    #open-query-btn {
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    button {
       padding: 12px 24px;
       background-color: #007bff;
       color: white;
@@ -48,11 +53,9 @@
       font-size: 16px;
       cursor: pointer;
       text-decoration: none; 
-      display: inline-block;
     }
 
-    button:hover,
-    #open-query-btn:hover {
+    button:hover {
       background-color: #0056b3;
     }
   </style>
@@ -64,12 +67,15 @@
     <p>This is your user page. You can access your account information here.</p>
     <div class="button-container">
       <form id="query-form" action="/query/create" method="get">
-      <button type="button" id="open-query-btn">Open Query</button>
-      <input type="text" name="username" id="username" value={{username}} required readonly hidden>
-    </form>
-    <br>
-      <button id="logout-btn">Logout</button>
+        <button type="button" id="open-query-btn">Open Query</button>
+        <input type="text" name="username" id="username" value={{username}} required readonly hidden>
+      </form>
+      <form id="query-list" action="/query/list" method="get">
+        <button type="button" id="list-query-btn">Show Queries</button>
+        <input type="text" name="username" id="username" value={{username}} required readonly hidden>
+      </form>
     </div>
+    <button id="logout-btn">Logout</button>
   </div>
   <script>
     document.getElementById("logout-btn").addEventListener("click", function() {
@@ -77,6 +83,9 @@
     });
     document.getElementById("open-query-btn").addEventListener("click", function() {
       document.getElementById("query-form").submit();
+    });
+    document.getElementById("list-query-btn").addEventListener("click", function() {
+      document.getElementById("query-list").submit();
     });
   </script>
 </body>

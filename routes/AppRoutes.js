@@ -1,8 +1,10 @@
 const express =  require('express')
 const APIRouter = express.Router()
-const { create,save } = require('../controllers/AppController')
+const { create,save,list } = require('../controllers/AppController')
 
 APIRouter.get('/create',create)
+
+APIRouter.get('/list',list)
 
 APIRouter.post('/save',save)
 
