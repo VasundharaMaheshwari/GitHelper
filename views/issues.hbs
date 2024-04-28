@@ -23,13 +23,18 @@
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       text-align: justify;
       max-width: 800px;
-      width: 100%; 
+      width: 100%;
     }
 
     h2 {
       font-size: 28px;
       margin-bottom: 20px;
       color: #333;
+    }
+
+    .issue-list {
+      max-height: 600px;
+      overflow-y: scroll; 
     }
 
     .issue {
@@ -53,7 +58,7 @@
   </style>
 </head>
 <body>
-  <div class="issues-container" style="width: 70%;">
+  <div class="issues-container">
     <h2>User Issues</h2>
     <div class="issue-list">
       {{#if issues.length}}
