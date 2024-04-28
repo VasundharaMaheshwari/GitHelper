@@ -21,7 +21,9 @@ const register = async (req,res) => {
       await trial2.save()
   return res.redirect('/api/login')
     }else{
-      res.send('Username taken')
+      res.render('main.hbs',{layout: "error.hbs",
+      error_message: "User Already Exists"
+    })
     }
   } catch(err) {
       console.log(err)
@@ -35,13 +37,17 @@ const login = async (req,res) => {
       const user = await GHUser.findOne({ username: username })
 
       if(user == null){
-          res.send('Please register')
+        res.render('main.hbs',{layout: "error.hbs",
+        error_message: "Please Register"
+      })
       }else{
         const keyr = await GHUser.findOne({ meow: "meow" })
         const decrypted = CryptoJS.AES.decrypt(user.password, keyr.password).toString(CryptoJS.enc.Utf8);
 
         if(encryptedpassword != decrypted){
-          res.send('Wrong password')
+          res.render('main.hbs',{layout: "error.hbs",
+      error_message: "Wrong Password"
+    })
         } else {
           if(user.role == "User"){
         return res.render('main.hbs',{layout: "user.hbs",

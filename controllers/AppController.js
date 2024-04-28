@@ -9,7 +9,9 @@ const create = async (req,res) => {
     return res.render('main.hbs',{layout: 'create.hbs',
     username: username
   })} else {
-    return res.send('Not allowed')
+    return res.render('main.hbs',{layout: "error.hbs",
+    error_message: "Not Allowed"
+  })
   }
   }
 
@@ -33,9 +35,13 @@ const save = async (req,res) => {
       await trial.save()
   return res.redirect('/api/login')}
   else {
-    return res.send('Already created')
+    return res.render('main.hbs',{layout: "error.hbs",
+    error_message: "Query Already Created"
+  })
   }} else {
-    return res.send('Not allowed')
+    return res.render('main.hbs',{layout: "error.hbs",
+    error_message: "Not Allowed"
+  })
   }
   } catch(err) {
       console.log(err)
