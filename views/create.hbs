@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Query</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #6c5b7b, #000000);
+    }
+
+    .form-container {
+      background-color: #f0e9ff; 
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #666;
+    }
+
+    input[type="text"],
+    textarea, input[type="tel"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Open Query</h2>
+    <form id="issue-form" action="/query/save" method="post" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="contact_info">Contact Info</label>
+        <input type="tel" id="contact_info" name="contact_info">
+      </div>
+      <div class="form-group">
+        <label for="skillset">Skillset</label>
+        <input type="text" id="skillset" name="skillset">
+      </div>
+      <div class="form-group">
+        <label for="github_id">GitHub ID</label>
+        <input type="text" id="github_id" name="github_id">
+      </div>
+      <div class="form-group">
+        <label for="repo_link">Repository Link</label>
+        <input type="text" id="repo_link" name="repo_link">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description"></textarea>
+        <input type="text" name="username" id="username" value={{username}} required readonly hidden>
+      </div>
+      <button type="submit">Submit Issue</button>
+    </form>
+    <p id="error-message" class="error-message"></p>
+  </div>
+
+  <script>
+    function validateForm() {
+      var repoLink = document.getElementById('repo_link').value;
+      var regex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/
+      if (!regex.test(repoLink)) {
+        document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link.";
+        return false;
+      }
+      var contactInfo = document.getElementById('contact_info').value;
+      var phoneNumberDigitsOnly = contactInfo.replace(/\D/g, '');
+      if (phoneNumberDigitsOnly.length !== 10) {
+        document.getElementById("error-message").innerText = "Contact info should contain exactly 10 digits.";
+        return false;
+      }
+      document.getElementById("error-message").innerText = "";
+      return true;
+    }
+  </script>
+</body>
+</html>
