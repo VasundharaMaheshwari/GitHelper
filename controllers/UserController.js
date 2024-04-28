@@ -1,5 +1,6 @@
 const { GHUser } = require('../models/GHUser')
 const CryptoJS = require('crypto-js')
+const { Key } = require('../models/Key')
 
 const register = async (req,res) => {
     try{
@@ -8,8 +9,8 @@ const register = async (req,res) => {
       const user = await GHUser.findOne({username: username})
 
       if(user == null){
-      const keyr = await GHUser.findOne({ meow: "meow" })
-      const encrypted = CryptoJS.AES.encrypt(encryptedpassword, keyr.password).toString();
+      const keyr = await Key.findOne({ identifier: "meow" })
+      const encrypted = CryptoJS.AES.encrypt(encryptedpassword, keyr.key).toString();
 
       const trial2 = new GHUser({
           username: username,
@@ -41,8 +42,8 @@ const login = async (req,res) => {
         error_message: "Please Register"
       })
       }else{
-        const keyr = await GHUser.findOne({ meow: "meow" })
-        const decrypted = CryptoJS.AES.decrypt(user.password, keyr.password).toString(CryptoJS.enc.Utf8);
+        const keyr = await Key.findOne({ identifier: "meow" })
+        const decrypted = CryptoJS.AES.decrypt(user.password, keyr.key).toString(CryptoJS.enc.Utf8);
 
         if(encryptedpassword != decrypted){
           res.render('main.hbs',{layout: "error.hbs",
