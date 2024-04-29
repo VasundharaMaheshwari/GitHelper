@@ -3,6 +3,9 @@ const CryptoJS = require('crypto-js')
 const { Key } = require('../models/Key')
 const { ObjectId } = require('mongodb');
 
+const {v4: uuidv4} = require('uuid')
+const { setUser } = require('../services/auth')
+
 const register = async (req,res) => {
     try{
       const {username,email,encryptedpassword} = req.body;
@@ -26,7 +29,7 @@ const register = async (req,res) => {
       return res.redirect('/error?error_details=User_Already_Created')
     }
   } catch(err) {
-      console.log(err)
+    return res.redirect(`/error?error_details=Email_Already_Taken`)
   }
   }
 
@@ -45,11 +48,16 @@ const login = async (req,res) => {
         if(encryptedpassword != decrypted){
           return res.redirect('/error?error_details=Invalid_Password')
         } else {
+
+          const sessionId = uuidv4()
+          setUser(sessionId,user)
+          res.cookie("uid",sessionId)
+
             const id = user._id
         return res.redirect(`/api/user?id=${id}`)}
       }
       }  catch (err) {
-        console.log(err)
+        return res.redirect('/error?error_details=Unexpected_Error_Occurred')
     }
   }
 

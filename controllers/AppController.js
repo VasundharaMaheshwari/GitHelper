@@ -34,7 +34,8 @@ const save = async (req,res) => {
           skillset: skillset,
           github_id: github_id,
           repo_link: repo_link,
-          description: description
+          description: description,
+          createdBy: req.user._id
       })
       await trial.save()
       const id = user._id

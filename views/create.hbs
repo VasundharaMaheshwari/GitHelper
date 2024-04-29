@@ -80,7 +80,7 @@
     <form id="issue-form" action="/query/save" method="post" onsubmit="return validateForm()">
       <div class="form-group">
         <label for="contact_info">Contact Info</label>
-        <input type="tel" id="contact_info" name="contact_info">
+        <input type="tel" id="contact_info" name="contact_info" required>
       </div>
       <div class="form-group">
         <label for="skillset">Skill Set</label>
@@ -92,7 +92,7 @@
       </div>
       <div class="form-group">
         <label for="repo_link">Repository Link</label>
-        <input type="text" id="repo_link" name="repo_link">
+        <input type="text" id="repo_link" name="repo_link" required>
       </div>
       <div class="form-group">
         <label for="description">Description</label>

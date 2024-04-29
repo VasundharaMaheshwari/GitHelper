@@ -2,10 +2,14 @@ const { Schema, default: mongoose } = require('mongoose')
 
 const KeySchema = new Schema({
     identifier: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
     },
     key: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
     }
 })
 
