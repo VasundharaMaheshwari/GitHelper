@@ -116,7 +116,7 @@
           <p><span>Username:</span> {{username}}</p>
           <p><span>Skill Set:</span> {{skillset}}</p>
           <p><span>GitHub ID:</span> {{github_id}}</p>
-          <p><span>Repository Link:</span> {{repo_link}}</p>
+          <p><span>Repository Link:</span> <a href={{repo_link}}>{{repo_link}}</a></p>
           <form action="/home/view?id={{_id}}" method="GET">
             <input type="hidden" name="_id" value="{{_id}}" required readonly hidden>
             <br>
