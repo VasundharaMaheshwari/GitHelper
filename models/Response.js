@@ -1,20 +1,31 @@
+const { ObjectId } = require('mongodb')
 const {Schema, default: mongoose} = require('mongoose')
 
 const Response_Schema = new Schema({
-    r_username: {
-        type: String,
-        required: true
+    responder: {
+        username: {
+            type: String,
+            required: true
+        },
+        uid: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'GHUsers'
+        },
+        github_id: {
+            type: String
+        }
     },
-    r_contact_info: {
-        type: Number,
-        required: true
+    issue: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Issues'
     },
-    r_description: {
-        type: String
+    creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'GHUsers'
     },
-    r_github_id: {
-        type: String
-    }
 },{timestamps: true})
 
 const Response = mongoose.model('Response',Response_Schema)
