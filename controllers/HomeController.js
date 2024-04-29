@@ -19,7 +19,15 @@ const details = async (req,res) => {
   const issue_details = await Issue.findOne({"_id": _id})
 
   if(issue_details != null){
-    return res.send(issue_details)
+    return res.render('main.hbs',{layout: "individual.hbs",
+    id: _id,
+    username: issue_details.username,
+    contact_info: issue_details.contact_info,
+    skillset: issue_details.skillset,
+    github_id: issue_details.github_id,
+    repo_link: issue_details.repo_link,
+    description: issue_details.description
+  })
   }
   else{
     return res.redirect('/error?error_details=Query_Not_Found')

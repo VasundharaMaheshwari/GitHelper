@@ -115,13 +115,12 @@
         <div class="issue">
           <h2>{{title}}</h2>
           <p><span>Username:</span> {{username}}</p>
-          <p><span>Contact Info:</span> {{contact_info}}</p>
-          <p><span>Skillset:</span> {{skillset}}</p>
+          <p><span>Skill Set:</span> {{skillset}}</p>
           <p><span>GitHub ID:</span> {{github_id}}</p>
           <p><span>Repository Link:</span> {{repo_link}}</p>
-          <p><span>Description:</span> {{description}}</p>
           <form action="/home/view?id={{_id}}" method="GET">
             <input type="hidden" name="_id" value="{{_id}}" required readonly hidden>
+            <br>
             <button type="submit" class="btn">View Issue</button>
           </form>
         </div>

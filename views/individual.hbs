@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Issue</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0e9ff;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #6c5b7b;
+    }
+
+    .issue-details {
+      margin-bottom: 20px;
+    }
+
+    .issue-details p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .repo-link {
+      color: #007bff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .repo-link:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Issue Details</h1>
+    <div class="issue-details">
+      <input type="text" name="id" id="id" value={{id}} hidden readonly required>
+      <p><strong>Username:</strong> {{username}}</p>
+      <p><strong>Contact Info:</strong> {{contact_info}}</p>
+      <p><strong>Skill Set:</strong> {{skillset}}</p>
+      <p><strong>GitHub ID:</strong> {{github_id}}</p>
+      <p><strong>Repository Link:</strong> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
+      <p><strong>Description:</strong> {{description}}</p>
+    </div>
+  </div>
+</body>
+</html>
