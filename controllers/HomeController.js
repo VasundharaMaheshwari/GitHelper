@@ -1,6 +1,8 @@
 const { Issue } = require('../models/Issue')
 const { ObjectId } = require('mongodb');
 
+const { delUser } = require('../services/auth')
+
 const refresh = async (req, res) => {    
     try {
       const issues = await Issue.find().lean().exec();
@@ -37,4 +39,10 @@ const details = async (req,res) => {
 }
 }
 
-module.exports = { refresh,details }
+const logout = (req,res) => {
+  delUser(res.cookie?.uid)
+  res.clearCookie('uid')
+  return res.redirect('/api/login')
+}
+
+module.exports = { refresh,details,logout }
