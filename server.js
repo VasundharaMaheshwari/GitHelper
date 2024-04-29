@@ -1,5 +1,5 @@
 const express = require('express')
-const connectDB = require('./services/db')
+const connectDB = require('./databases/db')
 const app = express()
 
 const cookie_parser = require('cookie-parser')
