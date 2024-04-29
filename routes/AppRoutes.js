@@ -8,4 +8,8 @@ APIRouter.get('/list',list)
 
 APIRouter.post('/save',save)
 
+APIRouter.get('/respond',(req,res) => {
+    return console.log(req.query)
+})
+
 module.exports = APIRouter

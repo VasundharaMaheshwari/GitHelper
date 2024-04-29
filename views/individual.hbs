@@ -48,6 +48,21 @@
       color: #0056b3;
       text-decoration: underline;
     }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #6c5b7b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #54466d;
+    }
   </style>
 </head>
 <body>
@@ -60,6 +75,12 @@
       <p><strong>GitHub ID:</strong> {{github_id}}</p>
       <p><strong>Repository Link:</strong> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
       <p><strong>Description:</strong> {{description}}</p>
+      <form action="/query/respond" method="GET">
+            <input type="hidden" name="_id" value={{_id}} required readonly hidden>
+            <input type="hidden" name="username" value={{username}} required readonly hidden>
+            <br>
+            <button type="submit" class="btn">Respond</button>
+          </form>
     </div>
   </div>
 </body>

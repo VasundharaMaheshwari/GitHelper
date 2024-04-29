@@ -128,8 +128,8 @@
           <p><span>Skill Set:</span> {{skillset}}</p>
           <p><span>GitHub ID:</span> {{github_id}}</p>
           <p><span>Repository Link:</span> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
-          <form action="/home/view?id={{_id}}" method="GET">
-            <input type="hidden" name="_id" value="{{_id}}" required readonly hidden>
+          <form action="/home/view" method="GET">
+            <input type="hidden" name="_id" value={{_id}} required readonly hidden>
             <br>
             <button type="submit" class="btn">View Query</button>
           </form>
