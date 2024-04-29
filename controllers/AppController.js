@@ -60,8 +60,9 @@ const save = async (req,res) => {
       issues: issues
     });
     } catch (error) {
-      console.error(error);
-      res.status(500).send("An error occurred while fetching issues.");
+      return res.render('main.hbs',{layout: "error.hbs",
+    error_message: "Error Occured While Fetching Issues"
+  })
     }
   };
   

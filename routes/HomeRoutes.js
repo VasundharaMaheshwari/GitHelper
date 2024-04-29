@@ -1,11 +1,9 @@
 const express = require('express')
 const HomeRouter = express.Router()
-const { refresh } = require('../controllers/HomeController')
+const { refresh,details } = require('../controllers/HomeController')
 
 HomeRouter.get('/',refresh)
 
-HomeRouter.get('/view',(req,res) => {
-    return res.send('Success')
-})
+HomeRouter.get('/view',details)
 
 module.exports = HomeRouter

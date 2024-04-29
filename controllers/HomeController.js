@@ -12,4 +12,19 @@ const refresh = async (req, res) => {
     }
   };
 
-module.exports = { refresh }
+const details = async (req,res) => {
+  const {_id} = req.query
+
+  const issue_details = await Issue.findOne({"_id": _id})
+
+  if(issue_details != null){
+    return res.send(issue_details)
+  }
+  else{
+    return res.render('main.hbs',{layout: "error.hbs",
+    error_message: "Issue No Longer Exists"
+  })
+  }
+}
+
+module.exports = { refresh,details }
