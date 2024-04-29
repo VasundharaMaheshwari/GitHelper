@@ -53,8 +53,7 @@ const login = async (req,res) => {
           setUser(sessionId,user)
           res.cookie("uid",sessionId)
 
-            const id = user._id
-        return res.redirect(`/api/user?id=${id}`)}
+        return res.redirect(`/api/user`)}
       }
       }  catch (err) {
         return res.redirect('/error?error_details=Unexpected_Error_Occurred')
@@ -62,14 +61,12 @@ const login = async (req,res) => {
   }
 
 const load = async (req,res) => {
-  const {id} = req.query
-  if(ObjectId.isValid(id)){
-  const user = await GHUser.findOne({"_id": id})
+  if(ObjectId.isValid(req.user._id)){
+  const user = await GHUser.findOne({"_id": req.user._id})
   if(user && user.role == "User"){
   res.render('main.hbs',{layout: "user.hbs",
   username: user.username,
   email: user.email,
-  id: id
   })
 } else {
   if(user && user.role == "Admin"){

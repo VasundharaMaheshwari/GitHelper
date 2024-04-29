@@ -58,6 +58,11 @@
     button:hover {
       background-color: #0056b3;
     }
+
+    .query {
+      color: white;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -66,26 +71,14 @@
     <p>Email: {{email}}</p>
     <p>This is your user page. You can access your account information here.</p>
     <div class="button-container">
-      <form id="query-form" action="/query/create" method="get">
-        <button type="button" id="open-query-btn">Open Query</button>
-        <input type="text" name="id" id="id" value={{id}} required readonly hidden>
-      </form>
-      <form id="query-list" action="/query/list" method="get">
-        <button type="button" id="list-query-btn">Show Queries</button>
-        <input type="text" name="id" id="id" value={{id}} required readonly hidden>
-      </form>
+        <button type="button" id="open-query-btn"><a class="query" href="/query/create">Open Query</a></button>
+        <button type="button" id="list-query-btn"><a class="query" href="/query/list">Show Queries</a></button>
     </div>
     <button id="logout-btn">Logout</button>
   </div>
   <script>
     document.getElementById("logout-btn").addEventListener("click", function() {
       window.location.href = "/api/login"; 
-    });
-    document.getElementById("open-query-btn").addEventListener("click", function() {
-      document.getElementById("query-form").submit();
-    });
-    document.getElementById("list-query-btn").addEventListener("click", function() {
-      document.getElementById("query-list").submit();
     });
   </script>
 </body>

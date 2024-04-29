@@ -14,4 +14,13 @@ const restrict = async (req,res,next) => {
     next()
 }
 
-module.exports = { restrict }
+const less_restrict = async (req,res,next) => {
+    const UserUID = req.cookies?.uid
+    
+    const user = getUser(UserUID)
+
+    req.user = user
+    next()
+}
+
+module.exports = { restrict,less_restrict }

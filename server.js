@@ -9,7 +9,7 @@ const APIRouter = require('./routes/AppRoutes')
 const HomeRouter = require('./routes/HomeRoutes')
 const ErrorRouter = require('./routes/ErrorRoutes')
 
-const { restrict } = require('./middlewares/auth')
+const { restrict,less_restrict } = require('./middlewares/auth')
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -22,7 +22,7 @@ app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
 
 app.use('/api',UserRouter)
 app.use('/query',restrict,APIRouter)
-app.use('/home',HomeRouter)
+app.use('/home',less_restrict,HomeRouter)
 app.use('/error',ErrorRouter)
 
 app.get('/', (req,res) => {
