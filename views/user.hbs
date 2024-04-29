@@ -74,10 +74,6 @@
         <button type="button" id="list-query-btn">Show Queries</button>
         <input type="text" name="id" id="id" value={{id}} required readonly hidden>
       </form>
-      <form id="home-page" action="/home" method="get">
-        <button type="button" id="home-page-btn">Go To Home Page</button>
-        <input type="text" name="user_id" id="user_id" value={{user_id}} required readonly hidden>
-      </form>
     </div>
     <button id="logout-btn">Logout</button>
   </div>
@@ -90,9 +86,6 @@
     });
     document.getElementById("list-query-btn").addEventListener("click", function() {
       document.getElementById("query-list").submit();
-    });
-    document.getElementById("home-page-btn").addEventListener("click", function() {
-      document.getElementById("home-page").submit();
     });
   </script>
 </body>

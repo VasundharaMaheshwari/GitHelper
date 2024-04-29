@@ -61,8 +61,7 @@ const load = async (req,res) => {
   res.render('main.hbs',{layout: "user.hbs",
   username: user.username,
   email: user.email,
-  id: id,
-  user_id: id
+  id: id
   })
 } else {
   if(user && user.role == "Admin"){

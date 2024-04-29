@@ -20,7 +20,7 @@ app.use('/home',HomeRouter)
 app.use('/error',ErrorRouter)
 
 app.get('/', (req,res) => {
-  return res.redirect('/home?user_id=required')
+  return res.redirect('/home')
 })
 
 app.listen(3000, async () => {
