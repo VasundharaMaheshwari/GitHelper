@@ -1,6 +1,7 @@
 const { GHUser } = require('../models/GHUser')
 const CryptoJS = require('crypto-js')
 const { Key } = require('../models/Key')
+const { ObjectId } = require('mongodb');
 
 const register = async (req,res) => {
     try{
@@ -54,6 +55,7 @@ const login = async (req,res) => {
 
 const load = async (req,res) => {
   const {id} = req.query
+  if(ObjectId.isValid(id)){
   const user = await GHUser.findOne({"_id": id})
   if(user && user.role == "User"){
   res.render('main.hbs',{layout: "user.hbs",
@@ -66,6 +68,9 @@ const load = async (req,res) => {
     res.render('admin.hbs')
   } else {
     return res.redirect('/error?error_details=Not_Allowed') }
+}
+} else {
+  return res.redirect('/error?error_details=Invalid_URL')
 }
 }
 
