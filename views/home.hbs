@@ -99,6 +99,17 @@
     .hidden {
       display: none;
     }
+    
+    .repo-link {
+      color: #007bff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .repo-link:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -116,7 +127,7 @@
           <p><span>Username:</span> {{username}}</p>
           <p><span>Skill Set:</span> {{skillset}}</p>
           <p><span>GitHub ID:</span> {{github_id}}</p>
-          <p><span>Repository Link:</span> <a href={{repo_link}}>{{repo_link}}</a></p>
+          <p><span>Repository Link:</span> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
           <form action="/home/view?id={{_id}}" method="GET">
             <input type="hidden" name="_id" value="{{_id}}" required readonly hidden>
             <br>
