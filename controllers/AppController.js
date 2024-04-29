@@ -37,5 +37,4 @@ const save = async (req,res) => {
       return res.redirect('/error?error_details=Error_Occurred')
     }};
   
-
 module.exports = { create,save,list }

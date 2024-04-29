@@ -74,12 +74,7 @@
         <button type="button" id="open-query-btn"><a class="query" href="/query/create">Open Query</a></button>
         <button type="button" id="list-query-btn"><a class="query" href="/query/list">Show Queries</a></button>
     </div>
-    <button id="logout-btn">Logout</button>
+    <button type="button" id="logout-btn"><a class="query" href="/api/login">Proceed To Logout</a></button>
   </div>
-  <script>
-    document.getElementById("logout-btn").addEventListener("click", function() {
-      window.location.href = "/api/login"; 
-    });
-  </script>
 </body>
 </html>
