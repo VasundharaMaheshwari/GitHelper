@@ -7,8 +7,7 @@ const refresh = async (req, res) => {
       issues: issues
     });
     } catch (error) {
-      console.error(error);
-      res.status(500).send("An error occurred while fetching issues.");
+      return res.redirect('/error?error_details=Error_Occured');
     }
   };
 
@@ -21,9 +20,7 @@ const details = async (req,res) => {
     return res.send(issue_details)
   }
   else{
-    return res.render('main.hbs',{layout: "error.hbs",
-    error_message: "Issue No Longer Exists"
-  })
+    return res.redirect('/error?error_details=Query_Not_Found')
   }
 }
 

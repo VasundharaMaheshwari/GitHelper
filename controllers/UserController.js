@@ -22,9 +22,7 @@ const register = async (req,res) => {
       await trial2.save()
   return res.redirect('/api/login')
     }else{
-      res.render('main.hbs',{layout: "error.hbs",
-      error_message: "User Already Exists"
-    })
+      return res.redirect('/error?error_details=User_Already_Created')
     }
   } catch(err) {
       console.log(err)
@@ -38,17 +36,13 @@ const login = async (req,res) => {
       const user = await GHUser.findOne({ username: username })
 
       if(user == null){
-        res.render('main.hbs',{layout: "error.hbs",
-        error_message: "Please Register"
-      })
+        return res.redirect('/error?error_details=Please_Register')
       }else{
         const keyr = await Key.findOne({ identifier: "meow" })
         const decrypted = CryptoJS.AES.decrypt(user.password, keyr.key).toString(CryptoJS.enc.Utf8);
 
         if(encryptedpassword != decrypted){
-          res.render('main.hbs',{layout: "error.hbs",
-      error_message: "Wrong Password"
-    })
+          return res.redirect('/error?error_details=Invalid_Password')
         } else {
             const id = user._id
         return res.redirect(`/api/user?id=${id}`)}
@@ -71,9 +65,7 @@ const load = async (req,res) => {
   if(user && user.role == "Admin"){
     res.render('admin.hbs')
   } else {
-  res.render('main.hbs',{layout: "error.hbs",
-      error_message: "Not Allowed"
-    }) }
+    return res.redirect('/error?error_details=Not_Allowed') }
 }
 }
 

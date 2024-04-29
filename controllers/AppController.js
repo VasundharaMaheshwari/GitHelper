@@ -9,9 +9,7 @@ const create = async (req,res) => {
     return res.render('main.hbs',{layout: 'create.hbs',
     id: user._id
   })} else {
-    return res.render('main.hbs',{layout: "error.hbs",
-    error_message: "Not Allowed"
-  })
+    return res.redirect('/error?error_details=Not_Allowed')
   }
   }
 
@@ -36,13 +34,9 @@ const save = async (req,res) => {
       const id = user._id
   return res.redirect(`/api/user?id=${id}`)}
   else {
-    return res.render('main.hbs',{layout: "error.hbs",
-    error_message: "Query Already Created"
-  })
+    return res.redirect('/error?error_details=Query_Already_Created')
   }} else {
-    return res.render('main.hbs',{layout: "error.hbs",
-    error_message: "Not Allowed"
-  })
+    return res.redirect('/error?error_details=Not_Allowed')
   }
   } catch(err) {
       console.log(err)
@@ -60,9 +54,7 @@ const save = async (req,res) => {
       issues: issues
     });
     } catch (error) {
-      return res.render('main.hbs',{layout: "error.hbs",
-    error_message: "Error Occured While Fetching Issues"
-  })
+      return res.redirect('/error?error_details=Error_Occurred')
     }
   };
   
