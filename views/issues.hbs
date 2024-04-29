@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Issues</title>
+  <title>Opened Queries</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -59,7 +59,7 @@
 </head>
 <body>
   <div class="issues-container">
-    <h2>User Issues</h2>
+    <h2>Opened Queries</h2>
     <div class="issue-list">
       {{#if issues.length}}
         {{#each issues}}
@@ -73,7 +73,7 @@
           </div>
         {{/each}}
       {{else}}
-        <p>No issues found for this user.</p>
+        <p>No opened queries found.</p>
       {{/if}}
     </div>
   </div>

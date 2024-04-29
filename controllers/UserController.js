@@ -50,8 +50,8 @@ const login = async (req,res) => {
       error_message: "Wrong Password"
     })
         } else {
-            const email = user.email
-        return res.redirect(`/api/user?username=${username}&email=${email}`)}
+            const id = user._id
+        return res.redirect(`/api/user?id=${id}`)}
       }
       }  catch (err) {
         console.log(err)
@@ -59,12 +59,13 @@ const login = async (req,res) => {
   }
 
 const load = async (req,res) => {
-  const {username,email} = req.query
-  const user = await GHUser.findOne({username: username, email: email})
+  const {id} = req.query
+  const user = await GHUser.findOne({"_id": id})
   if(user && user.role == "User"){
   res.render('main.hbs',{layout: "user.hbs",
-  username: username,
-  email: email
+  username: user.username,
+  email: user.email,
+  id: id
   })
 } else {
   if(user && user.role == "Admin"){

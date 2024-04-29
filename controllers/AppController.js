@@ -2,12 +2,12 @@ const { Issue } = require('../models/Issue')
 const { GHUser } = require('../models/GHUser')
 
 const create = async (req,res) => {
-    const {username} = req.query
+    const {id} = req.query
     
-    const user = await GHUser.findOne({ username: username })
+    const user = await GHUser.findOne({ "_id": id })
     if(user != null){
     return res.render('main.hbs',{layout: 'create.hbs',
-    username: username
+    id: user._id
   })} else {
     return res.render('main.hbs',{layout: "error.hbs",
     error_message: "Not Allowed"
@@ -18,14 +18,14 @@ const create = async (req,res) => {
 const save = async (req,res) => {
     try{
         
-      const {username,contact_info,skillset,github_id,repo_link,description} = req.body
+      const {id,contact_info,skillset,github_id,repo_link,description} = req.body
 
-      const user = await GHUser.findOne({ username: username })
+      const user = await GHUser.findOne({ "_id": id })
       if(user!=null){
       const check = await Issue.findOne({repo_link: repo_link})
       if(check == null){
       const trial = new Issue({
-          username: username,
+          username: user.username,
           contact_info: contact_info,
           skillset: skillset,
           github_id: github_id,
@@ -33,8 +33,8 @@ const save = async (req,res) => {
           description: description
       })
       await trial.save()
-      const email = user.email
-  return res.redirect(`/api/user?username=${username}&email=${email}`)}
+      const id = user._id
+  return res.redirect(`/api/user?id=${id}`)}
   else {
     return res.render('main.hbs',{layout: "error.hbs",
     error_message: "Query Already Created"
@@ -50,10 +50,12 @@ const save = async (req,res) => {
   }
 
   const list = async (req, res) => {
-    const { username } = req.query;
+    const { id } = req.query;
+
+    const user = await GHUser.findOne({"_id": id})
     
     try {
-      const issues = await Issue.find({ username: username }).lean().exec();
+      const issues = await Issue.find({ username: user.username }).lean().exec();
       res.render('main.hbs',{layout: "issues.hbs",
       issues: issues
     });
