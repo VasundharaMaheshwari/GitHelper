@@ -45,6 +45,6 @@ const responder = async (req,res) => {
   issue_id: _id,
   creator: user._id
 })
-}
+}//creator!=responder + try catch
   
 module.exports = { create,save,list,responder }
