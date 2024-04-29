@@ -39,10 +39,10 @@ const save = async (req,res) => {
     }};
 
 const responder = async (req,res) => {
-  const {username,issue_id} = req.query
+  const {username,_id} = req.query
   const user = await GHUser.findOne({username: username})
   return res.render('main.hbs',{layout: "response.hbs",
-  issue_id: issue_id,
+  issue_id: _id,
   creator: user._id
 })
 }
