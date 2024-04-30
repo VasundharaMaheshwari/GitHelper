@@ -33,6 +33,10 @@ const admin = async (req,res,next) => {
         return res.redirect('/api/login')
     }
 
+    if(user.role == "User"){
+        return res.redirect('/api/user')
+    }
+
     if(user.role != "Admin"){
         return res.redirect('/error?error_details=Access_Denied')
     }
