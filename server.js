@@ -10,7 +10,7 @@ const HomeRouter = require('./routes/HomeRoutes')
 const ErrorRouter = require('./routes/ErrorRoutes')
 const AdminRouter = require('./routes/AdminRoutes')
 
-const { restrict,less_restrict,admin } = require('./middlewares/auth')
+const { restrict,less_restrict,admin } = require('./middlewares/middleware')
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
