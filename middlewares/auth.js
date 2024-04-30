@@ -34,7 +34,7 @@ const admin = async (req,res,next) => {
     }
 
     if(user.role == "User"){
-        return res.redirect('/api/user')
+        return 
     }
 
     if(user.role != "Admin"){
