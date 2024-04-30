@@ -24,7 +24,7 @@ const Response_Schema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'GHUsers'
-    },
+    }
 },{timestamps: true})
 
 const Response = mongoose.model('Response',Response_Schema)
