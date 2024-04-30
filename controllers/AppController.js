@@ -63,7 +63,6 @@ const save_response = async (req,res) => {
   const {issue_id,creator,github_id} = req.body
   if(creator != req.user._id && ObjectId.isValid(issue_id)){
     const resp_check = await Response.findOne({"responder.uid": req.user._id })
-    console.log(resp_check)
     if(resp_check == null){
     const response_ = new Response({
       responder:{
