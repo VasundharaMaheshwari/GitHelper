@@ -8,8 +8,9 @@ const UserRouter = require('./routes/UserRoutes')
 const APIRouter = require('./routes/AppRoutes')
 const HomeRouter = require('./routes/HomeRoutes')
 const ErrorRouter = require('./routes/ErrorRoutes')
+const AdminRouter = require('./routes/AdminRoutes')
 
-const { restrict,less_restrict } = require('./middlewares/auth')
+const { restrict,less_restrict,admin } = require('./middlewares/auth')
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -24,6 +25,7 @@ app.use('/api',UserRouter)
 app.use('/query',restrict,APIRouter)
 app.use('/home',less_restrict,HomeRouter)
 app.use('/error',ErrorRouter)
+app.use('/admin',admin,AdminRouter)
 
 app.get('/', (req,res) => {
   return res.redirect('/home')

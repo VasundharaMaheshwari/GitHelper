@@ -23,4 +23,22 @@ const less_restrict = async (req,res,next) => {
     next()
 }
 
-module.exports = { restrict,less_restrict }
+const admin = async (req,res,next) => {
+    const UserUID = req.cookies?.uid
+    if(!UserUID){
+        return res.redirect('/api/login')
+    }
+    const user = getUser(UserUID)
+    if(!user){
+        return res.redirect('/api/login')
+    }
+
+    if(user.role != "Admin"){
+        return res.redirect('/error?error_details=Access_Denied')
+    }
+
+    req.user = user
+    next()
+}
+
+module.exports = { restrict,less_restrict,admin }

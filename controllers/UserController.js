@@ -71,7 +71,7 @@ const load = async (req,res) => {
   })
 } else {
   if(user && user.role == "Admin"){
-    res.render('admin.hbs')
+    res.redirect('/admin')
   } else {
     return res.redirect('/error?error_details=Not_Allowed') }
 }
