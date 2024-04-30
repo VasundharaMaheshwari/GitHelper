@@ -61,6 +61,7 @@ const login = async (req,res) => {
   }
 
 const load = async (req,res) => {
+  try{
   if(ObjectId.isValid(req.user._id)){
   const user = await GHUser.findOne({"_id": req.user._id})
   if(user && user.role == "User"){
@@ -76,6 +77,8 @@ const load = async (req,res) => {
 }
 } else {
   return res.redirect('/error?error_details=Invalid_URL')
+}} catch(err){
+  return res.redirect('/error?error_details=Error_Occurred')
 }
 }
 

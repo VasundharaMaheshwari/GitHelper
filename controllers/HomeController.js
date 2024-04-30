@@ -15,6 +15,7 @@ const refresh = async (req, res) => {
   };
 
 const details = async (req,res) => {
+  try{
   const {_id} = req.query
   if(ObjectId.isValid(_id)){
 
@@ -37,12 +38,19 @@ const details = async (req,res) => {
 } else {
   return res.redirect('/error?error_details=Invalid_URL')
 }
+  } catch(err) {
+    return res.redirect('/error?error_details=Error_Occurred')
+  }
 }
 
 const logout = (req,res) => {
+  try{
   delUser(res.cookie?.uid)
   res.clearCookie('uid')
   return res.redirect('/api/login')
+  } catch (err) {
+    return res.redirect('/error?error_details=Failed_To_Logout')
+  }
 }
 
 module.exports = { refresh,details,logout }
