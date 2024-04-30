@@ -1,4 +1,5 @@
 const { Issue } = require('../models/Issue')
+const { Response } = require('../models/Response')
 const { GHUser } = require('../models/GHUser')
 const { ObjectId } = require('mongodb')
 
@@ -61,7 +62,21 @@ const save_response = async (req,res) => {
   try{
   const {issue_id,creator} = req.body
   if(creator != req.user._id && ObjectId.isValid(issue_id)){
-    return res.send('Success')
+    const resp_check = await Response.findOne({responder: {uid : req.user._id}})
+    if(!resp_check){
+    const response_ = new Response({
+      responder:{
+        username : req.user.username,
+        uid : req.user._id,
+        github_id : github_id
+      },
+      issue: issue_id,
+      creator: creator
+    })
+    await response_.save()
+    return res.redirect('/home')} else {
+      return res.redirect('/error?error_details=Already_Responded')
+    }
   }else{
     return res.redirect('/error?error_details=Not_Allowed')
   }} catch(err) {
