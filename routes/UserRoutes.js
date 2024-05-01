@@ -1,17 +1,17 @@
 const express = require('express')
 const UserRouter = express.Router()
 const { login,register,load } = require('../controllers/UserController')
-const { restrict } = require('../middlewares/middleware')
+const { restrict,loggedIn } = require('../middlewares/middleware')
 
-UserRouter.post('/login', login)
+UserRouter.post('/login',loggedIn,login)
 
-UserRouter.post('/register', register)
+UserRouter.post('/register',loggedIn,register)
 
-UserRouter.get('/login',(req,res) => {
+UserRouter.get('/login',loggedIn,(req,res) => {
     res.render('login.hbs')
 })
 
-UserRouter.get('/register',(req,res) => {
+UserRouter.get('/register',loggedIn,(req,res) => {
     res.render('register.hbs')
 })
 
