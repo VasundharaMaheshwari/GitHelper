@@ -19,6 +19,11 @@ app.use(express.json());
 
 app.use(cookie_parser())
 
+app.use((req, res, next) => {      
+  res.set('Cache-Control', 'no-store')
+  next() 
+})
+
 const handlebars = require("express-handlebars");
 app.set("view engine", "handlebars");
 app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
