@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const { GHUser } = require('../models/GHUser')
 const { Issue } = require('../models/Issue')
 
@@ -14,4 +15,22 @@ const loader = async (req, res) => {
     }
   }
 
-module.exports = { loader }
+const deleter = async (req,res) => {
+  try {
+    const {_id} = req.query
+    if(ObjectId.isValid(_id)){
+      const status = await Issue.findOneAndDelete({"_id" : _id})
+      if(status){
+        return res.redirect('/admin/home')
+      } else {
+        return res.redirect('/error?error_details=Unable_To_Delete_Query')
+      }
+    } else {
+      return res.redirect('/error?error_details=Query_Does_Not_Exist')
+    }
+  } catch(err) {
+    return res.redirect('/error?error_details=Error_Occurred')
+  }
+}
+
+module.exports = { loader,deleter }
