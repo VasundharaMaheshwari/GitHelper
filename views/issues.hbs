@@ -33,13 +33,14 @@
     }
 
     .issue-list {
-      max-height: 600px;
-      overflow-y: scroll; 
+      max-height: 600px; 
+      overflow-y: scroll;
     }
 
     .issue {
       padding: 20px;
       border-bottom: 3px solid #ccc;
+      position: relative; 
     }
 
     .issue:last-child {
@@ -55,6 +56,28 @@
     strong {
       font-weight: bold;
     }
+
+    .edit-delete-buttons {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .edit-button,
+    .delete-button {
+      background-color: #333; 
+      color: #fff; 
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .edit-button:hover,
+    .delete-button:hover {
+      background-color: #555; 
+    }
   </style>
 </head>
 <body>
@@ -64,6 +87,10 @@
       {{#if issues.length}}
         {{#each issues}}
           <div class="issue">
+            <div class="edit-delete-buttons">
+              <button class="edit-button" onclick="editQuery('{{_id}}')">Edit</button>
+              <button class="delete-button" onclick="deleteQuery('{{_id}}')">Delete</button>
+            </div>
             <p><strong>Skillset:</strong> {{skillset}}</p>
             <p><strong>GitHub ID:</strong> {{github_id}}</p>
             <p><strong>Repository Link:</strong> {{repo_link}}</p>
@@ -75,5 +102,15 @@
       {{/if}}
     </div>
   </div>
+
+  <script>
+    function editQuery(queryId) {      
+      window.location.href = `/api/edit?queryId=${queryId}`;
+    }
+
+    function deleteQuery(queryId) {
+      window.location.href = `/api/delete?queryId=${queryId}`;
+    }
+  </script>
 </body>
 </html>
