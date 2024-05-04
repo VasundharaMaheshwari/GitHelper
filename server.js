@@ -12,6 +12,8 @@ const AdminRouter = require('./routes/AdminRoutes')
 
 const { restrict,less_restrict,admin } = require('./middlewares/middleware')
 
+app.disable("x-powered-by")
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
