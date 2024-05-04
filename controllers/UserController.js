@@ -1,6 +1,5 @@
 const { GHUser } = require('../models/GHUser')
 const CryptoJS = require('crypto-js')
-const { Key } = require('../models/Key')
 const { ObjectId } = require('mongodb');
 
 require('dotenv').config()
