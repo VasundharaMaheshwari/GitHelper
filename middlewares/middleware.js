@@ -45,4 +45,15 @@ const admin = async (req,res,next) => {
     next()
 }
 
-module.exports = { restrict,less_restrict,admin }
+const loggedIn = async (req,res,next) => {
+    const UserUID = req.cookies?.uid
+    const user = getUser(UserUID)
+    if(user){
+        return res.redirect('/api/user')
+    }
+
+    req.user = user
+    next()
+}
+
+module.exports = { restrict,less_restrict,admin,loggedIn }
