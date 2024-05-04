@@ -1,12 +1,15 @@
 const { Issue } = require('../models/Issue')
 const { ObjectId } = require('mongodb');
 
-const { delUser } = require('../services/auth')
+const { delUser } = require('../services/auth');
+const { GHUser } = require('../models/GHUser');
 
 const refresh = async (req, res) => {    
     try {
+      const user = await GHUser.findOne({"_id": req.user?._id})
       const issues = await Issue.find().lean().exec();
       res.render('main.hbs',{layout: "home.hbs",
+      user: user,
       issues: issues
     });
     } catch (error) {
