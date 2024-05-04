@@ -3,6 +3,8 @@ const CryptoJS = require('crypto-js')
 const { Key } = require('../models/Key')
 const { ObjectId } = require('mongodb');
 
+require('dotenv').config()
+
 const {v4: uuidv4} = require('uuid')
 const { setUser } = require('../services/auth')
 
@@ -13,8 +15,7 @@ const register = async (req,res) => {
       const user = await GHUser.findOne({username: username})
 
       if(user == null){
-      const keyr = await Key.findOne({ identifier: "meow" })
-      const encrypted = CryptoJS.AES.encrypt(encryptedpassword, keyr.key).toString();
+      const encrypted = CryptoJS.AES.encrypt(encryptedpassword, process.env.SECRET_KEY).toString();
 
       const trial2 = new GHUser({
           username: username,
@@ -42,8 +43,7 @@ const login = async (req,res) => {
       if(user == null){
         return res.redirect('/error?error_details=Please_Register')
       }else{
-        const keyr = await Key.findOne({ identifier: "meow" })
-        const decrypted = CryptoJS.AES.decrypt(user.password, keyr.key).toString(CryptoJS.enc.Utf8);
+        const decrypted = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8);
 
         if(encryptedpassword != decrypted){
           return res.redirect('/error?error_details=Invalid_Password')
