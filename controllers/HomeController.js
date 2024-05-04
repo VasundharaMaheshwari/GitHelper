@@ -7,6 +7,9 @@ const { GHUser } = require('../models/GHUser');
 const refresh = async (req, res) => {    
     try {
       const user = await GHUser.findOne({"_id": req.user?._id})
+      if(user && user.role == "Admin"){
+        return res.redirect('/admin/home')
+      }
       const issues = await Issue.find().lean().exec();
       res.render('main.hbs',{layout: "home.hbs",
       user: user,
