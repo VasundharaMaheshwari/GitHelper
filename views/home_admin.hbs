@@ -63,6 +63,10 @@
       color: #666;
     }
 
+    .btn-container {
+      text-align: center;
+    }
+
     .btn {
       display: inline-block;
       padding: 10px 20px;
@@ -72,6 +76,7 @@
       border-radius: 5px;
       text-decoration: none;
       transition: background-color 0.3s ease;
+      margin: 0 5px;
     }
 
     .btn:hover {
@@ -94,10 +99,6 @@
 
     .navbar a:hover {
       text-decoration: underline;
-    }
-
-    .hidden {
-      display: none;
     }
     
     .repo-link {
@@ -132,24 +133,18 @@
           <p><span>Skill Set:</span> {{skillset}}</p>
           <p><span>GitHub ID:</span> {{github_id}}</p>
           <p><span>Repository Link:</span> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
-          <form id="queryForm" method="GET">
-              <input type="hidden" name="_id" value={{_id}} required readonly hidden>
-              <br>
+          <br>
+          <div class="btn-container">
+            <form action="/home/view" method="GET" style="display: inline;">
+              <input type="text" name="_id" value={{_id}} required readonly hidden>
               <button type="submit" class="btn" id="viewButton">View Query</button>
+            </form>
+            <form action="/admin/delete" method="GET" style="display: inline;">
+              <input type="text" name="_id" value={{_id}} required readonly hidden>
               <button type="submit" class="btn" id="deleteButton">Delete Query</button>
-          </form>
+            </form>
+          </div>
         </div>
-        <script>
-          document.getElementById('queryForm').addEventListener('submit', function(event) {
-            var action;
-            if (event.submitter && event.submitter.id === 'deleteButton') {
-                action = '/admin/delete';
-            } else {
-                action = '/home/view';
-            }
-            this.setAttribute('action', action);
-          });
-        </script>
       {{/each}}
     {{else}}
       <p class="no-issues">No open queries found.</p>
