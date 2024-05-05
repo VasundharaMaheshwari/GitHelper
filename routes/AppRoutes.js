@@ -1,6 +1,7 @@
 const express =  require('express')
 const APIRouter = express.Router()
 const { create,save,list,responder,save_response } = require('../controllers/AppController')
+const { edit,delete_res,show_res } = require('../controllers/AppController2')
 const { issue_limit,response_limit } = require('../middlewares/rate_limiter')
 
 APIRouter.get('/create',create)
@@ -13,16 +14,10 @@ APIRouter.get('/respond',responder)
 
 APIRouter.post('/respond',response_limit,save_response)
 
-APIRouter.get('/edit',(req,res) => {
-    return res.status(201).send('Success')
-})
+APIRouter.get('/edit',edit)
 
-APIRouter.get('/delete',(req,res) => {
-    return res.status(201).send('Success')
-})
+APIRouter.get('/delete',delete_res)
 
-APIRouter.get('/response',(req,res) => {
-    return res.status(201).send('Success')
-})
+APIRouter.get('/response',show_res)
 
 module.exports = APIRouter
