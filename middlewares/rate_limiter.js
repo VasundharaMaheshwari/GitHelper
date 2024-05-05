@@ -32,7 +32,7 @@ const issue_limit = limiter({
         req.rateLimit.resetTime = date.toLocaleTimeString()
         return res.redirect(`/error?error_details=Maximum_Number_Of_Queries_Created_Please_Wait_Till_${req.rateLimit.resetTime}`)
     },
-    skipSuccessfulRequests: true
+    keyGenerator: (req,res) => req.user._id
 })
 
 const response_limit = limiter({
@@ -44,7 +44,7 @@ const response_limit = limiter({
         req.rateLimit.resetTime = date.toLocaleTimeString()
         return res.redirect(`/error?error_details=Maximum_Number_Of_Responses_Sent_Please_Wait_Till_${req.rateLimit.resetTime}`)
     },
-    skipSuccessfulRequests: true
+    keyGenerator: (req,res) => req.user._id
 })
 
 module.exports = { register_limit,login_limit,issue_limit,response_limit }
