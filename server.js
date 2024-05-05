@@ -11,7 +11,7 @@ const HomeRouter = require('./routes/HomeRoutes')
 const ErrorRouter = require('./routes/ErrorRoutes')
 const AdminRouter = require('./routes/AdminRoutes')
 
-const { restrict,less_restrict,admin } = require('./middlewares/middleware')
+const { restrict,less_restrict,admin,query_check } = require('./middlewares/middleware')
 
 app.disable("x-powered-by")
 
@@ -31,7 +31,7 @@ app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
 
 app.use('/api',UserRouter)
 app.use('/query',restrict,APIRouter)
-app.use('/query_work',restrict,QueryRouter)
+app.use('/query_work',query_check,QueryRouter)
 app.use('/home',less_restrict,HomeRouter)
 app.use('/error',ErrorRouter)
 app.use('/admin',admin,AdminRouter)

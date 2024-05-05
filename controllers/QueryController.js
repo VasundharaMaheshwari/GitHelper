@@ -16,7 +16,7 @@ const edit = async (req,res) => {
           github_id: issue.github_id,
           repo_link: issue.repo_link,
           description: issue.description,
-          _id: issue._id
+          queryId: issue._id
         })
       } else{
         return res.status(404).redirect('/error?error_details=Invalid_URL')
@@ -62,11 +62,11 @@ const show_res = async (req,res) => {
 
 const save_edit = async (req,res) => {
   try{
-    const {_id} = req.query
-    if(ObjectId.isValid(_id)){
+    const {queryId} = req.query
+    if(ObjectId.isValid(queryId)){
       const second = await Issue.findOne({"repo_link": req.body.repo_link})
-      if(_id == second._id && second.username == req.user.username){
-        const first = await Issue.findOneAndUpdate({"_id": _id},{
+      if(queryId == second._id && second.username == req.user.username){
+        const first = await Issue.findOneAndUpdate({"_id": queryId},{
           username: req.user.username,
           contact_info: req.body.contact_info,
           skillset: req.body.skillset,

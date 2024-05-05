@@ -77,7 +77,7 @@
 <body>
   <div class="form-container">
     <h2>Edit Query</h2>
-    <form id="issue-form" action="/query_work/edit_query?_id={{_id}}" method="post" onsubmit="return validateForm()">
+    <form id="issue-form" action="/query_work/edit_query?queryId={{queryId}}" method="post" onsubmit="return validateForm()">
       <div class="form-group">
         <label for="contact_info">Contact Info</label>
         <input type="tel" id="contact_info" name="contact_info" value={{contact_info}} required>

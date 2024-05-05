@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb')
+const { Issue } = require('../models/Issue')
 const { getUser } = require('../services/auth')
 
 const restrict = async (req,res,next) => {
@@ -56,4 +58,21 @@ const loggedIn = async (req,res,next) => {
     next()
 }
 
-module.exports = { restrict,less_restrict,admin,loggedIn }
+const query_check = async (req,res,next) => {
+    const UserUID = req.cookies?.uid
+    if(!UserUID){
+        return res.status(401).redirect('/api/login')
+    }
+    const user = getUser(UserUID)
+    if(!user){
+        return res.status(401).redirect('/api/login')
+    }
+    const {queryId} = req.query
+    if(ObjectId.isValid(queryId) && await Issue.findOne({"_id": queryId})){
+    req.user = user
+    return next()
+    }
+    return res.status(403).redirect('/query/list')
+}
+
+module.exports = { restrict,less_restrict,admin,loggedIn,query_check }
