@@ -21,4 +21,8 @@ APIRouter.get('/delete',(req,res) => {
     return res.status(201).send('Success')
 })
 
+APIRouter.get('/response',(req,res) => {
+    return res.status(201).send('Success')
+})
+
 module.exports = APIRouter
