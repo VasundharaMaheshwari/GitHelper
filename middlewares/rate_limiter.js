@@ -2,10 +2,10 @@ const limiter = require('express-rate-limit')
 
 const register_limit = limiter({
     windowMs: 24*60*60*1000,
-    max: 3,
+    max: 5,
     legacyHeaders: false,
-    requestWasSuccessful: (req, res) => res.status < 400,
-    skipFailedRequests: true,
+    // requestWasSuccessful: (req, res) => res.status < 400,
+    // skipFailedRequests: true,
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
         req.rateLimit.resetTime = date.toLocaleTimeString()
@@ -44,36 +44,36 @@ const issue_limit = limiter({
     windowMs: 24*60*60*1000,
     max: 5,
     legacyHeaders: false,
-    requestWasSuccessful: (req, res) => res.status < 400,
-    skipFailedRequests: true,
+    // requestWasSuccessful: (req, res) => res.status < 400,
+    // skipFailedRequests: true,
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
-        req.rateLimit.resetTime = date.toLocaleTimeString()
+        req.rateLimit.resetTime = date.toLocaleString()
         return res.status(429).redirect(`/error?error_details=Maximum_Number_Of_Queries_Created_Please_Wait_Till_${req.rateLimit.resetTime}`)
     },
-    keyGenerator: (req,res) => req.user._id
+    keyGenerator: (req,res) => req.body.id
 })
 
 const response_limit = limiter({
     windowMs: 10*60*60*1000,
     max: 10,
     legacyHeaders: false,
-    requestWasSuccessful: (req, res) => res.status < 400,
-    skipFailedRequests: true,
+    // requestWasSuccessful: (req, res) => res.status < 400,
+    // skipFailedRequests: true,
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
         req.rateLimit.resetTime = date.toLocaleTimeString()
         return res.status(429).redirect(`/error?error_details=Maximum_Number_Of_Responses_Sent_Please_Wait_Till_${req.rateLimit.resetTime}`)
     },
-    keyGenerator: (req,res) => req.user._id
+    keyGenerator: (req,res) => req.body.id
 })
 
 const edit_limit = limiter({
     windowMs: 60*60*1000,
     max: 5,
     legacyHeaders: false,
-    requestWasSuccessful: (req, res) => res.status < 400,
-    skipFailedRequests: true,
+    // requestWasSuccessful: (req, res) => res.status < 400,
+    // skipFailedRequests: true,
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
         req.rateLimit.resetTime = date.toLocaleTimeString()
