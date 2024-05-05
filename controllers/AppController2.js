@@ -36,7 +36,7 @@ const delete_query = async (req,res) => {
           return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query')
         }
       } else {
-        return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
+        return res.status(404).redirect('/error?error_details=Invalid_URL')
       }
     } catch(err) {
       return res.status(500).redirect('/error?error_details=Error_Occurred')
