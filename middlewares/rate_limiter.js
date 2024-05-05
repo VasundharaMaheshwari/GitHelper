@@ -36,7 +36,7 @@ const login_limit_ip = limiter({
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
         req.rateLimit.resetTime = date.toLocaleString()
-        return res.status(429).redirect(`/error?error_details=Login_Disabled_Due_To_Too_Many_Attempts_Till_${req.rateLimit.resetTime}`)
+        return res.status(429).redirect(`/error?error_details=Login_Disabled_Till_${req.rateLimit.resetTime}`)
     }
 })
 
