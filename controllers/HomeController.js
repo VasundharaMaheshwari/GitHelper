@@ -26,7 +26,10 @@ const details = async (req,res) => {
   if(ObjectId.isValid(_id)){
 
   const issue_details = await Issue.findOne({"_id": _id})
-
+  var user = await GHUser.findOne({"_id": req.user?._id})
+  if(user.role == "Admin"){
+    user = null
+  }
   if(issue_details != null){
     return res.status(200).render('main.hbs',{layout: "individual.hbs",
     _id: _id,
@@ -35,7 +38,8 @@ const details = async (req,res) => {
     skillset: issue_details.skillset,
     github_id: issue_details.github_id,
     repo_link: issue_details.repo_link,
-    description: issue_details.description
+    description: issue_details.description,
+    user: user
   })
   }
   else{
@@ -45,6 +49,7 @@ const details = async (req,res) => {
   return res.status(400).redirect('/error?error_details=Invalid_URL')
 }
   } catch(err) {
+    console.log(err)
     return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
