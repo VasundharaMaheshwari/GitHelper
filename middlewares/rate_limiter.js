@@ -18,9 +18,8 @@ const login_limit = limiter({
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
         req.rateLimit.resetTime = date.toLocaleTimeString()
-        return res.redirect(`/error?error_details=Login_Disabled_Due_To_Too_Many_Failed_Attempts_Till_${req.rateLimit.resetTime}`)
-    },
-    skipSuccessfulRequests: true
+        return res.redirect(`/error?error_details=Login_Disabled_Due_To_Too_Many_Attempts_Till_${req.rateLimit.resetTime}`)
+    }
 })
 
 const issue_limit = limiter({
