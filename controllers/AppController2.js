@@ -1,8 +1,25 @@
 const { ObjectId } = require('mongodb')
 const { Issue } = require('../models/Issue')
 
-const edit = (req,res) => {
-    return res.status(201).send('Success')
+const edit = async (req,res) => {
+    try{
+      const {queryId} = req.query
+      if(ObjectId.isValid(queryId)){
+        const issue = await Issue.findOne({"_id": queryId})
+        return res.status(200).render('main.hbs',{layout: "edit.hbs",
+          contact_info: issue.contact_info,
+          skillset: issue.skillset,
+          github_id: issue.github_id,
+          repo_link: issue.repo_link,
+          description: issue.description,
+          _id: issue._id
+        })
+      } else{
+        return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
+      }
+    } catch(err) {
+      return res.status(500).redirect('/error?error_details=Error_Occurred')
+    }
 }
 
 const delete_query = async (req,res) => {
@@ -19,7 +36,6 @@ const delete_query = async (req,res) => {
         return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
       }
     } catch(err) {
-        console.log(err)
       return res.status(500).redirect('/error?error_details=Error_Occurred')
     }
   }
