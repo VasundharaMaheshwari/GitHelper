@@ -13,4 +13,12 @@ APIRouter.get('/respond',responder)
 
 APIRouter.post('/respond',response_limit,save_response)
 
+APIRouter.get('/edit',(req,res) => {
+    return res.status(201).send('Success')
+})
+
+APIRouter.get('/delete',(req,res) => {
+    return res.status(201).send('Success')
+})
+
 module.exports = APIRouter
