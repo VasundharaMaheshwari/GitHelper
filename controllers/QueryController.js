@@ -31,7 +31,8 @@ const delete_query = async (req,res) => {
       const {queryId} = req.query
       if(ObjectId.isValid(queryId)){
         const status = await Issue.findOneAndDelete({"_id" : queryId, "username": req.user.username})
-        if(status){
+        const resp = await Response.deleteMany({"issue": _id}).lean().exec()
+        if(status && resp){
           return res.status(200).redirect('/query/list')
         } else {
           return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query')
