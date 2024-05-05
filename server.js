@@ -6,6 +6,7 @@ const cookie_parser = require('cookie-parser')
 
 const UserRouter = require('./routes/UserRoutes')
 const APIRouter = require('./routes/AppRoutes')
+const QueryRouter = require('./routes/QueryRoutes')
 const HomeRouter = require('./routes/HomeRoutes')
 const ErrorRouter = require('./routes/ErrorRoutes')
 const AdminRouter = require('./routes/AdminRoutes')
@@ -25,11 +26,13 @@ app.use((req, res, next) => {
 })
 
 const handlebars = require("express-handlebars");
+const QueryRouter = require('./routes/QueryRoutes')
 app.set("view engine", "handlebars");
 app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
 
 app.use('/api',UserRouter)
 app.use('/query',restrict,APIRouter)
+app.use('/query_work',restrict,QueryRouter)
 app.use('/home',less_restrict,HomeRouter)
 app.use('/error',ErrorRouter)
 app.use('/admin',admin,AdminRouter)
