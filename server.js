@@ -26,7 +26,6 @@ app.use((req, res, next) => {
 })
 
 const handlebars = require("express-handlebars");
-const QueryRouter = require('./routes/QueryRoutes')
 app.set("view engine", "handlebars");
 app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
 
