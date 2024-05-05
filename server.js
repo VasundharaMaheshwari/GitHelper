@@ -35,7 +35,7 @@ app.use('/error',ErrorRouter)
 app.use('/admin',admin,AdminRouter)
 
 app.get('/', (req,res) => {
-  return res.redirect('/home')
+  return res.status(302).redirect('/home')
 })
 
 app.listen(3000, async () => {

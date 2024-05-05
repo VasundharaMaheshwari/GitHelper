@@ -8,15 +8,15 @@ const refresh = async (req, res) => {
     try {
       const user = await GHUser.findOne({"_id": req.user?._id})
       if(user && user.role == "Admin"){
-        return res.redirect('/admin/home')
+        return res.status(403).redirect('/admin/home')
       }
       const issues = await Issue.find().lean().exec();
-      res.render('main.hbs',{layout: "home.hbs",
+      res.status(200).render('main.hbs',{layout: "home.hbs",
       user: user,
       issues: issues
     });
     } catch (error) {
-      return res.redirect('/error?error_details=Error_Occured');
+      return res.status(500).redirect('/error?error_details=Error_Occured');
     }
   };
 
@@ -28,7 +28,7 @@ const details = async (req,res) => {
   const issue_details = await Issue.findOne({"_id": _id})
 
   if(issue_details != null){
-    return res.render('main.hbs',{layout: "individual.hbs",
+    return res.status(200).render('main.hbs',{layout: "individual.hbs",
     _id: _id,
     username: issue_details.username,
     contact_info: issue_details.contact_info,
@@ -39,13 +39,13 @@ const details = async (req,res) => {
   })
   }
   else{
-    return res.redirect('/error?error_details=Query_Not_Found')
+    return res.status(404).redirect('/error?error_details=Query_Not_Found')
   }
 } else {
-  return res.redirect('/error?error_details=Invalid_URL')
+  return res.status(400).redirect('/error?error_details=Invalid_URL')
 }
   } catch(err) {
-    return res.redirect('/error?error_details=Error_Occurred')
+    return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
 
@@ -53,9 +53,9 @@ const logout = (req,res) => {
   try{
   delUser(res.cookie?.uid)
   res.clearCookie('uid')
-  return res.redirect('/api/login')
+  return res.status(200).redirect('/api/login')
   } catch (err) {
-    return res.redirect('/error?error_details=Failed_To_Logout')
+    return res.status(500).redirect('/error?error_details=Failed_To_Logout')
   }
 }
 

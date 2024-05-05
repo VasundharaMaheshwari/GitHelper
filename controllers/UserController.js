@@ -24,12 +24,12 @@ const register = async (req,res) => {
       })
 
       await trial2.save()
-  return res.redirect('/api/login')
+  return res.status(201).redirect('/api/login')
     }else{
-      return res.redirect('/error?error_details=User_Already_Created')
+      return res.status(403).redirect('/error?error_details=User_Already_Created')
     }
   } catch(err) {
-    return res.redirect(`/error?error_details=Email_Already_Taken`)
+    return res.status(500).redirect(`/error?error_details=Email_Already_Taken`)
   }
   }
 
@@ -40,22 +40,22 @@ const login = async (req,res) => {
       const user = await GHUser.findOne({ username: username })
 
       if(user == null){
-        return res.redirect('/error?error_details=Please_Register')
+        return res.status(404).redirect('/error?error_details=Please_Register')
       }else{
         const decrypted = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8);
 
         if(encryptedpassword != decrypted){
-          return res.redirect('/error?error_details=Invalid_Password')
+          return res.status(401).redirect('/error?error_details=Invalid_Password')
         } else {
 
           const sessionId = uuidv4()
           setUser(sessionId,user)
           res.cookie("uid",sessionId)
 
-        return res.redirect(`/api/user`)}
+        return res.status(200).redirect(`/api/user`)}
       }
       }  catch (err) {
-        return res.redirect('/error?error_details=Unexpected_Error_Occurred')
+        return res.status(500).redirect('/error?error_details=Unexpected_Error_Occurred')
     }
   }
 
@@ -64,20 +64,20 @@ const load = async (req,res) => {
   if(ObjectId.isValid(req.user._id)){
   const user = await GHUser.findOne({"_id": req.user._id})
   if(user && user.role == "User"){
-  res.render('main.hbs',{layout: "user.hbs",
+  res.status(200).render('main.hbs',{layout: "user.hbs",
   username: user.username,
   email: user.email,
   })
 } else {
   if(user && user.role == "Admin"){
-    res.redirect('/admin')
+    res.status(403).redirect('/admin')
   } else {
-    return res.redirect('/error?error_details=Not_Allowed') }
+    return res.status(403).redirect('/error?error_details=Not_Allowed') }
 }
 } else {
-  return res.redirect('/error?error_details=Invalid_URL')
+  return res.status(400).redirect('/error?error_details=Invalid_URL')
 }} catch(err){
-  return res.redirect('/error?error_details=Error_Occurred')
+  return res.status(500).redirect('/error?error_details=Error_Occurred')
 }
 }
 

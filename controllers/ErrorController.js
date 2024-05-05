@@ -1,6 +1,6 @@
 const error = (req,res) => {
     const {error_details} = req.query
-    return res.render('main.hbs',{layout: "error.hbs",
+    return res.status(200).render('main.hbs',{layout: "error.hbs",
     error_message: error_details
   })
 }

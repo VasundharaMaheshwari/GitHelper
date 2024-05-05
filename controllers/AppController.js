@@ -4,7 +4,7 @@ const { GHUser } = require('../models/GHUser')
 const { ObjectId } = require('mongodb')
 
 const create = (req,res) => {
-    return res.render('create.hbs')
+    return res.status(200).render('create.hbs')
   }
 
 const save = async (req,res) => {
@@ -24,22 +24,22 @@ const save = async (req,res) => {
           createdBy: req.user._id
       })
       await trial.save()
-  return res.redirect(`/api/user`)} else {
-    return res.redirect('/error?error_details=Query_Already_Exists')
+  return res.status(201).redirect(`/api/user`)} else {
+    return res.status(403).redirect('/error?error_details=Query_Already_Exists')
   }
   } catch(err) {
-      return res.redirect('/error?error_details=Error_Occurred')
+      return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
   }
 
   const list = async (req, res) => {    
     try {
       const issues = await Issue.find({ username: req.user.username }).lean().exec();
-      return res.render('main.hbs',{layout: "issues.hbs",
+      return res.status(200).render('main.hbs',{layout: "issues.hbs",
       issues: issues
     });
     } catch (error) {
-      return res.redirect('/error?error_details=Error_Occurred')
+      return res.status(500).redirect('/error?error_details=Error_Occurred')
     }};
 
 const responder = async (req,res) => {
@@ -47,14 +47,14 @@ const responder = async (req,res) => {
   const {username,_id} = req.query
   const user = await GHUser.findOne({username: username})
   if(ObjectId.isValid(_id) && user != null){
-  return res.render('main.hbs',{layout: "response.hbs",
+  return res.status(200).render('main.hbs',{layout: "response.hbs",
   issue_id: _id,
   creator: user._id})}
   else {
-    return res.redirect('/error?error_details=Invalid_URL')
+    return res.status(400).redirect('/error?error_details=Invalid_URL')
   }
 } catch(err) {
-  return res.redirect('/error?error_details=Error_Occurred')
+  return res.status(500).redirect('/error?error_details=Error_Occurred')
 }
 }
 
@@ -74,13 +74,13 @@ const save_response = async (req,res) => {
       creator: creator
     })
     await response_.save()
-    return res.redirect('/home')} else {
-      return res.redirect('/error?error_details=Already_Responded')
+    return res.status(201).redirect('/home')} else {
+      return res.status(403).redirect('/error?error_details=Already_Responded')
     }
   }else{
-    return res.redirect('/error?error_details=Not_Allowed')
+    return res.status(403).redirect('/error?error_details=Not_Allowed')
   }} catch(err) {
-    return res.redirect('/error?error_details=Error_Occurred')
+    return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
   

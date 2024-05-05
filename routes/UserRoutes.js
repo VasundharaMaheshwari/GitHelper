@@ -9,11 +9,11 @@ UserRouter.post('/login',loggedIn,login_limit,login)
 UserRouter.post('/register',loggedIn,register_limit,register)
 
 UserRouter.get('/login',loggedIn,(req,res) => {
-    return res.render('login.hbs')
+    return res.status(302).render('login.hbs')
 })
 
 UserRouter.get('/register',loggedIn,(req,res) => {
-    return res.render('register.hbs')
+    return res.status(302).render('register.hbs')
 })
 
 UserRouter.get('/user',restrict,load)

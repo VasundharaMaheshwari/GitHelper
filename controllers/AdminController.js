@@ -6,12 +6,12 @@ const loader = async (req, res) => {
     try {
       const user = await GHUser.findOne({"_id": req.user?._id})
       const issues = await Issue.find().lean().exec();
-      return res.render('main.hbs',{layout: "home_admin.hbs",
+      return res.status(200).render('main.hbs',{layout: "home_admin.hbs",
       user: user,
       issues: issues
     });
     } catch (error) {
-      return res.redirect('/error?error_details=Error_Occured');
+      return res.status(500).redirect('/error?error_details=Error_Occured');
     }
   }
 
@@ -21,15 +21,15 @@ const deleter = async (req,res) => {
     if(ObjectId.isValid(_id)){
       const status = await Issue.findOneAndDelete({"_id" : _id})
       if(status){
-        return res.redirect('/admin/home')
+        return res.status(200).redirect('/admin/home')
       } else {
-        return res.redirect('/error?error_details=Unable_To_Delete_Query')
+        return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query')
       }
     } else {
-      return res.redirect('/error?error_details=Query_Does_Not_Exist')
+      return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
     }
   } catch(err) {
-    return res.redirect('/error?error_details=Error_Occurred')
+    return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
 

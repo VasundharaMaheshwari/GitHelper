@@ -3,7 +3,7 @@ const express = require('express')
 const AdminRouter = express.Router()
 
 AdminRouter.get('/', (req,res) => {
-        return res.render('admin.hbs')})
+        return res.status(200).render('admin.hbs')})
 
 AdminRouter.get('/home', loader)
 
