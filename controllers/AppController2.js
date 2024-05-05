@@ -29,7 +29,7 @@ const delete_query = async (req,res) => {
     try {
       const {queryId} = req.query
       if(ObjectId.isValid(queryId)){
-        const status = await Issue.findOneAndDelete({"_id" : queryId})
+        const status = await Issue.findOneAndDelete({"_id" : queryId, "username": req.user.username})
         if(status){
           return res.status(200).redirect('/query/list')
         } else {
@@ -52,7 +52,7 @@ const save_edit = async (req,res) => {
     const {_id} = req.query
     if(ObjectId.isValid(_id)){
       const second = await Issue.findOne({"repo_link": req.body.repo_link})
-      if(_id == second._id && second.createdBy == req.user._id){
+      if(_id == second._id && second.username == req.user.username){
         const first = await Issue.findOneAndUpdate({"_id": _id},{
           username: req.user.username,
           contact_info: req.body.contact_info,
