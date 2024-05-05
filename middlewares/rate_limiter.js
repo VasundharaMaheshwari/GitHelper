@@ -8,7 +8,7 @@ const register_limit = limiter({
     // skipFailedRequests: true,
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
-        req.rateLimit.resetTime = date.toLocaleTimeString()
+        req.rateLimit.resetTime = date.toLocaleString()
         return res.status(429).redirect(`/error?error_details=Cannot_Create_More_Accounts_Till_${req.rateLimit.resetTime}`)
     }
 })
@@ -21,7 +21,7 @@ const login_limit = limiter({
     skipSuccessfulRequests: true,
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
-        req.rateLimit.resetTime = date.toLocaleTimeString()
+        req.rateLimit.resetTime = date.toLocaleString()
         return res.status(429).redirect(`/error?error_details=Login_Disabled_Due_To_Too_Many_Attempts_Till_${req.rateLimit.resetTime}`)
     },
     keyGenerator: (req,res) => req.body.username
@@ -35,7 +35,7 @@ const login_limit_ip = limiter({
     skipSuccessfulRequests: true,
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
-        req.rateLimit.resetTime = date.toLocaleTimeString()
+        req.rateLimit.resetTime = date.toLocaleString()
         return res.status(429).redirect(`/error?error_details=Login_Disabled_Due_To_Too_Many_Attempts_Till_${req.rateLimit.resetTime}`)
     }
 })
@@ -62,7 +62,7 @@ const response_limit = limiter({
     // skipFailedRequests: true,
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
-        req.rateLimit.resetTime = date.toLocaleTimeString()
+        req.rateLimit.resetTime = date.toLocaleString()
         return res.status(429).redirect(`/error?error_details=Maximum_Number_Of_Responses_Sent_Please_Wait_Till_${req.rateLimit.resetTime}`)
     },
     keyGenerator: (req,res) => req.body.id
@@ -76,7 +76,7 @@ const edit_limit = limiter({
     // skipFailedRequests: true,
     handler: (req,res) => {
         const date = new Date(req.rateLimit.resetTime)
-        req.rateLimit.resetTime = date.toLocaleTimeString()
+        req.rateLimit.resetTime = date.toLocaleString()
         return res.status(429).redirect(`/error?error_details=Maximum_Number_Of_Edits_Made_Please_Wait_Till_${req.rateLimit.resetTime}`)
     },
     keyGenerator: (req,res) => req.user._id + req.query.queryId
