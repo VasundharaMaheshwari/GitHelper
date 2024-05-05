@@ -24,7 +24,7 @@ const login_limit = limiter({
 })
 
 const issue_limit = limiter({
-    windowMs: 60*60*1000,
+    windowMs: 24*60*60*1000,
     max: 5,
     legacyHeaders: false,
     handler: (req,res) => {
@@ -36,7 +36,7 @@ const issue_limit = limiter({
 })
 
 const response_limit = limiter({
-    windowMs: 60*60*1000,
+    windowMs: 10*60*60*1000,
     max: 10,
     legacyHeaders: false,
     handler: (req,res) => {
