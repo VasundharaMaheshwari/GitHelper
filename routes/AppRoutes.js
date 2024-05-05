@@ -1,15 +1,16 @@
 const express =  require('express')
 const APIRouter = express.Router()
 const { create,save,list,responder,save_response } = require('../controllers/AppController')
+const { issue_limit,response_limit } = require('../middlewares/rate_limiter')
 
 APIRouter.get('/create',create)
 
 APIRouter.get('/list',list)
 
-APIRouter.post('/save',save)
+APIRouter.post('/save',issue_limit,save)
 
 APIRouter.get('/respond',responder)
 
-APIRouter.post('/respond',save_response)
+APIRouter.post('/respond',response_limit,save_response)
 
 module.exports = APIRouter
