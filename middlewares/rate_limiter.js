@@ -27,6 +27,19 @@ const login_limit = limiter({
     keyGenerator: (req,res) => req.body.username
 })
 
+const login_limit_ip = limiter({
+    windowMs: 60*60*1000,
+    max: 10,
+    legacyHeaders: false,
+    requestWasSuccessful: (req, res) => res.status < 400,
+    skipSuccessfulRequests: true,
+    handler: (req,res) => {
+        const date = new Date(req.rateLimit.resetTime)
+        req.rateLimit.resetTime = date.toLocaleTimeString()
+        return res.status(429).redirect(`/error?error_details=Login_Disabled_Due_To_Too_Many_Attempts_Till_${req.rateLimit.resetTime}`)
+    }
+})
+
 const issue_limit = limiter({
     windowMs: 24*60*60*1000,
     max: 5,
@@ -55,4 +68,4 @@ const response_limit = limiter({
     keyGenerator: (req,res) => req.user._id
 })
 
-module.exports = { register_limit,login_limit,issue_limit,response_limit }
+module.exports = { register_limit,login_limit,issue_limit,response_limit,login_limit_ip }

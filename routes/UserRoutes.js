@@ -2,9 +2,9 @@ const express = require('express')
 const UserRouter = express.Router()
 const { login,register,load } = require('../controllers/UserController')
 const { restrict,loggedIn } = require('../middlewares/middleware')
-const { register_limit,login_limit } = require('../middlewares/rate_limiter')
+const { register_limit,login_limit,login_limit_ip } = require('../middlewares/rate_limiter')
 
-UserRouter.post('/login',loggedIn,login_limit,login)
+UserRouter.post('/login',loggedIn,login_limit,login_limit_ip,login)
 
 UserRouter.post('/register',loggedIn,register_limit,register)
 
