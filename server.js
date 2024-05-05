@@ -11,6 +11,7 @@ const ErrorRouter = require('./routes/ErrorRoutes')
 const AdminRouter = require('./routes/AdminRoutes')
 
 const { restrict,less_restrict,admin } = require('./middlewares/middleware')
+const { refresh_limit } = require('./middlewares/rate_limiter')
 
 app.disable("x-powered-by")
 
@@ -28,11 +29,11 @@ const handlebars = require("express-handlebars");
 app.set("view engine", "handlebars");
 app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
 
-app.use('/api',UserRouter)
-app.use('/query',restrict,APIRouter)
-app.use('/home',less_restrict,HomeRouter)
+app.use('/api',refresh_limit,UserRouter)
+app.use('/query',restrict,refresh_limit,APIRouter)
+app.use('/home',less_restrict,refresh_limit,HomeRouter)
 app.use('/error',ErrorRouter)
-app.use('/admin',admin,AdminRouter)
+app.use('/admin',admin,refresh_limit,AdminRouter)
 
 app.get('/', (req,res) => {
   return res.redirect('/home')
