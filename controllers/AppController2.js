@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb')
 const { Issue } = require('../models/Issue')
+const { Response } = require('../models/Response')
 
 const edit = async (req,res) => {
     try{
@@ -43,8 +44,18 @@ const delete_query = async (req,res) => {
     }
   }
 
-const show_res = (req,res) => {
-    return res.status(201).send('Success')
+const show_res = async (req,res) => {
+    try{
+      const {queryId} = req.query
+      if(ObjectId.isValid(queryId)){
+      const responses = await Response.find({"issue": queryId, "creator": req.user._id}).lean().exec()
+      return res.status(200).send(JSON.stringify(responses))
+      } else {
+        return res.status(404).redirect('/error?error_details=Invalid_URL')
+      }
+    } catch(err) {
+      return res.status(500).redirect('/error?error_details=Error_Occurred')
+    }
 }
 
 const save_edit = async (req,res) => {
