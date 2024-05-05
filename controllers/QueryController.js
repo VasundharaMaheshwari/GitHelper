@@ -16,7 +16,8 @@ const edit = async (req,res) => {
           github_id: issue.github_id,
           repo_link: issue.repo_link,
           description: issue.description,
-          queryId: issue._id
+          queryId: issue._id,
+          _id: req.user._id
         })
       } else{
         return res.status(404).redirect('/error?error_details=Invalid_URL')
