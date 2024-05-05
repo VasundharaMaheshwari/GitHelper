@@ -12,6 +12,10 @@ const restrict = async (req,res,next) => {
         return res.status(401).redirect('/api/login')
     }
 
+    if(user.role == "Admin"){
+        return res.status(403).redirect('/admin')
+    }
+
     req.user = user
     next()
 }
