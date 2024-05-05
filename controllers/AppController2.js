@@ -52,7 +52,7 @@ const save_edit = async (req,res) => {
     const {_id} = req.query
     if(ObjectId.isValid(_id)){
       const second = await Issue.findOne({"repo_link": req.body.repo_link})
-      if(_id == second._id){
+      if(_id == second._id && second.createdBy == req.user._id){
         const first = await Issue.findOneAndUpdate({"_id": _id},{
           username: req.user.username,
           contact_info: req.body.contact_info,
