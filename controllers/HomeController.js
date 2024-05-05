@@ -49,7 +49,6 @@ const details = async (req,res) => {
   return res.status(400).redirect('/error?error_details=Invalid_URL')
 }
   } catch(err) {
-    console.log(err)
     return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
