@@ -74,6 +74,9 @@ const query_check = async (req,res,next) => {
     const {queryId} = req.query
     if(ObjectId.isValid(queryId) && await Issue.findOne({"_id": queryId})){
     req.user = user
+    if(user.role == "Admin"){
+        return res.status(403).redirect('/admin')
+    }
     return next()
     }
     return res.status(403).redirect('/query/list')
