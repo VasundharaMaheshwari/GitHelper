@@ -64,7 +64,7 @@ const save_edit = async (req,res) => {
         if(first){
           return res.status(200).redirect('/query/list')
         } else {
-          return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query')
+          return res.status(403).redirect('/error?error_details=Unable_To_Edit_Query')
         }
       }else {
         return res.status(403).redirect('/error?error_details=Already_Exists')
