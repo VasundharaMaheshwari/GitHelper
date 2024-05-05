@@ -6,6 +6,9 @@ const edit = async (req,res) => {
       const {queryId} = req.query
       if(ObjectId.isValid(queryId)){
         const issue = await Issue.findOne({"_id": queryId})
+        if(issue == null){
+          return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
+        }
         return res.status(200).render('main.hbs',{layout: "edit.hbs",
           contact_info: issue.contact_info,
           skillset: issue.skillset,
@@ -15,7 +18,7 @@ const edit = async (req,res) => {
           _id: issue._id
         })
       } else{
-        return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
+        return res.status(404).redirect('/error?error_details=Invalid_URL')
       }
     } catch(err) {
       return res.status(500).redirect('/error?error_details=Error_Occurred')
