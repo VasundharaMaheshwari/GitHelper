@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Response Details</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #6c5b7b, #000000);
+    }
+
+    .container {
+      background-color: #f0e9ff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #6c5b7b;
+    }
+
+    .response-details {
+      margin-bottom: 20px;
+      overflow-y: scroll;
+      max-height: 290px;
+    }
+
+    .response-details p {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #6c5b7b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #54466d;
+    }
+
+    .response {
+      margin-bottom: 20px; 
+      padding: 20px; 
+      background-color: #ffffff; 
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Response Details</h1>
+    <div class="response-details">
+      {{#if responses.length}}
+        {{#each responses}}
+          <div class="response">
+            <p><strong>Username:</strong> {{responder.username}}</p>
+            <p><strong>GitHub ID:</strong> {{responder.github_id}}</p>
+          </div>
+        {{/each}}
+      {{else}}
+        <p>No responses found.</p>
+      {{/if}}
+    </div>
+    <a href="/query/list" class="btn">Back to Queries</a>
+  </div>
+</body>
+</html>
