@@ -16,6 +16,10 @@ APIRouter.post('/respond',response_limit,save_response)
 
 APIRouter.get('/edit',edit)
 
+APIRouter.post('/edit_query',(req,res) => {
+    return res.status(200).send('WIP')
+})
+
 APIRouter.get('/delete',delete_query)
 
 APIRouter.get('/response',show_res)
