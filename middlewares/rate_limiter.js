@@ -68,4 +68,18 @@ const response_limit = limiter({
     keyGenerator: (req,res) => req.user._id
 })
 
-module.exports = { register_limit,login_limit,issue_limit,response_limit,login_limit_ip }
+const edit_limit = limiter({
+    windowMs: 60*60*1000,
+    max: 5,
+    legacyHeaders: false,
+    requestWasSuccessful: (req, res) => res.status < 400,
+    skipFailedRequests: true,
+    handler: (req,res) => {
+        const date = new Date(req.rateLimit.resetTime)
+        req.rateLimit.resetTime = date.toLocaleTimeString()
+        return res.status(429).redirect(`/error?error_details=Maximum_Number_Of_Edits_Made_Please_Wait_Till_${req.rateLimit.resetTime}`)
+    },
+    keyGenerator: (req,res) => req.user._id + req.query.queryId
+})
+
+module.exports = { register_limit,login_limit,issue_limit,response_limit,login_limit_ip,edit_limit }
