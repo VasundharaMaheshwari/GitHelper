@@ -68,6 +68,16 @@
     .btn:hover {
       background-color: #54466d;
     }
+
+    .query {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .query:hover {
+      color: #e6e6e6;
+    }
   </style>
 </head>
 <body>
@@ -88,6 +98,7 @@
         <button type="submit" class="btn">Respond</button>
       </form>
       {{/if}}
+      <button type="button" class="btn" id="home-btn"><a class="query" href="/">Go To Homepage</a></button>
     </div>
   </div>
 </body>

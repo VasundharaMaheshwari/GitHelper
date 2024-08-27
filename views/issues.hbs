@@ -64,7 +64,8 @@
     }
 
     .edit-button,
-    .delete-button,.response-button {
+    .delete-button,
+    .response-button {
       background-color: #333; 
       color: #fff; 
       border: none;
@@ -72,11 +73,45 @@
       border-radius: 5px;
       cursor: pointer;
       margin-left: 5px;
+      transition: background-color 0.3s ease;
     }
 
     .edit-button:hover,
-    .delete-button:hover,.response-button:hover {
+    .delete-button:hover,
+    .response-button:hover {
       background-color: #555; 
+    }
+
+    #home-btn {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #6c5b7b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #54466d;
+    }
+
+    #home-btn a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      width: 40%;
+      height: 100%;
     }
   </style>
 </head>
@@ -101,6 +136,9 @@
       {{else}}
         <p>No open queries found.</p>
       {{/if}}
+      <div id="home-btn">
+        <a href="/api/user" class="btn">Back To Dashboard</a>
+      </div>
     </div>
   </div>
 

@@ -57,7 +57,7 @@
 
     .btn {
       padding: 12px 24px;
-      background-color: #007bff;
+      background-color: #6c5b7b;
       color: white;
       border: none;
       border-radius: 6px;
@@ -65,10 +65,20 @@
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
+      transition: background-color 0.3s ease;
     }
 
     .btn:hover {
-      background-color: #0056b3;
+      background-color: #54466d;
+    }
+
+    #home-btn {
+      margin-top: 15px;
+    }
+
+    #home-btn a {
+      color: white;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -80,11 +90,12 @@
         <label for="github_id">Your GitHub ID:</label>
         <input type="text" id="github_id" name="github_id">
       </div>
-      <input type="hidden" name="issue_id" value={{issue_id}}>
-      <input type="hidden" name="creator" value={{creator}}>
-      <input type="hidden" name="id" value={{_id}}>
+      <input type="hidden" name="issue_id" value="{{issue_id}}">
+      <input type="hidden" name="creator" value="{{creator}}">
+      <input type="hidden" name="id" value="{{_id}}">
       <input type="submit" value="Submit" class="btn">
     </form>
+    <button type="button" id="home-btn" class="btn"><a href="/">Go To Homepage</a></button>
   </div>
 </body>
 </html>
