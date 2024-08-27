@@ -85,6 +85,11 @@
     .btn-delete:hover {
       background-color: #cc0000;
     }
+
+    #back-btn {
+      margin-top: 20px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -107,6 +112,9 @@
       {{else}}
         <p>No users found.</p>
       {{/if}}
+      <div id="back-btn">
+        <a href="/api/user" class="btn">Back To Dashboard</a>
+      </div>
     </div>
   </div>
 </body>
