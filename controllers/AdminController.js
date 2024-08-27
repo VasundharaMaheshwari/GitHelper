@@ -60,6 +60,13 @@ const usermod = async (req,res) => {
       if(user.role != "Admin"){
         const user_resp = await GHUser.findOneAndDelete({"_id": _id})
         const issue_resp = await Issue.deleteMany({"createdBy": _id})
+        const resp_resp = await Response.deleteMany({"responder.uid": _id})
+        const resp_resp2 = await Response.deleteMany({"creator": _id})
+        if(user_resp && issue_resp && resp_resp && resp_resp2){
+          return res.status(200).redirect('/admin/userlist')
+        } else {
+          return res.status(403).redirect('/error?error_details=Unable_To_Delete_User')
+        }
       } else {
         return res.status(405).redirect('/error?error_details=Cannot_Delete_Admin_Account')
       }
