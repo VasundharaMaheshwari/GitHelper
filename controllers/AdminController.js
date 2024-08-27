@@ -37,10 +37,19 @@ const deleter = async (req,res) => {
 }
 
 const userlist = async (req,res) => {
-  const users = await GHUser.find({"role": "User"}).lean().exec();
-  return res.render('main.hbs',{layout: "usermod.hbs",
-    users: users
-  })
+  try{
+    const users = await GHUser.find({"role": "User"}).lean().exec();
+    if(users){
+      return res.status(200).render('main.hbs',{layout: "usermod.hbs",
+        users: users
+      })
+    } else {
+      return res.status(404).redirect('/error?error_details=No_Users_To_Display')
+    }
+  } catch(err) {
+    console.log(err)
+    return res.status(500).redirect('/error?error_details=Error_Occurred')
+  }
 }
 
 module.exports = { loader,deleter,userlist }
