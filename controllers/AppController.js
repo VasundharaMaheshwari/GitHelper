@@ -61,11 +61,16 @@ const responder = async (req,res) => {
   try{
   const {username,_id} = req.query
   const user = await GHUser.findOne({username: username})
-  if(ObjectId.isValid(_id) && user != null && username != req.user.username){
-  return res.status(200).render('main.hbs',{layout: "response.hbs",
-  _id: req.user._id,
-  issue_id: _id,
-  creator: user._id})}
+  if(ObjectId.isValid(_id) && user != null){
+    if(username != req.user.username){
+      return res.status(200).render('main.hbs',{layout: "response.hbs",
+      _id: req.user._id,
+      issue_id: _id,
+      creator: user._id})
+    } else {
+      return res.status(403).redirect('/error?error_details=Not_Allowed')
+    }
+  }
   else {
     return res.status(400).redirect('/error?error_details=Invalid_URL')
   }
