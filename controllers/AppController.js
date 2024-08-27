@@ -61,7 +61,7 @@ const responder = async (req,res) => {
   try{
   const {username,_id} = req.query
   const user = await GHUser.findOne({username: username})
-  if(ObjectId.isValid(_id) && user != null){
+  if(ObjectId.isValid(_id) && user != null && username != req.user.username){
   return res.status(200).render('main.hbs',{layout: "response.hbs",
   _id: req.user._id,
   issue_id: _id,
