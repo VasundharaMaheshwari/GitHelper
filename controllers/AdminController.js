@@ -53,7 +53,23 @@ const userlist = async (req,res) => {
 }
 
 const usermod = async (req,res) => {
-  return res.send({"Answer": "Done"})
+  try{
+    const {_id} = req.query
+    if(ObjectId.isValid(_id)){
+      const user = await GHUser.findOne({"_id": _id})
+      if(user.role != "Admin"){
+        const user_resp = await GHUser.findOneAndDelete({"_id": _id})
+        const issue_resp = await Issue.deleteMany({"createdBy": _id})
+      } else {
+        return res.status(405).redirect('/error?error_details=Cannot_Delete_Admin_Account')
+      }
+    } else {
+      return res.status(404).redirect('/error?error_details=User_Does_Not_Exist')
+    }
+  } catch(err) {
+    console.log(err)
+    return res.status(500).redirect('/error?error_details=Error_Occurred')
+  }
 }
 
 module.exports = { loader,deleter,userlist,usermod }
