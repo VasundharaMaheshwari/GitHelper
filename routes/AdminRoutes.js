@@ -1,4 +1,4 @@
-const { loader,deleter,userlist } = require('../controllers/AdminController')
+const { loader,deleter,userlist,usermod } = require('../controllers/AdminController')
 const express = require('express')
 const AdminRouter = express.Router()
 
@@ -10,5 +10,7 @@ AdminRouter.get('/home', loader)
 AdminRouter.get('/delete', deleter)
 
 AdminRouter.get('/userlist', userlist)
+
+AdminRouter.get('/delete-user', usermod)
 
 module.exports = AdminRouter

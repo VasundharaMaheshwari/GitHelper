@@ -52,4 +52,8 @@ const userlist = async (req,res) => {
   }
 }
 
-module.exports = { loader,deleter,userlist }
+const usermod = async (req,res) => {
+  return res.send({"Answer": "Done"})
+}
+
+module.exports = { loader,deleter,userlist,usermod }
