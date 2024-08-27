@@ -36,4 +36,11 @@ const deleter = async (req,res) => {
   }
 }
 
-module.exports = { loader,deleter }
+const userlist = async (req,res) => {
+  const users = await GHUser.find({"role": "User"}).lean().exec();
+  return res.render('main.hbs',{layout: "usermod.hbs",
+    users: users
+  })
+}
+
+module.exports = { loader,deleter,userlist }
