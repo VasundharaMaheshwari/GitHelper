@@ -24,7 +24,6 @@
       text-align: center;
       max-width: 400px;
       width: 100%;
-      align-items: center;
     }
 
     h1 {
@@ -36,7 +35,6 @@
     .form-group {
       margin-bottom: 20px;
       text-align: left;
-      align-items: center;
     }
 
     .form-group label {
@@ -80,15 +78,35 @@
       color: white;
       text-decoration: none;
     }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+    }
   </style>
+  <script>
+    function validateForm() {
+      var githubId = document.getElementById("github_id").value;
+
+      var githubIdRegex = /^[a-zA-Z0-9-]{1,39}$/;
+      if (!githubIdRegex.test(githubId)) {
+        document.getElementById("error-message").innerText = "Invalid GitHub ID.";
+        return false;
+      }
+
+      document.getElementById("error-message").innerText = "";
+      return true;
+    }
+  </script>
 </head>
 <body>
   <div class="container">
     <h1>Response</h1>
-    <form action="/query/respond" method="POST">
+    <form action="/query/respond" method="POST" onsubmit="return validateForm()">
       <div class="form-group">
         <label for="github_id">Your GitHub ID:</label>
-        <input type="text" id="github_id" name="github_id">
+        <input type="text" id="github_id" name="github_id" required>
       </div>
       <input type="hidden" name="issue_id" value="{{issue_id}}">
       <input type="hidden" name="creator" value="{{creator}}">
@@ -96,6 +114,7 @@
       <input type="submit" value="Submit" class="btn">
     </form>
     <button type="button" id="home-btn" class="btn"><a href="/">Go To Homepage</a></button>
+    <p id="error-message" class="error-message"></p>
   </div>
 </body>
 </html>

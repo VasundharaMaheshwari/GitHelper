@@ -126,9 +126,9 @@ function validateForm() {
   }
 
   var githubId = document.getElementById('github_id').value;
-  var githubIdRegex = /^[a-zA-Z0-9-]+$/;
+  var githubIdRegex = /^[a-zA-Z0-9-]{1,39}$/;
   if (!githubIdRegex.test(githubId)) {
-    document.getElementById("error-message").innerText = "GitHub ID can only contain alphanumeric characters and hyphens.";
+    document.getElementById("error-message").innerText = "Invalid GitHub ID.";
     return false;
   }
 
