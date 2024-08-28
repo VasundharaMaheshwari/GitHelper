@@ -85,20 +85,20 @@
     <form id="issue-form" action="/query_work/edit_query?queryId={{queryId}}" method="post" onsubmit="return validateForm()">
       <div class="form-group">
         <label for="contact_info">Contact Info</label>
-        <input type="tel" id="contact_info" name="contact_info" value={{contact_info}} required>
+        <input type="tel" id="contact_info" name="contact_info" value="{{contact_info}}" required>
       </div>
       <div class="form-group">
         <label for="skillset">Skill Set</label>
-        <input type="text" id="skillset" name="skillset" value={{skillset}}>
-        <input type="text" id="id" name="id" value={{_id}} hidden required readonly>
+        <input type="text" id="skillset" name="skillset" value="{{skillset}}">
+        <input type="text" id="id" name="id" value="{{_id}}" hidden required readonly>
       </div>
       <div class="form-group">
         <label for="github_id">GitHub ID</label>
-        <input type="text" id="github_id" name="github_id" value={{github_id}}>
+        <input type="text" id="github_id" name="github_id" value="{{github_id}}" required>
       </div>
       <div class="form-group">
         <label for="repo_link">Repository Link</label>
-        <input type="text" id="repo_link" name="repo_link" value={{repo_link}} required readonly>
+        <input type="text" id="repo_link" name="repo_link" value="{{repo_link}}" required readonly>
       </div>
       <div class="form-group">
         <label for="description">Description</label>
@@ -110,22 +110,46 @@
   </div>
 
   <script>
-    function validateForm() {
-      var repoLink = document.getElementById('repo_link').value;
-      var regex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/;
-      if (!regex.test(repoLink)) {
-        document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link.";
-        return false;
-      }
-      var contactInfo = document.getElementById('contact_info').value;
-      var phoneNumberDigitsOnly = contactInfo.replace(/\D/g, '');
-      if (phoneNumberDigitsOnly.length !== 10) {
-        document.getElementById("error-message").innerText = "Contact info should contain exactly 10 digits.";
-        return false;
-      }
-      document.getElementById("error-message").innerText = "";
-      return true;
-    }
+function validateForm() {
+  var repoLink = document.getElementById('repo_link').value;
+  var repoRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/;
+  if (!repoRegex.test(repoLink)) {
+    document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link.";
+    return false;
+  }
+
+  var contactInfo = document.getElementById('contact_info').value;
+  var phoneNumberDigitsOnly = contactInfo.replace(/\D/g, '');
+  if (phoneNumberDigitsOnly.length !== 10) {
+    document.getElementById("error-message").innerText = "Contact info should contain exactly 10 digits.";
+    return false;
+  }
+
+  var githubId = document.getElementById('github_id').value;
+  var githubIdRegex = /^[a-zA-Z0-9-]+$/;
+  if (!githubIdRegex.test(githubId)) {
+    document.getElementById("error-message").innerText = "GitHub ID can only contain alphanumeric characters and hyphens.";
+    return false;
+  }
+
+  var skillset = document.getElementById('skillset').value;
+  var skillsetRegex = /^[a-zA-Z0-9,.\s]+$/;
+  if (skillset && !skillsetRegex.test(skillset)) {
+    document.getElementById("error-message").innerText = "Skill Set can only contain letters, numbers, commas, periods, and spaces.";
+    return false;
+  }
+
+  var description = document.getElementById('description').value;
+  var descriptionRegex = /^[a-zA-Z0-9.,!?;:\s]+$/;
+  if (description && !descriptionRegex.test(description)) {
+    document.getElementById("error-message").innerText = "Description can only contain letters, numbers, and standard punctuation.";
+    return false;
+  }
+
+  document.getElementById("error-message").innerText = "";
+  return true;
+}
+
   </script>
 </body>
 </html>
