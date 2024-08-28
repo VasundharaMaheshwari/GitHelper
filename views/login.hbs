@@ -117,7 +117,7 @@
       
       var usernameRegex = /^[a-zA-Z0-9_]+$/;
       if (!usernameRegex.test(username)) {
-          document.getElementById("error-message").innerText = "Username can only contain letters, numbers, and underscores.";
+          document.getElementById("error-message").innerText = "Invalid Username.";
           event.preventDefault();
           return;
       }
@@ -125,7 +125,7 @@
       
       var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
       if (!passwordRegex.test(password)) {
-          document.getElementById("error-message").innerText = "Password must be at least 8 characters long and contain at least one letter, one number, and may include special characters.";
+          document.getElementById("error-message").innerText = "Invalid Password.";
           event.preventDefault();
           return;
       }
