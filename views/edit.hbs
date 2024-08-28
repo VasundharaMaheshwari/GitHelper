@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open Query</title>
+  <title>Edit Query</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -45,12 +45,17 @@
     }
 
     input[type="text"],
-    textarea, input[type="tel"] {
+    textarea, 
+    input[type="tel"] {
       width: 80%;
       padding: 10px;
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 6px;
+    }
+
+    input[readonly] {
+      background-color: #e0e0e0;
     }
 
     button {
@@ -107,7 +112,7 @@
   <script>
     function validateForm() {
       var repoLink = document.getElementById('repo_link').value;
-      var regex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/
+      var regex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/;
       if (!regex.test(repoLink)) {
         document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link.";
         return false;
