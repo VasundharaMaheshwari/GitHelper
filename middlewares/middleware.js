@@ -16,6 +16,10 @@ const restrict = async (req,res,next) => {
         return res.status(403).redirect('/admin')
     }
 
+    if(user.role != "User"){
+        return res.status(401).redirect('/error?error_details=Access_Denied')
+    }
+
     req.user = user
     next()
 }
