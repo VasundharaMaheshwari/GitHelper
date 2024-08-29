@@ -7,6 +7,7 @@ const error = (req,res) => {
       return res.status(200).render('main.hbs',{layout: "error.hbs",
       error_message: error_details
     })}
+    res.send('Oops! Error Occured...')
 }
 
 module.exports = { error }
