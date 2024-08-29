@@ -29,7 +29,7 @@ const register = async (req,res) => {
       return res.status(403).redirect('/error?error_details=User_Already_Created')
     }
   } catch(err) {
-    return res.status(500).redirect(`/error?error_details=Email_Already_Taken`)
+    return res.status(500).redirect(`/error?error_details=Error_Occured`)
   }
   }
 
