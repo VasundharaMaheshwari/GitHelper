@@ -61,25 +61,25 @@ const login = async (req,res) => {
   }
 
 const load = async (req,res) => {
-  try{
+try{
   if(ObjectId.isValid(req.user._id)){
-  const user = await GHUser.findOne({"_id": req.user._id})
-  if(user && user.role == "User"){
-  res.status(200).render('main.hbs',{layout: "user.hbs",
-  username: user.username,
-  email: user.email,
-  })
-} else {
-  if(user && user.role == "Admin"){
-    res.status(403).redirect('/admin')
+    const user = await GHUser.findOne({"_id": req.user._id})
+    if(user && user.role == "User"){
+    res.status(200).render('main.hbs',{layout: "user.hbs",
+    username: user.username,
+    email: user.email,
+    })
+    } else {
+      if(user && user.role == "Admin"){
+        res.status(403).redirect('/admin')
+      } else {
+        return res.status(403).redirect('/error?error_details=Not_Allowed') }
+    }
   } else {
-    return res.status(403).redirect('/error?error_details=Not_Allowed') }
-}
-} else {
-  return res.status(400).redirect('/error?error_details=Invalid_URL')
-}} catch(err){
+    return res.status(400).redirect('/error?error_details=Invalid_URL')
+  }
+} catch(err){
   return res.status(500).redirect('/error?error_details=Error_Occurred')
-}
-}
+}}
 
 module.exports = { login,register,load }
