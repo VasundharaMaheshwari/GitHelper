@@ -12,8 +12,9 @@ const register = async (req,res) => {
       const {username,email,encryptedpassword} = req.body;
 
       const user = await GHUser.findOne({username: username})
+      const emailcheck = await GHUser.findOne({email: email})
 
-      if(user == null){
+      if(user == null && email == null){
       const encrypted = CryptoJS.AES.encrypt(encryptedpassword, process.env.SECRET_KEY).toString();
 
       const trial2 = new GHUser({
@@ -26,7 +27,7 @@ const register = async (req,res) => {
       await trial2.save()
   return res.status(201).redirect('/api/login')
     }else{
-      return res.status(403).redirect('/error?error_details=User_Already_Created')
+      return res.status(403).redirect('/error?error_details=Username_or_Email_Already_Taken')
     }
   } catch(err) {
     return res.status(500).redirect(`/error?error_details=Error_Occurred`)
