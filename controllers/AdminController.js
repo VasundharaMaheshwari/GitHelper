@@ -6,7 +6,7 @@ const { validationResult } = require('express-validator')
 
 const loader = async (req, res) => {    
     try {
-      const user = await GHUser.findOne({"_id": req.user?._id})
+      const user = await GHUser.findOne({"_id": req.user._id})
       const issues = await Issue.find().lean().exec();
       return res.status(200).render('main.hbs',{layout: "home_admin.hbs",
       user: user,

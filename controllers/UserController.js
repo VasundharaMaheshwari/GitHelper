@@ -14,7 +14,7 @@ const register = async (req,res) => {
       const user = await GHUser.findOne({username: username})
       const emailcheck = await GHUser.findOne({email: email})
 
-      if(user == null && email == null){
+      if(user == null && emailcheck == null){
       const encrypted = CryptoJS.AES.encrypt(encryptedpassword, process.env.SECRET_KEY).toString();
 
       const trial2 = new GHUser({
