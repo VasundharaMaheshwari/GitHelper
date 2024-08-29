@@ -1,5 +1,7 @@
 const { loader,deleter,userlist,usermod } = require('../controllers/AdminController')
 const express = require('express')
+const { idcheck } = require('../validators/AdminValidators')
+
 const AdminRouter = express.Router()
 
 AdminRouter.get('/', (req,res) => {
@@ -7,10 +9,10 @@ AdminRouter.get('/', (req,res) => {
 
 AdminRouter.get('/home', loader)
 
-AdminRouter.get('/delete', deleter)
+AdminRouter.get('/delete', idcheck, deleter)
 
 AdminRouter.get('/userlist', userlist)
 
-AdminRouter.get('/delete-user', usermod)
+AdminRouter.get('/delete-user', idcheck, usermod)
 
 module.exports = AdminRouter
