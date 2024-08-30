@@ -27,7 +27,7 @@ const details = async (req,res) => {
   if(ObjectId.isValid(_id)){
 
   const issue_details = await Issue.findOne({"_id": _id})
-  var userGH = ObjectId.isValid(req.user?._id) ? req.user?._id : null 
+  const userGH = ObjectId.isValid(req.user?._id) ? req.user?._id : null 
   var user = await GHUser.findOne({"_id": userGH})
   if(user?.role == "Admin" || req.user?.username == issue_details.username){
     user = null
