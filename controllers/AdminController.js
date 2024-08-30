@@ -6,12 +6,16 @@ const { validationResult } = require('express-validator')
 
 const loader = async (req, res) => {    
     try {
-      const user = await GHUser.findOne({"_id": req.user._id})
-      const issues = await Issue.find().lean().exec();
-      return res.status(200).render('main.hbs',{layout: "home_admin.hbs",
-      user: user,
-      issues: issues
-    });
+      if(ObjectId.isValid(req.user._id)){
+        const user = await GHUser.findOne({"_id": req.user._id})
+        const issues = await Issue.find().lean().exec();
+        return res.status(200).render('main.hbs',{layout: "home_admin.hbs",
+        user: user,
+        issues: issues
+        });
+      } else {
+        return res.status(400).redirect('/error?error_details=Invalid_URL')
+      }
     } catch (error) {
       return res.status(500).redirect('/error?error_details=Error_Occured');
     }
