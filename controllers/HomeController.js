@@ -1,5 +1,6 @@
 const { Issue } = require('../models/Issue')
 const { ObjectId } = require('mongodb');
+const { validationResult } = require('express-validator')
 
 const { delUser } = require('../services/auth');
 const { GHUser } = require('../models/GHUser');
@@ -23,6 +24,8 @@ const refresh = async (req, res) => {
 
 const details = async (req,res) => {
   try{
+    const errors = validationResult(req)
+    if(errors.isEmpty()){
   const {_id} = req.query
   if(ObjectId.isValid(_id)){
 
@@ -52,9 +55,9 @@ const details = async (req,res) => {
   }
 } else {
   return res.status(400).redirect('/error?error_details=Invalid_URL')
-}
+} }
+return res.send("Oops! Error Occurred...")
   } catch(err) {
-    console.log(err)
     return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
