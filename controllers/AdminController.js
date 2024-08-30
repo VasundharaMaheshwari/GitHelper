@@ -38,7 +38,7 @@ const deleter = async (req,res) => {
         return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
       }
     } 
-    return res.send("Oops! Error Occured...")
+    return res.send("Oops! Error Occurred...")
   } catch(err) {
     console.log(err)
     return res.status(500).redirect('/error?error_details=Error_Occurred')
@@ -85,7 +85,7 @@ const usermod = async (req,res) => {
         return res.status(404).redirect('/error?error_details=User_Does_Not_Exist')
       }
     } 
-    return res.send("Oops! Error Occured...")
+    return res.send("Oops! Error Occurred...")
   } catch(err) {
     console.log(err)
     return res.status(500).redirect('/error?error_details=Error_Occurred')

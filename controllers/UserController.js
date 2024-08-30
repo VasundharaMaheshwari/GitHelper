@@ -1,6 +1,7 @@
 const { GHUser } = require('../models/GHUser')
 const CryptoJS = require('crypto-js')
 const { ObjectId } = require('mongodb');
+const { validationResult } = require('express-validator')
 
 require('dotenv').config()
 
@@ -9,6 +10,8 @@ const { setUser } = require('../services/auth')
 
 const register = async (req,res) => {
     try{
+      const errors = validationResult(req)
+      if(errors.isEmpty()){
       const {username,email,encryptedpassword} = req.body;
 
       const user = await GHUser.findOne({username: username})
@@ -29,6 +32,8 @@ const register = async (req,res) => {
     }else{
       return res.status(403).redirect('/error?error_details=Username_or_Email_Already_Taken')
     }
+  }
+  return res.send("Oops! Error Occurred...")
   } catch(err) {
     return res.status(500).redirect(`/error?error_details=Error_Occurred`)
   }
@@ -36,6 +41,8 @@ const register = async (req,res) => {
 
 const login = async (req,res) => {
     try{
+      const error = validationResult(req)
+      if(error.isEmpty()){
       const {username,encryptedpassword} = req.body
 
       const user = await GHUser.findOne({ username: username })
@@ -46,7 +53,7 @@ const login = async (req,res) => {
         const decrypted = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8);
 
         if(encryptedpassword != decrypted){
-          return res.status(401).redirect('/error?error_details=Invalid_Password')
+          return res.status(401).redirect('/error?error_details=Incorrect_Password')
         } else {
 
           const sessionId = uuidv4()
@@ -55,6 +62,8 @@ const login = async (req,res) => {
 
         return res.status(200).redirect(`/api/user`)}
       }
+    }
+    return res.send("Oops! Error Occurred...")
       }  catch (err) {
         return res.status(500).redirect('/error?error_details=Unexpected_Error_Occurred')
     }
