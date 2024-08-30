@@ -16,7 +16,7 @@ const refresh = async (req, res) => {
       issues: issues
     });
     } catch (error) {
-      return res.status(500).redirect('/error?error_details=Error_Occured');
+      return res.status(500).redirect('/error?error_details=Error_Occurred');
     }
   };
 
