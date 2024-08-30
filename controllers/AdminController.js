@@ -40,7 +40,6 @@ const deleter = async (req,res) => {
     } 
     return res.send("Oops! Error Occurred...")
   } catch(err) {
-    console.log(err)
     return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
@@ -56,7 +55,6 @@ const userlist = async (req,res) => {
       return res.status(404).redirect('/error?error_details=No_Users_To_Display')
     }
   } catch(err) {
-    console.log(err)
     return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
@@ -87,7 +85,6 @@ const usermod = async (req,res) => {
     } 
     return res.send("Oops! Error Occurred...")
   } catch(err) {
-    console.log(err)
     return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
