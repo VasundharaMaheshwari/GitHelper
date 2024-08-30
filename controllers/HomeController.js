@@ -6,7 +6,7 @@ const { GHUser } = require('../models/GHUser');
 
 const refresh = async (req, res) => {    
     try {
-      const userGH = new ObjectId(req.user?._id)
+      const userGH = ObjectId.isValid(req.user?._id) ? req.user?._id : null 
       const user = await GHUser.findOne({"_id": userGH})
       if(user && user.role == "Admin"){
         return res.status(403).redirect('/admin/home')
