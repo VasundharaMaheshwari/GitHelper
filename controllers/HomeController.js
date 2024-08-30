@@ -29,7 +29,10 @@ const details = async (req,res) => {
   const issue_details = await Issue.findOne({"_id": _id})
   const userGH = ObjectId.isValid(req.user?._id) ? req.user?._id : null 
   var user = await GHUser.findOne({"_id": userGH})
-  if(user?.role == "Admin" || req.user?.username == issue_details.username){
+  const usernameRegex = /^[a-zA-Z0-9_]+$/
+  const usernameGH = (req) => usernameRegex.test(req.user?.username)
+  const usercheck = usernameGH ? req.user?.username : null
+  if(user?.role == "Admin" || usercheck == issue_details.username){
     user = null
   }
   if(issue_details != null){
