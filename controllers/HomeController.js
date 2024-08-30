@@ -27,8 +27,8 @@ const details = async (req,res) => {
   if(ObjectId.isValid(_id)){
 
   const issue_details = await Issue.findOne({"_id": _id})
-  const userGH = ObjectId.isValid(req.user?._id) ? req.user?._id : null 
-  const user = await GHUser.findOne({"_id": userGH})
+  var userGH = ObjectId.isValid(req.user?._id) ? req.user?._id : null 
+  var user = await GHUser.findOne({"_id": userGH})
   if(user?.role == "Admin" || req.user?.username == issue_details.username){
     user = null
   }
@@ -51,6 +51,7 @@ const details = async (req,res) => {
   return res.status(400).redirect('/error?error_details=Invalid_URL')
 }
   } catch(err) {
+    console.log(err)
     return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
