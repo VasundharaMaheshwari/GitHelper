@@ -73,10 +73,14 @@ const save = async (req,res) => {
 
 const responder = async (req,res) => {
   try{
+    const errors = validationResult(req)
+    if(errors.isEmpty()){
   const {username,_id} = req.query
-  const user = await GHUser.findOne({username: username})
-  if(ObjectId.isValid(_id) && user != null && ObjectId.isValid(req.user._id)){
-    if(username != req.user.username){
+  const regex = /^[a-zA-Z0-9_]+$/
+  const checker = regex.test(req.user.username)
+  if(ObjectId.isValid(_id) && checker && ObjectId.isValid(req.user._id)){
+    const user = await GHUser.findOne({username: username})
+    if(username != req.user.username && user != null){
       return res.status(200).render('main.hbs',{layout: "response.hbs",
       _id: req.user._id,
       issue_id: _id,
@@ -88,6 +92,8 @@ const responder = async (req,res) => {
   else {
     return res.status(400).redirect('/error?error_details=Invalid_URL')
   }
+}
+return res.send("Oops! Error Occurred...")
 } catch(err) {
   return res.status(500).redirect('/error?error_details=Error_Occurred')
 }
