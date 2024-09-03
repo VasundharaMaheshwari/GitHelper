@@ -60,7 +60,7 @@ const save = async (req,res) => {
       const regex = /^[a-zA-Z0-9_]+$/
       const checker = regex.test(req.user.username)
       if(checker){
-      const issues = await Issue.find({ username: req.user.username }).lean().exec();
+      const issues = await Issue.find({ username: req.user.username }).lean().exec()
       return res.status(200).render('main.hbs',{layout: "issues.hbs",
       issues: issues
     })
