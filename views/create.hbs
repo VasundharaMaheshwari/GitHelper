@@ -115,7 +115,8 @@ function validateForm() {
 
   var contactInfo = document.getElementById('contact_info').value;
   var phoneNumberDigitsOnly = contactInfo.replace(/\D/g, '');
-  if (phoneNumberDigitsOnly.length !== 10) {
+  var phoneIdRegex = /^[0-9]{10}$/;
+  if (!phoneIdRegex.test(phoneNumberDigitsOnly)) {
     document.getElementById("error-message").innerText = "Contact info should contain exactly 10 digits.";
     return false;
   }
