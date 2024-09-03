@@ -57,13 +57,19 @@ const save = async (req,res) => {
 
   const list = async (req, res) => {    
     try {
+      const regex = /^[a-zA-Z0-9_]+$/
+      const checker = regex.test(req.user.username)
+      if(checker){
       const issues = await Issue.find({ username: req.user.username }).lean().exec();
       return res.status(200).render('main.hbs',{layout: "issues.hbs",
       issues: issues
-    });
-    } catch (error) {
+    })
+    } else {
+      return res.status(400).redirect('/error?error_details=Invalid_URL')
+    }
+  } catch (error) {
       return res.status(500).redirect('/error?error_details=Error_Occurred')
-    }};
+    }}
 
 const responder = async (req,res) => {
   try{
