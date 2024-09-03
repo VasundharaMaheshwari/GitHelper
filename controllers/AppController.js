@@ -102,7 +102,9 @@ return res.send("Oops! Error Occurred...")
 const save_response = async (req,res) => {
   try{
   const {issue_id,creator,github_id} = req.body
-  if(creator != req.user._id && ObjectId.isValid(issue_id) && ObjectId.isValid(req.user._id)){
+  const regex = /^[a-zA-Z0-9_]+$/
+  const checker = regex.test(req.user.username)
+  if(creator != req.user._id && ObjectId.isValid(issue_id) && ObjectId.isValid(req.user._id) && checker){
     const resp_check = await Response.findOne({"responder.uid": req.user._id, "issue" : issue_id})
     if(resp_check == null){
     const response_ = new Response({
