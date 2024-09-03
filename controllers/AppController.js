@@ -30,8 +30,9 @@ const save = async (req,res) => {
       const {contact_info,skillset,github_id,repo_link,description} = req.body
       const regex = /^[a-zA-Z0-9_]+$/
       const checker = regex.test(req.user.username)
+      if(checker){
       const check = await Issue.findOne({repo_link: repo_link})
-      if(check == null && checker){
+      if(check == null){
       const trial = new Issue({
           username: req.user.username,
           contact_info: contact_info,
@@ -45,7 +46,9 @@ const save = async (req,res) => {
   return res.status(201).redirect(`/api/user`)} else {
     return res.status(403).redirect('/error?error_details=Query_Already_Exists')
   }
-  } 
+  } else {
+    return res.status(400).redirect('/error?error_details=Invalid_URL')
+  }}
   return res.send("Oops! Error Occurred...")
 } catch(err) {
       return res.status(500).redirect('/error?error_details=Error_Occurred')
@@ -66,7 +69,7 @@ const responder = async (req,res) => {
   try{
   const {username,_id} = req.query
   const user = await GHUser.findOne({username: username})
-  if(ObjectId.isValid(_id) && user != null){
+  if(ObjectId.isValid(_id) && user != null && ObjectId.isValid(req.user._id)){
     if(username != req.user.username){
       return res.status(200).render('main.hbs',{layout: "response.hbs",
       _id: req.user._id,
