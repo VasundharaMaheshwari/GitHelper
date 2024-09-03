@@ -2,6 +2,7 @@ const { Issue } = require('../models/Issue')
 const { Response } = require('../models/Response')
 const { GHUser } = require('../models/GHUser')
 const { ObjectId } = require('mongodb')
+const { validationResult } = require('express-validator')
 
 const create = async (req,res) => {
   try{
@@ -24,11 +25,13 @@ const create = async (req,res) => {
 
 const save = async (req,res) => {
     try{
-        
+        const error = validationResult(req)
+        if(error.isEmpty()){
       const {contact_info,skillset,github_id,repo_link,description} = req.body
-
+      const regex = /^[a-zA-Z0-9_]+$/
+      const checker = regex.test(req.user.username)
       const check = await Issue.findOne({repo_link: repo_link})
-      if(check == null){
+      if(check == null && checker){
       const trial = new Issue({
           username: req.user.username,
           contact_info: contact_info,
@@ -42,7 +45,9 @@ const save = async (req,res) => {
   return res.status(201).redirect(`/api/user`)} else {
     return res.status(403).redirect('/error?error_details=Query_Already_Exists')
   }
-  } catch(err) {
+  } 
+  return res.send("Oops! Error Occurred...")
+} catch(err) {
       return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
   }
