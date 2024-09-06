@@ -1,11 +1,12 @@
 const { ObjectId } = require('mongodb')
 const { Issue } = require('../models/Issue')
 const { Response } = require('../models/Response')
+const { validationResult } = require('express-validator')
 
 const edit = async (req,res) => {
     try{
       const {queryId} = req.query
-      if(ObjectId.isValid(queryId)){
+      if(ObjectId.isValid(queryId) && ObjectId.isValid(req.user._id)){
         const issue = await Issue.findOne({"_id": queryId})
         if(issue == null){
           return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
@@ -30,7 +31,9 @@ const edit = async (req,res) => {
 const delete_query = async (req,res) => {
     try {
       const {queryId} = req.query
-      if(ObjectId.isValid(queryId)){
+      const regex = /^[a-zA-Z0-9_]+$/
+      const checker = regex.test(req.user.username)
+      if(ObjectId.isValid(queryId) && checker){
         const status = await Issue.findOneAndDelete({"_id" : queryId, "username": req.user.username})
         const resp = await Response.deleteMany({"issue": queryId}).lean().exec()
         if(status && resp){
@@ -49,7 +52,7 @@ const delete_query = async (req,res) => {
 const show_res = async (req,res) => {
     try{
       const {queryId} = req.query
-      if(ObjectId.isValid(queryId)){
+      if(ObjectId.isValid(queryId) && ObjectId.isValid(req.user._id)){
       const responses = await Response.find({"issue": queryId, "creator": req.user._id}).lean().exec()
       return res.status(200).render('main.hbs',{layout: "responses.hbs",
         responses: responses
@@ -66,7 +69,9 @@ const save_edit = async (req,res) => {
   try{
     const {queryId} = req.query
     const {contact_info,skillset,github_id,repo_link,description} = req.body
-    if(ObjectId.isValid(queryId)){
+    const regex = /^[a-zA-Z0-9_]+$/
+    const checker = regex.test(req.user.username)
+    if(ObjectId.isValid(queryId) && checker){
       const second = await Issue.findOne({"repo_link": repo_link})
       if(queryId == second._id && second.username == req.user.username){
         const first = await Issue.findOneAndUpdate({"_id": queryId},{

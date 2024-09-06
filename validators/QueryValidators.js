@@ -13,3 +13,5 @@ const saveR =  [query(queryId).trim().notEmpty().matches(/^[a-fA-F0-9]{24}$/),
     body('repo_link').trim().notEmpty().matches(/^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/),
     body('description').trim().notEmpty().matches(/^[a-zA-Z0-9.,!?;:\s]+$/)
 ]
+
+module.exports = { editQ,delQ,showR,saveR }
