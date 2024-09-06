@@ -67,7 +67,7 @@ const save_edit = async (req,res) => {
     const {queryId} = req.query
     const {contact_info,skillset,github_id,repo_link,description} = req.body
     if(ObjectId.isValid(queryId)){
-      const second = await Issue.findOne({"repo_link": req.body.repo_link})
+      const second = await Issue.findOne({"repo_link": repo_link})
       if(queryId == second._id && second.username == req.user.username){
         const first = await Issue.findOneAndUpdate({"_id": queryId},{
           username: req.user.username,
