@@ -101,6 +101,8 @@ return res.send("Oops! Error Occurred...")
 
 const save_response = async (req,res) => {
   try{
+    const errors = validationResult(req)
+    if(errors.isEmpty()){
   const {issue_id,creator,github_id} = req.body
   const regex = /^[a-zA-Z0-9_]+$/
   const checker = regex.test(req.user.username)
@@ -122,7 +124,10 @@ const save_response = async (req,res) => {
     }
   }else{
     return res.status(403).redirect('/error?error_details=Not_Allowed')
-  }} catch(err) {
+  }
+}
+return res.send("Oops! Error Occurred...")
+} catch(err) {
     return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
