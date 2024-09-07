@@ -5,6 +5,8 @@ const { validationResult } = require('express-validator')
 
 const edit = async (req,res) => {
     try{
+      const errors = validationResult(req)
+      if(errors.isEmpty()){
       const {queryId} = req.query
       if(ObjectId.isValid(queryId) && ObjectId.isValid(req.user._id)){
         const issue = await Issue.findOne({"_id": queryId})
@@ -23,6 +25,8 @@ const edit = async (req,res) => {
       } else{
         return res.status(404).redirect('/error?error_details=Invalid_URL')
       }
+    }
+    return res.send("Oops! Error Occurred...")
     } catch(err) {
       return res.status(500).redirect('/error?error_details=Error_Occurred')
     }
@@ -30,6 +34,8 @@ const edit = async (req,res) => {
 
 const delete_query = async (req,res) => {
     try {
+      const errors = validationResult(req)
+      if(errors.isEmpty()){
       const {queryId} = req.query
       const regex = /^[a-zA-Z0-9_]+$/
       const checker = regex.test(req.user.username)
@@ -44,6 +50,8 @@ const delete_query = async (req,res) => {
       } else {
         return res.status(404).redirect('/error?error_details=Invalid_URL')
       }
+    }
+    return res.send("Oops! Error Occurred...")
     } catch(err) {
       return res.status(500).redirect('/error?error_details=Error_Occurred')
     }
@@ -51,6 +59,8 @@ const delete_query = async (req,res) => {
 
 const show_res = async (req,res) => {
     try{
+      const errors = validationResult(req)
+      if(errors.isEmpty()){
       const {queryId} = req.query
       if(ObjectId.isValid(queryId) && ObjectId.isValid(req.user._id)){
       const responses = await Response.find({"issue": queryId, "creator": req.user._id}).lean().exec()
@@ -60,6 +70,8 @@ const show_res = async (req,res) => {
       } else {
         return res.status(404).redirect('/error?error_details=Invalid_URL')
       }
+    }
+    return res.send("Oops! Error Occurred...")
     } catch(err) {
       return res.status(500).redirect('/error?error_details=Error_Occurred')
     }
@@ -67,6 +79,8 @@ const show_res = async (req,res) => {
 
 const save_edit = async (req,res) => {
   try{
+    const errors = validationResult(req)
+      if(errors.isEmpty()){
     const {queryId} = req.query
     const {contact_info,skillset,github_id,repo_link,description} = req.body
     const regex = /^[a-zA-Z0-9_]+$/
@@ -93,6 +107,8 @@ const save_edit = async (req,res) => {
     } else {
       return res.status(404).redirect('/error?error_details=Invalid_URL')
     }
+  }
+  return res.send("Oops! Error Occurred...")
   } catch(err) {
     return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
