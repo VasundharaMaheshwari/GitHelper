@@ -10,6 +10,7 @@ const QueryRouter = require('./routes/QueryRoutes')
 const HomeRouter = require('./routes/HomeRoutes')
 const ErrorRouter = require('./routes/ErrorRoutes')
 const AdminRouter = require('./routes/AdminRoutes')
+const ChatRouter = require('./routes/ChatRoutes')
 
 const { restrict,less_restrict,admin,query_check } = require('./middlewares/middleware')
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 })
 
 const handlebars = require("express-handlebars");
+
 app.set("view engine", "handlebars");
 app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
 
@@ -35,6 +37,7 @@ app.use('/query_work',query_check,QueryRouter)
 app.use('/home',less_restrict,HomeRouter)
 app.use('/error',ErrorRouter)
 app.use('/admin',admin,AdminRouter)
+app.use('/chat',restrict,ChatRouter)
 
 app.get('/', (req,res) => {
   return res.status(302).redirect('/home')
