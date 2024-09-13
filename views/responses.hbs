@@ -54,6 +54,7 @@
       text-decoration: none;
       transition: background-color 0.3s ease;
       cursor: pointer;
+      margin: 5px 0;
     }
 
     .btn:hover {
@@ -61,9 +62,17 @@
     }
 
     .response {
-      margin-bottom: 20px; 
-      padding: 20px; 
-      background-color: #ffffff; 
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
     }
 
   </style>
@@ -77,6 +86,9 @@
           <div class="response">
             <p><strong>Username:</strong> {{responder.username}}</p>
             <p><strong>GitHub ID:</strong> {{responder.github_id}}</p>
+            <div class="action-buttons">
+              <a href="/chat/?username={{responder.username}}" class="btn">Chat</a>
+            </div>
           </div>
         {{/each}}
       {{else}}
