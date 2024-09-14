@@ -2,6 +2,10 @@ const express = require('express')
 const connectDB = require('./databases/db')
 const app = express()
 
+const http = require('http')
+
+const server = http.createServer(app)
+
 const cookie_parser = require('cookie-parser')
 
 const UserRouter = require('./routes/UserRoutes')
@@ -43,7 +47,7 @@ app.get('/', (req,res) => {
   return res.status(302).redirect('/home')
 })
 
-app.listen(3000, async () => {
+server.listen(3000, async () => {
     db = await connectDB();
     console.log(`http://localhost:3000`);
   });
