@@ -75,6 +75,10 @@
       margin-top: 10px;
     }
 
+    form {
+      display: inline;
+    }
+
   </style>
 </head>
 <body>
@@ -87,7 +91,11 @@
             <p><strong>Username:</strong> {{responder.username}}</p>
             <p><strong>GitHub ID:</strong> {{responder.github_id}}</p>
             <div class="action-buttons">
-              <a href="/chat/?username={{responder.username}}" class="btn">Chat</a>
+              <form action="/chat/start" method="GET">
+                <input type="hidden" name="queryId" value="{{issue}}" readonly required>
+                <input type="hidden" name="username" value="{{responder.username}}" readonly required>
+                <button type="submit" class="btn">Chat</button>
+              </form>
             </div>
           </div>
         {{/each}}

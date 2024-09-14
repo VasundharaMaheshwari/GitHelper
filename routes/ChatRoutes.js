@@ -4,6 +4,6 @@ const { checkchat } = require('../validators/ChatValidators')
 
 const ChatRouter = express.Router()
 
-ChatRouter.get('/',checkchat,chatload)
+ChatRouter.get('/start',checkchat,chatload)
 
 module.exports = ChatRouter
