@@ -65,7 +65,7 @@ const show_res = async (req,res) => {
       if(ObjectId.isValid(queryId) && ObjectId.isValid(req.user._id)){
       const responses = await Response.find({"issue": queryId, "creator": req.user._id}).lean().exec()
       return res.status(200).render('main.hbs',{layout: "responses.hbs",
-        responses: responses,
+        responses: responses
       })
       } else {
         return res.status(404).redirect('/error?error_details=Invalid_URL')
