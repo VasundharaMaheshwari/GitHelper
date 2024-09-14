@@ -6,6 +6,8 @@ const http = require('http')
 
 const server = http.createServer(app)
 
+const { Server } = require('socket.io')
+
 const cookie_parser = require('cookie-parser')
 
 const UserRouter = require('./routes/UserRoutes')
