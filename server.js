@@ -10,7 +10,13 @@ const { Server } = require('socket.io')
 
 const io = new Server(server)
 
+const { setid,getid } = require('./services/socketio')
+
 io.on('connection', (socket) => {
+
+  const { userId } = socket.handshake.auth
+  setid(userId,socket.id)
+
   socket.on('user-message', (msg) => {
     io.emit('message', msg)
   })

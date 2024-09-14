@@ -99,9 +99,13 @@
     <button id="sendBtn">Send</button>
   </div>
 
+  <input type="hidden" id="userId" value="{{userId}}" required readonly>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  const socket = io();
+  const socket = io({"auth": {
+    "userId": document.getElementById('userId').value
+  }});
 
   const sendBtn = document.getElementById("sendBtn");
   const messageInput = document.getElementById("message");
