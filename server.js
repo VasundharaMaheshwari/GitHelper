@@ -11,7 +11,9 @@ const { Server } = require('socket.io')
 const io = new Server(server)
 
 io.on('connection', (socket) => {
-  
+  socket.on('user-message', (msg) => {
+    io.emit('message', msg)
+  })
 })
 
 const cookie_parser = require('cookie-parser')

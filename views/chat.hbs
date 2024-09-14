@@ -115,7 +115,11 @@
 
   send.addEventListener("click", (e) => {
     const msg = message.value
-    console.log(msg)
+    socket.emit('user-message', msg)
+  })
+
+  socket.on('message', (msg) => {
+    console.log("fed back", msg)
   })
 </script>
 </body>
