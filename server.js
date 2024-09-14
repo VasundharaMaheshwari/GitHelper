@@ -10,6 +10,10 @@ const { Server } = require('socket.io')
 
 const io = new Server(server)
 
+io.on('connection', (socket) => {
+  
+})
+
 const cookie_parser = require('cookie-parser')
 
 const UserRouter = require('./routes/UserRoutes')

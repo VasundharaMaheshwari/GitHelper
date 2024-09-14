@@ -100,20 +100,23 @@
       All good! What about you?
       <div class="timestamp">10:02 AM</div>
     </div>
-    <div class="message receiver">
-      Doing great, just catching up on some work.
-      <div class="timestamp">10:05 AM</div>
-    </div>
-    <div class="message sender">
-      Nice! Let me know if you need any help.
-      <div class="timestamp">10:10 AM</div>
-    </div>
   </div>
 
   <div class="input-container">
-    <input type="text" placeholder="Type a message...">
-    <button type="submit">Send</button>
+    <input type="text" id="message" placeholder="Type a message...">
+    <button id="sendBtn">Send</button>
   </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io()
 
+  const send = document.getElementById("sendBtn")
+  const message = document.getElementById("message")
+
+  send.addEventListener("click", (e) => {
+    const msg = message.value
+    console.log(msg)
+  })
+</script>
 </body>
 </html>
