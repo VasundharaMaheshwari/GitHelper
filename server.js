@@ -10,7 +10,7 @@ const { Server } = require('socket.io')
 
 const io = new Server(server)
 
-const { setid,getid } = require('./services/socketio')
+const { setid,getid,delid } = require('./services/socketio')
 
 io.on('connection', (socket) => {
 
@@ -19,6 +19,10 @@ io.on('connection', (socket) => {
 
   socket.on('user-message', (msg) => {
     io.emit('message', msg)
+  })
+
+  socket.on('disconnect', (socket) => {
+    delid(userId)
   })
 })
 
