@@ -91,36 +91,53 @@
     Chat with {{receiverUsername}}
   </div>
 
-  <div class="chat-container">
-    <div class="message receiver">
-      Hey! How's it going?
-      <div class="timestamp">10:00 AM</div>
-    </div>
-    <div class="message sender">
-      All good! What about you?
-      <div class="timestamp">10:02 AM</div>
-    </div>
+  <div class="chat-container" id="chat-container">
   </div>
 
   <div class="input-container">
     <input type="text" id="message" placeholder="Type a message...">
     <button id="sendBtn">Send</button>
   </div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  const socket = io()
+  const socket = io();
 
-  const send = document.getElementById("sendBtn")
-  const message = document.getElementById("message")
+  const sendBtn = document.getElementById("sendBtn");
+  const messageInput = document.getElementById("message");
+  const chatContainer = document.getElementById("chat-container");
 
-  send.addEventListener("click", (e) => {
-    const msg = message.value
-    socket.emit('user-message', msg)
-  })
+  sendBtn.addEventListener("click", () => {
+    const msg = messageInput.value;
+    if (msg.trim()) {
+      socket.emit('user-message', msg);
+
+      appendMessage(msg, 'sender');
+
+      messageInput.value = ''; 
+    }
+  });
+
+  function appendMessage(msg, type) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', type); 
+
+    messageDiv.innerText = msg;
+
+    const timestampDiv = document.createElement('div');
+    timestampDiv.classList.add('timestamp');
+    timestampDiv.innerText = '10:00 AM'; 
+
+    messageDiv.appendChild(timestampDiv);
+
+    chatContainer.appendChild(messageDiv);
+
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
 
   socket.on('message', (msg) => {
-    console.log("fed back", msg)
-  })
+    appendMessage(msg, 'receiver'); 
+  });
 </script>
 </body>
 </html>
