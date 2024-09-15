@@ -116,7 +116,8 @@ const save_response = async (req,res) => {
         github_id : github_id
       },
       issue: issue_id,
-      creator: creator
+      creator: creator,
+      approved: false
     })
     await response_.save()
     return res.status(201).redirect('/home')} else {
