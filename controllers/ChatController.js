@@ -1,6 +1,8 @@
 const { ObjectId } = require('mongodb')
 const { Response } = require('../models/Response')
 const { validationResult } = require('express-validator')
+const { Convo } = require('../models/Convo')
+const { GHUser } = require('../models/GHUser')
 
 const chatload = async (req,res) => {
     try{
@@ -9,6 +11,19 @@ const chatload = async (req,res) => {
         if(checker2 && error.isEmpty()){
             const checker = await Response.findOneAndUpdate({"responder.username": req.query.username, "issue": req.query.queryId, "creator": req.user._id},{"approved": true})
         if(checker && ObjectId.isValid(req.query.queryId)) {
+            const receiver = await GHUser.findOne({ "username": req.query.username });
+            if (!receiver) {
+              return res.status(404).redirect('/error?error_details=Receiver_Not_Found');
+            }
+            const convo_check = await Convo.findOne({"initiator": req.user._id, "issue" : req.query.queryId, "receiver": receiver._id})
+    if(convo_check == null){
+    const convo_ = new Convo({
+      initiator: req.user._id,
+      issue: req.query.queryId,
+      receiver: receiver._id
+    })
+    await convo_.save()
+}
     return res.status(200).render('main.hbs',{layout: "chat.hbs",
         receiverUsername: req.query.username,
         userId: req.user._id
