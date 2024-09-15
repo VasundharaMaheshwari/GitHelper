@@ -94,7 +94,10 @@
               <form action="/chat/start" method="GET">
                 <input type="hidden" name="queryId" value="{{issue}}" readonly required>
                 <input type="hidden" name="username" value="{{responder.username}}" readonly required>
+                {{#if approved}}
+                {{else}}
                 <button type="submit" class="btn">Chat</button>
+                {{/if}}
               </form>
             </div>
           </div>
