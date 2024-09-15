@@ -40,4 +40,39 @@ const chatload = async (req,res) => {
     }
 }
 
-module.exports = { chatload }
+
+const chatlist = async (req, res) => {
+    try {
+        const checker2 = ObjectId.isValid(req.user._id)
+        if(checker2){
+      const userId = req.user._id;
+  
+      const conversations = await Convo.find({
+        $or: [
+          { initiator: userId },
+          { receiver: userId }
+        ]
+      })
+      .populate('initiator', 'username _id') 
+      .populate('receiver', 'username _id'); 
+  
+      const users = conversations.map(convo => {
+        return convo.initiator._id.equals(userId)
+          ? { username: convo.receiver.username, userId: convo.receiver._id, issue: convo.issue }
+          : { username: convo.initiator.username, userId: convo.initiator._id, issue: convo.issue }
+      })
+  
+      return res.status(200).render('main.hbs', {
+        layout: 'chats_list.hbs',
+        users: users
+      })
+    } else {
+        return res.status(400).redirect('/error?error_details=Invalid_URL')
+    }
+    } catch (error) {
+        return res.status(500).redirect('/error?error_details=Error_Occurred')
+    }
+  }
+
+
+module.exports = { chatload,chatlist }

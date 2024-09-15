@@ -76,8 +76,8 @@
   <div class="user-list-container">
     {{#if users.length}}
       {{#each users}}
-        <div class="user" data-username="{{this.receiver}}" data-queryid="{{this.issue}}">
-          <span class="username">{{this.receiver}}</span>
+        <div class="user" data-username="{{this.username}}" data-queryid="{{this.issue}}">
+          <span class="username">{{this.username}}</span>
         </div>
       {{/each}}
     {{else}}
@@ -93,7 +93,7 @@
       const username = user.getAttribute('data-username');
       const queryId = user.getAttribute('data-queryid');
 
-      window.location.href = `/chat/start?username=${username}&queryId=${queryId}`;
+      window.location.href = `/chat/chats?username=${username}&queryId=${queryId}`;
     });
   });
 </script>
