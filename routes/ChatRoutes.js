@@ -9,7 +9,7 @@ ChatRouter.get('/start',checkchat,chatload)
 ChatRouter.get('/list',chatlist)
 
 ChatRouter.get('/chats',(req,res) => {
-    return res.status(200).send("Developing...")
+    return res.status(200).send("Developing... Need to delete convos and messages when deleting issues now... Implement middleware to see if first approval or not then redirect to chats... See ongoing responses and closing responses == delete convo and messages from either side etc.")
 })
 
 module.exports = ChatRouter
