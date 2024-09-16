@@ -2,7 +2,9 @@ const { ObjectId } = require('mongodb');
 const { GHUser } = require('../models/GHUser')
 const { Issue } = require('../models/Issue')
 const { Response } = require('../models/Response')
-const { validationResult } = require('express-validator')
+const { Convo } = require('../models/Convo')
+const { validationResult } = require('express-validator');
+const { Msg } = require('../models/Msg');
 
 const loader = async (req, res) => {    
     try {
@@ -29,7 +31,9 @@ const deleter = async (req,res) => {
       if(ObjectId.isValid(_id)){
         const stat = await Issue.findOneAndDelete({"_id" : _id})
         const resp = await Response.deleteMany({"issue": _id}).lean().exec()
-        if(stat && resp){
+        const con = await Convo.deleteMany({"issue": _id}).lean().exec()
+        const msg = await Msg.deleteMany({"issue": _id}).lean().exec()
+        if(stat && resp && con && msg){
           return res.status(200).redirect('/admin/home')
         } else {
           return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query')
@@ -71,7 +75,14 @@ const usermod = async (req,res) => {
           const issue_resp = await Issue.deleteMany({"createdBy": _id})
           const resp_resp = await Response.deleteMany({"responder.uid": _id})
           const resp_resp2 = await Response.deleteMany({"creator": _id})
-          if(user_resp && issue_resp && resp_resp && resp_resp2){
+          const con_resp = await Convo.deleteMany({$or: [
+            {"initiator": _id},{"receiver": _id}
+          ]})
+          const msg_resp = await Msg.deleteMany({$or: [
+            {"sender": _id},{"receiver": _id}
+          ]})
+
+          if(user_resp && issue_resp && resp_resp && resp_resp2 && con_resp && msg_resp){
             return res.status(200).redirect('/admin/userlist')
           } else {
             return res.status(403).redirect('/error?error_details=Unable_To_Delete_User')
