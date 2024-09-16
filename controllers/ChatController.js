@@ -10,8 +10,8 @@ const chatload = async (req,res) => {
         const checker2 = ObjectId.isValid(req.user._id)
         if(checker2 && error.isEmpty()){
             const checker = await Response.findOneAndUpdate({"responder.username": req.query.username, "issue": req.query.queryId, "creator": req.user._id},{"approved": true})
-        if(checker && ObjectId.isValid(req.query.queryId)) {
-          return res.status(400).redirect(`/chat/chats?username=${req.query.username}&queryId=${req.query.queryId}`)
+        if(checker) {
+          return res.status(400).redirect(`/chat/chats?username=${req.query.username}&queryId=${req.query.queryId}&resId=${req.query.resId}`)
 } else {
     return res.status(400).redirect('/error?error_details=Invalid_URL')
 }
@@ -41,8 +41,8 @@ const chatlist = async (req, res) => {
   
       const users = conversations.map(convo => {
         return convo.initiator._id.equals(userId)
-          ? { username: convo.receiver.username, userId: convo.receiver._id, issue: convo.issue }
-          : { username: convo.initiator.username, userId: convo.initiator._id, issue: convo.issue }
+          ? { username: convo.receiver.username, userId: convo.receiver._id, issue: convo.issue, response: convo.response }
+          : { username: convo.initiator.username, userId: convo.initiator._id, issue: convo.issue, respons: convo.response }
       })
   
       return res.status(200).render('main.hbs', {
@@ -69,7 +69,8 @@ const chatting = async (req,res) => {
     const convo_ = new Convo({
       initiator: req.user._id,
       issue: req.query.queryId,
-      receiver: receiver._id
+      receiver: receiver._id,
+      response: req.query.resId
     })
     await convo_.save()
 }
