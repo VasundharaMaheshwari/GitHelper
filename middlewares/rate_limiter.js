@@ -92,8 +92,7 @@ const convo_limit = limiter({
         const date = new Date(req.rateLimit.resetTime)
         req.rateLimit.resetTime = date.toLocaleString()
         return res.status(429).redirect(`/error?error_details=Chat_Disabled_Till_${req.rateLimit.resetTime}`)
-    },
-    keyGenerator: (req,res) => req.body.username + req.body.queryId
+    }
 })
 
 module.exports = { register_limit,login_limit,issue_limit,response_limit,login_limit_ip,edit_limit,convo_limit }
