@@ -14,3 +14,5 @@ Repeating the below Steps
 8) git push origin frontend
 
 HAPPY HAPPY!
+
+IF ISSUE CONTACT ME DONT CRISIS CONTROL
