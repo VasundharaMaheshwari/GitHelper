@@ -2,6 +2,8 @@ const { ObjectId } = require('mongodb')
 const { Issue } = require('../models/Issue')
 const { Response } = require('../models/Response')
 const { validationResult } = require('express-validator')
+const { Convo } = require('../models/Convo')
+const { Msg } = require('../models/Msg')
 
 const edit = async (req,res) => {
     try{
@@ -42,7 +44,9 @@ const delete_query = async (req,res) => {
       if(ObjectId.isValid(queryId) && checker){
         const status = await Issue.findOneAndDelete({"_id" : queryId, "username": req.user.username})
         const resp = await Response.deleteMany({"issue": queryId}).lean().exec()
-        if(status && resp){
+        const con = await Convo.deleteMany({"issue": queryId}).lean().exec()
+        const msg = await Msg.deleteMany({"issue": queryId}).lean().exec()
+        if(status && resp && con && msg){
           return res.status(200).redirect('/query/list')
         } else {
           return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query')
