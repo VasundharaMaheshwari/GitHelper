@@ -6,21 +6,22 @@
   <title>Chat with {{receiverUsername}}</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
       height: 100vh;
-      background-color: #f5f5f5;
+      background-color: #f8f4ff;
     }
 
     .header {
       background-color: #6c5b7b;
-      padding: 15px;
+      padding: 20px;
       text-align: center;
       color: white;
-      font-size: 24px;
+      font-size: 28px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .chat-container {
@@ -29,15 +30,23 @@
       flex-direction: column;
       padding: 20px;
       overflow-y: auto;
-      background-color: #ffffff;
+      background-color: #fff;
+      border-top: 1px solid #e0e0e0;
+      border-bottom: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      margin: 20px;
     }
 
     .message {
       margin-bottom: 15px;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 12px 18px;
+      border-radius: 18px;
       max-width: 60%;
       word-wrap: break-word;
+      font-size: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
     }
 
     .sender {
@@ -51,37 +60,66 @@
       background-color: #e1bee7;
     }
 
+    .message:hover {
+      background-color: #ddd;
+    }
+
     .timestamp {
       font-size: 12px;
       color: #888;
-      margin-top: 5px;
+      margin-top: 8px;
+      text-align: right;
     }
 
     .input-container {
       display: flex;
-      padding: 10px;
+      padding: 15px;
       background-color: #f5f5f5;
+      border-top: 1px solid #e0e0e0;
     }
 
     .input-container input {
       flex: 1;
-      padding: 10px;
+      padding: 12px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 20px;
       margin-right: 10px;
+      font-size: 16px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: border 0.3s ease;
+    }
+
+    .input-container input:focus {
+      outline: none;
+      border: 1px solid #6c5b7b;
     }
 
     .input-container button {
-      padding: 10px 20px;
+      padding: 12px 20px;
       background-color: #6c5b7b;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 20px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 16px;
     }
 
     .input-container button:hover {
       background-color: #54466d;
+    }
+
+    .chat-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-container::-webkit-scrollbar-thumb {
+      background-color: #6c5b7b;
+      border-radius: 10px;
+    }
+
+    .chat-container::-webkit-scrollbar-track {
+      background-color: #f8f4ff;
     }
   </style>
 </head>
@@ -103,22 +141,32 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  const socket = io({"auth": {
-    "userId": document.getElementById('userId').value
-  }});
+  const socket = io({
+    "auth": {
+      "userId": document.getElementById('userId').value
+    }
+  });
 
   const sendBtn = document.getElementById("sendBtn");
   const messageInput = document.getElementById("message");
   const chatContainer = document.getElementById("chat-container");
 
-  sendBtn.addEventListener("click", () => {
+  function sendMessage() {
     const msg = messageInput.value;
     if (msg.trim()) {
       socket.emit('user-message', msg);
 
       appendMessage(msg, 'sender');
-
       messageInput.value = ''; 
+    }
+  }
+
+  sendBtn.addEventListener("click", sendMessage);
+
+  messageInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); 
+      sendMessage();
     }
   });
 
@@ -130,12 +178,11 @@
 
     const timestampDiv = document.createElement('div');
     timestampDiv.classList.add('timestamp');
-    timestampDiv.innerText = '10:00 AM'; 
+    timestampDiv.innerText = new Date().toLocaleTimeString(); 
 
     messageDiv.appendChild(timestampDiv);
 
     chatContainer.appendChild(messageDiv);
-
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }
 
@@ -143,5 +190,6 @@
     appendMessage(msg, 'receiver'); 
   });
 </script>
+
 </body>
 </html>
