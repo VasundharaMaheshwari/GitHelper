@@ -1,10 +1,11 @@
 const express = require('express')
 const { chatload,chatlist } = require('../controllers/ChatController')
 const { checkchat } = require('../validators/ChatValidators')
+const { convo_limit } = require('../middlewares/rate_limiter')
 
 const ChatRouter = express.Router()
 
-ChatRouter.get('/start',checkchat,chatload)
+ChatRouter.post('/start',checkchat,convo_limit,chatload)
 
 ChatRouter.get('/list',chatlist)
 

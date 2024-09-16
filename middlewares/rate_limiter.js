@@ -82,4 +82,18 @@ const edit_limit = limiter({
     keyGenerator: (req,res) => req.body.id + req.query.queryId
 })
 
-module.exports = { register_limit,login_limit,issue_limit,response_limit,login_limit_ip,edit_limit }
+const convo_limit = limiter({
+    windowMs: 60*60*1000,
+    max: 5,
+    legacyHeaders: false,
+    //requestWasSuccessful: (req, res) => res.status < 400,
+    //skipSuccessfulRequests: true,
+    handler: (req,res) => {
+        const date = new Date(req.rateLimit.resetTime)
+        req.rateLimit.resetTime = date.toLocaleString()
+        return res.status(429).redirect(`/error?error_details=Chat_Disabled_Till_${req.rateLimit.resetTime}`)
+    },
+    keyGenerator: (req,res) => req.query.username + req.query.queryId
+})
+
+module.exports = { register_limit,login_limit,issue_limit,response_limit,login_limit_ip,edit_limit,convo_limit }
