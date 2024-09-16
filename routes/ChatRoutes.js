@@ -1,5 +1,5 @@
 const express = require('express')
-const { chatload,chatlist } = require('../controllers/ChatController')
+const { chatload,chatlist, chatting } = require('../controllers/ChatController')
 const { checkchat } = require('../validators/ChatValidators')
 const { convo_limit } = require('../middlewares/rate_limiter')
 
@@ -9,7 +9,9 @@ ChatRouter.post('/start',checkchat,convo_limit,chatload)
 
 ChatRouter.get('/list',chatlist)
 
-ChatRouter.get('/chats',(req,res) => {
+ChatRouter.get('/chats',checkchat,chatting)
+
+ChatRouter.post('/chats',(req,res) => {
     return res.status(200).send("Developing... Need to delete convos and messages when deleting issues now... Implement middleware to see if first approval or not then redirect to chats... See ongoing responses and closing responses == delete convo and messages from either side and vice versa if initiator... Pre load history etc.")
 })
 
