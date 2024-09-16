@@ -19,6 +19,16 @@ const Msg_Schema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'GHUser'
+    },
+    "issue": {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Issue'
+    },
+    "response": {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Response'
     }
 },
 {timestamps:true})
