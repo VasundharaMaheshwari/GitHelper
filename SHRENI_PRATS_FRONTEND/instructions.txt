@@ -1,0 +1,18 @@
+Put your frontend stuff here ONLY
+
+Steps - 
+
+1) git clone repo
+2) git branch frontend
+3) git checkout frontend
+
+Repeating the below Steps
+4) add files to this folder for everything except user pages and chatting --> do admin tho
+5) git pull frontend
+6) git add .
+7) git commit -m "SOME BS HERE"
+8) git push origin frontend
+
+HAPPY HAPPY!
+
+IF ISSUE CONTACT ME DONT CRISIS CONTROL
