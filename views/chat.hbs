@@ -150,7 +150,8 @@
 
   const socket = io({
     "auth": {
-      "userId": sender.value
+      "userId": sender.value,
+      "receiverId": receiver.value
     }
   });
 
