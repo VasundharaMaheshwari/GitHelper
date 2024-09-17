@@ -4,111 +4,157 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Opened Queries</title>
+
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #6c5b7b;
-      color: #333;
+      background-image: url('{{image}}') no-repeat center center fixed;
+      background-size: cover;
+      color: #f0f0f0; /* Light grey for contrast */
+      backdrop-filter: blur(5px); /* Subtle blur effect */
     }
 
     .container {
-      max-width: 800px;
-      margin: 50px auto;
+      max-width: 900px;
+      margin: 60px auto;
       padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      background-color: #fff;
+      border-radius: 30px;
+      background-color: rgba(9, 23, 58, 0.9); /* Darker blue with opacity */
+      box-shadow: 3px 6px 15px rgba(255, 255, 255, 0.2);
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     h1 {
-      font-size: 32px;
-      margin-bottom: 20px;
+      font-size: 33px;
+      margin-bottom: 24px;
       text-align: center;
-      color: #6c5b7b;
+      color: #dbdada; /* White text for contrast */
+      animation: slideDown 1.2s ease-in-out;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-30px); }
+      to { transform: translateY(0); }
     }
 
     .issue {
       padding: 20px;
       margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease-in-out;
+      border-radius: 12px;
+      background-color: rgba(23, 49, 101, 0.9); /* Transparent navy */
+      box-shadow: 6px 6px 12px rgba(71, 71, 71, 0.2);
+      transition: transform 0.6s ease-in-out;
     }
 
     .issue:hover {
-      transform: translateY(-5px);
+      transform: translateY(-6px);
+      background-color: rgba(18, 37, 81, 0.9); /* Slightly lighter on hover */
     }
 
     .issue h2 {
       font-size: 24px;
-      margin-bottom: 10px;
-      color: #6c5b7b;
+      margin-bottom: 12px;
+      color: #9f9d9d;
     }
 
     .issue p {
       font-size: 16px;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
+      color: #dbdada; /* Soft grey for readability */
     }
 
     .issue span {
       font-weight: bold;
-      color: #6c5b7b;
+      color: #d1d1d1;
     }
 
     .no-issues {
       text-align: center;
-      font-size: 18px;
-      color: #666;
+      font-size: 21px;
+      color: #b5b5b5;
     }
 
     .btn {
       display: inline-block;
       padding: 10px 20px;
-      background-color: #6c5b7b;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc); /* Gradient */
       color: #fff;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       text-decoration: none;
-      transition: background-color 0.3s ease;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
     .btn:hover {
-      background-color: #54466d;
+      transform: scale(1.05);
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
     }
 
     .navbar {
-      background-color: #e3dcf9;
-      padding: 20px;
+      display: flex;
+      justify-content: right;
+      background-color: rgba(3, 14, 32, 0.8); /* Transparent background */
+      padding: 15px;
+      border-radius: 10px;
       margin-bottom: 20px;
-      border-radius: 5px;
-      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .navbar a {
-      color: #6c5b7b;
+      color: #fff;
       text-decoration: none;
       margin: 0 10px;
+      padding: 12px 25px;
+      font-weight: bold;
+      border-radius: 25px;
+      background-image: linear-gradient(45deg, #4c00c2, #008cff); /* Gradient for buttons */
+      transition: transform 0.3s ease, background-image 0.3s ease;
+      font-size: 16px;
     }
 
     .navbar a:hover {
-      text-decoration: underline;
+      background-image: linear-gradient(45deg, #370086, #0066cc);
+      transform: scale(1.1);
     }
 
     .hidden {
       display: none;
     }
-    
+
     .repo-link {
-      color: #007bff;
+      color: #ffdc47; /* Bright yellow for emphasis */
       text-decoration: none;
+      font-weight: bold;
       transition: color 0.3s ease;
     }
 
     .repo-link:hover {
-      color: #0056b3;
-      text-decoration: underline;
+      color: #ffb300;
+    }
+
+    /* Adding responsiveness */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+
+      .navbar a {
+        padding: 10px 15px;
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
     }
   </style>
 </head>

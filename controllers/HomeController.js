@@ -15,7 +15,8 @@ const refresh = async (req, res) => {
       const issues = await Issue.find().lean().exec();
       res.status(200).render('main.hbs',{layout: "home.hbs",
       user: user,
-      issues: issues
+      issues: issues,
+      image:images/home.jpg
     });
     } catch (error) {
       return res.status(500).redirect('/error?error_details=Error_Occurred');
