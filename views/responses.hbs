@@ -91,8 +91,7 @@
             <p><strong>Username:</strong> {{responder.username}}</p>
             <p><strong>GitHub ID:</strong> {{responder.github_id}}</p>
             <div class="action-buttons">
-              <form id="convo" action="/chat/start?username={{responder.username}}&queryId={{issue}}&resId={{_id}}" method="POST">
-                <input type="hidden" id="queryId" name="queryId" value="{{issue}}" readonly required>
+              <form id="convo" action="/chat/start" method="POST">
                 <input type="hidden" id="username" name="username" value="{{responder.username}}" readonly required>
                 <input type="hidden" id="response" name="response" value="{{_id}}" readonly required>
                 {{#if approved}}
