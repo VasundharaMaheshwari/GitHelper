@@ -6,28 +6,27 @@
   <title>Opened Queries</title>
 
   <style>
-body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-image: url("home.jpg"); 
-  background-repeat: no-repeat; /* Add this line */
-  background-position: center center; /* Add this for centering */
-  background-attachment: fixed; /* Fixed background */
-  background-size: cover; /* Ensure it covers the whole screen */
-  color: #f0f0f0; /* Light grey for contrast */
-  backdrop-filter: blur(5px); /* Subtle blur effect */
-}
-
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url("Home1.jpg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      color: #f0f0f0;
+    }
 
     .container {
       max-width: 900px;
       margin: 60px auto;
       padding: 30px;
       border-radius: 30px;
-      background-color: rgba(9, 23, 58, 0.9); /* Darker blue with opacity */
+      background-color: rgba(9, 23, 58, 0.8); /* Adjusted opacity */
       box-shadow: 3px 6px 15px rgba(255, 255, 255, 0.2);
       animation: fadeIn 1.2s ease-in-out;
+      backdrop-filter: blur(0px); /* No blur behind the container */
     }
 
     @keyframes fadeIn {
@@ -39,7 +38,7 @@ body {
       font-size: 33px;
       margin-bottom: 24px;
       text-align: center;
-      color: #dbdada; /* White text for contrast */
+      color: #dbdada;
       animation: slideDown 1.2s ease-in-out;
     }
 
@@ -52,14 +51,14 @@ body {
       padding: 20px;
       margin-bottom: 20px;
       border-radius: 12px;
-      background-color: rgba(23, 49, 101, 0.9); /* Transparent navy */
+      background-color: rgba(23, 49, 101, 0.9);
       box-shadow: 6px 6px 12px rgba(71, 71, 71, 0.2);
       transition: transform 0.6s ease-in-out;
     }
 
     .issue:hover {
       transform: translateY(-6px);
-      background-color: rgba(18, 37, 81, 0.9); /* Slightly lighter on hover */
+      background-color: rgba(18, 37, 81, 0.9);
     }
 
     .issue h2 {
@@ -71,7 +70,7 @@ body {
     .issue p {
       font-size: 16px;
       margin-bottom: 6px;
-      color: #dbdada; /* Soft grey for readability */
+      color: #dbdada;
     }
 
     .issue span {
@@ -88,7 +87,7 @@ body {
     .btn {
       display: inline-block;
       padding: 10px 20px;
-      background-image: linear-gradient(45deg, #6a11cb, #2575fc); /* Gradient */
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
       color: #fff;
       border: none;
       border-radius: 6px;
@@ -106,11 +105,9 @@ body {
     .navbar {
       display: flex;
       justify-content: right;
-      background-color: rgba(3, 14, 32, 0.8); /* Transparent background */
       padding: 15px;
       border-radius: 10px;
       margin-bottom: 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .navbar a {
@@ -120,22 +117,18 @@ body {
       padding: 12px 25px;
       font-weight: bold;
       border-radius: 25px;
-      background-image: linear-gradient(45deg, #4c00c2, #008cff); /* Gradient for buttons */
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);;
       transition: transform 0.3s ease, background-image 0.3s ease;
       font-size: 16px;
     }
 
     .navbar a:hover {
-      background-image: linear-gradient(45deg, #370086, #0066cc);
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
       transform: scale(1.1);
     }
 
-    .hidden {
-      display: none;
-    }
-
     .repo-link {
-      color: #ffdc47; /* Bright yellow for emphasis */
+      color: #ffdc47;
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s ease;
@@ -145,7 +138,6 @@ body {
       color: #ffb300;
     }
 
-    /* Adding responsiveness */
     @media (max-width: 768px) {
       .container {
         padding: 15px;
