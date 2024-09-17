@@ -12,6 +12,12 @@ const io = new Server(server)
 
 const { setid,getid,delid } = require('./services/socketio')
 
+app.use(express.static('public', { setHeaders: (res, path) => {
+  if (path.endsWith('.png')) {
+    res.setHeader('Content-Type', 'image/png');
+  }
+}})); 
+
 io.on('connection', (socket) => {
 
   const { userId } = socket.handshake.auth
