@@ -170,7 +170,6 @@
 
       socket.emit('user-message', jsonMsg);
 
-      appendMessage(msg, 'sender');
       messageInput.value = ''; 
     }
   }
@@ -190,18 +189,22 @@
 
     messageDiv.innerText = msg;
 
-    const timestampDiv = document.createElement('div');
+    {{!-- const timestampDiv = document.createElement('div');
     timestampDiv.classList.add('timestamp');
     timestampDiv.innerText = new Date().toLocaleTimeString(); 
 
-    messageDiv.appendChild(timestampDiv);
+    messageDiv.appendChild(timestampDiv); --}}
 
     chatContainer.appendChild(messageDiv);
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }
 
-  socket.on('message', (msg) => {
+  socket.on('received-message', (msg) => {
     appendMessage(msg, 'receiver'); 
+  });
+
+    socket.on('sent-message', (msg) => {
+    appendMessage(msg, 'sender'); 
   });
 </script>
 

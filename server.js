@@ -18,8 +18,13 @@ io.on('connection', (socket) => {
   setid(userId,socket.id)
 
   socket.on('user-message', (msg) => {
-    console.log(msg)
-    //io.emit('message', msg)
+    const sockettx = getid(msg.sender)
+    const socketrx = getid(msg.receiver)
+    const message = msg.msg
+
+    io.to(sockettx).emit('sent-message', message)
+
+    io.to(socketrx).emit('received-message', message)
   })
 
   socket.on('disconnect', (socket) => {
