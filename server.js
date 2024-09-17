@@ -32,6 +32,12 @@ io.on('connection', (socket) => {
   })
 })
 
+app.use(express.static('public', { setHeaders: (res, path) => {
+  if (path.endsWith('.png')) {
+    res.setHeader('Content-Type', 'image/png');
+  }
+}}))
+
 const cookie_parser = require('cookie-parser')
 
 const UserRouter = require('./routes/UserRoutes')
