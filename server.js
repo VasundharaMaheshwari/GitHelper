@@ -18,7 +18,8 @@ io.on('connection', (socket) => {
   setid(userId,socket.id)
 
   socket.on('user-message', (msg) => {
-    io.emit('message', msg)
+    console.log(msg)
+    //io.emit('message', msg)
   })
 
   socket.on('disconnect', (socket) => {

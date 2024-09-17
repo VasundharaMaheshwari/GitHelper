@@ -60,23 +60,27 @@ const chatlist = async (req, res) => {
 const chatting = async (req,res) => {
   try{
     if(ObjectId.isValid(req.user._id)){
-    const receiver = await GHUser.findOne({ "username": req.query.username });
+      const {username,queryId,resId} = req.query
+    const receiver = await GHUser.findOne({ "username": username });
             if (!receiver) {
               return res.status(404).redirect('/error?error_details=Receiver_Not_Found');
             }
-            const convo_check = await Convo.findOne({"initiator": req.user._id, "issue" : req.query.queryId, "receiver": receiver._id})
+            const convo_check = await Convo.findOne({"initiator": req.user._id, "issue" : queryId, "receiver": receiver._id})
     if(convo_check == null){
     const convo_ = new Convo({
       initiator: req.user._id,
-      issue: req.query.queryId,
+      issue: queryId,
       receiver: receiver._id,
-      response: req.query.resId
+      response: resId
     })
     await convo_.save()
 }
     return res.status(200).render('main.hbs',{layout: "chat.hbs",
-        receiverUsername: req.query.username,
-        userId: req.user._id
+        receiverUsername: username,
+        queryId: queryId,
+        receiverUserId: receiver._id,
+        resId: resId,
+        senderUserId: req.user._id
       }
     )
   }

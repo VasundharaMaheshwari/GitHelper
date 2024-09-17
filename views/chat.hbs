@@ -137,13 +137,22 @@
     <button id="sendBtn">Send</button>
   </div>
 
-  <input type="hidden" id="userId" value="{{userId}}" required readonly>
+  <input type="hidden" id="senderUserId" value="{{senderUserId}}" required readonly>
+  <input type="hidden" id="receiverUserId" value="{{receiverUserId}}" required readonly>
+  <input type="hidden" id="queryId" value="{{queryId}}" required readonly>
+  <input type="hidden" id="resId" value="{{resId}}" required readonly>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
+
+  const sender = document.getElementById('senderUserId')
+  const receiver = document.getElementById('receiverUserId')
+  const query = document.getElementById('queryId')
+  const res = document.getElementById('resId')
+
   const socket = io({
     "auth": {
-      "userId": document.getElementById('userId').value
+      "userId": sender.value
     }
   });
 
@@ -154,7 +163,16 @@
   function sendMessage() {
     const msg = messageInput.value;
     if (msg.trim()) {
-      socket.emit('user-message', msg);
+      const jsonMsg = {
+        "convoId": "23i9242",
+        "receiver": receiver.value,
+        "msg": msg,
+        "sender": sender.value,
+        "issue": query.value,
+        "response": res.value
+      }
+
+      socket.emit('user-message', jsonMsg);
 
       appendMessage(msg, 'sender');
       messageInput.value = ''; 
