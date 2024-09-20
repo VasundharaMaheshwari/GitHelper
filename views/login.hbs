@@ -4,71 +4,207 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Form</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
     body {
       background-image: url("/1329272.png");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       height: 100vh;
-      margin: 0;
-      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
     .login-container {
-      background-color: #f0e9ff; 
-      padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+}
+
+.login-box {
+    display: flex;
+      align-items: stretch; /* Align sections vertically */
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      width: 30%;
-    }
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
 
-    h2 {
-      font-size: 28px;
+.logo-section {
+    flex: 1;
+    display: flex; /* Use Flexbox to position image and text side by side */
+    flex-direction: rpw; /* Set the direction to row */
+    align-items: center; /* Align items vertically centered */
+    justify-content: center; /* Align items to the left */
+    color: white;
+    padding-right: 20px;
+}
+
+.logo-image {
+    width: 50px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
+    margin-right: 10px; /* Space between image and text */
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.logo-text h1 {
+    font-family: 'Roboto', sans-serif; 
+    font-size: 36px;
+    margin-bottom: 0; /* Remove extra margin */
+}
+
+.logo-text p {
+    font-size: 14px;
+    color: #ccc;
+    margin: 0;
+}
+
+.partition {
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin: 0 20px; /* Space between sections */
+}
+.login-form {
+    flex: 1; /* Adjusts size to take up one part of the space */
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.login-form h2 {
+      font-family: 'Roboto', sans-serif; 
       margin-bottom: 20px;
-      color: #333;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #666;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-      width: 50%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-
-    button {
-      padding: 12px 24px;
-      background-color: #4CAF50;
       color: white;
+      text-align: center;
+    }
+    
+    .form-group {
+    margin-bottom: 15px;
+    position: relative;
+    }
+
+    .form-group label {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+ .input-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 10px 10px 10px 60px; /* Padding to make room for the icon */
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
+      border-radius: 5px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
     }
 
-    button:hover {
-      background-color: #45a049;
+     .input-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ccc;
     }
 
+    .input-divider {
+      position: absolute;
+      left: 35px;
+      top: 10px;
+      bottom: 10px;
+      width: 1px;
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+.form-group input {
+    padding: 10px 10px 10px 60px; /* Adjust as needed */
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7); /* Adjust the color as needed */
+  font-family: 'Roboto', sans-serif; /* Change to your desired font */
+  font-size: 14px; /* Adjust font size as needed */
+}
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+.options a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 12px;
+    display: flex;
+    align-items: center; /* Align text and icon vertically */
+}
+
+.options a.forgot-password {
+    font-size: 17px;
+    font-family: 'Roboto', sans-serif; 
+    color: #ccc; /* Maintain existing color */
+    text-decoration: none;
+    display: flex;
+    align-items: center; 
+}
+
+.options a i {
+      margin-right: 8px; /* Space between icon and text */
+    }
+
+.options a:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    background-color: #2874f0;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
     .error-message {
       color: red;
       margin-top: 10px;
@@ -76,7 +212,11 @@
     }
 
     .register-link {
+      text-align: center;
       margin-top: 20px;
+      color: #ccc; 
+      font-size: 18px;
+      font-family: 'Roboto', sans-serif; 
     }
 
     .register-link a {
@@ -91,25 +231,58 @@
 
   </style>
 </head>
+
 <body>
   <div class="login-container">
-    <h2>Login</h2>
-    <form id="login-form" action="/api/login" method="post">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
+    <div class="login-box">
+
+      <!-- Logo Section -->
+      <div class="logo-section">
+        <img src="/logo.jpg" alt="Logo" class="logo-image">
+            <div class="logo-text">
+              <h1>GitHelper</h1>   
+            </div>
       </div>
+
+    <!-- Partition Line -->
+    <div class="partition"></div>
+    
+    <!-- Login Form Section -->
+    
+    <form id="login-form" class="login-form" action="/api/login" method="post">
+      
+      <!-- Image Above the Form -->
+      <img src="/people.png" alt="Login Illustration" style="width: 100%; height: auto; margin-bottom: 20px;">
+      
       <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" required>
-        <input type="password" name="encryptedpassword" id="encryptedpassword" required readonly hidden>
+        <div class="input-container"></div>
+            <i class="fas fa-user input-icon"></i>
+        <div class="input-divider"></div>
+        <input type="text" id="username" placeholder="Username" name="username" required>
       </div>
-      <button type="submit">Login</button>
+
+      <div class="form-group">
+        <div class="input-container"></div>
+            <i class="fas fa-lock input-icon"></i>
+        <div class="input-divider"></div>
+        <input type="password" placeholder="Password" id="password" required>
+        <input type="password" name="encryptedpassword"   id="encryptedpassword" required readonly hidden>
+      </div>
+      <div class="options">
+        <label>
+          <input type="checkbox"> Remember me
+        </label>
+          <a href="#" class="forgot-password"><i class="fas fa-key"></i>Forgot Password?</a>
+      </div>
+      <button type="submit" class="login-button">LOGIN</button>
+      
+      <div class="register-link" style="text-align: center; margin-top: 20px;">
+        <p>Don't have an account? <a href="/api/register" style="font-size: 17px">Register</a></p>
+      </div>
+    </div>
     </form>
     <p id="error-message" class="error-message"></p>
-    <div class="register-link">
-      <p>Don't have an account? <a href="/api/register">Register</a></p>
-    </div>
+    
   </div>
 
   <script>
