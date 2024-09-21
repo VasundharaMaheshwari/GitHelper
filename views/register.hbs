@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Register Form</title>
 
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
@@ -12,16 +12,18 @@
   
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
+    /* Reset some default styles */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
     }
 
     body {
-      background-image: url("/1329272.png");
+      background-image: url("/Home1.jpg");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
@@ -30,115 +32,177 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      color: #f0f0f0;
+      overflow: hidden; /* Prevent scrolling */
     }
 
+    /* Navbar Styles */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: transparent; /* Removed dark overlay */
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .logo img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar .logo img:hover {
+      transform: rotate(10deg);
+    }
+
+    .navbar .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 25px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      transition: transform 0.3s ease, background-image 0.3s ease;
+      position: relative;
+    }
+
+    .navbar .nav-links a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+    }
+
+    /* Register Container */
     .register-container {
       display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 900px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 900px; /* Made the container smaller */
+      padding-top: 100px; /* Moved the form further down to prevent interference with navbar */
+      padding-bottom: 0; /* Removed bottom padding since no footer */
     }
 
-  .register-box {
-    display: flex;
-      align-items: stretch; /* Align sections vertically */
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 40px;
+    .register-box {
+      display: flex;
+      align-items: stretch;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+      padding: 30px; /* Reduced padding to make it smaller */
       backdrop-filter: blur(10px);
-       width: 100%;
+      width: 100%;
+      max-height: 80vh; /* Reduced the height to make it smaller */
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
+    }
 
-.logo-section {
-    flex: 1;
-    display: flex; /* Use Flexbox to position image and text side by side */
-    flex-direction: row; /* Set the direction to row */
-    align-items: center; /* Align items vertically centered */
-    justify-content: center; /* Align items to the left */
-    color: white;
-    padding-right: 20px;
-}
+    .logo-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      padding-right: 20px;
+    }
 
-.logo-image {
-    width: 75px; /* Adjust the width as needed */
-    height: 75px; /* Adjust the height as needed */
-    margin-right: 10px; /* Space between image and text */
-}
+    .logo-image {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 20px;
+    }
 
-.logo-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-.logo-text h1 {
-    font-family: 'Roboto', sans-serif; 
-    font-size: 36px;
-    margin-bottom: 0; /* Remove extra margin */
-}
+    .logo-text h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
 
-.logo-text p {
-    font-size: 14px;
-    color: #ccc;
-    margin: 0;
-}
+    .logo-text p {
+      font-size: 14px;
+      color: #ccc;
+      text-align: center;
+      max-width: 200px;
+    }
 
-.partition {
-    width: 1px;
-    background-color: rgba(255, 255, 255, 0.3);
-    margin: 0 50px; /* Space between sections */
-}
-.image-container {
-  text-align: center; /* Center the image */
-  margin-bottom: 20px;
-}
+    .partition {
+      width: 1px;
+      background-color: rgba(255, 255, 255, 0.3);
+      margin: 0 10px; /* Reduced margin */
+    }
 
-.image {
-  width: 300px; /* Adjust the width as needed */
-  height: auto;
-  padding-bottom: 50px;
-  padding-top: 35px;
-}
+    .illustration-container {
+      flex: 0.8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-left: 10px;
+    }
 
+    .illustration-icon {
+      font-size: 100px; /* Adjust the size as needed */
+      color: #ffffff; /* White color to stand out against the dark background */
+      margin-bottom: 10px;
+      /* Optional: Add animation or additional styling */
+      /* Example: */
+      /* animation: pulse 2s infinite; */
+    }
+    
+    /* Optional: Add a hover effect */
+    .illustration-icon:hover {
+      color: #ff4b2b; /* Change color on hover */
+      transform: scale(1.1); /* Slightly enlarge on hover */
+      transition: all 0.3s ease;
+    }
 
-.register-form {
-    flex: 1; /* Adjusts size to take up one part of the space */
-    display: flex;
-    flex-direction: column;
-    padding-left: 20px;
-}
+    .register-form {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      padding-left: 20px;
+    }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 15px; /* Reduced margin to make it less congested */
       position: relative;
     }
 
     .form-group label {
-      color: white;
+      color: #fff;
       font-size: 14px;
       margin-bottom: 5px;
       display: block;
     }
 
-     .input-container {
+    .input-container {
       position: relative;
       width: 100%;
       display: flex;
-  align-items: center;
+      align-items: center;
     }
 
     .input-container input {
       width: 100%;
-      padding: 10px 10px 10px 50px; /* Adjust padding to move placeholder right */
+      padding: 10px 10px 10px 50px;
       border: none;
       border-radius: 5px;
       outline: none;
       background: rgba(255, 255, 255, 0.2);
-      color: white;
+      color: #fff;
     }
 
-     .input-icon {
+    .input-container input:focus {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .input-icon {
       position: absolute;
       left: 15px;
       top: 50%;
@@ -156,66 +220,84 @@
       background-color: rgba(255, 255, 255, 0.3);
     }
 
-    .form-group input {
-      padding: 10px 10px 10px 60px; /* Adjust as needed */
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    outline: none;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    }
-
-    input::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-      font-family: 'Roboto', sans-serif;
-      font-size: 14px;
-    }
-    
-    .form-group input[type="text"],
-    .form-group input[type="email"],
-    .form-group input[type="password"] {
-      font-size: 16px;
-    }
-    
     .register-button {
       width: 100%;
-    background-color: #2874f0;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+      background-image: linear-gradient(45deg, #ff416c, #ff4b2b);
+      color: #fff;
+      border: none;
+      padding: 15px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px; /* Add some top margin */
+      transition: transform 0.3s ease, background-image 0.3s ease;
+    }
 
-.register-button:hover {
-    background-color: #0056b3;
-}
+    .register-button:hover {
+      background-image: linear-gradient(45deg, #e60039, #e63900);
+      transform: translateY(-5px);
+    }
+
+    .register-button i {
+      margin-right: 10px;
+    }
+
     .error-message {
-      color: red;
+      color: #ff4b2b;
       margin-top: 10px;
       font-size: 14px;
+      text-align: center;
     }
 
     .login-link {
       text-align: center;
-      margin-top: 20px;
-      color: #ccc; 
-      font-size: 18px;
-      font-family: 'Roboto', sans-serif; 
+      margin-top: 15px;
+      color: #ccc;
+      font-size: 16px;
     }
 
     .login-link a {
-      color: #ccc;
+      color: #ff4b2b;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .login-link a:hover {
+      color: #ff416c;
       text-decoration: underline;
     }
 
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .register-box {
+        flex-direction: column;
+        max-height: 95vh;
+      }
+
+      .partition {
+        width: 100%;
+        height: 1px;
+        margin: 20px 0;
+      }
+
+      .illustration-container {
+        padding-left: 0;
+        margin-bottom: 20px;
+      }
+
+      .register-form {
+        padding-left: 0;
+      }
+
+      .illustration-icon {
+        font-size: 80px; /* Smaller size for mobile devices */
+      }
+    }
   </style>
 
   <script>
@@ -283,7 +365,7 @@
       for (i = 0; i < 8; i++) {
           for (j = 3; j + 1; j--) {
               var b = (hash[i]>>(j*8))&255;
-              result += ((b < 16) ? 0 : '') + b.toString(16);
+              result += ((b < 16) ? '0' : '') + b.toString(16);
           }
       }
       return result;
@@ -326,70 +408,89 @@
 </head>
 
 <body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      <img src="/logo.jpeg" alt="Git Helper Logo">
+      <span>Git Helper</span>
+    </div>
+    <div class="nav-links">
+      <a href="/"><i class="fas fa-home"></i> Homepage</a>
+      <a href="/error/faq"><i class="fas fa-question-circle"></i> FAQ</a>
+    </div>
+  </div>
+
+  <!-- Register Container -->
   <div class="register-container">
     <div class="register-box">
-
-    <!-- Logo Section -->
       <div class="logo-section">
-        <img src="/logo.png" alt="Logo" class="logo-image">
-            <div class="logo-text">
-              <h1>Git Helper</h1>   
-            </div>
+        <img class="logo-image" src="/logo.jpeg" alt="Logo">
+        <div class="logo-text">
+          <h1>Git Helper</h1>
+          <p>Alleviates maintainer fatigue and helps you contribute in open source effectively.</p>
+        </div>
       </div>
 
-    <!-- Partition Line -->
-    <div class="partition"></div>
-    
-    <!-- Login Form Section -->
-    <form id="register-form" action="/api/register" method="post" onsubmit="return validateForm()">    
+      <div class="partition"></div>
 
-      <!-- Image Above the Form -->
-      <div class="image-container">
-      <img src="/rocket.png" alt="Login Illustration" class="image">
+      <div class="illustration-container">
+        <!-- Font Awesome Register Icon -->
+        <i class="fas fa-user-plus illustration-icon" aria-hidden="true"></i>
       </div>
 
-      <div class="form-group">
-        <div class="input-container">
+      <!-- Register Form Section -->
+      <form id="register-form" class="register-form" action="/api/register" method="post" onsubmit="return validateForm()">
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <div class="input-container">
             <i class="fas fa-user input-icon"></i>
-        <div class="input-divider"></div>
-        <input type="text" id="username" placeholder="Username" name="username" required>
+            <div class="input-divider"></div>
+            <input type="text" id="username" placeholder="Username" name="username" required>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <div class="input-container">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-container">
             <i class="fas fa-envelope input-icon"></i>
-        <div class="input-divider"></div>
-        <input type="email" placeholder="Email" id="email" name="email" required>
+            <div class="input-divider"></div>
+            <input type="email" placeholder="Email" id="email" name="email" required>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <div class="input-container">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-container">
             <i class="fas fa-lock input-icon"></i>
-        <div class="input-divider"></div>
-        <input type="password" placeholder="Password" id="password" required>
-      </div>
-      </div>
+            <div class="input-divider"></div>
+            <input type="password" placeholder="Password" id="password" required>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <div class="input-container">
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <div class="input-container">
             <i class="fas fa-lock input-icon"></i>
-        <div class="input-divider"></div>
-        <input type="password" placeholder="Confirm Password" id="confirm-password" required>
-        <input type="password" name="encryptedpassword" id="encryptedpassword" required readonly hidden>
-      </div>
-      </div>
-      <button type="submit" class="register-button">REGISTER</button>
-      
+            <div class="input-divider"></div>
+            <input type="password" placeholder="Confirm Password" id="confirm-password" required>
+            <input type="password" name="encryptedpassword" id="encryptedpassword" required readonly hidden>
+          </div>
+        </div>
 
-    
-    <p id="error-message" class="error-message"></p>
-    <div class="login-link">
-      <p>Already have an account? <a href="/api/login" style="font-size: 17px;">Login</a></p>
+        <button type="submit" class="register-button"><i class="fas fa-rocket"></i> Register</button>
+        
+        <p id="error-message" class="error-message"></p>
+        <div class="login-link">
+          <p>Already have an account? <a href="/api/login">Login</a></p>
+        </div>
+      </form>
     </div>
-  </div>  
-  </form>
   </div>
+
 </body>
 </html>
+
+
+
