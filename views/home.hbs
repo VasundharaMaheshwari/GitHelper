@@ -431,6 +431,10 @@
       color: #ff416c;
     }
 
+   .footer-link i {
+     margin-right: 8px; /* Space between icon and text */
+   }
+
     /* Animations */
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
@@ -616,9 +620,9 @@
   <!-- Footer -->
   <div class="footer">
     <p>&copy; 2024 Git Helper. All rights reserved.</p>
-    <p>
-      <a href="/terms">Terms of Service</a> | 
-      <a href="/privacy">Privacy Policy</a> | 
+    <p class="footer-link">
+      <a href="/terms"><i class="fas fa-file-contract"></i>Terms of Service</a> | 
+      <a href="/privacy"><i class="fas fa-user-shield"></i>Privacy Policy</a> | 
       <a href="/contact"><i class="fas fa-envelope"></i> Contact</a>
     </p>
   </div>
