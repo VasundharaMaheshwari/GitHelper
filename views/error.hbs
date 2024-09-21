@@ -4,54 +4,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Error Page</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-image: url("/1329272.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #6c5b7b, #000000);
     }
 
     .error-container {
-      background-color: #f0e9ff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 800px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
+      max-width: 600px; /* Adjust to match login container */
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      flex-direction: column;
+      text-align: center;
     }
 
     h2 {
-      font-size: 28px;
+      font-size: 36px; /* Match login form title size */
+      color: white;
       margin-bottom: 20px;
-      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+     h2 i {
+      margin-right: 10px; /* Add spacing between icon and text */
+      color: #ff4d4d; /* Red color for the error icon */
     }
 
     p {
       font-size: 16px;
-      color: #666;
+      color: #ccc;
       margin-bottom: 20px;
     }
 
     .btn {
       display: inline-block;
-      padding: 10px 20px;
-      background-color: #6c5b7b;
-      color: #fff;
+      background-color: #2874f0;
+      color: white;
       border: none;
+      padding: 12px 20px; /* Consistent padding with login button */
       border-radius: 5px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
+      font-size: 16px;
       cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
     }
 
     .btn:hover {
-      background-color: #54466d;
+    background-color: #0056b3;
+    }
+
+    .btn a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn a:hover {
+      color: #e6e6e6;
+    }
+
+    .btn i {
+      margin-right: 8px; /* Spacing between icon and text */
     }
 
     .query {
@@ -67,9 +109,9 @@
 </head>
 <body>
   <div class="error-container">
-    <h2>Error</h2>
+    <h2><i class="fas fa-exclamation-circle"></i>ERROR!</h2>
     <p>{{error_message}}</p>
-    <button type="button" class="btn" id="home-btn"><a class="query" href="/">Go To Home</a></button>
+    <button type="button" class="btn" id="home-btn"><a class="query" href="/"><i class="fas fa-home"></i>Go To Home</a></button>
   </div>
 </body>
 </html>

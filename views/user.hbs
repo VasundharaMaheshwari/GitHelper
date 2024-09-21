@@ -4,56 +4,88 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Page</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-image: url("/1329272.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #6c5b7b, #000000);
     }
 
     .user-container {
-      background-color: #f0e9ff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
+      max-width: 600px; /* Adjust to match login container */
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      flex-direction: column;
+      text-align: center;
     }
 
     h2 {
-      font-size: 28px;
+      font-size: 36px;
+      color: white;
       margin-bottom: 20px;
-      color: #333;
     }
 
     p {
       font-size: 16px;
-      color: #666;
+      color: #ccc;
       margin-bottom: 20px;
     }
 
-    .button-container {
+    .button-container, .logout-container {
       display: flex;
-      justify-content: space-between; 
+      justify-content: space-around;
+      width: 100%; /* Ensures full width distribution */
       margin-bottom: 20px;
     }
+
+     .logout-container {
+      justify-content: center; /* Center the buttons */
+      gap: 15px; /* Add a small gap between the buttons */
+    }
+
 
     button {
-      padding: 12px 24px;
-      background-color: #007bff;
+      display: inline-block;
+      background-color: #2874f0;
       color: white;
       border: none;
-      border-radius: 6px;
+      padding: 12px 20px; /* Consistent padding with login button */
+      border-radius: 5px;
       font-size: 16px;
       cursor: pointer;
+      transition: background-color 0.3s;
       text-decoration: none; 
-      margin: 0 5px; 
+    }
+
+    button i {
+      margin-right: 8px; /* Spacing between icon and text */
     }
 
     button:hover {
@@ -72,12 +104,14 @@
     <p>Email: {{email}}</p>
     <p>This is your user page. You can access your account information here.</p>
     <div class="button-container">
-        <button type="button" id="open-query-btn"><a class="query" href="/query/create">Open Query</a></button>
-        <button type="button" id="list-query-btn"><a class="query" href="/query/list">Show Queries</a></button>
-        <button type="button" id="home-btn"><a class="query" href="/">Go To Home</a></button>
+        <button type="button" id="open-query-btn"><a class="query" href="/query/create"><i class="fas fa-plus-circle"></i>Open Query</a></button>
+        <button type="button" id="list-query-btn"><a class="query" href="/query/list"><i class="fas fa-list"></i>Show Queries</a></button>
+        <button type="button" id="home-btn"><a class="query" href="/"><i class="fas fa-home"></i>Go To Home</a></button>
     </div>
-    <button type="button" id="chat-btn"><a class="query" href="/chat/list">Show Chats</a></button>
-    <button type="button" id="logout-btn"><a class="query" href="/home/logout">Proceed To Logout</a></button>
+    <div class="logout-container">
+    <button type="button" id="chat-btn"><a class="query" href="/chat/list"><i class="fas fa-comments"></i>Show Chats</a></button>
+    <button type="button" id="logout-btn"><a class="query" href="/home/logout"><i class="fas fa-sign-out-alt"></i>Proceed To Logout</a></button>
+    </div>
   </div>
 </body>
 </html>

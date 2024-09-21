@@ -4,42 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Query Details</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
+      background-image: url("/Home1.jpg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #6c5b7b, #000000);
+      
     }
 
     .container {
-      background-color: #f0e9ff;
+      background-color: rgba(240, 233, 255, 0.9); /* Semi-transparent background */
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       text-align: center;
       max-width: 800px;
       width: 100%;
+      backdrop-filter: blur(10px); /* Blur effect for a glassy look */
     }
 
     h1 {
       font-size: 32px;
       margin-bottom: 20px;
       color: #6c5b7b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
     .issue-details {
       margin-bottom: 20px;
     }
 
-    .issue-details p {
+     .issue-details p {
       font-size: 18px;
       margin-bottom: 10px;
       color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .repo-link {
@@ -69,6 +92,9 @@
       text-decoration: none;
       transition: background-color 0.3s ease;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn:hover {
@@ -84,30 +110,36 @@
     .query:hover {
       color: #e6e6e6;
     }
+
+    button i{
+      margin-right: 8px;
+    }
+
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Query Details</h1>
+    <h1><i class="fas fa-info-circle"></i>Query Details</h1>
     <div class="issue-details">
-      <p><strong>Username:</strong> {{username}}</p>
-      <p><strong>Contact Info:</strong> {{contact_info}}</p>
-      <p><strong>Skill Set:</strong> {{skillset}}</p>
-      <p><strong>GitHub ID:</strong> {{github_id}}</p>
-      <p><strong>Repository Link:</strong> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
-      <p><strong>Description:</strong> {{description}}</p>
+      <p><i class="fas fa-user"></i><strong>Username:</strong> {{username}}</p>
+      <p><i class="fas fa-phone"></i><strong>Contact Info:</strong> {{contact_info}}</p>
+      <p><i class="fas fa-code"></i><strong>Skill Set:</strong> {{skillset}}</p>
+      <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> {{github_id}}</p>
+      <p><i class="fas fa-link"></i><strong>Repository Link:</strong> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
+      <p><i class="fas fa-align-left"></i><strong>Description:</strong> {{description}}</p>
+
       {{#if user}}
       <form action="/query/respond" method="GET">
         <input type="hidden" name="_id" value={{_id}} required readonly hidden>
         <input type="hidden" name="username" value={{username}} required readonly hidden>
         <div class="btn-container">
-          <button type="submit" class="btn">Respond</button>
-          <button type="button" class="btn" id="home-btn"><a class="query" href="/">Go To Homepage</a></button>
+          <button type="submit" class="btn"><i class="fas fa-reply"></i>Respond</button>
+          <button type="button" class="btn" id="home-btn"><a class="query" href="/"><i class="fas fa-home"></i>Go To Homepage</a></button>
         </div>
       </form>
       {{else}}
       <div class="btn-container">
-        <button type="button" class="btn" id="home-btn"><a class="query" href="/">Go To Homepage</a></button>
+        <button type="button" class="btn" id="home-btn"><a class="query" href="/"><i class="fas fa-home"></i>Go To Homepage</a></button>
       </div>
       {{/if}}
     </div>
