@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login Form</title>
 
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
@@ -15,11 +15,12 @@
 
   <style>
     * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
     body {
       background-image: url("/Home1.jpg");
       background-repeat: no-repeat;
@@ -30,87 +31,169 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      
+      position: relative;
+      color: #f0f0f0;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    /* Top Navigation Bar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .logo img {
+      height: 40px;
+      margin-right: 10px; 
+      transition: transform 0.3s ease;
+    }
+
+    .navbar .logo img:hover {
+      transform: rotate(10deg);
+    }
+
+    .navbar .nav-links a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 20px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      transition: background-image 0.5s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .navbar .nav-links a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
     .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 900px;
-}
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 750px;
+      padding-top: 40px;
+      padding-bottom: 0;
+    }
 
-.login-box {
-    display: flex;
-      align-items: stretch; /* Align sections vertically */
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 40px;
+    .login-box {
+      display: flex;
+      align-items: stretch;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 30px;
       backdrop-filter: blur(10px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      max-width: 800px;
+    }
 
-.logo-section {
-    flex: 1;
-    display: flex; /* Use Flexbox to position image and text side by side */
-    flex-direction: row; /* Set the direction to row */
-    align-items: center; /* Align items vertically centered */
-    justify-content: center; /* Align items to the left */
-    color: white;
-    padding-right: 20px;
-}
+    .login-box:hover {
+      transform: translateY(-10px); 
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+    }
 
-.logo-image {
-    width: 75px; /* Adjust the width as needed */
-    height: 75px; /* Adjust the height as needed */
-    margin-right: 10px; /* Space between image and text */
-}
+    .logo-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      padding-right: 20px;
+    }
 
-.logo-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-.logo-text h1 {
-    font-family: 'Roboto', sans-serif; 
-    font-size: 36px;
-    margin-bottom: 0; /* Remove extra margin */
-}
+    .logo-image {
+      width: 80px;
+      height: 80px;
+      margin-right: 15px;
+      transition: transform 0.3s ease;
+    }
 
-.logo-text p {
-    font-size: 14px;
-    color: #ccc;
-    margin: 0;
-}
+    .logo-image:hover {
+      transform: rotate(10deg);
+    }
 
-.partition {
-    width: 1px;
-    background-color: rgba(255, 255, 255, 0.3);
-    margin: 0 20px; /* Space between sections */
-}
-.login-form {
-    flex: 1; /* Adjusts size to take up one part of the space */
-    display: flex;
-    flex-direction: column;
-    padding-left: 20px;
-}
+    .logo-text h1 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 36px;
+      margin-bottom: 0;
+      color: #ffffff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .partition {
+      width: 1px;
+      background-color: rgba(255, 255, 255, 0.3);
+      margin: 0 10px;
+    }
+
+    .login-form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding-left: 20px;
+    }
+
+    .login-form img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .login-form img:hover {
+      transform: scale(1.05);
+    }
 
     .form-group {
-    margin-bottom: 15px;
-    position: relative;
+      margin-bottom: 15px;
+      position: relative;
     }
 
     .form-group label {
-    color: white;
-    font-size: 14px;
-    margin-bottom: 5px;
-    display: block;
-}
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: block;
+    }
 
- .input-container {
+    .input-container {
       position: relative;
       width: 100%;
+      display: flex;
+      align-items: center;
     }
 
     .input-container input {
@@ -119,205 +202,263 @@
       border-radius: 5px;
       outline: none;
       background: rgba(255, 255, 255, 0.2);
-      color: white;
+      color: #fff; 
+      padding: 10px 10px 10px 60px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      font-size: 14px;
     }
 
-     .input-icon {
+    .input-container input::placeholder {
+      color: rgba(255, 255, 255, 0.7); 
+    }
+
+    .input-container input:focus {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 5px rgba(40, 116, 240, 0.7);
+    }
+
+    .input-icon {
       position: absolute;
-      left: 10px;
+      left: 15px;
       top: 50%;
       transform: translateY(-50%);
-      color: #ccc;
+      color: #fff;
+      font-size: 18px;
     }
 
     .input-divider {
       position: absolute;
-      left: 35px;
+      left: 45px;
       top: 10px;
       bottom: 10px;
       width: 1px;
       background-color: rgba(255, 255, 255, 0.3);
     }
 
-.form-group input {
-    padding: 10px 10px 10px 60px; /* Adjust as needed */
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    outline: none;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-input::placeholder {
-  color: rgba(255, 255, 255, 0.7); /* Adjust the color as needed */
-  font-family: 'Roboto', sans-serif; /* Change to your desired font */
-  font-size: 14px; /* Adjust font size as needed */
-}
-
-.options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    color: #ccc;
-}
-
-.options a {
-    color: #ccc;
-    text-decoration: none;
-    font-size: 12px;
-    display: flex;
-    align-items: center; /* Align text and icon vertically */
-}
-
-.options a.forgot-password {
-    font-size: 17px;
-    font-family: 'Roboto', sans-serif; 
-    color: #ccc; /* Maintain existing color */
-    text-decoration: none;
-    display: flex;
-    align-items: center; 
-}
-
-.options a i {
-      margin-right: 8px; /* Space between icon and text */
+    .login-button {
+      width: 100%;
+      background-image: linear-gradient(45deg, #ff416c, #ff4b2b);
+      color: #fff;
+      border: none;
+      padding: 15px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 18px;
+      transition: background-image 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-.options a:hover {
-    text-decoration: underline;
-}
+    .login-button i {
+      margin-right: 8px;
+    }
 
-.login-button {
-    background-color: #2874f0;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+    .login-button:hover {
+      background-image: linear-gradient(45deg, #e60039, #e63900);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
 
-.login-button:hover {
-    background-color: #0056b3;
-}
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
+    .options label {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .options input[type="checkbox"] {
+      margin-right: 5px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+
+    .options a.forgot-password {
+      font-size: 14px;
+      color: #ccc;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      transition: color 0.3s ease;
+    }
+
+    .options a.forgot-password i {
+      margin-right: 5px;
+    }
+
+    .options a.forgot-password:hover {
+      color: #ff7e5f; 
+    }
+
     .error-message {
-      color: red;
+      color: #ff4b2b;
       margin-top: 10px;
       font-size: 14px;
+      text-align: center;
     }
 
     .register-link {
       text-align: center;
+      color: white;
       margin-top: 20px;
-      color: #ccc; 
-      font-size: 18px;
-      font-family: 'Roboto', sans-serif; 
+      font-size: 16px;
     }
 
     .register-link a {
-      color: #ccc;
+      color: #ff4b2b;
+      font-weight: bold;
       text-decoration: none;
-      font-size: 14px;
+      transition: color 0.3s ease;
     }
 
     .register-link a:hover {
+      color: #ff416c;
       text-decoration: underline;
     }
 
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .login-box {
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      .partition {
+        width: 100%;
+        height: 1px;
+        margin: 20px 0;
+      }
+
+      .logo-section, .login-form {
+        padding: 0;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar .nav-links {
+        margin-top: 10px;
+      }
+
+      .navbar .nav-links a {
+        margin-left: 0;
+        margin-right: 20px;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <!-- Top Navigation Bar -->
+  <div class="navbar">
+    <div class="logo">
+      <img src="/logo.jpeg" alt="Git Helper Logo">
+      <span>Git Helper</span>
+    </div>
+    <div class="nav-links">
+      <a href="/home"><i class="fas fa-home"></i> Homepage</a>
+      <a href="/error/faq"><i class="fas fa-question-circle"></i> FAQ</a>
+    </div>
+  </div>
+
   <div class="login-container">
     <div class="login-box">
-
       <!-- Logo Section -->
       <div class="logo-section">
-        <img src="/logo.png" alt="Logo" class="logo-image">
-            <div class="logo-text">
-              <h1>Git Helper</h1>   
-            </div>
+        <img src="/logo.jpeg" alt="Logo" class="logo-image">
+        <div class="logo-text">
+          <h1>Git Helper</h1>
+        </div>
       </div>
 
-    <!-- Partition Line -->
-    <div class="partition"></div>
-    
-    <!-- Login Form Section -->
-    <form id="login-form" class="login-form" action="/api/login" method="post">
-      
-      <!-- Image Above the Form -->
-      <img src="/people.png" alt="Login Illustration" style="width: 100%; height: auto; margin-bottom: 20px;">
-      
-      <div class="form-group">
-        <div class="input-container">
+      <!-- Partition Line -->
+      <div class="partition"></div>
+
+      <!-- Login Form Section -->
+      <form id="login-form" class="login-form" action="/api/login" method="post">
+        <!-- Image Above the Form -->
+        <img src="/people.png" alt="Login Illustration">
+        
+        <div class="form-group">
+          <label for="username">Username</label> 
+          <div class="input-container">
             <i class="fas fa-user input-icon"></i>
-        <div class="input-divider"></div>
-        <input type="text" id="username" placeholder="Username" name="username" required>
+            <div class="input-divider"></div>
+            <input type="text" id="username" placeholder="Enter your username" name="username" required>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <div class="input-container">
+        <div class="form-group">
+          <label for="password">Password</label> 
+          <div class="input-container">
             <i class="fas fa-lock input-icon"></i>
-        <div class="input-divider"></div>
-        <input type="password" placeholder="Password" id="password" required>
-        <input type="password" name="encryptedpassword"   id="encryptedpassword" required readonly hidden>
+            <div class="input-divider"></div>
+            <input type="password" placeholder="Enter your password" id="password" name="password" required>
+            <input type="password" name="encryptedpassword" id="encryptedpassword" required readonly hidden>
+          </div>
         </div>
-      </div>
 
-      <div class="options">
-        <label>
-          <input type="checkbox"> Remember me
-        </label>
+        <div class="options">
+          <label>
+            <input type="checkbox" name="remember"> Remember me
+          </label>
           <a href="#" class="forgot-password"><i class="fas fa-key"></i>Forgot Password?</a>
-      </div>
-      <button type="submit" class="login-button"> <i class="fas fa-sign-in-alt"></i>LOGIN</button>
-      
-      <div class="register-link" style="text-align: center; margin-top: 20px;">
-        <p>Don't have an account? <a href="/api/register" style="font-size: 17px">Register</a></p>
-      </div>
+        </div>
+        <button type="submit" class="login-button"><i class="fas fa-sign-in-alt"></i> LOGIN</button>
+        
+        <div class="register-link">
+          <p>Don't have an account? <a href="/api/register">Register</a></p>
+        </div>
+      </form>
 
+      <p id="error-message" class="error-message"></p>
     </div>
-    </form>
-    <p id="error-message" class="error-message"></p>
-    
   </div>
 
   <script>
     document.getElementById("login-form").addEventListener("submit", function(event) {
-    
+      // Existing validation logic
       var username = document.getElementById("username").value;
       var password = document.getElementById("password").value;
 
-      
       var usernameRegex = /^[a-zA-Z0-9_]+$/;
       if (!usernameRegex.test(username)) {
-          document.getElementById("error-message").innerText = "Invalid Username.";
-          event.preventDefault();
-          return;
+        document.getElementById("error-message").innerText = "Invalid Username. Only letters, numbers, and underscores are allowed.";
+        event.preventDefault();
+        return;
       }
 
-      
       var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
       if (!passwordRegex.test(password)) {
-          document.getElementById("error-message").innerText = "Invalid Password.";
-          event.preventDefault();
-          return;
-      }
-      
-      if (username.trim() === "" || password.trim() === "") {
-        document.getElementById("error-message").innerText = "Username and password are required";
+        document.getElementById("error-message").innerText = "Password must contain at least 8 characters, including 1 letter and 1 number.";
         event.preventDefault();
-      } else {
-        
-        document.getElementById("error-message").innerText = "";
-
+        return;
       }
 
-      var sha256 = function sha256(ascii) {
+      if (username.trim() === "" || password.trim() === "") {
+        document.getElementById("error-message").innerText = "Username and password are required.";
+        event.preventDefault();
+        return;
+      } else {
+        document.getElementById("error-message").innerText = "";
+      }
+
+      // SHA-256 Encryption Function
+      var sha256 = function(ascii) {
         function rightRotate(value, amount) {
-            return (value>>>amount) | (value<<(32 - amount));
+          return (value >>> amount) | (value << (32 - amount));
         };
         
         var mathPow = Math.pow;
@@ -325,82 +466,82 @@ input::placeholder {
         var lengthProperty = 'length';
         var i, j; 
         var result = '';
-
         var words = [];
-        var asciiBitLength = ascii[lengthProperty]*8;
+        var asciiBitLength = ascii[lengthProperty] * 8;
         
         var hash = sha256.h = sha256.h || [];
         var k = sha256.k = sha256.k || [];
         var primeCounter = k[lengthProperty];
-
+        
         var isComposite = {};
         for (var candidate = 2; primeCounter < 64; candidate++) {
-            if (!isComposite[candidate]) {
-                for (i = 0; i < 313; i += candidate) {
-                    isComposite[i] = candidate;
-                }
-                hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-                k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+          if (!isComposite[candidate]) {
+            for (i = 0; i < 313; i += candidate) {
+              isComposite[i] = candidate;
             }
+            hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+            k[primeCounter++] = (mathPow(candidate, 1/3) * maxWord) | 0;
+          }
         }
         
-        ascii += '\x80' 
-        while (ascii[lengthProperty]%64 - 56) ascii += '\x00' 
+        ascii += '\x80'; 
+        while (ascii[lengthProperty] % 64 - 56) ascii += '\x00'; 
         for (i = 0; i < ascii[lengthProperty]; i++) {
-            j = ascii.charCodeAt(i);
-            if (j>>8) return; 
-            words[i>>2] |= j << ((3 - i)%4)*8;
+          j = ascii.charCodeAt(i);
+          if (j >> 8) return; 
+          words[i >> 2] |= j << ((3 - i) % 4) * 8;
         }
-        words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
-        words[words[lengthProperty]] = (asciiBitLength)
+        words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+        words[words[lengthProperty]] = (asciiBitLength);
         
         for (j = 0; j < words[lengthProperty];) {
-            var w = words.slice(j, j += 16); 
-            var oldHash = hash;
-            hash = hash.slice(0, 8);
+          var w = words.slice(j, j += 16); 
+          var oldHash = hash.slice(0);
+          hash = hash.slice(0, 8);
+          
+          for (i = 0; i < 64; i++) {
+            var i2 = i + j;
+            var w15 = w[i - 15], w2 = w[i - 2];
+    
+            var a = hash[0], e = hash[4];
+            var temp1 = hash[7]
+                + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) 
+                + ((e & hash[5]) ^ ((~e) & hash[6])) 
+                + k[i]
+                + (w[i] = (i < 16) ? w[i] : (
+                        w[i - 16]
+                        + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+                        + w[i - 7]
+                        + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+                    ) | 0
+                );
+            var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) 
+                + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
             
-            for (i = 0; i < 64; i++) {
-                var i2 = i + j;
-                var w15 = w[i - 15], w2 = w[i - 2];
-
-                var a = hash[0], e = hash[4];
-                var temp1 = hash[7]
-                    + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) 
-                    + ((e&hash[5])^((~e)&hash[6])) 
-                    + k[i]
-                    + (w[i] = (i < 16) ? w[i] : (
-                            w[i - 16]
-                            + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
-                            + w[i - 7]
-                            + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
-                        )|0
-                    );
-                var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) 
-                    + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
-                
-                hash = [(temp1 + temp2)|0].concat(hash); 
-                hash[4] = (hash[4] + temp1)|0;
-            }
-            
-            for (i = 0; i < 8; i++) {
-                hash[i] = (hash[i] + oldHash[i])|0;
-            }
+            hash = [(temp1 + temp2) | 0].concat(hash); 
+            hash[4] = (hash[4] + temp1) | 0;
+          }
+          
+          for (i = 0; i < 8; i++) {
+            hash[i] = (hash[i] + oldHash[i]) | 0;
+          }
         }
         
         for (i = 0; i < 8; i++) {
-            for (j = 3; j + 1; j--) {
-                var b = (hash[i]>>(j*8))&255;
-                result += ((b < 16) ? 0 : '') + b.toString(16);
-            }
+          for (j = 3; j + 1; j--) {
+            var b = (hash[i] >> (j * 8)) & 255;
+            result += ((b < 16) ? '0' : '') + b.toString(16);
+          }
         }
         return result;
-
-    };
-
-    var encryptedpassword = document.getElementById("encryptedpassword");
-    encryptedpassword.value = sha256(document.getElementById("password").value);
-
-  });
+      };
+      
+      var encryptedpassword = document.getElementById("encryptedpassword");
+      encryptedpassword.value = sha256(document.getElementById("password").value);
+    });
   </script>
 </body>
 </html>
+
+
+

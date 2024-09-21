@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* Reset some default styles */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -32,8 +31,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
       color: #f0f0f0;
-      overflow: hidden; /* Prevent scrolling */
+      overflow: hidden; 
     }
 
     /* Navbar Styles */
@@ -42,7 +42,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; /* Removed dark overlay */
+      background: transparent; 
       position: fixed;
       width: 100%;
       top: 0;
@@ -87,9 +87,9 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      max-width: 900px; /* Made the container smaller */
-      padding-top: 100px; /* Moved the form further down to prevent interference with navbar */
-      padding-bottom: 0; /* Removed bottom padding since no footer */
+      max-width: 900px; 
+      padding-top: 100px; 
+      padding-bottom: 0; 
     }
 
     .register-box {
@@ -97,10 +97,10 @@
       align-items: stretch;
       background: rgba(0, 0, 0, 0.6);
       border-radius: 20px;
-      padding: 30px; /* Reduced padding to make it smaller */
+      padding: 30px; 
       backdrop-filter: blur(10px);
       width: 100%;
-      max-height: 80vh; /* Reduced the height to make it smaller */
+      max-height: 80vh;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     }
 
@@ -135,7 +135,7 @@
     .partition {
       width: 1px;
       background-color: rgba(255, 255, 255, 0.3);
-      margin: 0 10px; /* Reduced margin */
+      margin: 0 10px; 
     }
 
     .illustration-container {
@@ -147,18 +147,14 @@
     }
 
     .illustration-icon {
-      font-size: 100px; /* Adjust the size as needed */
-      color: #ffffff; /* White color to stand out against the dark background */
+      font-size: 100px; 
+      color: #ffffff; 
       margin-bottom: 10px;
-      /* Optional: Add animation or additional styling */
-      /* Example: */
-      /* animation: pulse 2s infinite; */
     }
     
-    /* Optional: Add a hover effect */
     .illustration-icon:hover {
-      color: #ff4b2b; /* Change color on hover */
-      transform: scale(1.1); /* Slightly enlarge on hover */
+      color: #ff4b2b; 
+      transform: scale(1.1); 
       transition: all 0.3s ease;
     }
 
@@ -170,7 +166,7 @@
     }
 
     .form-group {
-      margin-bottom: 15px; /* Reduced margin to make it less congested */
+      margin-bottom: 15px; 
       position: relative;
     }
 
@@ -234,13 +230,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 10px; /* Add some top margin */
+      margin-top: 10px;
       transition: transform 0.3s ease, background-image 0.3s ease;
     }
 
     .register-button:hover {
       background-image: linear-gradient(45deg, #e60039, #e63900);
-      transform: translateY(-5px);
+      transform: translateY(-2px);
     }
 
     .register-button i {
@@ -295,8 +291,7 @@
       }
 
       .illustration-icon {
-        font-size: 80px; /* Smaller size for mobile devices */
-      }
+        font-size: 80px; 
     }
   </style>
 
@@ -416,7 +411,7 @@
       <span>Git Helper</span>
     </div>
     <div class="nav-links">
-      <a href="/"><i class="fas fa-home"></i> Homepage</a>
+      <a href="/home"><i class="fas fa-home"></i> Homepage</a>
       <a href="/error/faq"><i class="fas fa-question-circle"></i> FAQ</a>
     </div>
   </div>
