@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
+    /* Reset some default styles */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -37,7 +38,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; 
+      background: transparent; /* Removed background color */
       position: fixed;
       width: 100%;
       top: 0;
@@ -46,7 +47,7 @@
     }
 
     .navbar:hover {
-      background: rgba(0, 0, 0, 0.3); 
+      background: rgba(0, 0, 0, 0.3); /* Optional: Add slight background on hover for readability */
     }
 
     .navbar .logo {
@@ -104,10 +105,11 @@
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      background: rgba(0, 0, 0, 0.3); 
+      background: rgba(0, 0, 0, 0.3); /* Adjusted for better transparency */
       backdrop-filter: blur(5px);
       animation: fadeIn 2s ease-in-out;
-      padding-top: 80px;
+      padding-top: 80px; /* To prevent overlap with navbar */
+    }
 
     .hero h1 {
       font-size: 48px;
@@ -147,7 +149,7 @@
       padding: 60px 20px;
       text-align: center;
       animation: fadeIn 1.2s ease-in-out;
-      min-height: 100vh; 
+      min-height: 100vh; /* Occupy entire viewport */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -197,6 +199,7 @@
       color: #dbdada;
     }
 
+    /* Additional Features */
     .features .feature.extra-feature {
       background: rgba(23, 49, 101, 0.9);
       padding: 20px;
@@ -234,7 +237,7 @@
       padding: 60px 20px;
       text-align: center;
       animation: fadeIn 1.2s ease-in-out;
-      min-height: 100vh; 
+      min-height: 100vh; /* Occupy entire viewport */
     }
 
     .testimonials h2 {
@@ -370,7 +373,7 @@
     }
 
     .repo-link {
-      color: #1e90ff; 
+      color: #1e90ff; /* Changed to DodgerBlue for better readability */
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s ease;
@@ -431,7 +434,7 @@
     }
 
    .footer-link i {
-     margin-right: 8px; 
+     margin-right: 8px; /* Space between icon and text */
    }
 
     /* Animations */
@@ -522,7 +525,7 @@
   <!-- Navbar -->
   <div class="navbar">
     <div class="logo">
-      <img src="logo.jpeg" alt="Git Helper Logo"> 
+      <img src="logo.jpeg" alt="Git Helper Logo"> <!-- Replace 'logo.jpeg' with your logo file -->
       <span>Git Helper</span>
     </div>
     <div class="nav-links">
