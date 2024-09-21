@@ -4,48 +4,105 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FAQ & Tutorial - GitHelper</title>
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #6c5b7b;
-      color: #333;
+      background-image: url("/Home1.jpg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: column;
+      padding-top: 80px; /* Space for fixed navbar */
+      
     }
 
-    .container {
+     .navbar {
+      background-color: #e3dcf9;
+      padding: 15px 20px;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center; /* Center the content horizontally */
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar a {
+      color: #6c5b7b;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    .navbar a:hover {
+      color: #54466d;
+    }
+
+    .navbar i{
+      margin-right: 8px;
+    }
+    
+    .content-section i{
+      margin-right: 8px;
+    }
+
+     .container {
       max-width: 1200px;
-      margin: 50px auto;
+      width: 95%;
+      margin: 20px auto;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      background-color: #fff;
+      backdrop-filter: blur(3px); /* Adds the blur effect */
+
     }
 
     h1 {
       font-size: 32px;
       margin-bottom: 20px;
       text-align: center;
-      color: #6c5b7b;
+      color: white;
     }
 
     .content-section {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       gap: 20px;
       margin-bottom: 40px;
     }
 
     .faq-section, .tutorial-section {
-      flex: 1;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      background-color: #f8f4ff;
-      transition: transform 0.3s ease-in-out;
-    }
+  flex: 1;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
 
-    .faq-section:hover, .tutorial-section:hover {
+     .faq-section:hover, .tutorial-section:hover {
       transform: translateY(-5px);
     }
 
@@ -58,46 +115,14 @@
     .faq-section p, .tutorial-section p {
       font-size: 16px;
       margin-bottom: 10px;
-      color: #555;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #6c5b7b;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn:hover {
-      background-color: #54466d;
-    }
-
-    .navbar {
-      background-color: #e3dcf9;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 5px;
-      text-align: center;
-    }
-
-    .navbar a {
-      color: #6c5b7b;
-      text-decoration: none;
-      margin: 0 10px;
-    }
-
-    .navbar a:hover {
-      text-decoration: underline;
+      color: #ccc;
     }
 
     .faq-question, .tutorial-question {
       font-weight: bold;
       color: #6c5b7b;
     }
+     
 
     .hidden {
       display: none;
@@ -125,7 +150,7 @@
 </head>
 <body>
   <div class="navbar">
-    <a href="/">Home</a>
+    <a href="/"><i class="fas fa-home"></i>Home</a>
   </div>
 
   <div class="container">
@@ -133,7 +158,7 @@
 
     <div class="content-section">
       <div class="faq-section">
-        <h2>Frequently Asked Questions:</h2>
+        <h2><i class="fas fa-question-circle"></i>Frequently Asked Questions:</h2>
 
         <div class="faq-item">
           <h2 class="faq-question">What is GitHelper?</h2>
@@ -162,7 +187,7 @@
       </div>
 
       <div class="tutorial-section">
-        <h2>Tutorial:</h2>
+        <h2><i class="fas fa-book"></i>Tutorial:</h2>
 
         <div class="tutorial-item">
           <h2 class="tutorial-question">How to Register an Account?</h2>
