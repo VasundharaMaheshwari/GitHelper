@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FAQ & Tutorial - GitHelper</title>
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
 
@@ -13,77 +13,130 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+    /* Reset and Base Styles */
     * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
     body {
       background-image: url("/Home1.jpg");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       flex-direction: column;
       padding-top: 80px; /* Space for fixed navbar */
-      
+      backdrop-filter: brightness(0.8); /* Subtle dark overlay */
+      color: #f0f0f0;
     }
 
-     .navbar {
-      background-color: #e3dcf9;
-      padding: 15px 20px;
+    /* Navbar Styles */
+    .navbar {
       width: 100%;
       position: fixed;
       top: 0;
       left: 0;
       z-index: 1000;
       display: flex;
-      justify-content: center; /* Center the content horizontally */
+      justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 15px 30px;
+      background: transparent; /* Transparent background */
+      transition: background 0.3s ease;
     }
 
-    .navbar a {
-      color: #6c5b7b;
+    .navbar:hover {
+      background: rgba(0, 0, 0, 0.3); /* Slight background on hover for readability */
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .logo img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar .logo img:hover {
+      transform: rotate(10deg);
+    }
+
+    .navbar .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .nav-links a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
       text-decoration: none;
-      margin: 0 10px;
-      font-size: 18px;
-      transition: color 0.3s;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
     }
 
-    .navbar a:hover {
-      color: #54466d;
+    .navbar .nav-links a i {
+      margin-right: 4px;
     }
 
-    .navbar i{
-      margin-right: 8px;
-    }
-    
-    .content-section i{
-      margin-right: 8px;
+
+
+    .navbar .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
     }
 
-     .container {
+    .navbar .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .navbar .nav-links a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Container Styles */
+    .container {
       max-width: 1200px;
       width: 95%;
-      margin: 20px auto;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(3px); /* Adds the blur effect */
-
+      margin: 40px auto;
+      padding: 40px;
+      border-radius: 12px;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     h1 {
-      font-size: 32px;
-      margin-bottom: 20px;
+      font-size: 36px;
+      margin-bottom: 25px;
       text-align: center;
-      color: white;
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     .content-section {
@@ -95,152 +148,307 @@
     }
 
     .faq-section, .tutorial-section {
-  flex: 1;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
-}
+      flex: 1;
+      padding: 25px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.2); /* Transparent background */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+      position: relative;
+    }
 
-     .faq-section:hover, .tutorial-section:hover {
-      transform: translateY(-5px);
+    .faq-section:hover, .tutorial-section:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
 
     .faq-section h2, .tutorial-section h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
+      font-size: 26px;
+      margin-bottom: 12px;
       color: #6c5b7b;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    .faq-section h2 i, .tutorial-section h2 i {
+      margin-right: 8px;
+      color: #ff416c;
     }
 
     .faq-section p, .tutorial-section p {
       font-size: 16px;
-      margin-bottom: 10px;
-      color: #ccc;
+      margin-bottom: 12px;
+      color: #f0f0f0;
+      line-height: 1.6;
     }
 
     .faq-question, .tutorial-question {
       font-weight: bold;
       color: #6c5b7b;
-    }
-     
-
-    .hidden {
-      display: none;
-    }
-
-    .show-more {
       cursor: pointer;
-      color: #007bff;
-      text-decoration: underline;
+      position: relative;
+      padding-right: 25px;
+      margin-bottom: 0px; /* Increased space between questions */
+    }
+
+    .faq-question::after, .tutorial-question::after {
+      content: '\f078'; /* Font Awesome chevron-down */
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-question.active::after, .tutorial-question.active::after {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer, .tutorial-answer {
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.3s ease, opacity 0.3s ease; /* Increased transition duration */
+      overflow: hidden;
+      background-color: rgba(255, 255, 255, 0.7);
+      color: #333333;
+      padding: 5px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: max-height 0.6s ease, opacity 0.6s ease, background-color 0.6s ease, color 0.6s ease;
+    }
+
+    .faq-answer.show, .tutorial-answer.show {
+      max-height: 500px; /* Arbitrary large value to accommodate content */
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #ffffff;
+    }
+
+    /* Show More Buttons Alignment */
+    .show-more-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .show-more-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
       font-size: 16px;
-      margin-top: 10px;
-      transition: color 0.3s ease;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
-    .show-more:hover {
-      color: #0056b3;
+    .show-more-btn:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
     }
 
+    /* Responsive Design */
     @media (max-width: 768px) {
       .content-section {
         flex-direction: column;
       }
     }
+
+    /* Additional Enhancements */
+    .faq-section, .tutorial-section {
+      background-color: rgba(255, 255, 255, 0.1); /* More transparency */
+      backdrop-filter: blur(5px);
+    }
+
+    .faq-section h2, .tutorial-section h2 {
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .faq-section p, .tutorial-section p {
+      color: #d1d1d1;
+    }
+
+    .faq-question, .tutorial-question {
+      color: #ffffff;
+    }
+
+    /* Smooth transitions for content reveal */
+    .hidden {
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0s ease, opacity 0s ease; /* Increased transition duration */
+    }
+
+    .hidden.show {
+      max-height: 1000px; /* Arbitrary large value to accommodate content */
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
+  <!-- Navbar -->
   <div class="navbar">
-    <a href="/"><i class="fas fa-home"></i>Home</a>
+    <div class="logo">
+      <img src="/logo.jpeg" alt="Git Helper Logo">
+      <span>Git Helper</span>
+    </div>
+    <div class="nav-links">
+      <a href="/"><i class="fas fa-home"></i>Home</a>
+      <a href="/api/register"><i class="fas fa-user-plus"></i>Register</a>
+      <a href="/api/login"><i class="fas fa-sign-in-alt"></i>Login</a>
+    </div>
   </div>
 
+  <!-- Main Container -->
   <div class="container">
     <h1>FAQ & Tutorial</h1>
 
     <div class="content-section">
+      <!-- FAQ Section -->
       <div class="faq-section">
         <h2><i class="fas fa-question-circle"></i>Frequently Asked Questions:</h2>
 
         <div class="faq-item">
-          <h2 class="faq-question">What is GitHelper?</h2>
-          <p>GitHelper: Empowering the Final Push is a platform designed to connect maintainers with aspiring contributors. It helps improve quality of contributions made while reducing maintainer fatigue.</p>
+          <h3 class="faq-question" onclick="toggleFaqItem(this)">What is GitHelper?</h3>
+          <div class="faq-answer">
+            <p>GitHelper: Empowering the Final Push is a platform designed to connect maintainers with aspiring contributors. It helps improve the quality of contributions made while reducing maintainer fatigue.</p>
+          </div>
         </div>
 
         <div class="faq-item">
-          <h2 class="faq-question">Why can't I perform an action?</h2>
-          <p>If you're unable to perform certain actions, it might be due to a rate limit. This happens when you're moving too fast, so please slow down and try again later.</p>
+          <h3 class="faq-question" onclick="toggleFaqItem(this)">Why can't I perform an action?</h3>
+          <div class="faq-answer">
+            <p>If you're unable to perform certain actions, it might be due to a rate limit. This happens when you're moving too fast, so please slow down and try again later.</p>
+          </div>
         </div>
 
         <div class="faq-item">
-          <h2 class="faq-question">How do maintainers communicate with contributors?</h2>
-          <p>Maintainers are the only ones who can initiate conversations with contributors to prevent spam. They can view the GitHub profiles of respondents and start chats if skills match.</p>
+          <h3 class="faq-question" onclick="toggleFaqItem(this)">How do maintainers communicate with contributors?</h3>
+          <div class="faq-answer">
+            <p>Maintainers are the only ones who can initiate conversations with contributors to prevent spam. They can view the GitHub profiles of respondents and start chats if skills match.</p>
+          </div>
         </div>
 
-        <div class="hidden faq-item" id="faq-hidden">
-          <h2 class="faq-question">Why did my account disappear?</h2>
-          <p>If your account has disappeared, it’s likely that you violated platform rules and it was deleted by an admin.</p>
+        <div class="faq-item hidden" id="faq-hidden">
+          <h3 class="faq-question" onclick="toggleFaqItem(this)">Why did my account disappear?</h3>
+          <div class="faq-answer">
+            <p>If your account has disappeared, it’s likely that you violated platform rules and it was deleted by an admin.</p>
+          </div>
 
-          <h2 class="faq-question">Can I get my account back after it's deleted?</h2>
-          <p>If your account was deleted due to breaking the rules, it cannot be restored. Please follow the guidelines to avoid this in the future.</p>
+          <h3 class="faq-question" onclick="toggleFaqItem(this)">Can I get my account back after it's deleted?</h3>
+          <div class="faq-answer">
+            <p>If your account was deleted due to breaking the rules, it cannot be restored. Please follow the guidelines to avoid this in the future.</p>
+          </div>
         </div>
-
-        <span class="show-more" onclick="toggleFaqHidden()">Show More</span>
       </div>
 
+      <!-- Tutorial Section -->
       <div class="tutorial-section">
         <h2><i class="fas fa-book"></i>Tutorial:</h2>
 
         <div class="tutorial-item">
-          <h2 class="tutorial-question">How to Register an Account?</h2>
-          <p>To register, click on the Register link in the navbar, fill in your details and submit. Once registered, you can log in and begin contributing.</p>
+          <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How to Register an Account?</h3>
+          <div class="tutorial-answer">
+            <p>To register, click on the Register link in the navbar, fill in your details, and submit. Once registered, you can log in and begin contributing.</p>
+          </div>
         </div>
 
         <div class="tutorial-item">
-          <h2 class="tutorial-question">How to Login?</h2>
-          <p>Navigate to the Login page, enter your credentials, and hit submit. You'll now have access to your account dashboard.</p>
+          <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How to Login?</h3>
+          <div class="tutorial-answer">
+            <p>Navigate to the Login page, enter your credentials, and hit submit. You'll now have access to your account dashboard.</p>
+          </div>
         </div>
 
         <div class="tutorial-item">
-          <h2 class="tutorial-question">How to Open a Query?</h2>
-          <p>After logging in, you can click the Open Query button to create a new issue. Fill out the necessary information, including a title, description, and a GitHub repository link, and submit it. Your query will then be visible to aspiring contributors.</p>
+          <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How to Open a Query?</h3>
+          <div class="tutorial-answer">
+            <p>After logging in, you can click the Open Query button to create a new issue. Fill out the necessary information, including a title, description, and a GitHub repository link, and submit it. Your query will then be visible to aspiring contributors.</p>
+          </div>
         </div>
 
-        <div class="hidden tutorial-item" id="tutorial-hidden">
-          <h2 class="tutorial-question">How to View Open Queries?</h2>
-          <p>Head to the homepage where you can browse all the currently open queries. Each query will display the maintainer’s GitHub ID, skill set expected, and repository link.</p>
+        <div class="tutorial-item hidden" id="tutorial-hidden">
+          <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How to View Open Queries?</h3>
+          <div class="tutorial-answer">
+            <p>Head to the homepage where you can browse all the currently open queries. Each query will display the maintainer’s GitHub ID, skill set expected, and repository link.</p>
+          </div>
 
-          <h2 class="tutorial-question">How can maintainers initiate conversations?</h2>
-          <p>Maintainers can view the responses to their queries and initiate conversations when they find a suitable match.</p>
+          <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How can maintainers initiate conversations?</h3>
+          <div class="tutorial-answer">
+            <p>Maintainers can view the responses to their queries and initiate conversations when they find a suitable match.</p>
+          </div>
         </div>
-
-        <span class="show-more" onclick="toggleTutorialHidden()">Show More</span>
       </div>
+    </div>
+
+    <!-- Show More Buttons Aligned -->
+    <div class="show-more-container">
+      <button class="show-more-btn" id="faq-show-more" onclick="toggleFaqHidden()">Show More FAQ</button>
+      <button class="show-more-btn" id="tutorial-show-more" onclick="toggleTutorialHidden()">Show More Tutorial</button>
     </div>
   </div>
 
   <script>
+    // Toggle Hidden FAQ Section
     function toggleFaqHidden() {
       const faqHidden = document.getElementById('faq-hidden');
-      const faqShowMore = document.querySelector('.faq-section .show-more');
+      const faqShowMore = document.getElementById('faq-show-more');
 
       if (faqHidden.classList.contains('hidden')) {
         faqHidden.classList.remove('hidden');
-        faqShowMore.textContent = 'Show Less';
+        faqHidden.classList.add('show');
+        faqShowMore.textContent = 'Show Less FAQ';
       } else {
         faqHidden.classList.add('hidden');
-        faqShowMore.textContent = 'Show More';
+        faqHidden.classList.remove('show');
+        faqShowMore.textContent = 'Show More FAQ';
       }
     }
 
+    // Toggle Hidden Tutorial Section
     function toggleTutorialHidden() {
       const tutorialHidden = document.getElementById('tutorial-hidden');
-      const tutorialShowMore = document.querySelector('.tutorial-section .show-more');
+      const tutorialShowMore = document.getElementById('tutorial-show-more');
 
       if (tutorialHidden.classList.contains('hidden')) {
         tutorialHidden.classList.remove('hidden');
-        tutorialShowMore.textContent = 'Show Less';
+        tutorialHidden.classList.add('show');
+        tutorialShowMore.textContent = 'Show Less Tutorial';
       } else {
         tutorialHidden.classList.add('hidden');
-        tutorialShowMore.textContent = 'Show More';
+        tutorialHidden.classList.remove('show');
+        tutorialShowMore.textContent = 'Show More Tutorial';
+      }
+    }
+
+    // Toggle Individual FAQ Items
+    function toggleFaqItem(element) {
+      const answer = element.nextElementSibling;
+
+      if (answer.classList.contains('show')) {
+        answer.classList.remove('show');
+        element.classList.remove('active');
+      } else {
+        answer.classList.add('show');
+        element.classList.add('active');
+      }
+    }
+
+    // Toggle Individual Tutorial Items
+    function toggleTutorialItem(element) {
+      const answer = element.nextElementSibling;
+
+      if (answer.classList.contains('show')) {
+        answer.classList.remove('show');
+        element.classList.remove('active');
+      } else {
+        answer.classList.add('show');
+        element.classList.add('active');
       }
     }
   </script>

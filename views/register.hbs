@@ -65,20 +65,39 @@
     }
 
     .navbar .nav-links a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
       color: #fff;
       text-decoration: none;
-      margin-left: 20px;
-      padding: 10px 20px;
-      font-weight: bold;
       border-radius: 25px;
-      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
-      transition: transform 0.3s ease, background-image 0.3s ease;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       position: relative;
+    }
+
+    .navbar .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .navbar .nav-links a:hover::after {
+      width: 100%;
     }
 
     .navbar .nav-links a:hover {
       background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
       transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
     /* Register Container */
@@ -403,8 +422,6 @@
 </head>
 
 <body>
-
-  <!-- Navbar -->
   <div class="navbar">
     <div class="logo">
       <img src="/logo.jpeg" alt="Git Helper Logo">
@@ -416,7 +433,6 @@
     </div>
   </div>
 
-  <!-- Register Container -->
   <div class="register-container">
     <div class="register-box">
       <div class="logo-section">
@@ -429,11 +445,10 @@
       <div class="partition"></div>
 
       <div class="illustration-container">
-        <!-- Font Awesome Register Icon -->
         <i class="fas fa-user-plus illustration-icon" aria-hidden="true"></i>
       </div>
 
-      <!-- Register Form Section -->
+      
       <form id="register-form" class="register-form" action="/api/register" method="post" onsubmit="return validateForm()">
 
         <div class="form-group">

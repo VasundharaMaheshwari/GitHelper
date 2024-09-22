@@ -85,9 +85,24 @@
       text-decoration: none;
       border-radius: 25px;
       font-size: 16px;
-      transition: background-image 0.5s ease, transform 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      font-weight: bold;      transition: background-image 0.5s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       position: relative;
+    }
+
+    .navbar .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .navbar .nav-links a:hover::after {
+      width: 100%;
     }
 
     .navbar .nav-links a:hover {
