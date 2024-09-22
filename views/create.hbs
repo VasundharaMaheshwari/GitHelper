@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open Query</title>
-
-    <link rel="icon" href="/logo.jpeg" type="image/icon type">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open Query - GitHelper</title>
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -14,191 +13,395 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-
+    /* Reset and Base Styles */
     * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
     body {
       background-image: url("/Home1.jpg");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Changed to flex-start to allow margin-top */
+      position: relative;
+      color: #f0f0f0;
+      overflow: hidden;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: transparent; /* Removed semi-transparent dark background */
+      transition: background 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added subtle shadow for depth */
+    }
+
+    .navbar .logo {
+      display: flex;
       align-items: center;
     }
 
-    .form-container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px;
-      border-radius: 10px;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    .navbar .logo img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar .logo img:hover {
+      transform: rotate(10deg);
+    }
+
+    .navbar .logo span {
+      font-size: 20px;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Added text shadow for better visibility */
+      font-weight: 700;
+    }
+
+    .navbar .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Added text shadow for better visibility */
+    }
+
+    .navbar .nav-links a i {
+      margin-right: 8px;
+    }
+
+    .navbar .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .navbar .nav-links a:hover::after {
       width: 100%;
-      max-width: 500px;
+    }
+
+    .navbar .nav-links a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Main Container Styles */
+    .container {
+      max-width: 800px;
+      width: 90%;
+      padding: 30px 40px;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.6); /* Slightly reduced opacity for better background visibility */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px); /* Reduced blur for clarity */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 80vh; /* Adjusted height to fit within viewport */
+      margin-top: 55px; /* Added margin to shift container below navbar */
+      animation: fadeIn 1s ease-in-out; /* Added fade-in animation */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Enhanced text shadow */
+      font-weight: 700; /* Increased font weight */
+    }
+
+    .form-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: slideUp 1s ease-in-out; /* Added slide-up animation */
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
       font-size: 28px;
-      margin-bottom: 20px;
-      color: white;
+      margin-bottom: 25px;
+      color: #ffffff;
       text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7); /* Enhanced text shadow */
+      font-weight: 600; /* Increased font weight */
+    }
+
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .form-group {
-      margin-bottom: 20px;
-    position: relative;
+      position: relative;
+      width: 100%;
     }
 
     .form-group label {
-    color: white;
-    font-size: 14px;
-    margin-bottom: 5px;
-    display: block;
-}
-
- .form-group input, .form-group textarea {
-      width: 100%;
-      padding: 12px;
-      padding-left: 60px; /* Add padding to leave space for the icon */
-      font-size: 14px;
-      border: none;
-      border-radius: 6px;
-      outline: none;
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
+      display: none; /* Hiding labels for a cleaner look */
     }
 
-    .form-group input::placeholder, .form-group textarea::placeholder {
-      color: rgba(255, 255, 255, 0.7);
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 20px 14px 50px; /* Increased padding for better spacing */
+      font-size: 16px; /* Increased font size for readability */
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.2); /* Adjusted background opacity */
+      color: #fff;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.8); /* Darkened placeholder text for better contrast */
       font-family: 'Roboto', sans-serif;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Added focus shadow */
     }
 
     .form-group i {
       position: absolute;
-      left: 10px;
+      left: 20px;
       top: 50%;
       transform: translateY(-50%);
-      color: rgba(255, 255, 255, 0.7);
+      color: #ffffff; /* Changed icon color to solid white */
+      font-size: 20px; /* Increased icon size */
     }
 
-     /* Partition line between icon and input field */
-    .form-group::before {
-      content: '';
-      position: absolute;
-      left: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 60%;
-      background-color: rgba(255, 255, 255, 0.5);
-    }
-    button {
+    /* Submit Button Styles */
+    .form-container button {
       width: 100%;
-      padding: 12px;
-      background-color: #4CAF50;
-      color: white;
+      padding: 14px;
+      background-image: linear-gradient(45deg, #ff416c, #ff4b2b);
+      color: #fff;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: bold;
       cursor: pointer;
+      transition: background-image 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase; /* Added uppercase text for buttons */
+      letter-spacing: 1px; /* Added letter spacing for better readability */
     }
 
-    button:hover {
-      background-color: #45a049;
+    .form-container button:hover {
+      background-image: linear-gradient(45deg, #e60039, #e63900);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
     }
 
-    textarea {
-      height: 100px;
-      resize: vertical;
+    .form-container button i {
+      margin-right: 10px;
+      font-size: 18px; /* Adjusted icon size within button */
     }
 
+    /* Error Message Styles */
     .error-message {
-      color: red;
+      color: #ff4b2b;
       margin-top: 10px;
-      font-size: 14px;
+      font-size: 16px;
       text-align: center;
+      font-weight: 500;
+    }
+
+    /* Responsive Design */
+    @media (max-height: 800px) {
+      .container {
+        height: 90vh;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .navbar .nav-links a {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      .form-container button {
+        padding: 12px;
+        font-size: 16px;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 12px 16px 12px 45px;
+        font-size: 14px;
+      }
+
+      .form-group i {
+        font-size: 18px;
+        left: 15px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <h2>Open Query</h2>
-    <form id="issue-form" action="/query/save" method="post" onsubmit="return validateForm()">
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      <img src="/logo.jpeg" alt="Git Helper Logo">
+      <span>Git Helper</span>
+    </div>
+    <div class="nav-links">
+      <a href="/"><i class="fas fa-home"></i>Home</a>
+      <a href="/faq"><i class="fas fa-question-circle"></i>FAQ</a>
+    </div>
+  </div>
 
-      <div class="form-group"><i class="fas fa-phone-alt"></i>
-        <input type="tel" id="contact_info" placeholder="Contact Info" name="contact_info" required>
-      </div>
+  <!-- Main Container -->
+  <div class="container">
+    <div class="form-container">
+      <h2>Create a New Query</h2>
+      <form id="issue-form" action="/query/save" method="post" onsubmit="return validateForm()">
 
-      <div class="form-group"><i class="fas fa-tools"></i>
-        <input type="text" id="skillset" placeholder="Skill Set" name="skillset" required>
-      </div>
+        <div class="form-group">
+          <i class="fas fa-phone-alt"></i>
+          <input type="tel" id="contact_info" placeholder="Contact Info (10 digits)" name="contact_info" required>
+        </div>
 
-      <div class="form-group"><i class="fab fa-github"></i>
-        <input type="text" id="github_id" placeholder="GitHub ID" name="github_id" required>
-      </div>
+        <div class="form-group">
+          <i class="fas fa-tools"></i>
+          <input type="text" id="skillset" placeholder="Skill Set (e.g., JavaScript, Python)" name="skillset" required>
+        </div>
 
-      <div class="form-group"><i class="fas fa-link"></i>
-        <input type="text" id="repo_link" placeholder="Repository Link" name="repo_link" required>
-        <input type="text" id="id" name="id" value="{{_id}}" required hidden readonly>
-      </div>
+        <div class="form-group">
+          <i class="fab fa-github"></i>
+          <input type="text" id="github_id" placeholder="GitHub ID" name="github_id" required>
+        </div>
 
-      <div class="form-group"><i class="fas fa-align-left"></i>
-        <textarea id="description" placeholder="Description" name="description" required></textarea>
-      </div>
+        <div class="form-group">
+          <i class="fas fa-link"></i>
+          <input type="url" id="repo_link" placeholder="Repository Link" name="repo_link" required>
+          <input type="hidden" id="id" name="id" value="{{_id}}">
+        </div>
 
-      <button type="submit">Submit Query</button>
-    </form>
-    <p id="error-message" class="error-message"></p>
+        <div class="form-group">
+          <i class="fas fa-align-left"></i>
+          <textarea id="description" placeholder="Description of the Query" name="description" required></textarea>
+        </div>
+
+        <button type="submit"><i class="fas fa-paper-plane"></i> Submit Query</button>
+      </form>
+      <p id="error-message" class="error-message"></p>
+    </div>
   </div>
 
   <script>
-function validateForm() {
-  var repoLink = document.getElementById('repo_link').value;
-  var repoRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/;
-  if (!repoRegex.test(repoLink)) {
-    document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link.";
-    return false;
-  }
+    // Validation Script
+    function validateForm() {
+      var repoLink = document.getElementById('repo_link').value;
+      var repoRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/;
+      if (!repoRegex.test(repoLink)) {
+        document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link.";
+        return false;
+      }
 
-  var contactInfo = document.getElementById('contact_info').value;
-  var phoneNumberDigitsOnly = contactInfo.replace(/\D/g, '');
-  var phoneIdRegex = /^[0-9]{10}$/;
-  if (!phoneIdRegex.test(phoneNumberDigitsOnly)) {
-    document.getElementById("error-message").innerText = "Contact info should contain exactly 10 digits.";
-    return false;
-  }
+      var contactInfo = document.getElementById('contact_info').value;
+      var phoneNumberDigitsOnly = contactInfo.replace(/\D/g, '');
+      var phoneIdRegex = /^[0-9]{10}$/;
+      if (!phoneIdRegex.test(phoneNumberDigitsOnly)) {
+        document.getElementById("error-message").innerText = "Contact info should contain exactly 10 digits.";
+        return false;
+      }
 
-  var githubId = document.getElementById('github_id').value;
-  var githubIdRegex = /^[a-zA-Z0-9-]{1,39}$/;
-  if (!githubIdRegex.test(githubId)) {
-    document.getElementById("error-message").innerText = "Invalid GitHub ID.";
-    return false;
-  }
+      var githubId = document.getElementById('github_id').value;
+      var githubIdRegex = /^[a-zA-Z0-9-]{1,39}$/;
+      if (!githubIdRegex.test(githubId)) {
+        document.getElementById("error-message").innerText = "Invalid GitHub ID.";
+        return false;
+      }
 
-  var skillset = document.getElementById('skillset').value;
-  var skillsetRegex = /^[a-zA-Z0-9,.\s]+$/;
-  if (!skillsetRegex.test(skillset)) {
-    document.getElementById("error-message").innerText = "Skill Set can only contain letters, numbers, commas, periods, and spaces.";
-    return false;
-  }
+      var skillset = document.getElementById('skillset').value;
+      var skillsetRegex = /^[a-zA-Z0-9,.\s]+$/;
+      if (!skillsetRegex.test(skillset)) {
+        document.getElementById("error-message").innerText = "Skill Set can only contain letters, numbers, commas, periods, and spaces.";
+        return false;
+      }
 
-  var description = document.getElementById('description').value;
-  var descriptionRegex = /^[a-zA-Z0-9.,!?;:\s]+$/;
-  if (!descriptionRegex.test(description)) {
-    document.getElementById("error-message").innerText = "Description can only contain letters, numbers, and standard punctuation.";
-    return false;
-  }
+      var description = document.getElementById('description').value;
+      var descriptionRegex = /^[a-zA-Z0-9.,!?;:\s]+$/;
+      if (!descriptionRegex.test(description)) {
+        document.getElementById("error-message").innerText = "Description can only contain letters, numbers, and standard punctuation.";
+        return false;
+      }
 
-  document.getElementById("error-message").innerText = "";
-  return true;
-}
-
+      document.getElementById("error-message").innerText = "";
+      return true;
+    }
   </script>
 </body>
 </html>
+
+
+
+
