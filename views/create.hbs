@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* Reset and Base Styles */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -31,7 +30,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start; /* Changed to flex-start to allow margin-top */
+      justify-content: flex-start; 
       position: relative;
       color: #f0f0f0;
       overflow: hidden;
@@ -48,9 +47,9 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; /* Removed semi-transparent dark background */
+      background: transparent; 
       transition: background 0.3s ease;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added subtle shadow for depth */
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
     }
 
     .navbar .logo {
@@ -71,7 +70,7 @@
     .navbar .logo span {
       font-size: 20px;
       color: #ffffff;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Added text shadow for better visibility */
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5); 
       font-weight: 700;
     }
 
@@ -94,7 +93,7 @@
       transition: background-image 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       position: relative;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Added text shadow for better visibility */
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5); 
     }
 
     .navbar .nav-links a i {
@@ -128,16 +127,16 @@
       width: 90%;
       padding: 30px 40px;
       border-radius: 20px;
-      background: rgba(0, 0, 0, 0.6); /* Slightly reduced opacity for better background visibility */
+      background: rgba(0, 0, 0, 0.6); 
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(5px); /* Reduced blur for clarity */
+      backdrop-filter: blur(5px); 
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 80vh; /* Adjusted height to fit within viewport */
-      margin-top: 55px; /* Added margin to shift container below navbar */
-      animation: fadeIn 1s ease-in-out; /* Added fade-in animation */
+      height: 80vh; 
+      margin-top: 55px; 
+      animation: fadeIn 1s ease-in-out; 
     }
 
     @keyframes fadeIn {
@@ -150,8 +149,8 @@
       margin-bottom: 20px;
       text-align: center;
       color: #ffffff;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Enhanced text shadow */
-      font-weight: 700; /* Increased font weight */
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); 
+      font-weight: 700; 
     }
 
     .form-container {
@@ -159,7 +158,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: slideUp 1s ease-in-out; /* Added slide-up animation */
+      animation: slideUp 1s ease-in-out; 
     }
 
     @keyframes slideUp {
@@ -172,8 +171,8 @@
       margin-bottom: 25px;
       color: #ffffff;
       text-align: center;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.7); /* Enhanced text shadow */
-      font-weight: 600; /* Increased font weight */
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7); 
+      font-weight: 600; 
     }
 
     form {
@@ -189,32 +188,32 @@
     }
 
     .form-group label {
-      display: none; /* Hiding labels for a cleaner look */
+      display: none; 
     }
 
     .form-group input,
     .form-group textarea {
       width: 100%;
-      padding: 14px 20px 14px 50px; /* Increased padding for better spacing */
-      font-size: 16px; /* Increased font size for readability */
+      padding: 14px 20px 14px 50px; 
+      font-size: 16px; 
       border: none;
       border-radius: 10px;
       outline: none;
-      background: rgba(255, 255, 255, 0.2); /* Adjusted background opacity */
+      background: rgba(255, 255, 255, 0.2);
       color: #fff;
       transition: background 0.3s ease, box-shadow 0.3s ease;
     }
 
     .form-group input::placeholder,
     .form-group textarea::placeholder {
-      color: rgba(255, 255, 255, 0.8); /* Darkened placeholder text for better contrast */
+      color: rgba(255, 255, 255, 0.8); 
       font-family: 'Roboto', sans-serif;
     }
 
     .form-group input:focus,
     .form-group textarea:focus {
       background: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Added focus shadow */
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
     }
 
     .form-group i {
@@ -222,8 +221,8 @@
       left: 20px;
       top: 50%;
       transform: translateY(-50%);
-      color: #ffffff; /* Changed icon color to solid white */
-      font-size: 20px; /* Increased icon size */
+      color: #ffffff; 
+      font-size: 20px;
     }
 
     /* Submit Button Styles */
@@ -242,8 +241,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      text-transform: uppercase; /* Added uppercase text for buttons */
-      letter-spacing: 1px; /* Added letter spacing for better readability */
+      text-transform: uppercase; 
+      letter-spacing: 1px; 
     }
 
     .form-container button:hover {
@@ -254,7 +253,7 @@
 
     .form-container button i {
       margin-right: 10px;
-      font-size: 18px; /* Adjusted icon size within button */
+      font-size: 18px; 
     }
 
     /* Error Message Styles */
