@@ -184,6 +184,12 @@
       }
     }
   </style>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
 </head>
 <body>
   <!-- Navbar -->
@@ -198,9 +204,8 @@
   <div class="error-container">
     <h2><i class="fas fa-exclamation-circle"></i>ERROR!!</h2>
     <p>{{error_message}}</p>
-    <a href="/" class="btn"><i class="fas fa-home"></i>Go To Home</a>
+    <button class="btn" onclick="goBack()"><i class="fas fa-arrow-left"></i>Go Back</button>
   </div>
 
 </body>
 </html>
-
