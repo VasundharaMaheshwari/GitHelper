@@ -100,7 +100,7 @@
   <div class="user-list-container">
     {{#if users.length}}
       {{#each users}}
-        <div class="user" data-username="{{this.username}}" data-queryid="{{this.issue}}" data-resid="{{this.response}}">
+        <div class="user" data-username="{{this.username}}" data-resid="{{this.response}}">
           <span class="username">{{this.username}}</span>
           {{!-- <span class="timestamp">Last seen {{this.timestamp}}</span> --}}
         </div>
@@ -116,7 +116,6 @@
   users.forEach(user => {
     user.addEventListener('click', () => {
       const username = user.getAttribute('data-username');
-      const queryId = user.getAttribute('data-queryid');
       const resId = user.getAttribute('data-resid');
 
       window.location.href = `/chat/chats?username=${username}&resId=${resId}`;
