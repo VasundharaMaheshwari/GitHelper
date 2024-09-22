@@ -9,9 +9,10 @@ const chatload = async (req,res) => {
         const error = validationResult(req)
         const checker2 = ObjectId.isValid(req.user._id)
         if(checker2 && error.isEmpty()){
-            const checker = await Response.findOneAndUpdate({"responder.username": req.query.username, "issue": req.query.queryId, "creator": req.user._id},{"approved": true})
+          const {username,response} = req.body
+            const checker = await Response.findOneAndUpdate({"_id": response},{"approved": true})
         if(checker) {
-          return res.status(400).redirect(`/chat/chats?username=${req.query.username}&queryId=${req.query.queryId}&resId=${req.query.resId}`)
+          return res.status(400).redirect(`/chat/chats?username=${username}&resId=${response}`)
 } else {
     return res.status(400).redirect('/error?error_details=Invalid_URL')
 }
@@ -41,8 +42,8 @@ const chatlist = async (req, res) => {
   
       const users = conversations.map(convo => {
         return convo.initiator._id.equals(userId)
-          ? { username: convo.receiver.username, userId: convo.receiver._id, issue: convo.issue, response: convo.response }
-          : { username: convo.initiator.username, userId: convo.initiator._id, issue: convo.issue, respons: convo.response }
+          ? { username: convo.receiver.username, userId: convo.receiver._id, response: convo.response }
+          : { username: convo.initiator.username, userId: convo.initiator._id, response: convo.response }
       })
   
       return res.status(200).render('main.hbs', {
@@ -60,23 +61,28 @@ const chatlist = async (req, res) => {
 const chatting = async (req,res) => {
   try{
     if(ObjectId.isValid(req.user._id)){
-    const receiver = await GHUser.findOne({ "username": req.query.username });
+      const {username,resId} = req.query
+    const receiver = await GHUser.findOne({ "username": username });
             if (!receiver) {
               return res.status(404).redirect('/error?error_details=Receiver_Not_Found');
             }
-            const convo_check = await Convo.findOne({"initiator": req.user._id, "issue" : req.query.queryId, "receiver": receiver._id})
+            const convo_check = await Convo.findOne({"response": resId})
     if(convo_check == null){
     const convo_ = new Convo({
       initiator: req.user._id,
-      issue: req.query.queryId,
       receiver: receiver._id,
-      response: req.query.resId
+      response: resId
     })
     await convo_.save()
 }
+
+const convo = await Convo.findOne({"response": resId})
+
     return res.status(200).render('main.hbs',{layout: "chat.hbs",
-        receiverUsername: req.query.username,
-        userId: req.user._id
+        receiverUsername: username,
+        receiverUserId: receiver._id,
+        senderUserId: req.user._id,
+        convoId: convo._id
       }
     )
   }

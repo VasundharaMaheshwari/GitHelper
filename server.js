@@ -10,7 +10,7 @@ const { Server } = require('socket.io')
 
 const io = new Server(server)
 
-const { setid,getid,delid } = require('./services/socketio')
+const { setid,getid, delBySocketId } = require('./services/socketio')
 
 app.use(express.static('public', { setHeaders: (res, path) => {
   if (path.endsWith('.png')) {
@@ -19,18 +19,36 @@ app.use(express.static('public', { setHeaders: (res, path) => {
 }})); 
 
 io.on('connection', (socket) => {
+  const { userId, receiverId } = socket.handshake.auth;
 
-  const { userId } = socket.handshake.auth
-  setid(userId,socket.id)
+  setid(userId, receiverId, socket.id);
 
-  socket.on('user-message', (msg) => {
-    io.emit('message', msg)
-  })
+  socket.on('user-message', (message) => {
+    const { sender, receiver, msg } = message;
 
-  socket.on('disconnect', (socket) => {
-    delid(userId)
-  })
-})
+    const sockettx = getid(sender, receiver);  
+    const socketrx = getid(receiver, sender);  
+
+    if (sockettx) {
+      io.to(sockettx).emit('sent-message', msg);
+    }
+
+    if (socketrx) {
+      io.to(socketrx).emit('received-message', msg);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    delBySocketId(socket.id);  
+  });
+});
+
+
+app.use(express.static('public', { setHeaders: (res, path) => {
+  if (path.endsWith('.png')) {
+    res.setHeader('Content-Type', 'image/png');
+  }
+}}))
 
 const cookie_parser = require('cookie-parser')
 

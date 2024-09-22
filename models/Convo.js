@@ -1,11 +1,6 @@
 const { Schema, default: mongoose } = require('mongoose')
 
 const Convo_Schema = new Schema({
-    "issue": {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Issue'
-    },
     "initiator": {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
