@@ -4,21 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Details</title>
+
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #6c5b7b, #000000);
-      color: #333;
+      font-family: 'Roboto', sans-serif;
+    }
+     body {
+      background-image: url("/1329272.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
 
     .container {
-      background-color: #f0e9ff;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -26,19 +41,15 @@
       width: 100%;
       height: 80vh;
       overflow-y: auto;
+      backdrop-filter: blur(10px); /* Blur effect */
+      -webkit-backdrop-filter: blur(10px); /* Safari support */
     }
 
     h1 {
       font-size: 32px;
       margin-bottom: 20px;
-      color: #6c5b7b;
+      color: white;
       text-align: center;
-    }
-
-    .user-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
     }
 
     .user {
@@ -50,6 +61,12 @@
       border: 1px solid #ddd;
     }
 
+    .user-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
     .user:hover {
       transform: translateY(-5px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -59,23 +76,37 @@
       margin: 10px 0;
       font-size: 18px;
       color: #333;
+      display: flex;
+      align-items: center;
+    }
+
+    .user p i {
+      margin-right: 10px;
+      color: black;
     }
 
     .btn {
       display: inline-block;
       padding: 10px 20px;
-      background-color: #6c5b7b;
+      background-color: #ff4d4d;
       color: #fff;
       border: none;
       border-radius: 5px;
       text-decoration: none;
       transition: background-color 0.3s ease;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: 10px;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5px;
     }
 
     .btn:hover {
-      background-color: #54466d;
+      background-color: #cc0000;
     }
 
     .btn-delete {
@@ -90,8 +121,10 @@
       margin-top: 20px;
       text-align: center;
     }
+
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>User Details</h1>
@@ -99,14 +132,16 @@
       {{#if users.length}}
         {{#each users}}
           <div class="user">
-            <p><strong>Username:</strong> {{username}}</p>
-            <p><strong>Email:</strong> {{email}}</p>
-            <p><strong>GitHub ID:</strong> {{github_id}}</p>
-            <p><strong>Registered At:</strong> {{createdAt}}</p>
+            <p><i class="fas fa-user"></i><strong>Username:</strong> {{username}}</p>
+            <p><i class="fas fa-envelope"></i><strong>Email:</strong> {{email}}</p>
+            <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> {{github_id}}</p>
+            <p><i class="fas fa-calendar-alt"></i><strong>Registered At:</strong> {{createdAt}}</p>
+             <div class="btn-container">
             <form action="/admin/delete-user" method="GET">
               <input type="hidden" name="_id" value="{{_id}}" readonly required hidden>
               <button type="submit" class="btn btn-delete">Delete User</button>
             </form>
+            </div>
           </div>
         {{/each}}
       {{else}}

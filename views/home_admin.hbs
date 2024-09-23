@@ -4,103 +4,179 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Opened Queries</title>
+
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* Universal reset and box-sizing */
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background-color: #6c5b7b;
-      color: #333;
+      font-family: 'Roboto', sans-serif;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 50px auto;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      background-color: #fff;
+    /* Body background and layout */
+    body {
+      background-image: url("/1329272.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 60px; /* Adjust for the navbar height */
     }
 
-    h1 {
-      font-size: 32px;
-      margin-bottom: 20px;
-      text-align: center;
-      color: #6c5b7b;
-    }
-
-    .issue {
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .issue:hover {
-      transform: translateY(-5px);
-    }
-
-    .issue h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      color: #6c5b7b;
-    }
-
-    .issue p {
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-
-    .issue span {
-      font-weight: bold;
-      color: #6c5b7b;
-    }
-
-    .no-issues {
-      text-align: center;
-      font-size: 18px;
-      color: #666;
-    }
-
-    .btn-container {
-      text-align: center;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #6c5b7b;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-      margin: 0 5px;
-    }
-
-    .btn:hover {
-      background-color: #54466d;
-    }
-
+    /* Navbar styles */
     .navbar {
       background-color: #e3dcf9;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 5px;
-      text-align: center;
+      padding: 15px 20px;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
     .navbar a {
       color: #6c5b7b;
       text-decoration: none;
-      margin: 0 10px;
+      margin: 0 15px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a i {
+      margin-right: 8px;
     }
 
     .navbar a:hover {
       text-decoration: underline;
     }
-    
+
+    /* Container styles */
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 800px; /* Wider for more content space */
+      padding: 40px;
+      border-radius: 15px; /* Softer rounded corners */
+      backdrop-filter: blur(10px); /* Increased blur for modern look */
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); /* Deeper shadow for contrast */
+      text-align: center;
+    }
+
+    /* Heading styles */
+    h1 {
+      font-size: 36px; /* Bigger heading */
+      margin-bottom: 30px; /* Increased space */
+      text-align: center;
+      color: white;
+      letter-spacing: 1px;
+    }
+
+    /* Issue card styles */
+    .issue {
+      padding: 30px;
+      margin-bottom: 25px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: left; /* Align text to the left for better readability */
+      width: 100%;
+    }
+
+    .issue:hover {
+      transform: translateY(-8px); /* Slight lift effect */
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .issue h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .issue p {
+      font-size: 16px;
+      margin-bottom: 5px;
+      color: #555;
+      display: flex;
+      align-items: center;
+    }
+
+    .issue p i {
+      margin-right: 10px;
+      color: black;
+    }
+
+    .issue span {
+      font-weight: bold;
+      color: black;
+    }
+
+    /* No issues message */
+    .no-issues {
+      text-align: center;
+      font-size: 20px;
+      color: #666;
+      margin-top: 20px;
+    }
+
+    /* Button container */
+    .btn-container {
+      text-align: right; /* Align buttons to the right */
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px; /* Space between buttons */
+    }
+
+    /* Button styles */
+    .btn {
+      display: inline-block;
+      padding: 12px 25px; /* More padding for modern button size */
+      background-color: #ff4d4d;
+      color: #fff;
+      border: none;
+      border-radius: 8px; /* Rounded buttons */
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    /* Button hover effect */
+    .btn:hover {
+      background-color: #cc0000;
+    }
+
+    /* Font Awesome icon in buttons */
+    .btn i {
+      margin-right: 8px;
+    }
+
+    /* Repository link styles */
     .repo-link {
       color: #007bff;
       text-decoration: none;
@@ -111,15 +187,16 @@
       color: #0056b3;
       text-decoration: underline;
     }
+
   </style>
 </head>
 <body>
   <div class="navbar">
     {{#if user}}
-    <a href="/api/user">Profile</a>
+    <a href="/api/user"><i class="fas fa-user"></i>Profile</a>
     {{else}}
-    <a href="/api/register">Register</a>
-    <a href="/api/login">Login</a>
+    <a href="/api/register"><i class="fas fa-user-plus"></i>Register</a>
+    <a href="/api/login"><i class="fas fa-sign-in-alt"></i>Login</a>
     {{/if}}
   </div>
 
@@ -129,19 +206,19 @@
       {{#each issues}}
         <div class="issue">
           <h2>{{title}}</h2>
-          <p><span>Username:</span> {{username}}</p>
-          <p><span>Skill Set:</span> {{skillset}}</p>
-          <p><span>GitHub ID:</span> {{github_id}}</p>
-          <p><span>Repository Link:</span> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
+          <p><i class="fas fa-user"></i><span>Username:</span> {{username}}</p>
+          <p><i class="fas fa-tools"></i><span>Skill Set:</span> {{skillset}}</p>
+          <p><i class="fab fa-github"></i><span>GitHub ID:</span> {{github_id}}</p>
+          <p><i class="fas fa-link"></i><span>Repository Link:</span> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
           <br>
           <div class="btn-container">
             <form action="/home/view" method="GET" style="display: inline;">
               <input type="text" name="_id" value={{_id}} required readonly hidden>
-              <button type="submit" class="btn" id="viewButton">View Query</button>
+              <button type="submit" class="btn" id="viewButton"><i class="fas fa-eye"></i>View Query</button>
             </form>
             <form action="/admin/delete" method="GET" style="display: inline;">
               <input type="text" name="_id" value={{_id}} required readonly hidden>
-              <button type="submit" class="btn" id="deleteButton">Delete Query</button>
+              <button type="submit" class="btn" id="deleteButton"><i class="fas fa-trash-alt"></i>Delete Query</button>
             </form>
           </div>
         </div>
