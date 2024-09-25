@@ -14,15 +14,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
     }
+
     body {
-      background-image: url("/1329272.png");
+      background-image: url("/Home1.jpg");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
@@ -31,6 +31,26 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
+    }
+
+    .navbar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      color: white;
+    }
+
+    .navbar img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar img:hover {
+      transform: rotate(10deg);
     }
 
     .user-container {
@@ -38,12 +58,12 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      max-width: 600px; /* Adjust to match login container */
-      background: rgba(255, 255, 255, 0.1);
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.15);
       padding: 40px;
-      border-radius: 10px;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
       flex-direction: column;
       text-align: center;
     }
@@ -56,63 +76,75 @@
 
     p {
       font-size: 16px;
-      color: #ccc;
+      color: #eee;
       margin-bottom: 20px;
     }
 
     .button-container, .logout-container {
       display: flex;
       justify-content: space-around;
-      width: 100%; /* Ensures full width distribution */
+      width: 100%;
       margin-bottom: 20px;
     }
 
-     .logout-container {
-      justify-content: center; /* Center the buttons */
-      gap: 15px; /* Add a small gap between the buttons */
+    .logout-container {
+      justify-content: center;
+      gap: 15px;
     }
-
 
     button {
       display: inline-block;
-      background-color: #2874f0;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
       color: white;
       border: none;
-      padding: 12px 20px; /* Consistent padding with login button */
-      border-radius: 5px;
+      padding: 12px 25px;
+      border-radius: 30px;
       font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.3s;
-      text-decoration: none; 
-    }
-
-    button i {
-      margin-right: 8px; /* Spacing between icon and text */
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     button:hover {
-      background-color: #0056b3;
+      background: linear-gradient(45deg, #5d09b1, #1f65e3);
+    }
+
+    button i {
+      margin-right: 10px;
     }
 
     .query {
       color: white;
       text-decoration: none;
     }
+
+    /* Adjust spacing and alignments */
+    .user-container h2, .user-container p {
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
+  <!-- Navbar with Logo -->
+  <div class="navbar">
+    <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+    <span>Git Helper</span>
+  </div>
+
   <div class="user-container">
     <h2>Welcome, {{username}}!</h2>
     <p>Email: {{email}}</p>
     <p>This is your user page. You can access your account information here.</p>
+
     <div class="button-container">
-        <button type="button" id="open-query-btn"><a class="query" href="/query/create"><i class="fas fa-plus-circle"></i>Open Query</a></button>
-        <button type="button" id="list-query-btn"><a class="query" href="/query/list"><i class="fas fa-list"></i>Show Queries</a></button>
-        <button type="button" id="home-btn"><a class="query" href="/"><i class="fas fa-home"></i>Go To Home</a></button>
+      <button type="button" id="open-query-btn"><a class="query" href="/query/create"><i class="fas fa-plus-circle"></i>Open Query</a></button>
+      <button type="button" id="list-query-btn"><a class="query" href="/query/list"><i class="fas fa-list"></i>Show Queries</a></button>
+      <button type="button" id="home-btn"><a class="query" href="/"><i class="fas fa-home"></i>Go To Home</a></button>
     </div>
+
     <div class="logout-container">
-    <button type="button" id="chat-btn"><a class="query" href="/chat/list"><i class="fas fa-comments"></i>Show Chats</a></button>
-    <button type="button" id="logout-btn"><a class="query" href="/home/logout"><i class="fas fa-sign-out-alt"></i>Proceed To Logout</a></button>
+      <button type="button" id="chat-btn"><a class="query" href="/chat/list"><i class="fas fa-comments"></i>Show Chats</a></button>
+      <button type="button" id="logout-btn"><a class="query" href="/home/logout"><i class="fas fa-sign-out-alt"></i>Proceed To Logout</a></button>
     </div>
   </div>
 </body>

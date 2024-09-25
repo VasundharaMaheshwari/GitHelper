@@ -14,35 +14,94 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: 'Roboto', sans-serif;
     }
-     body {
-      background-image: url("/1329272.png");
+
+    body {
+      background-image: url("/Home1.jpg");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      position: relative; /* Ensure body is the positioning context for the back button */
+    }
+
+    .navbar {
+      background: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      width: 100%;
+      max-width: 1200px; /* Center align navbar with container */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      color: white;
+      height: 40px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 20px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+      font-size: 16px;
+      position: absolute;
+      top: 15px; /* Distance from the top of the viewport */
+      right: 15px; /* Distance from the right of the viewport */
+    }
+
+    .btn-back i {
+      margin-right: 8px; /* Space between icon and text */
+    }
+
+    .btn-back:hover {
+      background: linear-gradient(45deg, #5d09b1, #1f65e3);
     }
 
     .container {
+      background: rgba(255, 255, 255, 0.25); /* Subtle gradient for container */
       padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
       max-width: 800px;
       width: 100%;
-      height: 80vh;
-      overflow-y: auto;
-      backdrop-filter: blur(10px); /* Blur effect */
-      -webkit-backdrop-filter: blur(10px); /* Safari support */
+      height: 85vh;
+      overflow-y: scroll; /* Allows scrolling */
+      overflow-x: hidden;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.4); /* Light border for definition */
+    }
+
+    /* Hide the scrollbar */
+    .container::-webkit-scrollbar {
+      width: 0px;
+      background: transparent; /* Optional: Hide scrollbar background */
     }
 
     h1 {
@@ -50,26 +109,48 @@
       margin-bottom: 20px;
       color: white;
       text-align: center;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      font-weight: 700;
     }
 
     .user {
-      background-color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.85);
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
       border: 1px solid #ddd;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .user::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      z-index: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .user:hover::before {
+      opacity: 0.15;
     }
 
     .user-list {
       display: flex;
       flex-direction: column;
       gap: 20px;
+      padding: 10px;
     }
 
     .user:hover {
       transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.9);
     }
 
     .user p {
@@ -78,23 +159,26 @@
       color: #333;
       display: flex;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
 
     .user p i {
       margin-right: 10px;
-      color: black;
+      color: #007bff;
     }
 
     .btn {
       display: inline-block;
-      padding: 10px 20px;
-      background-color: #ff4d4d;
+      padding: 10px 25px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
       color: #fff;
       border: none;
-      border-radius: 5px;
+      border-radius: 25px;
       text-decoration: none;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
       cursor: pointer;
+      font-size: 16px;
       margin-top: 10px;
     }
 
@@ -102,30 +186,34 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 5px;
+      margin-top: 10px;
     }
 
     .btn:hover {
-      background-color: #cc0000;
+      background: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
     }
 
     .btn-delete {
-      background-color: #ff4d4d;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
     }
 
     .btn-delete:hover {
-      background-color: #cc0000;
+      background: linear-gradient(45deg, #5d09b1, #1f65e3);
     }
-
-    #back-btn {
-      margin-top: 20px;
-      text-align: center;
-    }
-
   </style>
 </head>
 
 <body>
+  <div class="navbar">
+    <div>
+      <img src="/logo.jpeg" alt="Logo" class="logo">
+      <span>Git Helper</span>
+    </div>
+  </div>
+  
+  <a href="/api/user" class="btn-back"><i class="fas fa-arrow-left"></i> Go Back</a>
+
   <div class="container">
     <h1>User Details</h1>
     <div class="user-list">
@@ -136,21 +224,19 @@
             <p><i class="fas fa-envelope"></i><strong>Email:</strong> {{email}}</p>
             <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> {{github_id}}</p>
             <p><i class="fas fa-calendar-alt"></i><strong>Registered At:</strong> {{createdAt}}</p>
-             <div class="btn-container">
-            <form action="/admin/delete-user" method="GET">
-              <input type="hidden" name="_id" value="{{_id}}" readonly required hidden>
-              <button type="submit" class="btn btn-delete">Delete User</button>
-            </form>
+            <div class="btn-container">
+              <form action="/admin/delete-user" method="GET">
+                <input type="hidden" name="_id" value="{{_id}}" readonly required hidden>
+                <button type="submit" class="btn btn-delete">Delete User</button>
+              </form>
             </div>
           </div>
         {{/each}}
       {{else}}
         <p>No users found.</p>
       {{/if}}
-      <div id="back-btn">
-        <a href="/api/user" class="btn">Back To Dashboard</a>
-      </div>
     </div>
   </div>
 </body>
 </html>
+
