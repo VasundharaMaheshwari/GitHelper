@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Opened Queries</title>
+  <title>Admin Home Page</title>
 
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
 
@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-        /* Universal reset and box-sizing */
+    /* Universal reset and box-sizing */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -24,200 +24,270 @@
 
     /* Body background and layout */
     body {
-      background-image: url("/1329272.png");
+      background-image: url("/Home1.jpg");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding-top: 60px; /* Adjust for the navbar height */
+      color: #f0f0f0;
+      overflow-x: hidden;
     }
 
     /* Navbar styles */
     .navbar {
-      background-color: #e3dcf9;
-      padding: 15px 20px;
-      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: transparent; 
       position: fixed;
+      width: 100%;
       top: 0;
-      left: 0;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      transition: background 0.3s ease;
     }
 
-    .navbar a {
-      color: #6c5b7b;
+    .navbar:hover {
+      background: rgba(0, 0, 0, 0.3); 
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .logo img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar .logo img:hover {
+      transform: rotate(10deg);
+    }
+
+    .navbar .nav-links a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
       text-decoration: none;
-      margin: 0 15px;
+      border-radius: 25px;
       font-size: 16px;
-      display: flex;
-      align-items: center;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
     }
 
-    .navbar a i {
-      margin-right: 8px;
+    .navbar .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
     }
 
-    .navbar a:hover {
-      text-decoration: underline;
+    .navbar .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .navbar .nav-links a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
     /* Container styles */
     .container {
+      background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      max-width: 900px;
+      width: 90%;
+      margin: 120px auto;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Centered Heading Styles */
+    h1 {
+      font-size: 34px;
+      margin-bottom: 30px;
+      color: #ffffff;
+      text-align: center;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 100%;
-      max-width: 800px; /* Wider for more content space */
-      padding: 40px;
-      border-radius: 15px; /* Softer rounded corners */
-      backdrop-filter: blur(10px); /* Increased blur for modern look */
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); /* Deeper shadow for contrast */
-      text-align: center;
+      gap: 10px;
+      animation: slideInDown 1s ease-out;
     }
 
-    /* Heading styles */
-    h1 {
-      font-size: 36px; /* Bigger heading */
-      margin-bottom: 30px; /* Increased space */
-      text-align: center;
-      color: white;
-      letter-spacing: 1px;
-    }
-
-    /* Issue card styles */
+    /* Issue styles */
     .issue {
-      padding: 30px;
-      margin-bottom: 25px;
-      background-color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.12);
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-align: left; /* Align text to the left for better readability */
-      width: 100%;
     }
 
     .issue:hover {
-      transform: translateY(-8px); /* Slight lift effect */
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
     }
 
-    .issue h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      color: #333;
-    }
-
-    .issue p {
-      font-size: 16px;
-      margin-bottom: 5px;
-      color: #555;
+    .issue-details {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .issue p i {
-      margin-right: 10px;
-      color: black;
+    .issue-details p {
+      font-size: 18px;
+      color: #d1d1d1;
+      display: flex;
+      align-items: flex-start; 
     }
 
-    .issue span {
+    .issue-details i {
+      font-size: 21px;
+      margin-right: 10px; 
+    }
+
+    .issue-details span {
       font-weight: bold;
-      color: black;
+      color: #ffffff;
+      margin-right: 4px;
     }
 
-    /* No issues message */
-    .no-issues {
-      text-align: center;
-      font-size: 20px;
-      color: #666;
-      margin-top: 20px;
-    }
-
-    /* Button container */
-    .btn-container {
-      text-align: right; /* Align buttons to the right */
-      margin-top: 20px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px; /* Space between buttons */
-    }
-
-    /* Button styles */
-    .btn {
-      display: inline-block;
-      padding: 12px 25px; /* More padding for modern button size */
-      background-color: #ff4d4d;
-      color: #fff;
-      border: none;
-      border-radius: 8px; /* Rounded buttons */
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
-
-    /* Button hover effect */
-    .btn:hover {
-      background-color: #cc0000;
-    }
-
-    /* Font Awesome icon in buttons */
-    .btn i {
-      margin-right: 8px;
-    }
-
-    /* Repository link styles */
     .repo-link {
-      color: #007bff;
+      color: #1e90ff;
       text-decoration: none;
+      font-weight: bold;
       transition: color 0.3s ease;
+      word-break: break-all; 
     }
 
     .repo-link:hover {
-      color: #0056b3;
+      color: #ffb300;
       text-decoration: underline;
     }
 
+    /* Button Styles */
+    .btn-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Animations */
+    @keyframes slideInDown {
+      from { transform: translateY(-100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      .navbar .nav-links {
+        margin-top: 10px;
+      }
+
+      .navbar .nav-links a {
+        margin: 5px 0;
+        font-size: 14px;
+      }
+
+      .container {
+        margin: 120px 10px 40px 10px;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+
+      .issue-details p {
+        font-size: 14px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="navbar">
-    {{#if user}}
-    <a href="/api/user"><i class="fas fa-user"></i>Profile</a>
-    {{else}}
-    <a href="/api/register"><i class="fas fa-user-plus"></i>Register</a>
-    <a href="/api/login"><i class="fas fa-sign-in-alt"></i>Login</a>
-    {{/if}}
+    <div class="logo">
+      <img src="/logo.jpeg" alt="Git Helper Logo">
+      <span>Git Helper</span>
+    </div>
+    <div class="nav-links">
+      {{#if user}}
+      <a href="/home"><i class="fas fa-arrow-left"></i><span style="margin-left: 5px;">Go Back</span></a>
+      {{else}}
+      <a href="/api/register"><i class="fas fa-user-plus"></i><span style="margin-left: 5px;">Register</span></a>
+      <a href="/api/login"><i class="fas fa-sign-in-alt"></i><span style="margin-left: 5px;">Login</span></a>
+      {{/if}}
+    </div>
   </div>
 
   <div class="container">
-    <h1>Current Open Queries</h1>
+    <h1><i class="fas fa-info-circle"></i>Current Open Queries</h1>
     {{#if issues.length}}
       {{#each issues}}
         <div class="issue">
           <h2>{{title}}</h2>
-          <p><i class="fas fa-user"></i><span>Username:</span> {{username}}</p>
-          <p><i class="fas fa-tools"></i><span>Skill Set:</span> {{skillset}}</p>
-          <p><i class="fab fa-github"></i><span>GitHub ID:</span> {{github_id}}</p>
-          <p><i class="fas fa-link"></i><span>Repository Link:</span> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
-          <br>
+          <div class="issue-details">
+            <p><i class="fas fa-user"></i> <span>Username:</span> {{username}}</p>
+            <p><i class="fas fa-code"></i> <span>Skill Set:</span> {{skillset}}</p>
+            <p><i class="fab fa-github"></i> <span>GitHub ID:</span> {{github_id}}</p>
+            <p><i class="fas fa-link"></i> <span>Repository Link:</span> <a href="{{repo_link}}" class="repo-link" target="_blank">{{repo_link}}</a></p>
+          </div>
           <div class="btn-container">
             <form action="/home/view" method="GET" style="display: inline;">
-              <input type="text" name="_id" value={{_id}} required readonly hidden>
+              <input type="text" name="_id" value="{{_id}}" required readonly hidden>
               <button type="submit" class="btn" id="viewButton"><i class="fas fa-eye"></i>View Query</button>
             </form>
             <form action="/admin/delete" method="GET" style="display: inline;">
-              <input type="text" name="_id" value={{_id}} required readonly hidden>
+              <input type="text" name="_id" value="{{_id}}" required readonly hidden>
               <button type="submit" class="btn" id="deleteButton"><i class="fas fa-trash-alt"></i>Delete Query</button>
             </form>
           </div>
@@ -229,3 +299,9 @@
   </div>
 </body>
 </html>
+
+
+
+
+
+
