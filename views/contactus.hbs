@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-image: url("/1329272.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 100%;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      color: #333;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #6c5b7b;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      width: 100%;
+      font-size: 16px;
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    textarea {
+      height: 150px;
+      resize: none;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      background-color: #6c5b7b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #54466d;
+    }
+
+    .icon {
+      color: #6c5b7b;
+      margin-right: 10px;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      color: #ddd;
+    }
+
+    .contact-info div {
+      display: flex;
+      align-items: center;
+    }
+
+    .contact-info p {
+      margin-left: 10px;
+    }
+
+    #back-btn {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #back-btn a {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #6c5b7b;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    #back-btn a:hover {
+      background-color: #54466d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-envelope icon"></i>Contact Us</h1>
+    <p>If you have any questions, feel free to contact us using the form below. We'd love to hear from you!</p>
+    
+    <form action="/send-message" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn"><i class="fas fa-paper-plane icon"></i> Send Message</button>
+    </form>
+
+    <div class="contact-info">
+      <div>
+        <i class="fas fa-phone-alt icon"></i>
+        <p>+123 456 7890</p>
+      </div>
+        <i class="fas fa-envelope icon"></i>
+        <p>githelper@gmail.com</p>
+      </div>
+    </div>
+
+    <div id="back-btn">
+      <a href="/home"><i class="fas fa-arrow-left icon"></i> Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>
