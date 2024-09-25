@@ -5,74 +5,112 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Opened Queries</title>
 
-    <link rel="icon" href="/logo.jpeg" type="image/icon type">
-
+  <!-- Favicon -->
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
     body {
       background-image: url("/Home1.jpg");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
-      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      
+      color: white;
     }
 
+    /* Logo Styling */
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container img:hover {
+      transform: rotate(10deg);
+    }
+
+    /* Container Styling */
     .issues-container {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
       padding: 40px;
-      border-radius: 10px;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      width: 100%;
-      max-width: 900px;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h2 {
       font-size: 28px;
-      margin-bottom: 20px;
-      color: white;
+      margin-bottom: 25px;
       text-align: center;
+      letter-spacing: 1px;
+      font-weight: 700;
     }
 
     .issue-list {
-      max-height: 500px;
+      max-height: 65vh;
       overflow-y: auto;
-      margin-bottom: 20px;
+      padding-right: 10px;
     }
 
     .issue {
       padding: 20px;
       border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-      position: relative;
-      background: rgba(0, 0, 0, 0.5);
-      color: white;
-      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
       margin-bottom: 15px;
+      position: relative;
+      transition: transform 0.3s ease, background-color 0.3s ease;
     }
 
-    .issue:last-child {
-      border-bottom: none;
+    .issue:hover {
+      transform: scale(1.02);
+      background-color: rgba(0, 0, 0, 0.8);
     }
 
     p {
-      font-size: 16px;
-      color: white;
+      font-size: 15px;
       margin-bottom: 8px;
     }
 
@@ -80,6 +118,16 @@
       font-weight: bold;
     }
 
+    a {
+      color: #ff8a00;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Buttons Styling */
     .edit-delete-buttons {
       position: absolute;
       top: 10px;
@@ -91,23 +139,24 @@
     .edit-button,
     .delete-button,
     .response-button {
-      background-color: #6c5b7b;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
       color: white;
       border: none;
       padding: 10px;
-      border-radius: 5px;
+      border-radius: 20px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
       font-size: 14px;
       display: flex;
       align-items: center;
       gap: 6px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
     }
 
     .edit-button:hover,
     .delete-button:hover,
     .response-button:hover {
-      background-color: #54466d;
+      background: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
     }
 
     .edit-button i,
@@ -116,6 +165,7 @@
       margin-right: 5px;
     }
 
+    /* Back Button */
     #home-btn {
       display: flex;
       justify-content: center;
@@ -125,19 +175,20 @@
     .btn {
       display: inline-block;
       padding: 12px 24px;
-      background-color: #6c5b7b;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 25px;
       font-size: 16px;
       cursor: pointer;
       text-decoration: none;
       text-align: center;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
 
     .btn:hover {
-      background-color: #54466d;
+      background: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
     }
 
     #home-btn a {
@@ -149,6 +200,13 @@
   </style>
 </head>
 <body>
+  <!-- Logo and Header -->
+  <div class="logo-container">
+    <img src="/logo.jpeg" alt="Logo">
+    <span>Git Helper</span>
+  </div>
+
+  <!-- Main Issues Container -->
   <div class="issues-container">
     <h2>Opened Queries</h2>
     <div class="issue-list">
@@ -156,28 +214,33 @@
         {{#each issues}}
           <div class="issue">
             <div class="edit-delete-buttons">
-              <button class="edit-button" onclick="editQuery('{{_id}}')"> <i class="fas fa-edit"></i>Edit</button>
-
-              <button class="delete-button" onclick="deleteQuery('{{_id}}')"><i class="fas fa-trash"></i>Delete</button>
-
-              <button class="response-button" onclick="responseQuery('{{_id}}')"><i class="fas fa-comment"></i>Show Responses</button>
+              <button class="edit-button" onclick="editQuery('{{_id}}')"> 
+                <i class="fas fa-edit"></i>Edit
+              </button>
+              <button class="delete-button" onclick="deleteQuery('{{_id}}')">
+                <i class="fas fa-trash"></i>Delete
+              </button>
+              <button class="response-button" onclick="responseQuery('{{_id}}')">
+                <i class="fas fa-comment"></i>Show Responses
+              </button>
             </div>
-
             <p><strong>Skillset:</strong> {{skillset}}</p>
             <p><strong>GitHub ID:</strong> {{github_id}}</p>
-            <p><strong>Repository Link:</strong> {{repo_link}}</p>
+            <p><strong>Repository Link:</strong> <a href="{{repo_link}}" target="_blank">{{repo_link}}</a></p>
             <p><strong>Description:</strong> {{description}}</p>
           </div>
         {{/each}}
       {{else}}
         <p>No open queries found.</p>
       {{/if}}
-      <div id="home-btn">
-        <a href="/api/user" class="btn">Back To Dashboard</a>
-      </div>
+    </div>
+
+    <div id="home-btn">
+      <a href="/api/user" class="btn">Back To Dashboard</a>
     </div>
   </div>
 
+  <!-- Script Functions -->
   <script>
     function editQuery(queryId) {      
       window.location.href = `/query_work/edit?queryId=${queryId}`;
@@ -193,3 +256,5 @@
   </script>
 </body>
 </html>
+
+
