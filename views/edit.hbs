@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Query</title>
 
-    <link rel="icon" href="/logo.jpeg" type="image/icon type">
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -196,7 +196,7 @@
     .form-group textarea {
       width: 100%;
       padding: 14px 20px 14px 50px; 
-      font-size: 16px; /
+      font-size: 16px;
       border: none;
       border-radius: 10px;
       outline: none;
@@ -242,7 +242,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      text-transform: uppercase; /
+      text-transform: uppercase; 
       letter-spacing: 1px; 
     }
 
@@ -264,6 +264,14 @@
       font-size: 16px;
       text-align: center;
       font-weight: 500;
+    }
+
+    /* Disabled Input Style */
+    .disabled-input {
+      background-color: #f0f0f0;
+      color: #666;
+      cursor: not-allowed; 
+      opacity: 0.6;
     }
 
     /* Responsive Design */
@@ -320,76 +328,77 @@
 
   <!-- Main Container -->
   <div class="container">
-  <div class="form-container">
-    <h2>Edit Query</h2>
-    <form id="issue-form" action="/query_work/edit_query?queryId={{queryId}}" method="post" onsubmit="return validateForm()">
+    <div class="form-container">
+      <h2>Edit Query</h2>
+      <form id="issue-form" action="/query_work/edit_query?queryId={{queryId}}" method="post" onsubmit="return validateForm()">
 
-      <div class="form-group"><i class="fas fa-phone-alt"></i>
-        <input type="tel" id="contact_info" placeholder="Contact Info (10 digits)"  name="contact_info" value="{{contact_info}}" required>
-      </div>
+        <div class="form-group"><i class="fas fa-phone-alt"></i>
+          <input type="tel" id="contact_info" placeholder="Contact Info (10 digits)" name="contact_info" value="{{contact_info}}" required>
+        </div>
 
-      <div class="form-group"><i class="fas fa-tools"></i>
-        <input type="text" id="skillset" placeholder="Skill Set (e.g., JavaScript, Python)"  name="skillset" value="{{skillset}}">
-        <input type="text" id="id" name="id" value="{{_id}}" hidden required readonly>
-      </div>
+        <div class="form-group"><i class="fas fa-tools"></i>
+          <input type="text" id="skillset" placeholder="Skill Set (e.g., JavaScript, Python)" name="skillset" value="{{skillset}}">
+          <input type="text" id="id" name="id" value="{{_id}}" hidden required readonly>
+        </div>
 
-      <div class="form-group"><i class="fab fa-github"></i>
-        <input type="text" id="github_id" placeholder="GitHub ID"  name="github_id" value="{{github_id}}" required>
-      </div>
+        <div class="form-group"><i class="fab fa-github"></i>
+          <input type="text" id="github_id" placeholder="GitHub ID" name="github_id" value="{{github_id}}" required>
+        </div>
 
-      <div class="form-group"><i class="fas fa-link"></i>
-        <input type="url" id="repo_link" placeholder="Repository Link"  name="repo_link" value="{{repo_link}}" required readonly>
-      </div>
+        <div class="form-group"><i class="fas fa-link"></i>
+          <input type="url" id="repo_link" placeholder="Repository Link" name="repo_link" value="{{repo_link}}" required readonly class="disabled-input">
+        </div>
 
-      <div class="form-group"><i class="fas fa-align-left"></i>
-        <textarea id="description" placeholder="Description of the Query" name="description">{{description}}</textarea>
-      </div>
-      <button type="submit"><i class="fas fa-paper-plane"></i> Submit Query</button>
-    </form>
-    <p id="error-message" class="error-message"></p>
+        <div class="form-group"><i class="fas fa-align-left"></i>
+          <textarea id="description" placeholder="Description of the Query" name="description">{{description}}</textarea>
+        </div>
+        <button type="submit"><i class="fas fa-paper-plane"></i> Submit Query</button>
+      </form>
+      <p id="error-message" class="error-message"></p>
+    </div>
+
+    <script>
+      function validateForm() {
+        var repoLink = document.getElementById('repo_link').value;
+        var repoRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/;
+        if (!repoRegex.test(repoLink)) {
+          document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link.";
+          return false;
+        }
+
+        var contactInfo = document.getElementById('contact_info').value;
+        var phoneNumberDigitsOnly = contactInfo.replace(/\D/g, '');
+        if (phoneNumberDigitsOnly.length !== 10) {
+          document.getElementById("error-message").innerText = "Contact info should contain exactly 10 digits.";
+          return false;
+        }
+
+        var githubId = document.getElementById('github_id').value;
+        var githubIdRegex = /^[a-zA-Z0-9-]{1,39}$/;
+        if (!githubIdRegex.test(githubId)) {
+          document.getElementById("error-message").innerText = "Invalid GitHub ID.";
+          return false;
+        }
+
+        var skillset = document.getElementById('skillset').value;
+        var skillsetRegex = /^[a-zA-Z0-9,.\s]+$/;
+        if (skillset && !skillsetRegex.test(skillset)) {
+          document.getElementById("error-message").innerText = "Skill Set can only contain letters, numbers, commas, periods, and spaces.";
+          return false;
+        }
+
+        var description = document.getElementById('description').value;
+        var descriptionRegex = /^[a-zA-Z0-9.,!?;:\s]+$/;
+        if (description && !descriptionRegex.test(description)) {
+          document.getElementById("error-message").innerText = "Description can only contain letters, numbers, and standard punctuation.";
+          return false;
+        }
+
+        document.getElementById("error-message").innerText = "";
+        return true;
+      }
+    </script>
   </div>
-
-  <script>
-function validateForm() {
-  var repoLink = document.getElementById('repo_link').value;
-  var repoRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/;
-  if (!repoRegex.test(repoLink)) {
-    document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link.";
-    return false;
-  }
-
-  var contactInfo = document.getElementById('contact_info').value;
-  var phoneNumberDigitsOnly = contactInfo.replace(/\D/g, '');
-  if (phoneNumberDigitsOnly.length !== 10) {
-    document.getElementById("error-message").innerText = "Contact info should contain exactly 10 digits.";
-    return false;
-  }
-
-  var githubId = document.getElementById('github_id').value;
-  var githubIdRegex = /^[a-zA-Z0-9-]{1,39}$/;
-  if (!githubIdRegex.test(githubId)) {
-    document.getElementById("error-message").innerText = "Invalid GitHub ID.";
-    return false;
-  }
-
-  var skillset = document.getElementById('skillset').value;
-  var skillsetRegex = /^[a-zA-Z0-9,.\s]+$/;
-  if (skillset && !skillsetRegex.test(skillset)) {
-    document.getElementById("error-message").innerText = "Skill Set can only contain letters, numbers, commas, periods, and spaces.";
-    return false;
-  }
-
-  var description = document.getElementById('description').value;
-  var descriptionRegex = /^[a-zA-Z0-9.,!?;:\s]+$/;
-  if (description && !descriptionRegex.test(description)) {
-    document.getElementById("error-message").innerText = "Description can only contain letters, numbers, and standard punctuation.";
-    return false;
-  }
-
-  document.getElementById("error-message").innerText = "";
-  return true;
-}
-
-  </script>
 </body>
 </html>
+
