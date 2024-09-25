@@ -137,13 +137,21 @@
     <button id="sendBtn">Send</button>
   </div>
 
-  <input type="hidden" id="userId" value="{{userId}}" required readonly>
+  <input type="hidden" id="senderUserId" value="{{senderUserId}}" required readonly>
+  <input type="hidden" id="receiverUserId" value="{{receiverUserId}}" required readonly>
+  <input type="hidden" id="convoId" value="{{convoId}}" required readonly>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
+
+  const sender = document.getElementById('senderUserId')
+  const receiver = document.getElementById('receiverUserId')
+  const convo = document.getElementById('convoId')
+
   const socket = io({
     "auth": {
-      "userId": document.getElementById('userId').value
+      "userId": sender.value,
+      "receiverId": receiver.value
     }
   });
 
@@ -154,9 +162,15 @@
   function sendMessage() {
     const msg = messageInput.value;
     if (msg.trim()) {
-      socket.emit('user-message', msg);
+      const jsonMsg = {
+        "convoId": convo.value,
+        "receiver": receiver.value,
+        "msg": msg,
+        "sender": sender.value,
+      }
 
-      appendMessage(msg, 'sender');
+      socket.emit('user-message', jsonMsg);
+
       messageInput.value = ''; 
     }
   }
@@ -176,18 +190,22 @@
 
     messageDiv.innerText = msg;
 
-    const timestampDiv = document.createElement('div');
+    {{!-- const timestampDiv = document.createElement('div');
     timestampDiv.classList.add('timestamp');
     timestampDiv.innerText = new Date().toLocaleTimeString(); 
 
-    messageDiv.appendChild(timestampDiv);
+    messageDiv.appendChild(timestampDiv); --}}
 
     chatContainer.appendChild(messageDiv);
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }
 
-  socket.on('message', (msg) => {
+  socket.on('received-message', (msg) => {
     appendMessage(msg, 'receiver'); 
+  });
+
+    socket.on('sent-message', (msg) => {
+    appendMessage(msg, 'sender'); 
   });
 </script>
 
