@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Page</title>
+  <title>Admin Page - Git Helper</title>
 
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
+
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <style>
-    /* Universal reset and box-sizing */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -24,15 +23,40 @@
 
     /* Body background and layout */
     body {
-      background-image: url("/1329272.png");
+      background-image: url("/Home1.jpg");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px 20px;
+      background-color: rgba(0, 0, 0, 0.6); 
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .navbar img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar img:hover {
+      transform: rotate(10deg);
     }
 
     /* Admin container styling */
@@ -42,52 +66,60 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      max-width: 600px;
-      padding: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      max-width: 800px;
+      padding: 50px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      backdrop-filter: blur(20px); 
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
       text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .admin-container:hover {
+      transform: scale(1.02);
     }
 
     h2 {
-      font-size: 36px;
+      font-size: 42px;
       color: white;
       margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
     }
 
     p {
-      font-size: 16px;
+      font-size: 18px;
       color: #e0e0e0;
       margin-bottom: 30px;
     }
 
     /* Button styling */
     button {
-      padding: 12px 24px;
-      background-color: #dc3545;
+      padding: 15px 30px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc); 
       color: white;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: transform 0.3s ease, background 0.3s ease;
       margin-bottom: 15px;
-      width: 100%; /* Full width for better appearance */
+      width: 100%;
+      max-width: 400px;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); 
     }
 
-    /* Button hover effect */
     button:hover {
-      background-color: #c82333;
+      background: linear-gradient(45deg, #5a0fcf, #1d65e5);
+      transform: scale(1.05);
     }
 
-    /* Icon styling within the buttons */
     button i {
-      margin-right: 8px;
+      margin-right: 10px;
     }
 
     /* Responsive layout for smaller screens */
@@ -97,36 +129,49 @@
       }
 
       h2 {
-        font-size: 28px;
+        font-size: 32px;
       }
 
       button {
-        font-size: 14px;
-        padding: 10px 20px;
+        font-size: 16px;
+        padding: 12px 20px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Navbar with logo and "Git Helper" text -->
+  <div class="navbar">
+    <a href="/">
+      <img src="/logo.jpeg" alt="Logo">
+    </a>
+  </div>
+
   <div class="admin-container">
     <h2>Welcome, Admin!</h2>
     <p>This is the admin page. You have access to privileged information here.</p>
-    <!-- Buttons with icons for admin actions -->
+    <!-- Buttons for admin actions -->
     <button id="home-btn"><i class="fas fa-list"></i>List of Queries</button>
     <button id="mod-btn"><i class="fas fa-users"></i>List of Users</button>
     <button id="logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</button>
   </div>
-  
+
   <script>
     document.getElementById("logout-btn").addEventListener("click", function() {
-  window.location.href = "/home/logout"; 
-});
+      window.location.href = "/home/logout"; 
+    });
     document.getElementById("mod-btn").addEventListener("click", function() {
-  window.location.href = "/admin/userlist"; 
-});
+      window.location.href = "/admin/userlist"; 
+    });
     document.getElementById("home-btn").addEventListener("click", function() {
-  window.location.href = "/"; 
-});
+      window.location.href = "/"; 
+    });
   </script>
 </body>
 </html>
+
+
+
+
+
+
