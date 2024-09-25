@@ -251,7 +251,10 @@
     </div>
     <div class="nav-links">
       <a href="/error/faq"><i class="fas fa-question-circle"></i> FAQ</a>
+      {{#if user}}
       <a href="/api/user"><i class="fas fa-user-circle"></i> Profile</a>
+      {{else}}
+      {{/if}}
     </div>
   </div>
 
