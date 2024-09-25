@@ -132,6 +132,8 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       width: 100%;
       max-width: 800px;
+      min-height: 500px;
+      position: relative;
     }
 
     .login-box:hover {
@@ -317,9 +319,12 @@
 
     .error-message {
       color: #ff4b2b;
-      margin-top: 10px;
       font-size: 14px;
-      text-align: center;
+      text-align: left;
+      margin-top: 5px;
+      margin-bottom: 0;
+      height: auto;
+      position: relative;
     }
 
     .register-link {
@@ -423,6 +428,7 @@
             <input type="password" placeholder="Enter your password" id="password" name="password" required>
             <input type="password" name="encryptedpassword" id="encryptedpassword" required readonly hidden>
           </div>
+          <p id="error-message" class="error-message"></p>
         </div>
 
         <div class="options">
