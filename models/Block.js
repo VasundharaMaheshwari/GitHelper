@@ -3,7 +3,8 @@ const { Schema, default: mongoose } = require('mongoose')
 const Block_Schema = new Schema({
     "email": {
         type: String,
-        required: true
+        required: true,
+        unique: true
     }
 },
 {timestamps:true})
