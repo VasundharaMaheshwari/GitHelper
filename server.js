@@ -23,8 +23,8 @@ io.on('connection', (socket) => {
 
   setid(userId, receiverId, socket.id);
 
-  socket.on('user-message', (message) => {
-    const { sender, receiver, msg } = message;
+  socket.on('user-message', async (message) => {
+    const { sender, receiver, msg, convoId } = message;
 
     const sockettx = getid(sender, receiver);  
     const socketrx = getid(receiver, sender);  
@@ -35,6 +35,19 @@ io.on('connection', (socket) => {
 
     if (socketrx) {
       io.to(socketrx).emit('received-message', msg);
+    }
+
+    try{
+      const newMessage = new Msg({
+        sender: sender,
+        receiver: receiver,
+        msg: msg,
+        convoId: convoId
+      })
+
+      await newMessage.save()
+
+    } catch (err) {
     }
   });
 
@@ -75,6 +88,7 @@ app.use((req, res, next) => {
 })
 
 const handlebars = require("express-handlebars");
+const { Msg } = require('./models/Msg')
 
 app.set("view engine", "handlebars");
 app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
