@@ -3,6 +3,7 @@ const { GHUser } = require('../models/GHUser')
 const { Issue } = require('../models/Issue')
 const { Response } = require('../models/Response')
 const { Convo } = require('../models/Convo')
+const { Block } = require('../models/Block')
 const { validationResult } = require('express-validator');
 const { Msg } = require('../models/Msg');
 
@@ -92,6 +93,12 @@ const usermod = async (req,res) => {
           const msg_resp = await Msg.deleteMany({$or: [
             {"sender": _id},{"receiver": _id}
           ]})
+
+          const trial2 = new Block({
+            email: user.email
+        })
+
+        await trial2.save()
 
           if(user_resp && issue_resp && resp_resp && con_resp && msg_resp){
             return res.status(200).redirect('/admin/userlist')
