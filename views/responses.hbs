@@ -117,6 +117,16 @@
       display: inline;
     }
 
+    .github-id {
+      color: #333;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .github-id:hover {
+      text-decoration: underline;
+      color: #6c5b7b;
+    }
   </style>
 </head>
 <body>
@@ -127,7 +137,7 @@
         {{#each responses}}
           <div class="response">
             <p><i class="fas fa-user"></i><strong>Username:</strong> {{responder.username}}</p>
-            <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> {{responder.github_id}}</p>
+            <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> <a class="github-id" href="https://github.com/{{responder.github_id}}" target="_blank">{{responder.github_id}}</a></p>
             <div class="action-buttons">
               <form id="convo" action="/chat/start" method="POST">
                 <input type="hidden" id="username" name="username" value="{{responder.username}}" readonly required>
