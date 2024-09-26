@@ -1,6 +1,7 @@
 const { ObjectId } = require('mongodb')
 const { Issue } = require('../models/Issue')
 const { getUser } = require('../services/auth')
+const { Response } = require('../models/Response')
 
 const restrict = async (req,res,next) => {
     const UserUID = req.cookies?.uid
@@ -86,4 +87,35 @@ const query_check = async (req,res,next) => {
     next()
 }
 
-module.exports = { restrict,less_restrict,admin,loggedIn,query_check }
+const chat_check = async (req,res,next) => {
+    const UserUID = req.cookies?.uid
+    if(!UserUID){
+        return res.status(401).redirect('/api/login')
+    }
+    const user = getUser(UserUID)
+    if(!user){
+        return res.status(401).redirect('/api/login')
+    }
+    if(user.role == "Admin"){
+        return res.status(403).redirect('/admin')
+    }
+    const {resId} = req.query
+    if(!ObjectId.isValid(resId)){
+        return res.status(404).redirect('/query/list')
+    }
+
+    const response_approved = await Response.findOne({'_id': resId})
+
+    if(!response_approved){
+        return res.status(404).redirect('/query/list')
+    }
+
+    if(!response_approved.approved){
+        return res.status(404).redirect('/error?error_details=Not_Allowed_Response_Approval_Pending')
+    }
+
+    req.user = user
+    next()
+}
+
+module.exports = { restrict,less_restrict,admin,loggedIn,query_check,chat_check }
