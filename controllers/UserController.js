@@ -1,4 +1,5 @@
 const { GHUser } = require('../models/GHUser')
+const { Block } = require('../models/Block')
 const CryptoJS = require('crypto-js')
 const { ObjectId } = require('mongodb');
 const { validationResult } = require('express-validator')
@@ -16,6 +17,9 @@ const register = async (req,res) => {
 
       const user = await GHUser.findOne({username: username})
       const emailcheck = await GHUser.findOne({email: email})
+      const emailcheck2 = await Block.findOne({email: email})
+
+      if( emailcheck2 == null ){
 
       if(user == null && emailcheck == null){
       const encrypted = CryptoJS.AES.encrypt(encryptedpassword, process.env.SECRET_KEY).toString();
@@ -32,7 +36,9 @@ const register = async (req,res) => {
     }else{
       return res.status(403).redirect('/error?error_details=Username_or_Email_Already_Taken')
     }
-  }
+  } else {
+    return res.status(403).redirect('/error?error_details=Blocked_Email')
+  } }
   return res.send("Oops! Error Occurred...")
   } catch(err) {
     return res.status(500).redirect(`/error?error_details=Error_Occurred`)
