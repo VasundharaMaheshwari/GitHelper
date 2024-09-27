@@ -3,6 +3,7 @@ const { Response } = require('../models/Response')
 const { validationResult } = require('express-validator')
 const { Convo } = require('../models/Convo')
 const { GHUser } = require('../models/GHUser')
+const { Msg } = require('../models/Msg')
 
 const chatload = async (req,res) => {
     try{
@@ -78,11 +79,14 @@ const chatting = async (req,res) => {
 
 const convo = await Convo.findOne({"response": resId})
 
+const msg = await Msg.find({convoId: convo._id}).sort({createdAt: 1 })
+
     return res.status(200).render('main.hbs',{layout: "chat.hbs",
         receiverUsername: username,
         receiverUserId: receiver._id,
         senderUserId: req.user._id,
-        convoId: convo._id
+        convoId: convo._id,
+        messages: msg
       }
     )
   }

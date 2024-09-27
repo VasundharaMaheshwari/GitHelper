@@ -4,6 +4,8 @@ const app = express()
 
 const http = require('http')
 
+const hbs = require('hbs')
+
 const server = http.createServer(app)
 
 const { Server } = require('socket.io')
@@ -50,6 +52,9 @@ io.on('connection', (socket) => {
   });
 });
 
+hbs.registerHelper('ifCond', function(v1, v2, options) {
+  return (v1.toString() == v2.toString()) ? options.fn(this) : options.inverse(this);
+});
 
 app.use(express.static('public', { setHeaders: (res, path) => {
   if (path.endsWith('.png')) {
