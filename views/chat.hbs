@@ -130,6 +130,11 @@
   </div>
 
   <div class="chat-container" id="chat-container">
+    {{#each messages}}
+      <div class="message {{#ifCond sender ../senderUserId}}sender{{else}}receiver{{/ifCond}}">
+        {{msg}}
+      </div>
+    {{/each}}
   </div>
 
   <div class="input-container">
@@ -144,14 +149,14 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
-  const sender = document.getElementById('senderUserId')
-  const receiver = document.getElementById('receiverUserId')
-  const convo = document.getElementById('convoId')
+  const sender = document.getElementById('senderUserId');
+  const receiver = document.getElementById('receiverUserId');
+  const convo = document.getElementById('convoId');
 
   const socket = io({
-    "auth": {
-      "userId": sender.value,
-      "receiverId": receiver.value
+    auth: {
+      userId: sender.value,
+      receiverId: receiver.value
     }
   });
 
@@ -163,14 +168,13 @@
     const msg = messageInput.value;
     if (msg.trim()) {
       const jsonMsg = {
-        "convoId": convo.value,
-        "receiver": receiver.value,
-        "msg": msg,
-        "sender": sender.value,
+        convoId: convo.value,
+        receiver: receiver.value,
+        msg: msg,
+        sender: sender.value
       }
 
       socket.emit('user-message', jsonMsg);
-
       messageInput.value = ''; 
     }
   }
@@ -186,27 +190,21 @@
 
   function appendMessage(msg, type) {
     const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message', type); 
-
+    messageDiv.classList.add('message', type);
     messageDiv.innerText = msg;
-
-    {{!-- const timestampDiv = document.createElement('div');
-    timestampDiv.classList.add('timestamp');
-    timestampDiv.innerText = new Date().toLocaleTimeString(); 
-
-    messageDiv.appendChild(timestampDiv); --}}
 
     chatContainer.appendChild(messageDiv);
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }
 
   socket.on('received-message', (msg) => {
-    appendMessage(msg, 'receiver'); 
+    appendMessage(msg, 'receiver');
   });
 
-    socket.on('sent-message', (msg) => {
-    appendMessage(msg, 'sender'); 
+  socket.on('sent-message', (msg) => {
+    appendMessage(msg, 'sender');
   });
+
 </script>
 
 </body>
