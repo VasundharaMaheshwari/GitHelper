@@ -13,7 +13,7 @@ ChatRouter.get('/list',chatlist)
 ChatRouter.get('/chats',checkchat,chat_check,chatting)
 
 ChatRouter.post('/chats',(req,res) => {
-    return res.status(200).send("Check if socket mapping + error handling... See ongoing responses and closing responses == delete convo and messages from either side and vice versa if initiator... Pre load history etc.")
+    return res.status(200).send("Admin delete when browsing bug... Check if socket mapping + error handling... See ongoing responses and closing responses == delete convo and messages from either side and vice versa if initiator...")
 })
 
 module.exports = ChatRouter
