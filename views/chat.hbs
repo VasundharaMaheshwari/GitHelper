@@ -205,6 +205,11 @@
     appendMessage(msg, 'sender');
   });
 
+  socket.on('error', (msg) => {
+    alert(msg.message)
+    window.history.back()
+  })
+
 </script>
 
 </body>

@@ -23,7 +23,11 @@ app.use(express.static('public', { setHeaders: (res, path) => {
 io.on('connection', (socket) => {
   const { userId, receiverId } = socket.handshake.auth;
 
+  if(!getid(userId,receiverId)){
   setid(userId, receiverId, socket.id);
+  } else {
+    socket.emit('error', {message: "Chat_Already_Opened_Elsewhere"})
+  }
 
   socket.on('user-message', async (message) => {
     const { sender, receiver, msg, convoId } = message;

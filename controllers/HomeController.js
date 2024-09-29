@@ -66,7 +66,7 @@ const logout = (req,res) => {
   try{
   delUser(res.cookie?.uid)
   res.clearCookie('uid')
-  return res.status(200).redirect('/api/login')
+  return res.status(200).redirect('/')
   } catch (err) {
     return res.status(500).redirect('/error?error_details=Failed_To_Logout')
   }

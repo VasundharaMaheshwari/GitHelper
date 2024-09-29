@@ -88,7 +88,7 @@ try{
       if(user && user.role == "Admin"){
         res.status(403).redirect('/admin')
       } else {
-        return res.status(403).redirect('/error?error_details=Not_Allowed') }
+        return res.status(403).redirect('/home/logout') }
     }
   } else {
     return res.status(400).redirect('/error?error_details=Invalid_URL')

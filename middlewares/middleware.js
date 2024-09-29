@@ -1,5 +1,4 @@
 const { ObjectId } = require('mongodb')
-const { Issue } = require('../models/Issue')
 const { getUser } = require('../services/auth')
 const { Response } = require('../models/Response')
 
