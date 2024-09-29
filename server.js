@@ -26,6 +26,11 @@ io.on('connection', (socket) => {
   socket.on('user-message', async (message) => {
     const { sender, receiver, msg, convoId } = message;
 
+    if(msg.length == 0 || msg.length > 500){
+      socket.emit('chat_rule',{type: "length", message: "Message must be between 1 and 500 characters"})
+      return
+    }
+
     const sockettx = getid(sender, receiver);  
     const socketrx = getid(receiver, sender);  
 
@@ -49,7 +54,7 @@ io.on('connection', (socket) => {
 
     } catch (err) {
     }
-  });
+});
 
   socket.on('disconnect', () => {
     delBySocketId(socket.id);  
