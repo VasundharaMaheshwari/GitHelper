@@ -14,6 +14,8 @@ const io = new Server(server)
 
 const { setid,getid, delBySocketId } = require('./services/socketio')
 
+const { ObjectId } = require('mongodb')
+
 io.on('connection', (socket) => {
   const { userId, receiverId } = socket.handshake.auth;
 
@@ -26,6 +28,11 @@ io.on('connection', (socket) => {
   socket.on('user-message', async (message) => {
     const { sender, receiver, msg, convoId } = message;
 
+    if(typeof msg != 'string' || !msg.trim() || !ObjectId.isValid(sender) || !ObjectId.isValid(receiver) || !ObjectId.isValid(convoId)){
+      socket.emit('chat_rule',{type: "type", message: "Invalid message format"})
+      return
+    }
+    
     if(msg.length == 0 || msg.length > 500){
       socket.emit('chat_rule',{type: "length", message: "Message must be between 1 and 500 characters"})
       return
