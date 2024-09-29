@@ -14,6 +14,8 @@ const io = new Server(server)
 
 const { setid,getid, delBySocketId } = require('./services/socketio')
 
+const { ObjectId } = require('mongodb')
+
 app.use(express.static('public', { setHeaders: (res, path) => {
   if (path.endsWith('.png')) {
     res.setHeader('Content-Type', 'image/png');
@@ -31,6 +33,16 @@ io.on('connection', (socket) => {
 
   socket.on('user-message', async (message) => {
     const { sender, receiver, msg, convoId } = message;
+
+    if(typeof msg != 'string' || !msg.trim() || !ObjectId.isValid(sender) || !ObjectId.isValid(receiver) || !ObjectId.isValid(convoId)){
+      socket.emit('chat_rule',{type: "type", message: "Invalid message format"})
+      return
+    }
+    
+    if(msg.length == 0 || msg.length > 500){
+      socket.emit('chat_rule',{type: "length", message: "Message must be between 1 and 500 characters"})
+      return
+    }
 
     const sockettx = getid(sender, receiver);  
     const socketrx = getid(receiver, sender);  
@@ -55,7 +67,7 @@ io.on('connection', (socket) => {
 
     } catch (err) {
     }
-  });
+});
 
   socket.on('disconnect', () => {
     delBySocketId(socket.id);  
