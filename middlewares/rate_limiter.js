@@ -96,4 +96,15 @@ const convo_limit = limiter({
     keyGenerator: (req,res) => req.body.queryId
 })
 
-module.exports = { register_limit,login_limit,issue_limit,response_limit,login_limit_ip,edit_limit,convo_limit }
+const overall_limit = limiter({
+    windowMs: 15*60*1000,
+    max: 100,
+    legacyHeaders: false,
+    // requestWasSuccessful: (req, res) => res.status < 400,
+    // skipFailedRequests: true,
+    handler: (req,res) => {
+        return res.status(429).send("Not Allowed")
+    }
+})
+
+module.exports = { register_limit,login_limit,issue_limit,response_limit,login_limit_ip,edit_limit,convo_limit,overall_limit }

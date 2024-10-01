@@ -110,6 +110,9 @@ app.use((req, res, next) => {
 
 const handlebars = require("express-handlebars");
 const { Msg } = require('./models/Msg')
+const { overall_limit } = require('./middlewares/rate_limiter')
+
+app.use(overall_limit)
 
 app.set("view engine", "handlebars");
 app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
