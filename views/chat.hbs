@@ -164,19 +164,32 @@
   const messageInput = document.getElementById("message");
   const chatContainer = document.getElementById("chat-container");
 
+  function validateMessage(msg) {
+    if (typeof msg !== 'string') {
+      alert('Message must be a string.');
+      return false;
+    }
+    if (msg.trim().length === 0 || msg.length > 500) {
+      alert('Message length must be between 1 and 500 characters.');
+      return false;
+    }
+    return true;
+  }
+
   function sendMessage() {
     const msg = messageInput.value;
-    if (msg.trim()) {
-      const jsonMsg = {
-        convoId: convo.value,
-        receiver: receiver.value,
-        msg: msg,
-        sender: sender.value
-      }
+    messageInput.value = ''; 
 
-      socket.emit('user-message', jsonMsg);
-      messageInput.value = ''; 
-    }
+    if (!validateMessage(msg)) return;
+
+    const jsonMsg = {
+      convoId: convo.value,
+      receiver: receiver.value,
+      msg: msg,
+      sender: sender.value
+    };
+
+    socket.emit('user-message', jsonMsg);
   }
 
   sendBtn.addEventListener("click", sendMessage);

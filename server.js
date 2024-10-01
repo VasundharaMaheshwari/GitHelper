@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
     }
     
     if(msg.length == 0 || msg.length > 500){
-      socket.emit('chat_rule',{type: "length", message: "Message must be between 1 and 500 characters"})
+      socket.emit('chat_rule',{type: "length", message: "Message length must be between 1 and 500 characters"})
       return
     }
 
