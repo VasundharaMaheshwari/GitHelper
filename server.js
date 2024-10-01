@@ -84,6 +84,8 @@ app.use(express.static('public', { setHeaders: (res, path) => {
   }
 }}))
 
+app.set('trust proxy', 1);
+
 const cookie_parser = require('cookie-parser')
 
 const UserRouter = require('./routes/UserRoutes')
