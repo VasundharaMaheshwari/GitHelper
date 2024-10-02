@@ -185,29 +185,14 @@
     }
 
     .form-group {
-<<<<<<< HEAD
-      margin-bottom: 15px; 
-      position: relative;
-=======
       margin-bottom: 20px;
       text-align: left;
->>>>>>> e06035554a59a537e097e09493b6ba568ac7d77c
     }
 
     .form-group label {
       color: #fff;
       font-size: 14px;
       margin-bottom: 5px;
-<<<<<<< HEAD
-      display: block;
-    }
-
-    .input-container {
-      position: relative;
-      width: 100%;
-      display: flex;
-      align-items: center;
-=======
       font-weight: bold;
       color: #666;
       text-align: center;
@@ -221,7 +206,6 @@
       border-radius: 6px;
       font-size: 16px;
       box-sizing: border-box;
->>>>>>> e06035554a59a537e097e09493b6ba568ac7d77c
     }
 
     .input-container input {
@@ -264,18 +248,7 @@
       padding: 15px;
       border-radius: 30px;
       cursor: pointer;
-<<<<<<< HEAD
-      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
-      font-size: 18px;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 10px;
-      transition: transform 0.3s ease, background-image 0.3s ease;
-=======
       width: 100%;
->>>>>>> e06035554a59a537e097e09493b6ba568ac7d77c
     }
 
     .register-button:hover {
@@ -341,7 +314,6 @@
 
   <script>
     var sha256 = function sha256(ascii) {
-<<<<<<< HEAD
       function rightRotate(value, amount) {
           return (value>>>amount) | (value<<(32 - amount));
       };
@@ -409,87 +381,6 @@
           }
       }
       return result;
-=======
-        function rightRotate(value, amount) {
-            return (value>>>amount) | (value<<(32 - amount));
-        };
-        
-        var mathPow = Math.pow;
-        var maxWord = mathPow(2, 32);
-        var lengthProperty = 'length';
-        var i, j; 
-        var result = '';
-
-        var words = [];
-        var asciiBitLength = ascii[lengthProperty]*8;
-        
-        var hash = sha256.h = sha256.h || [];
-        var k = sha256.k = sha256.k || [];
-        var primeCounter = k[lengthProperty];
-
-        var isComposite = {};
-        for (var candidate = 2; primeCounter < 64; candidate++) {
-            if (!isComposite[candidate]) {
-                for (i = 0; i < 313; i += candidate) {
-                    isComposite[i] = candidate;
-                }
-                hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-                k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
-            }
-        }
-        
-        ascii += '\x80' 
-        while (ascii[lengthProperty]%64 - 56) ascii += '\x00' 
-        for (i = 0; i < ascii[lengthProperty]; i++) {
-            j = ascii.charCodeAt(i);
-            if (j>>8) return; 
-            words[i>>2] |= j << ((3 - i)%4)*8;
-        }
-        words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
-        words[words[lengthProperty]] = (asciiBitLength)
-        
-        for (j = 0; j < words[lengthProperty];) {
-            var w = words.slice(j, j += 16); 
-            var oldHash = hash;
-            hash = hash.slice(0, 8);
-            
-            for (i = 0; i < 64; i++) {
-                var i2 = i + j;
-                var w15 = w[i - 15], w2 = w[i - 2];
-
-                var a = hash[0], e = hash[4];
-                var temp1 = hash[7]
-                    + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) 
-                    + ((e&hash[5])^((~e)&hash[6])) 
-                    + k[i]
-                    + (w[i] = (i < 16) ? w[i] : (
-                            w[i - 16]
-                            + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
-                            + w[i - 7]
-                            + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
-                        )|0
-                    );
-                var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) 
-                    + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
-                
-                hash = [(temp1 + temp2)|0].concat(hash); 
-                hash[4] = (hash[4] + temp1)|0;
-            }
-            
-            for (i = 0; i < 8; i++) {
-                hash[i] = (hash[i] + oldHash[i])|0;
-            }
-        }
-        
-        for (i = 0; i < 8; i++) {
-            for (j = 3; j + 1; j--) {
-                var b = (hash[i]>>(j*8))&255;
-                result += ((b < 16) ? 0 : '') + b.toString(16);
-            }
-        }
-        return result;
-
->>>>>>> e06035554a59a537e097e09493b6ba568ac7d77c
     };
 
     function validateForm() {
@@ -545,7 +436,7 @@
     <div class="nav-links">
       <a href="/home"><i class="fas fa-home"></i> Home</a>
       <a href="/error/faq"><i class="fas fa-question-circle"></i> FAQ</a>
-=======
+
   <div class="register-container">
     <h2>Register</h2>
     <form id="register-form" action="/api/register" method="post" onsubmit="return validateForm()">
@@ -574,12 +465,7 @@
       <button type="submit">Register</button>
     </form>
     <div class="login-link">
-<<<<<<< HEAD
-      Already have an account? <a href="/login">Login here</a>
->>>>>>> e06035554a59a537e097e09493b6ba568ac7d77c
-=======
       Already have an account? <a href="/api/login">Login</a>
->>>>>>> 365b39a72154562eff1981db68ee73dfdab50f5d
     </div>
   </div>
 
