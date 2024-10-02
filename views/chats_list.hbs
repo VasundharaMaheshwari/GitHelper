@@ -3,78 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chats</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  <title>Chat Users</title>
+
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+
+ <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+   <style>
+     <style>
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-image: url('/moon.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      display: flex;
+      height: 100vh;
+    }
+
+    .chat-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(1px);
+    }
+
+    /* Left side with the user list */
+    .user-list-section {
+      width: 30%;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      height: 100vh;
-      background-color: #f8f4ff;
+      justify-content: flex-start;
+      overflow-y: auto;
     }
 
     .header {
-      background-color: #6c5b7b;
-      padding: 20px;
+      font-size: 24px;
+      color: white; 
       text-align: center;
-      color: white;
-      font-size: 28px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
     }
 
     .user-list-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      border-radius: 10px;
       overflow-y: auto;
-      background-color: #fff;
-      border-top: 1px solid #e0e0e0;
-      border-bottom: 1px solid #e0e0e0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      margin: 20px;
+      flex-grow: 1;
     }
 
     .user {
+      background-color: #dbeafe; /* Light blue */
       padding: 15px;
-      margin-bottom: 15px;
-      background-color: #e1bee7;
-      border-radius: 18px;
+      margin-bottom: 10px;
+      border-radius: 10px;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 18px;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .user:hover {
-      background-color: #d1a7ce;
+      background-color: #bfdbfe; /* Slightly darker blue on hover */
+      transform: translateY(-3px);
     }
 
     .username {
       font-weight: bold;
-      color: #4a235a;
+      color: #1c3879; /* Darker blue */
+      display: flex;
+      align-items: center;
     }
 
-    .timestamp {
-      font-size: 14px;
-      color: #888;
+    .username i {
+      margin-right: 10px;
+      color: #1c3879;
     }
 
     .no-chats {
-      font-size: 22px;
-      color: #888;
+      font-size: 20px;
+      color: #666;
       text-align: center;
       margin-top: 50px;
-    }
-
-    .hidden-field {
-      display: none;
     }
 
     .user-list-container::-webkit-scrollbar {
@@ -82,26 +107,46 @@
     }
 
     .user-list-container::-webkit-scrollbar-thumb {
-      background-color: #6c5b7b;
+      background-color: #1c3879; /* Darker blue for scrollbar */
       border-radius: 10px;
     }
 
     .user-list-container::-webkit-scrollbar-track {
-      background-color: #f8f4ff;
+      background-color: #dbeafe; /* Light blue */
     }
-  </style>
+
+    /* Right side with an image */
+    .chat-image-section {
+      width: 70%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+    }
+
+    .chat-image-section img {
+      max-width: 80%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+  </style> 
+
 </head>
 <body>
 
-  <div class="header">
-    Chat Users
-  </div>
+  <div class="chat-container">
+    <!-- Left side: Chat user list -->
+    <div class="user-list-section">
+      <div class="header">
+        <i class="fas fa-comments"></i> Chat Users
+      </div>
 
   <div class="user-list-container">
     {{#if users.length}}
       {{#each users}}
         <div class="user" data-username="{{this.username}}" data-resid="{{this.response}}">
-          <span class="username">{{this.username}}</span>
+          <span class="username"><i class="fas fa-user-circle"></i>{{this.username}}</span>
           {{!-- <span class="timestamp">Last seen {{this.timestamp}}</span> --}}
         </div>
       {{/each}}

@@ -13,32 +13,33 @@ const register = async (req,res) => {
     try{
       const errors = validationResult(req)
       if(errors.isEmpty()){
-      const {username,email,encryptedpassword} = req.body;
+      const {username,email,encryptedpassword,github_id} = req.body;
 
-      const user = await GHUser.findOne({username: username})
-      const emailcheck = await GHUser.findOne({email: email})
+      const user = await GHUser.findOne({$or: [{username: username},{email: email},{github_id: github_id}]})
       const emailcheck2 = await Block.findOne({email: email})
 
       if( emailcheck2 == null ){
 
-      if(user == null && emailcheck == null){
+      if(user == null){
       const encrypted = CryptoJS.AES.encrypt(encryptedpassword, process.env.SECRET_KEY).toString();
 
       const trial2 = new GHUser({
           username: username,
           email: email,
           password: encrypted,
+          github_id: github_id,
           role: "User"
       })
 
       await trial2.save()
   return res.status(201).redirect('/api/login')
     }else{
-      return res.status(403).redirect('/error?error_details=Username_or_Email_Already_Taken')
+      return res.status(403).redirect('/error?error_details=Username_or_Email_or_GitHub_ID_Already_Taken')
     }
   } else {
-    return res.status(403).redirect('/error?error_details=Blocked_Email')
+    return res.status(403).redirect('/error?error_details=Blocked_Email_or_GitHub_ID')
   } }
+  console.log(errors)
   return res.send("Oops! Error Occurred...")
   } catch(err) {
     return res.status(500).redirect(`/error?error_details=Error_Occurred`)
