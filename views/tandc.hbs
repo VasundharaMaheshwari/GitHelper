@@ -7,7 +7,7 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
+
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -20,43 +20,77 @@
     }
 
     body {
-      background-image: url("/1329272.png");
+      background-image: url('/image.jpg'); /* Background image path */
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
       height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
     }
 
+    /* Container */
     .container {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(0, 0, 0, 0.7);
       padding: 40px;
       border-radius: 10px;
       max-width: 900px;
       width: 100%;
-      height: 80vh;
+      margin: 120px auto 40px;
+      height: 75vh;
       overflow-y: auto;
       backdrop-filter: blur(8px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      color: #333;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Headings */
+    h1, h2 {
+      opacity: 0;
+      animation: slideIn 1.2s ease forwards;
+      transform: translateY(20px);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h1 {
-      font-size: 36px;
-      color: #6c5b7b;
+      font-size: 38px;
+      color: #e1b12c;
       text-align: center;
       margin-bottom: 20px;
+      animation-delay: 0.3s;
     }
 
     h2 {
       font-size: 28px;
       margin: 20px 0 10px;
-      color: #6c5b7b;
+      color: #f5d179;
+      animation-delay: 0.6s;
     }
 
+    /* Paragraphs */
     p {
       font-size: 16px;
       line-height: 1.6;
@@ -73,32 +107,69 @@
       margin-bottom: 8px;
     }
 
+    /* Buttons */
     .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #6c5b7b;
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 24px;
+      background: #d6b560;
       color: #fff;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       text-decoration: none;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
       cursor: pointer;
-      margin-top: 20px;
-      text-align: center;
+      transform: scale(0.95);
+      animation: bounceIn 1s ease forwards;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .btn:hover {
-      background-color: #54466d;
+      background: #e1b337;
+      transform: scale(1);
+    }
+
+    .btn:focus {
+      outline: none;
     }
 
     .icon {
-      color: #6c5b7b;
-      margin-right: 10px;
+      color: #f5d179;
+      margin-right: 8px;
     }
 
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Back button */
     #back-btn {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 30px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+        height: auto;
+        margin-top: 60px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
     }
   </style>
 </head>
@@ -125,8 +196,10 @@
     <p>If you have any questions about these terms and conditions, please contact us at githelper@gmail.com.</p>
 
     <div id="back-btn">
-      <a href="/#queries" class="btn"><i class="fas fa-arrow-left icon"></i> Back </a>
+      <a href="/#queries" class="btn"><i class="fas fa-arrow-left icon"></i> Back</a>
     </div>
   </div>
 </body>
 </html>
+
+
