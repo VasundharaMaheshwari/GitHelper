@@ -67,6 +67,10 @@ const chatting = async (req,res) => {
             if (!receiver) {
               return res.status(404).redirect('/error?error_details=Receiver_Not_Found');
             }
+            const response_check = await Response.findOne({"_id": resId, $or: [{"responder.uid": receiver._id},{"creator": receiver._id}]});
+            if (!response_check) {
+              return res.status(404).redirect('/error?error_details=Response_Not_Found');
+            }
             const convo_check = await Convo.findOne({"response": resId})
     if(convo_check == null){
     const convo_ = new Convo({
