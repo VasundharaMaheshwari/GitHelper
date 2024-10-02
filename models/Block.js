@@ -5,6 +5,11 @@ const Block_Schema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    github_id:{
+        type: String,
+        required: true,
+        unique: true
     }
 },
 {timestamps:true})
