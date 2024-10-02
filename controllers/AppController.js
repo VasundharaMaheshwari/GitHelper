@@ -27,7 +27,7 @@ const save = async (req,res) => {
     try{
         const error = validationResult(req)
         if(error.isEmpty()){
-      const {contact_info,skillset,github_id,repo_link,description} = req.body
+      const {contact_info,skillset,repo_link,description} = req.body
       const regex = /^[a-zA-Z0-9_]+$/
       const checker = regex.test(req.user.username)
       if(checker){
@@ -37,7 +37,7 @@ const save = async (req,res) => {
           username: req.user.username,
           contact_info: contact_info,
           skillset: skillset,
-          github_id: github_id,
+          github_id: req.user.github_id,
           repo_link: repo_link,
           description: description,
           createdBy: req.user._id
