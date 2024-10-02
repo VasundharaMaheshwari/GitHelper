@@ -3,75 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Page</title>
+  <title>Admin Page - Git Helper</title>
+
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #6c5b7b, #000000);
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
 
-.admin-container {
-  background-color: #f0e9ff; 
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  max-width: 400px;
-  width: 100%;
-}
+    /* Body background and layout */
+      body {
+      background-image: url("/1329272.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      min-height: 100vh;
+    }
 
-h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #333;
-}
+    /* Navbar styling */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      padding: 0 20px;
+    }
 
-p {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 20px;
-}
+    .logo-section {
+      display: flex;
+      align-items: center;
+      color: white;
+    }
 
-button {
-  padding: 12px 24px;
-  background-color: #dc3545; 
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-}
+    .logo-section img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
 
-button:hover {
-  background-color: #c82333; 
-}
+    .logo-section img:hover {
+      transform: rotate(10deg);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .buttons a {
+      color: white;
+      text-decoration: none;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      padding: 10px 20px;
+      border-radius: 20px;
+      transition: background 0.3s ease;
+    }
+
+    .buttons a:hover {
+      background: linear-gradient(45deg, #5d09b1, #1f65e3);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 100px auto; /* Margin adjusted for navbar */
+      padding: 0 20px;
+    }
+
+    .content-container {
+      display: flex;
+      width: 100%;
+      margin-top: 20px;
+      gap: 50px;
+    }
+
+    .left-section {
+      flex: 0 0 25%;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .button-container a {
+      text-align: left;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .button-container a:hover {
+      background: linear-gradient(45deg, #5d09b1, #1f65e3);
+    }
+
+    .right-section {
+      flex: 0 0 75%;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .user-details {
+      color: white;
+    }
+
+    .user-details h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .user-details p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    /* Profile picture styling */
+    .profile-picture {
+      width: 150px; /* Adjust size */
+      height: 150px; /* Must be the same as width to form a circle */
+      border-radius: 50%; /* Makes the image circular */
+      object-fit: cover; /* Ensures the image fits within the circle */
+      margin-bottom: 15px; /* Adds space between the image and the button */
+      display: block; /* Ensures the image behaves as a block-level element */
+      margin-left: auto;
+      margin-right: auto; /* Centers the image horizontally */
+    }
+
+    .welcome-line {
+      text-align: center;
+      margin-top: 30px; /* Margin adjusted for the welcome line */
+      margin-bottom: 30px;
+    }
+
+    .welcome-line h2 {
+      font-size: 36px;
+      color: white;
+    }
+
   </style>
 </head>
 <body>
-  <div class="admin-container">
-    <h2>Welcome, Admin!</h2>
-    <p>This is the admin page. You have access to privileged information here.</p>
-    <button id="logout-btn">Logout</button>
-    <button id="home-btn">List of Queries</button>
-    <button id="mod-btn">List of Users</button>
+   <!-- Navbar with GitHelper logo on the left and Home/Logout buttons on the right -->
+  <div class="navbar">
+    <!-- Left: GitHelper Logo -->
+    <div class="logo-section">
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <span>Git Helper</span>
+    </div>
+    
+    <!-- Right: Home and Logout Buttons -->
+    <div class="buttons">
+      <a href="/home/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
   </div>
-  
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Welcome Line -->
+    <div class="welcome-line">
+      <h2>Welcome, Admin!</h2>
+    </div>
+    <!-- Content Container: Left Buttons and Right User Details -->
+    <div class="content-container">
+      <!-- Left Section: Navigation Buttons -->
+      <div class="left-section">
+        <div class="button-container">
+           <!-- Default Profile Picture -->
+          <img src="/pfp.jpeg" alt="Admin Profile Picture" class="profile-picture">
+          <a href="/admin/home"><i class="fas fa-list"></i> List of Queries</a>
+          <a href="/admin/userlist"><i class="fas fa-users"></i> List of Users</a>
+        </div>
+      </div>
+
+      <!-- Right Section: User Details -->
+      <div class="right-section">
+        <div class="user-details">
+          <h2>Admin Information</h2>
+          <p>Username: {{username}}</p>
+          <p>Email: {{email}}</p>
+          <p>Contact: {{contact}}</p>
+          <p>GitHub ID: {{githubID}}</p>
+          <p>Other details...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.getElementById("logout-btn").addEventListener("click", function() {
-  window.location.href = "/home/logout"; 
-});
+      window.location.href = "/home/logout"; 
+    });
     document.getElementById("mod-btn").addEventListener("click", function() {
-  window.location.href = "/admin/userlist"; 
-});
+      window.location.href = "/admin/userlist"; 
+    });
     document.getElementById("home-btn").addEventListener("click", function() {
-  window.location.href = "/"; 
-});
+      window.location.href = "/"; 
+    });
   </script>
 </body>
 </html>
+
+
+
+
+
+
