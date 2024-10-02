@@ -127,14 +127,6 @@ const viewer = async (req,res) => {
   if(ObjectId.isValid(_id)){
 
   const issue_details = await Issue.findOne({"_id": _id})
-  const userGH = ObjectId.isValid(req.user?._id) ? req.user?._id : null 
-  var user = await GHUser.findOne({"_id": userGH})
-  const usernameRegex = /^[a-zA-Z0-9_]+$/
-  const usernameGH = (req) => usernameRegex.test(req.user?.username)
-  const usercheck = usernameGH ? req.user?.username : null
-  if(user?.role == "Admin" || usercheck == issue_details.username){
-    user = null
-  }
   if(issue_details != null){
     return res.status(200).render('main.hbs',{layout: "individual_admin.hbs",
     _id: _id,
@@ -143,8 +135,7 @@ const viewer = async (req,res) => {
     skillset: issue_details.skillset,
     github_id: issue_details.github_id,
     repo_link: issue_details.repo_link,
-    description: issue_details.description,
-    user: user
+    description: issue_details.description
   })
   }
   else{
