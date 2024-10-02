@@ -28,6 +28,8 @@
       background-attachment: fixed;
       background-size: cover;
       height: 100vh;
+      color: white;
+      overflow-x: hidden;
     }
 
     .container {
@@ -37,22 +39,22 @@
       padding: 0 20px;
     }
 
-    /* Navbar with GitHelper on the left and buttons on the right */
+    /* Navbar */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: absolute;
-      top: 20px;
+      padding: 15px 30px;
+      background: transparent; 
+      position: fixed;
       width: 100%;
-      padding: 0 20px;
+      top: 0;
+      z-index: 1000;
     }
 
-    /* GitHelper logo and text */
     .logo-section {
       display: flex;
       align-items: center;
-      color: white;
     }
 
     .logo-section img {
@@ -66,47 +68,74 @@
     }
 
     .logo-section span {
-      font-size: 18px;
+      font-size: 24px;
       font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
     }
 
-    /* Navbar buttons (Home and Logout) on the right */
+    /* Navbar buttons */
     .buttons {
       display: flex;
       gap: 15px;
     }
 
     .buttons a {
-      color: white;
-      text-decoration: none;
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      display: inline-block;
       padding: 10px 20px;
-      border-radius: 20px;
-      transition: background 0.3s ease;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
     }
 
-    .buttons a:hover {
-      background: linear-gradient(45deg, #5d09b1, #1f65e3);
+    .buttons a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
     }
 
-    /* Welcome Line below Navbar */
+    .buttons a:hover::after {
+      width: 100%;
+    }
+
+    .buttons a:hover{
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Welcome Line */
     .welcome-line {
       text-align: center;
-      margin-top: 80px; /* Pushes the welcome line below the navbar */
-      margin-bottom: 30px;
+      margin-top: 120px;
     }
 
     .welcome-line h2 {
-      font-size: 36px;
-      color: white;
+      font-size: 40px;
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+      animation: fadeIn 2s ease-in-out;
     }
 
-    /* Full Width Layout - Left Side for Buttons, Right Side for Details */
+    /* Content layout */
     .content-container {
       display: flex;
       width: 100%;
-      margin-top: 20px;
-      gap: 50px; /* Add space between the left and right sections */
+      margin-top: 30px;
+      gap: 50px;
     }
 
     /* Left Section - Buttons */
@@ -115,7 +144,7 @@
       padding: 20px;
       background: rgba(255, 255, 255, 0.15);
       border-radius: 15px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     }
 
@@ -132,11 +161,13 @@
       padding: 12px;
       border-radius: 8px;
       text-decoration: none;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     .button-container a:hover {
       background: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: translateX(5px);
     }
 
     /* Right Section - User Details */
@@ -145,48 +176,61 @@
       padding: 20px;
       background: rgba(255, 255, 255, 0.15);
       border-radius: 15px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    .user-details {
-      color: white;
+      animation: slideIn 1s ease-out;
     }
 
     .user-details h2 {
-      font-size: 28px;
-      margin-bottom: 15px;
+      font-size: 32px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     }
 
     .user-details p {
       font-size: 18px;
       margin-bottom: 10px;
+      animation: fadeIn 1.5s ease-in-out;
     }
 
-    /* Profile picture styling */
-.profile-picture {
-  width: 150px; /* Adjust size */
-  height: 150px; /* Must be the same as width to form a circle */
-  border-radius: 50%; /* Makes the image circular */
-  object-fit:cover; /* Ensures the image fits within the circle */
-  margin-bottom: 15px; /* Adds space between the image and the button */
-  display: block; /* Ensures the image behaves as a block-level element */
-  margin-left: auto;
-  margin-right: auto; /* Centers the image horizontally */
-}
-    
+    /* Profile Picture */
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border: 3px solid #fff;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .profile-picture:hover {
+      transform: scale(1.1);
+      border-color: #6a11cb;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
   </style>
 </head>
 <body>
-  <!-- Navbar with GitHelper logo on the left and Home/Logout buttons on the right -->
+  <!-- Navbar with GitHelper logo and buttons -->
   <div class="navbar">
-    <!-- Left: GitHelper Logo -->
     <div class="logo-section">
       <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
       <span>Git Helper</span>
     </div>
-    
-    <!-- Right: Home and Logout Buttons -->
     <div class="buttons">
       <a href="/"><i class="fas fa-home"></i> Home</a>
       <a href="/home/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -200,32 +244,29 @@
       <h2>Welcome, {{username}}!</h2>
     </div>
 
-    <!-- Content Container: Left Buttons and Right User Details -->
+    <!-- Content Container -->
     <div class="content-container">
-      <!-- Left Section: Buttons -->
+      <!-- Left Section -->
       <div class="left-section">
         <div class="button-container">
-
-          <!-- Default Profile Picture -->
-    <img src="/pfp.jpeg" alt="Default Profile Picture" class="profile-picture">
-
+          <img src="/pfp.jpeg" alt="Default Profile Picture" class="profile-picture">
           <a href="/query/create"><i class="fas fa-plus-circle"></i> Open Query</a>
           <a href="/query/list"><i class="fas fa-list"></i> Show Queries</a>
           <a href="/chat/list"><i class="fas fa-comments"></i> Show Chats</a>
         </div>
       </div>
 
-      <!-- Right Section: User Details -->
+      <!-- Right Section -->
       <div class="right-section">
         <div class="user-details">
           <h2>User Information</h2>
           <p>Email: {{email}}</p>
           <p>Contact: {{contact}}</p>
           <p>GitHub ID: {{githubID}}</p>
-          <p>Other details...</p>
         </div>
       </div>
     </div>
   </div>
 </body>
 </html>
+
