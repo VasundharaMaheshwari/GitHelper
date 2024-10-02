@@ -28,123 +28,186 @@
       background-attachment: fixed;
       background-size: cover;
       height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
     }
 
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    /* Navbar with GitHelper on the left and buttons on the right */
     .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       position: absolute;
       top: 20px;
-      left: 20px;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    /* GitHelper logo and text */
+    .logo-section {
       display: flex;
       align-items: center;
       color: white;
     }
 
-    .navbar img {
+    .logo-section img {
       height: 40px;
       margin-right: 10px;
       transition: transform 0.3s ease;
     }
 
-    .navbar img:hover {
+    .logo-section img:hover {
       transform: rotate(10deg);
     }
 
-    .user-container {
+    .logo-section span {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* Navbar buttons (Home and Logout) on the right */
+    .navbar .buttons {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      max-width: 600px;
-      background: rgba(255, 255, 255, 0.15);
-      padding: 40px;
-      border-radius: 15px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-      flex-direction: column;
-      text-align: center;
-    }
-
-    h2 {
-      font-size: 36px;
-      color: white;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 16px;
-      color: #eee;
-      margin-bottom: 20px;
-    }
-
-    .button-container, .logout-container {
-      display: flex;
-      justify-content: space-around;
-      width: 100%;
-      margin-bottom: 20px;
-    }
-
-    .logout-container {
-      justify-content: center;
       gap: 15px;
     }
 
-    button {
-      display: inline-block;
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
+    .navbar a {
       color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 30px;
-      font-size: 16px;
-      cursor: pointer;
+      text-decoration: none;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      padding: 10px 20px;
+      border-radius: 20px;
       transition: background 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
-    button:hover {
+    .navbar a:hover {
       background: linear-gradient(45deg, #5d09b1, #1f65e3);
     }
 
-    button i {
-      margin-right: 10px;
+    /* Welcome Line below Navbar */
+    .welcome-line {
+      text-align: center;
+      margin-top: 80px; /* Pushes the welcome line below the navbar */
+      margin-bottom: 30px;
     }
 
-    .query {
+    .welcome-line h2 {
+      font-size: 36px;
       color: white;
-      text-decoration: none;
     }
 
-    /* Adjust spacing and alignments */
-    .user-container h2, .user-container p {
+    /* Full Width Layout - Left Side for Buttons, Right Side for Details */
+    .content-container {
+      display: flex;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    /* Left Section - Buttons */
+    .left-section {
+      flex: 0 0 25%;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      margin-right: 20px;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .button-container a {
+      text-align: left;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .button-container a:hover {
+      background: linear-gradient(45deg, #5d09b1, #1f65e3);
+    }
+
+    /* Right Section - User Details */
+    .right-section {
+      flex: 0 0 75%;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .user-details {
+      color: white;
+    }
+
+    .user-details h2 {
+      font-size: 28px;
       margin-bottom: 15px;
     }
+
+    .user-details p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    
   </style>
 </head>
 <body>
-  <!-- Navbar with Logo -->
+  <!-- Navbar with GitHelper logo on the left and Home/Logout buttons on the right -->
   <div class="navbar">
-    <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
-    <span>Git Helper</span>
+    <!-- Left: GitHelper Logo -->
+    <div class="logo-section">
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"> Git Helper </a>
+    </div>
+    
+    <!-- Right: Home and Logout Buttons -->
+    <div class="buttons">
+      <a href="/"><i class="fas fa-home"></i> Go To Home</a>
+      <a href="/home/logout"><i class="fas fa-sign-out-alt"></i> Proceed To Logout</a>
+    </div>
   </div>
 
-  <div class="user-container">
-    <h2>Welcome, {{username}}!</h2>
-    <p>Email: {{email}}</p>
-    <p>This is your user page. You can access your account information here.</p>
-
-    <div class="button-container">
-      <button type="button" id="open-query-btn"><a class="query" href="/query/create"><i class="fas fa-plus-circle"></i>Open Query</a></button>
-      <button type="button" id="list-query-btn"><a class="query" href="/query/list"><i class="fas fa-list"></i>Show Queries</a></button>
-      <button type="button" id="home-btn"><a class="query" href="/"><i class="fas fa-home"></i>Go To Home</a></button>
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Welcome Line -->
+    <div class="welcome-line">
+      <h2>Welcome, {{username}}!</h2>
     </div>
 
-    <div class="logout-container">
-      <button type="button" id="chat-btn"><a class="query" href="/chat/list"><i class="fas fa-comments"></i>Show Chats</a></button>
-      <button type="button" id="logout-btn"><a class="query" href="/home/logout"><i class="fas fa-sign-out-alt"></i>Proceed To Logout</a></button>
+    <!-- Content Container: Left Buttons and Right User Details -->
+    <div class="content-container">
+      <!-- Left Section: Buttons -->
+      <div class="left-section">
+        <div class="button-container">
+          <a href="/query/create"><i class="fas fa-plus-circle"></i> Open Query</a>
+          <a href="/query/list"><i class="fas fa-list"></i> Show Queries</a>
+          <a href="/chat/list"><i class="fas fa-comments"></i> Show Chats</a>
+        </div>
+      </div>
+
+      <!-- Right Section: User Details -->
+      <div class="right-section">
+        <div class="user-details">
+          <h2>User Information</h2>
+          <p>Email: {{email}}</p>
+          <p>Contact: {{contact}}</p>
+          <p>GitHub ID: {{githubID}}</p>
+          <p>Other details...</p>
+        </div>
+      </div>
     </div>
   </div>
 </body>

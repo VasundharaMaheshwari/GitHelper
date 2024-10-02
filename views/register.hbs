@@ -101,43 +101,47 @@
     }
 
     /* Register Container */
-    .register-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      max-width: 900px; 
-      padding-top: 100px; 
-      padding-bottom: 0; 
-    }
+    /* Increased max-width and padding of register-container */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px; /* Increased from 900px */
+  padding-top: 100px;
+  padding-bottom: 0;
+}
 
-    .register-box {
-      display: flex;
-      align-items: stretch;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 20px;
-      padding: 30px; 
-      backdrop-filter: blur(10px);
-      width: 100%;
-      max-height: 80vh;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    }
+/* Adjusted size and padding of the register-box */
+.register-box {
+  display: flex;
+  align-items: stretch;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  padding: 40px; /* Increased padding */
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-height: 90vh; /* Increased max-height */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
 
-    .logo-section {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      padding-right: 20px;
-    }
 
-    .logo-image {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 20px;
-    }
+    /* Logo section adjustments */
+.logo-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  padding-right: 30px; /* Increased padding */
+}
+
+.logo-image {
+  width: 120px; /* Slightly increased logo size */
+  height: 120px;
+  margin-bottom: 30px;
+}
 
     .logo-text h1 {
       font-size: 36px;
@@ -151,26 +155,26 @@
       max-width: 200px;
     }
 
-    .partition {
-      width: 1px;
-      background-color: rgba(255, 255, 255, 0.3);
-      margin: 0 10px; 
-    }
+    /* Partition line adjustments */
+.partition {
+  width: 1px; /* Ensures it displays as a vertical line */
+  background-color: rgba(255, 255, 255, 0.3); /* Adds visibility */
+  margin: 0 40px;
+}
 
-    .illustration-container {
-      flex: 0.8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-left: 10px;
-    }
+/* Illustration adjustments */
+.illustration-container {
+  display: flex;
+  justify-content: center; /* Center the illustration */
+  align-items: center;
+  margin: 20px 0; /* Adds some margin to separate it from other elements */
+}
 
-    .illustration-icon {
-      font-size: 100px; 
-      color: #ffffff; 
-      margin-bottom: 10px;
-    }
-    
+.illustration-icon {
+  font-size: 150px; /* Increase the size of the icon */
+  color: #fff; /* Ensures the icon stays visible against the background */
+  margin-top: 20px; /* Adds a bit more space above the icon */
+}    
     .illustration-icon:hover {
       color: #ff4b2b; 
       transform: scale(1.1); 
@@ -178,53 +182,54 @@
     }
 
     .register-form {
-      flex: 2;
-      display: flex;
-      flex-direction: column;
-      padding-left: 20px;
-    }
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px; /* Increased padding */
+}
 
-    .form-group {
-      margin-bottom: 15px; 
-      position: relative;
-    }
+.form-group {
+  margin-bottom: 20px; /* Increased spacing between form groups */
+  position: relative;
+}
 
-    .form-group label {
-      color: #fff;
-      font-size: 14px;
-      margin-bottom: 5px;
-      display: block;
-    }
+.form-group label {
+  color: #fff;
+  font-size: 15px; /* Increased label font size */
+  margin-bottom: 8px;
+  display: block;
+}
 
-    .input-container {
-      position: relative;
-      width: 100%;
-      display: flex;
-      align-items: center;
-    }
+.input-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
 
     .input-container input {
-      width: 100%;
-      padding: 10px 10px 10px 50px;
-      border: none;
-      border-radius: 5px;
-      outline: none;
-      background: rgba(255, 255, 255, 0.2);
-      color: #fff;
-    }
+  width: 100%;
+  padding: 12px 12px 12px 55px; /* Increased padding inside input */
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 15px; /* Slightly increased input font size */
+}
 
     .input-container input:focus {
       background: rgba(255, 255, 255, 0.3);
     }
 
     .input-icon {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #ccc;
-      font-size: 18px;
-    }
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ccc;
+  font-size: 20px; /* Slightly increased icon size */
+}
 
     .input-divider {
       position: absolute;
@@ -235,23 +240,29 @@
       background-color: rgba(255, 255, 255, 0.3);
     }
 
-    .register-button {
-      width: 100%;
-      background-image: linear-gradient(45deg, #ff416c, #ff4b2b);
-      color: #fff;
-      border: none;
-      padding: 15px;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
-      font-size: 18px;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 10px;
-      transition: transform 0.3s ease, background-image 0.3s ease;
-    }
+    /* Increased spacing between GitHub ID and Password fields */
+.form-group:last-of-type {
+  margin-top: 30px; /* Adjust margin between GitHub ID and next field (password) */
+}
+
+    /* Increased button size and padding */
+.register-button {
+  width: 100%;
+  background-image: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: #fff;
+  border: none;
+  padding: 18px; /* Increased padding */
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+  font-size: 20px; /* Increased button font size */
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px; /* Increased margin-top for spacing */
+  transition: transform 0.3s ease, background-image 0.3s ease;
+}
 
     .register-button:hover {
       background-image: linear-gradient(45deg, #e60039, #e63900);
@@ -276,16 +287,19 @@
       font-size: 16px;
     }
 
-    .login-link a {
-      color: #ff4b2b;
-      text-decoration: none;
-      font-size: 16px;
-    }
+    /* Adjust spacing between form and register button */
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #ccc;
+  font-size: 16px;
+}
 
-    .login-link a:hover {
-      color: #ff416c;
-      text-decoration: underline;
-    }
+.login-link a {
+  color: #ff4b2b;
+  text-decoration: none;
+  font-size: 16px;
+}
 
     /* Responsive Styles */
     @media (max-width: 992px) {
@@ -469,6 +483,15 @@
           </div>
         </div>
 
+          <div class="form-group">
+  <label for="github-id">GitHub ID</label>
+  <div class="input-container">
+    <i class="fab fa-github input-icon"></i>
+    <div class="input-divider"></div>
+    <input type="text" placeholder="GitHub ID" id="github_id" name="github_id" required>
+  </div>
+</div>
+
         <div class="form-group">
           <label for="password">Password</label>
           <div class="input-container">
@@ -500,6 +523,3 @@
 
 </body>
 </html>
-
-
-
