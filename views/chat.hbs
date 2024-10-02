@@ -20,7 +20,7 @@
     }
 
     body {
-      background-image: url('/image.jpg');
+      background-image: url('/moon.jpg');
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
@@ -48,12 +48,12 @@
 
     .header {
       font-size: 32px;
-      color: #e1b12c;
+      color: white;
       text-align: center;
       padding: 20px;
       width: 100%;
       background-color: rgba(0, 0, 0, 0.2);
-      border-bottom: 2px solid #e1b12c;
+      border-bottom: 2px solid white;
       position: relative;
       z-index: 2;
     }
@@ -64,7 +64,7 @@
       background: none;
       border: none;
       font-size: 24px;
-      color: #e1b12c;
+      color: white;
       cursor: pointer;
       transition: color 0.3s ease;
     }
@@ -115,16 +115,16 @@
 
     .sender {
       align-self: flex-end;
-      background-color: #e1b12c;
-      color: #1c3879;
+      background-color: #164ba1;
+      color: white;
       border-radius: 18px 18px 0 18px;
       margin-left: auto;
     }
 
     .receiver {
       align-self: flex-start;
-      background-color: #a3c1ad;
-      color: #1c3879;
+      background-color: white;
+      color: #164ba1;
       border-radius: 18px 18px 18px 0;
       margin-right: auto;
     }
@@ -168,22 +168,23 @@
 
     .input-container input:focus {
       outline: none;
-      border: 1px solid #e1b12c;
+      border: 1px solid white;
     }
 
     .input-container button {
       padding: 12px 20px;
-      background-color: #e1b12c;
-      color: #1c3879;
+      background-color: white;
+      color: #164ba1;
       border: none;
       border-radius: 20px;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.3s ease;
       font-size: 16px;
+      font-weight: bold;
     }
 
     .input-container button:hover {
-      background-color: #e4c484;
+      background-color: lightgrey;
       transform: scale(1.05);
     }
 
@@ -193,7 +194,7 @@
     }
 
     .chat-container::-webkit-scrollbar-thumb {
-      background-color: #e1b12c;
+      background-color: #f5d8b382;
       border-radius: 10px;
     }
 
