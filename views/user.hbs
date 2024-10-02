@@ -71,12 +71,12 @@
     }
 
     /* Navbar buttons (Home and Logout) on the right */
-    .navbar .buttons {
+    .buttons {
       display: flex;
       gap: 15px;
     }
 
-    .navbar a {
+    .buttons a {
       color: white;
       text-decoration: none;
       background: linear-gradient(45deg, #6a11cb, #2575fc);
@@ -85,7 +85,7 @@
       transition: background 0.3s ease;
     }
 
-    .navbar a:hover {
+    .buttons a:hover {
       background: linear-gradient(45deg, #5d09b1, #1f65e3);
     }
 
@@ -106,6 +106,7 @@
       display: flex;
       width: 100%;
       margin-top: 20px;
+      gap: 50px; /* Add space between the left and right sections */
     }
 
     /* Left Section - Buttons */
@@ -116,7 +117,6 @@
       border-radius: 15px;
       backdrop-filter: blur(8px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-      margin-right: 20px;
     }
 
     .button-container {
@@ -162,6 +162,18 @@
       font-size: 18px;
       margin-bottom: 10px;
     }
+
+    /* Profile picture styling */
+.profile-picture {
+  width: 150px; /* Adjust size */
+  height: 150px; /* Must be the same as width to form a circle */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit:cover; /* Ensures the image fits within the circle */
+  margin-bottom: 15px; /* Adds space between the image and the button */
+  display: block; /* Ensures the image behaves as a block-level element */
+  margin-left: auto;
+  margin-right: auto; /* Centers the image horizontally */
+}
     
   </style>
 </head>
@@ -170,13 +182,14 @@
   <div class="navbar">
     <!-- Left: GitHelper Logo -->
     <div class="logo-section">
-      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"> Git Helper </a>
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <span>Git Helper</span>
     </div>
     
     <!-- Right: Home and Logout Buttons -->
     <div class="buttons">
-      <a href="/"><i class="fas fa-home"></i> Go To Home</a>
-      <a href="/home/logout"><i class="fas fa-sign-out-alt"></i> Proceed To Logout</a>
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/home/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
   </div>
 
@@ -192,6 +205,10 @@
       <!-- Left Section: Buttons -->
       <div class="left-section">
         <div class="button-container">
+
+          <!-- Default Profile Picture -->
+    <img src="/pfp.jpeg" alt="Default Profile Picture" class="profile-picture">
+
           <a href="/query/create"><i class="fas fa-plus-circle"></i> Open Query</a>
           <a href="/query/list"><i class="fas fa-list"></i> Show Queries</a>
           <a href="/chat/list"><i class="fas fa-comments"></i> Show Chats</a>
