@@ -95,7 +95,8 @@ const usermod = async (req,res) => {
           ]})
 
           const trial2 = new Block({
-            email: user.email
+            email: user.email,
+            github_id: user.github_id
         })
 
         await trial2.save()
