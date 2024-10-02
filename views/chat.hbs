@@ -317,6 +317,10 @@
   socket.on('chat_rule', (msg) => {
       alert(msg.message)
   });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  });
 </script>
 
 </body>
