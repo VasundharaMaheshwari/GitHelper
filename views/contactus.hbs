@@ -20,33 +20,50 @@
     }
 
     body {
-      background-image: url("/1329272.png");
+      background-image: url("/image.jpg");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      min-height: 100vh;
+      color: #fff;
+      padding: 20px;
     }
 
     .container {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(0, 0, 0, 0.6); /* Increased transparency */
       padding: 40px;
-      border-radius: 10px;
-      max-width: 600px;
+      border-radius: 15px;
+      max-width: 600px; 
       width: 100%;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      color: #333;
+      backdrop-filter: blur(10px); /* Enhanced blur effect */
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
       text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
 
     h1 {
-      font-size: 36px;
-      color: #6c5b7b;
+      font-size: 40px; /* Increased size of the heading */
+      color: #e1b12c;
       margin-bottom: 20px;
+    }
+
+    .icon-large {
+      font-size: 1.2em; /* Increase the icon size */
+      margin-right: 10px;
+      vertical-align: middle; /* Align the icon with the text */
     }
 
     p {
@@ -58,84 +75,126 @@
     form {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 15px;
+      margin-bottom: 20px;
     }
 
     input[type="text"],
     input[type="email"],
     textarea {
-      padding: 10px;
+      padding: 12px;
       border-radius: 5px;
       border: none;
       width: 100%;
       font-size: 16px;
       outline: none;
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #333;
     }
 
     textarea {
-      height: 150px;
+      height: 120px; 
       resize: none;
     }
 
     .btn {
-      padding: 12px 20px;
-      background-color: #6c5b7b;
-      color: white;
+      padding: 12px 24px;
+      background: #d6b560;
+      color: #fff;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .btn:hover {
-      background-color: #54466d;
-    }
-
-    .icon {
-      color: #6c5b7b;
-      margin-right: 10px;
+      background: #e1b337;
+      transform: translateY(-2px);
     }
 
     .contact-info {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       margin-top: 20px;
+      font-size: 16px;
       color: #ddd;
+      gap: 40px;
     }
 
     .contact-info div {
       display: flex;
-      align-items: center;
+      align-items: center; /* Ensure icons and text are vertically aligned */
+      flex: 1;
+      text-align: left;
+      transition: transform 0.2s; /* Smooth transition */
     }
 
-    .contact-info p {
-      margin-left: 10px;
+    .contact-info div p {
+      line-height: 1.5; /* Adjust as needed for alignment */
+      margin: 0; /* Remove any margin that might cause misalignment */
+    }
+
+    .contact-info div:hover {
+      transform: scale(1.05); /* Scale effect on hover */
+    }
+
+    .icon {
+      color: #f5d179;
+      margin-right: 10px;
+      flex-shrink: 0;
+      font-size: 1.4em; /* Increase icon size to match text */
     }
 
     #back-btn {
-      text-align: center;
-      margin-top: 20px;
+      margin-top: 30px;
     }
 
     #back-btn a {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #6c5b7b;
+      padding: 10px 24px;
+      background: #d6b560;
       color: white;
-      border-radius: 5px;
+      border-radius: 10px;
       text-decoration: none;
+      transition: background 0.3s ease;
+      display: inline-flex; 
+      align-items: center;
     }
 
     #back-btn a:hover {
-      background-color: #54466d;
+      background: #e1b337;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+        margin-top: 60px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      p {
+        font-size: 14px; 
+      }
+
+      .contact-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .contact-info div {
+        justify-content: center;
+        margin-bottom: 10px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1><i class="fas fa-envelope icon"></i>Contact Us</h1>
+    <h1><i class="fas fa-envelope icon-large"></i> Contact Us</h1>
     <p>If you have any questions, feel free to contact us using the form below. We'd love to hear from you!</p>
     
     <form action="/send-message" method="POST">
@@ -150,6 +209,7 @@
         <i class="fas fa-phone-alt icon"></i>
         <p>+123 456 7890</p>
       </div>
+      <div>
         <i class="fas fa-envelope icon"></i>
         <p>githelper@gmail.com</p>
       </div>
