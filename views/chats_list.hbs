@@ -4,17 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat Users</title>
-
+  
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
 
- <!-- Google Fonts -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-   <style>
-     <style>
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -23,69 +22,107 @@
     }
 
     body {
-      background-image: url('/moon.jpg');
-      background-size: cover;
-      background-position: center;
+      background-image: url('/image.jpg'); 
       background-repeat: no-repeat;
+      background-position: center center;
       background-attachment: fixed;
+      background-size: cover;
       display: flex;
+      flex-direction: column;
+      color: #fff;
+      padding: 20px;
       height: 100vh;
+      justify-content: flex-start;
+      align-items: center;
     }
 
     .chat-container {
       display: flex;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(1px);
+      flex-direction: column;
+      width: 80%;
+      max-width: 1200px;
+      margin: auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 30px; 
     }
 
-    /* Left side with the user list */
+    /* Back button icon */
+    #back-icon {
+      font-size: 30px;
+      color: #e1b12c;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: transform 0.2s;
+    }
+
+    #back-icon:hover {
+      transform: translateY(2px);
+    }
+
+    .header {
+      font-size: 32px; 
+      color: #e1b12c;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      display: block;
+      height: 3px; 
+      background: #e1b12c;
+      margin-top: 5px;
+      width: 60%; 
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     .user-list-section {
-      width: 30%;
-      padding: 20px;
+      width: 100%;
+      padding: 10px;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       overflow-y: auto;
     }
 
-    .header {
-      font-size: 24px;
-      color: white; 
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
     .user-list-container {
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 15px; 
       border-radius: 10px;
       overflow-y: auto;
       flex-grow: 1;
+      margin-top: 10px; 
     }
 
     .user {
-      background-color: #dbeafe; /* Light blue */
+      background-color: #a3c1ad;
       padding: 15px;
-      margin-bottom: 10px;
+      margin-bottom: 15px; 
       border-radius: 10px;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 18px;
+      font-size: 20px; /
       transition: background-color 0.3s ease, transform 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .user:hover {
-      background-color: #bfdbfe; /* Slightly darker blue on hover */
+      background-color: #8cbcb6;
       transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
     }
 
     .username {
       font-weight: bold;
-      color: #1c3879; /* Darker blue */
+      color: #1c3879;
       display: flex;
       align-items: center;
     }
@@ -102,71 +139,85 @@
       margin-top: 50px;
     }
 
+    /* No chats image */
+    .no-chats img {
+      width: 100px;
+      margin-top: 20px;
+    }
+
+    /* Scrollbar styles */
     .user-list-container::-webkit-scrollbar {
-      width: 6px;
+      width: 8px; 
     }
 
     .user-list-container::-webkit-scrollbar-thumb {
-      background-color: #1c3879; /* Darker blue for scrollbar */
+      background-color: #1c3879; 
       border-radius: 10px;
     }
 
     .user-list-container::-webkit-scrollbar-track {
-      background-color: #dbeafe; /* Light blue */
+      background-color: rgba(240, 240, 240, 0.9);
     }
 
-    /* Right side with an image */
-    .chat-image-section {
-      width: 70%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
-    }
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .chat-container {
+        width: 95%;
+      }
 
-    .chat-image-section img {
-      max-width: 80%;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      .header {
+        font-size: 28px; 
+      }
+
+      .user {
+        font-size: 18px; 
+      }
     }
   </style> 
-
 </head>
 <body>
 
   <div class="chat-container">
+    <!-- Back icon -->
+    <i id="back-icon" class="fas fa-arrow-left" onclick="window.location.href='/home#queries';"></i>
+
+    <!-- Header for Chat Users -->
+    <div class="header">
+      <i class="fas fa-comments"></i> Chat Users
+    </div>
+
     <!-- Left side: Chat user list -->
     <div class="user-list-section">
-      <div class="header">
-        <i class="fas fa-comments"></i> Chat Users
+      <div class="user-list-container" id="userList">
+        {{#if users.length}}
+          {{#each users}}
+            <div class="user" data-username="{{this.username}}" data-resid="{{this.response}}">
+              <span class="username"><i class="fas fa-user-circle"></i>{{this.username}}</span>
+            </div>
+          {{/each}}
+        {{else}}
+          <div class="no-chats">
+            <p>No chats available</p>
+            <img src="/path/to/no-chats-image.png" alt="No chats image">  
+          </div>
+        {{/if}}
       </div>
-
-  <div class="user-list-container">
-    {{#if users.length}}
-      {{#each users}}
-        <div class="user" data-username="{{this.username}}" data-resid="{{this.response}}">
-          <span class="username"><i class="fas fa-user-circle"></i>{{this.username}}</span>
-          {{!-- <span class="timestamp">Last seen {{this.timestamp}}</span> --}}
-        </div>
-      {{/each}}
-    {{else}}
-      <div class="no-chats">No chats available</div>
-    {{/if}}
+    </div>
   </div>
 
-<script>
-  const users = document.querySelectorAll('.user');
+  <script>
+    const users = document.querySelectorAll('.user');
+    const userList = document.getElementById('userList');
 
-  users.forEach(user => {
-    user.addEventListener('click', () => {
-      const username = user.getAttribute('data-username');
-      const resId = user.getAttribute('data-resid');
-
-      window.location.href = `/chat/chats?username=${username}&resId=${resId}`;
+    // Redirect to chat page on user click
+    users.forEach(user => {
+      user.addEventListener('click', () => {
+        const username = user.getAttribute('data-username');
+        const resId = user.getAttribute('data-resid');
+        window.location.href = `/chat/chats?username=${username}&resId=${resId}`;
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>
