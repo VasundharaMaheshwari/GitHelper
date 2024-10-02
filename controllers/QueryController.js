@@ -12,7 +12,7 @@ const edit = async (req,res) => {
       const {queryId} = req.query
       if(ObjectId.isValid(queryId) && ObjectId.isValid(req.user._id)){
         const issue = await Issue.findOne({"_id": queryId})
-        if(issue == null){
+        if(issue === null){
           return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
         }
         return res.status(200).render('main.hbs',{layout: "edit.hbs",
@@ -91,7 +91,7 @@ const save_edit = async (req,res) => {
     const checker = regex.test(req.user.username)
     if(ObjectId.isValid(queryId) && checker){
       const second = await Issue.findOne({"repo_link": repo_link})
-      if(queryId == second._id && second.username == req.user.username){
+      if(queryId.toString() === second._id.toString() && second.username === req.user.username){
         const first = await Issue.findOneAndUpdate({"_id": queryId},{
           // username: req.user.username,
           contact_info: contact_info,

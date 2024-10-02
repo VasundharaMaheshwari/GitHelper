@@ -81,7 +81,7 @@ const usermod = async (req,res) => {
       const {_id} = req.query
       if(ObjectId.isValid(_id)){
         const user = await GHUser.findOne({"_id": _id})
-        if(user.role != "Admin"){
+        if(user.role !== "Admin"){
           const user_resp = await GHUser.findOneAndDelete({"_id": _id})
           const issue_resp = await Issue.deleteMany({"createdBy": _id})
           const resp_resp = await Response.deleteMany({$or: [

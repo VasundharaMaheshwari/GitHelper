@@ -9,7 +9,7 @@ const refresh = async (req, res) => {
     try {
       const userGH = ObjectId.isValid(req.user?._id) ? req.user?._id : null 
       const user = await GHUser.findOne({"_id": userGH})
-      if(user && user.role == "Admin"){
+      if(user && user.role === "Admin"){
         return res.status(403).redirect('/admin/home')
       }
       const issues = await Issue.find().lean().exec();
@@ -35,10 +35,10 @@ const details = async (req,res) => {
   const usernameRegex = /^[a-zA-Z0-9_]+$/
   const usernameGH = (req) => usernameRegex.test(req.user?.username)
   const usercheck = usernameGH ? req.user?.username : null
-  if(user?.role == "Admin" || usercheck == issue_details.username){
+  if(user?.role === "Admin" || usercheck === issue_details.username){
     user = null
   }
-  if(issue_details != null){
+  if(issue_details !== null){
     return res.status(200).render('main.hbs',{layout: "individual.hbs",
     _id: _id,
     username: issue_details.username,

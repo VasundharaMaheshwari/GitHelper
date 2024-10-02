@@ -64,7 +64,7 @@ const chatting = async (req,res) => {
     if(ObjectId.isValid(req.user._id)){
       const {username,resId} = req.query
     const receiver = await GHUser.findOne({ "username": username });
-            if (!receiver && receiver._id !== req.user._id) {
+            if (!receiver && receiver._id.toString() !== req.user._id.toString()) {
               return res.status(404).redirect('/error?error_details=Receiver_Not_Found');
             }
             const response_check = await Response.findOne({"_id": resId, $or: [{"responder.uid": receiver._id},{"creator": receiver._id}]});
@@ -72,7 +72,7 @@ const chatting = async (req,res) => {
               return res.status(404).redirect('/error?error_details=Response_Not_Found');
             }
             const convo_check = await Convo.findOne({"response": resId})
-    if(convo_check == null){
+    if(convo_check === null){
     const convo_ = new Convo({
       initiator: req.user._id,
       receiver: receiver._id,

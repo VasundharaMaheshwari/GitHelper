@@ -18,9 +18,9 @@ const register = async (req,res) => {
       const user = await GHUser.findOne({$or: [{username: username},{email: email},{github_id: github_id}]})
       const emailcheck2 = await Block.findOne({email: email})
 
-      if( emailcheck2 == null ){
+      if( emailcheck2 === null ){
 
-      if(user == null){
+      if(user === null){
       const encrypted = CryptoJS.AES.encrypt(encryptedpassword, process.env.SECRET_KEY).toString();
 
       const trial2 = new GHUser({
@@ -54,12 +54,12 @@ const login = async (req,res) => {
 
       const user = await GHUser.findOne({ username: username })
 
-      if(user == null){
+      if(user === null){
         return res.status(404).redirect('/error?error_details=Please_Register')
       }else{
         const decrypted = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8);
 
-        if(encryptedpassword != decrypted){
+        if(encryptedpassword !== decrypted){
           return res.status(401).redirect('/error?error_details=Incorrect_Password')
         } else {
 
@@ -86,7 +86,7 @@ try{
     email: user.email,
     })
     } else {
-      if(user && user.role == "Admin"){
+      if(user && user.role === "Admin"){
         res.status(403).redirect('/admin')
       } else {
         return res.status(403).redirect('/home/logout') }
