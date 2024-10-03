@@ -36,16 +36,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: absolute;
-      top: 20px;
+      padding: 15px 30px;
+      background: transparent; 
+      position: fixed;
       width: 100%;
-      padding: 0 20px;
+      top: 0;
+      z-index: 1000;
     }
 
     .logo-section {
       display: flex;
       align-items: center;
-      color: white;
     }
 
     .logo-section img {
@@ -56,6 +57,14 @@
 
     .logo-section img:hover {
       transform: rotate(10deg);
+    }
+
+    .logo-section span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
     }
 
     .buttons {
