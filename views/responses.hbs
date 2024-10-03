@@ -6,7 +6,7 @@
   <title>Response Details</title>
 
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-
+  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   
@@ -15,11 +15,12 @@
 
   <style>
     * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
     body {
       background-image: url("/1329272.png");
       background-repeat: no-repeat;
@@ -27,121 +28,191 @@
       background-attachment: fixed;
       background-size: cover;
       height: 100vh;
+      color: white;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Navbar with GitHelper logo */
+    .navbar {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      
+      padding: 15px 30px;
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: background 0.3s ease;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-section img {
+      height: 50px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-section img:hover {
+      transform: rotate(10deg);
+    }
+
+    .logo-section span {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
     }
 
     .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      max-width: 900px;
-      background: rgba(255, 255, 255, 0.1); /* Light translucent background */
-      padding: 20px;
-      border-radius: 10px;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 1100px;
+      margin: 160px auto;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease;
     }
 
     h1 {
-      font-size: 32px;
-      margin-bottom: 20px;
-      color: white; /* Changed to white for better visibility */
+      font-size: 42px;
+      margin-bottom: 30px;
       text-align: center;
+      color: #fff;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
     }
 
     .response-details {
       margin-bottom: 20px;
       overflow-y: auto;
-      max-height: 290px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-      .response-details p {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #fff; /* Changed to white for readability against background */
-      text-align: center; /* Center the text */
+      max-height: 500px;
+      padding-right: 10px;
     }
 
     .response {
       margin-bottom: 20px;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.5); /* Darker background for contrast */
-      border-radius: 8px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
       color: white;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #6c5b7b;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-      cursor: pointer;
-      margin: 5px 0;
-      font-family: 'Roboto', sans-serif;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .btn:hover {
-      background-color: #54466d;
+    .response:hover {
+      transform: scale(1.012);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .response-info {
+      flex: 1;
+    }
+
+    .response-info p {
+      font-size: 20px;
+      margin-bottom: 12px;
     }
 
     .action-buttons {
       display: flex;
-      justify-content: center;
-      margin-top: 10px;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+    }
+
+    .btn:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.07);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
     }
 
     .button-group {
       display: flex;
-      gap: 15px; /* Space between buttons */
+      gap: 40px;
       justify-content: center;
-    }
-
-    form {
-      display: inline;
+      margin-top: 40px;
     }
 
     .github-id {
-      color: white;
+      color: #fff;
       text-decoration: none;
-      position: relative;
+      transition: color 0.3s ease;
     }
 
     .github-id:hover {
-      text-decoration: underline;
-      color: #6c5b7b;
+      color: #6a11cb;
     }
+
+    /* Scroll-to-top button */
+    .scroll-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #6a11cb;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 50%;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      z-index: 1001;
+    }
+
+    .scroll-top:hover {
+      background-color: #5d09b1;
+      transform: scale(1.15);
+    }
+
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <div class="navbar" id="navbar">
+    <div class="logo-section">
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <span>Git Helper</span>
+    </div>
+  </div>
+
   <div class="container">
     <h1><i class="fas fa-comments"></i> Response Details</h1>
     <div class="response-details">
       {{#if responses.length}}
         {{#each responses}}
           <div class="response">
-            <p><i class="fas fa-user"></i><strong>Username:</strong> {{responder.username}}</p>
-            <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> <a class="github-id" href="https://github.com/{{responder.github_id}}" target="_blank">{{responder.github_id}}</a></p>
+            <div class="response-info">
+              <p><i class="fas fa-user"></i> <strong>Username:</strong> {{responder.username}}</p>
+              <p><i class="fab fa-github"></i> <strong>GitHub ID:</strong> <a class="github-id" href="https://github.com/{{responder.github_id}}" target="_blank">{{responder.github_id}}</a></p>
+            </div>
             <div class="action-buttons">
               <form id="convo" action="/chat/start" method="POST">
-                <input type="hidden" id="username" name="username" value="{{responder.username}}" readonly required>
-                <input type="hidden" id="response" name="response" value="{{_id}}" readonly required>
+                <input type="hidden" name="username" value="{{responder.username}}">
+                <input type="hidden" name="response" value="{{_id}}">
                 {{#if approved}}
                 {{else}}
                 <button type="submit" class="btn"><i class="fas fa-check-circle"></i> Approve</button>
@@ -155,9 +226,25 @@
       {{/if}}
     </div>
     <div class="button-group">
-    <a href="/query/list" class="btn"><i class="fas fa-arrow-left"></i>Back to Queries</a>
-    <a href="/api/user" class="btn"><i class="fas fa-tachometer-alt"></i>Back to Dashboard</a>
+      <a href="/query/list" class="btn"><i class="fas fa-arrow-left"></i> Back to Queries</a>
+      <a href="/api/user" class="btn"><i class="fas fa-tachometer-alt"></i> Back to Dashboard</a>
     </div>
   </div>
+
+  <!-- Scroll-to-top button -->
+  <div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script>
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
 </body>
 </html>
