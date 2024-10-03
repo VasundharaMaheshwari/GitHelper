@@ -1,16 +1,14 @@
 const express =  require('express')
 const APIRouter = express.Router()
-const { create,save,list,responder,save_response } = require('../controllers/AppController')
+const { create,save,list,save_response } = require('../controllers/AppController')
 const { issue_limit,response_limit } = require('../middlewares/rate_limiter')
-const { saveIssue,resIssue,saveRes } = require('../validators/AppValidators')
+const { saveIssue,saveRes } = require('../validators/AppValidators')
 
 APIRouter.get('/create',create)
 
 APIRouter.get('/list',list)
 
 APIRouter.post('/save',saveIssue,issue_limit,save)
-
-APIRouter.get('/respond',resIssue,responder)
 
 APIRouter.post('/respond',saveRes,response_limit,save_response)
 
