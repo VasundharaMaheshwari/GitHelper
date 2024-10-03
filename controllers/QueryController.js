@@ -12,13 +12,13 @@ const edit = async (req,res) => {
       const {queryId} = req.query
       if(ObjectId.isValid(queryId) && ObjectId.isValid(req.user._id)){
         const issue = await Issue.findOne({"_id": queryId})
-        if(issue == null){
+        if(issue === null){
           return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
         }
         return res.status(200).render('main.hbs',{layout: "edit.hbs",
           contact_info: issue.contact_info,
           skillset: issue.skillset,
-          github_id: issue.github_id,
+          // github_id: issue.github_id,
           repo_link: issue.repo_link,
           description: issue.description,
           queryId: issue._id,
@@ -86,18 +86,18 @@ const save_edit = async (req,res) => {
     const errors = validationResult(req)
       if(errors.isEmpty()){
     const {queryId} = req.query
-    const {contact_info,skillset,github_id,repo_link,description} = req.body
+    const {contact_info,skillset,repo_link,description} = req.body
     const regex = /^[a-zA-Z0-9_]+$/
     const checker = regex.test(req.user.username)
     if(ObjectId.isValid(queryId) && checker){
       const second = await Issue.findOne({"repo_link": repo_link})
-      if(queryId == second._id && second.username == req.user.username){
+      if(queryId.toString() === second._id.toString() && second.username === req.user.username){
         const first = await Issue.findOneAndUpdate({"_id": queryId},{
-          username: req.user.username,
+          // username: req.user.username,
           contact_info: contact_info,
           skillset: skillset,
-          github_id: github_id,
-          repo_link: repo_link,
+          // github_id: github_id,
+          // repo_link: repo_link,
           description: description
         })
         if(first){

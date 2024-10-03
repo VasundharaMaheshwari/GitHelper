@@ -34,12 +34,12 @@ io.on('connection', (socket) => {
   socket.on('user-message', async (message) => {
     const { sender, receiver, msg, convoId } = message;
 
-    if(typeof msg != 'string' || !msg.trim() || !ObjectId.isValid(sender) || !ObjectId.isValid(receiver) || !ObjectId.isValid(convoId)){
+    if(typeof msg !== 'string' || !msg.trim() || !ObjectId.isValid(sender) || !ObjectId.isValid(receiver) || !ObjectId.isValid(convoId)){
       socket.emit('chat_rule',{type: "type", message: "Invalid message format"})
       return
     }
     
-    if(msg.length == 0 || msg.length > 500){
+    if(msg.length === 0 || msg.length > 500){
       socket.emit('chat_rule',{type: "length", message: "Message length must be between 1 and 500 characters"})
       return
     }
@@ -75,7 +75,7 @@ io.on('connection', (socket) => {
 });
 
 hbs.registerHelper('ifCond', function(v1, v2, options) {
-  return (v1.toString() == v2.toString()) ? options.fn(this) : options.inverse(this);
+  return (v1.toString() === v2.toString()) ? options.fn(this) : options.inverse(this);
 });
 
 app.use(express.static('public', { setHeaders: (res, path) => {

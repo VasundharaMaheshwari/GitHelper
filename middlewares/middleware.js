@@ -12,11 +12,11 @@ const restrict = async (req,res,next) => {
         return res.status(401).redirect('/api/login')
     }
 
-    if(user.role == "Admin"){
+    if(user.role === "Admin"){
         return res.status(403).redirect('/admin')
     }
 
-    if(user.role != "User"){
+    if(user.role !== "User"){
         return res.status(401).redirect('/error?error_details=Access_Denied')
     }
 
@@ -43,11 +43,11 @@ const admin = async (req,res,next) => {
         return res.status(401).redirect('/api/login')
     }
 
-    if(user.role == "User"){
+    if(user.role === "User"){
         return res.status(403).redirect('/api/user')
     }
 
-    if(user.role != "Admin"){
+    if(user.role !== "Admin"){
         return res.status(401).redirect('/error?error_details=Access_Denied')
     }
 
@@ -75,7 +75,7 @@ const query_check = async (req,res,next) => {
     if(!user){
         return res.status(401).redirect('/api/login')
     }
-    if(user.role == "Admin"){
+    if(user.role === "Admin"){
         return res.status(403).redirect('/admin')
     }
     const {queryId} = req.query
@@ -95,7 +95,7 @@ const chat_check = async (req,res,next) => {
     if(!user){
         return res.status(401).redirect('/api/login')
     }
-    if(user.role == "Admin"){
+    if(user.role === "Admin"){
         return res.status(403).redirect('/admin')
     }
     const {resId} = req.query
@@ -103,7 +103,7 @@ const chat_check = async (req,res,next) => {
         return res.status(404).redirect('/query/list')
     }
 
-    const response_approved = await Response.findOne({'_id': resId})
+    const response_approved = await Response.findOne({"_id": resId, $or: [{"responder.uid": user._id},{"creator": user._id}]});
 
     if(!response_approved){
         return res.status(404).redirect('/query/list')

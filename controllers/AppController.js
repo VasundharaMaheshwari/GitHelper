@@ -27,17 +27,17 @@ const save = async (req,res) => {
     try{
         const error = validationResult(req)
         if(error.isEmpty()){
-      const {contact_info,skillset,github_id,repo_link,description} = req.body
+      const {contact_info,skillset,repo_link,description} = req.body
       const regex = /^[a-zA-Z0-9_]+$/
       const checker = regex.test(req.user.username)
       if(checker){
       const check = await Issue.findOne({repo_link: repo_link})
-      if(check == null){
+      if(check === null){
       const trial = new Issue({
           username: req.user.username,
           contact_info: contact_info,
           skillset: skillset,
-          github_id: github_id,
+          github_id: req.user.github_id,
           repo_link: repo_link,
           description: description,
           createdBy: req.user._id
@@ -80,7 +80,7 @@ const responder = async (req,res) => {
   const checker = regex.test(req.user.username)
   if(ObjectId.isValid(_id) && checker && ObjectId.isValid(req.user._id)){
     const user = await GHUser.findOne({username: username})
-    if(username != req.user.username && user != null){
+    if(username !== req.user.username && user !== null){
       return res.status(200).render('main.hbs',{layout: "response.hbs",
       _id: req.user._id,
       issue_id: _id,
@@ -106,9 +106,9 @@ const save_response = async (req,res) => {
   const {issue_id,creator,github_id} = req.body
   const regex = /^[a-zA-Z0-9_]+$/
   const checker = regex.test(req.user.username)
-  if(creator != req.user._id && ObjectId.isValid(issue_id) && ObjectId.isValid(req.user._id) && checker){
+  if(creator.toString() !== req.user._id.toString() && ObjectId.isValid(issue_id) && ObjectId.isValid(req.user._id) && checker){
     const resp_check = await Response.findOne({"responder.uid": req.user._id, "issue" : issue_id})
-    if(resp_check == null){
+    if(resp_check === null){
     const response_ = new Response({
       responder:{
         username : req.user.username,
