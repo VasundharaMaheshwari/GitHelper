@@ -11,7 +11,7 @@ const edit = async (req,res) => {
       if(errors.isEmpty()){
       const {queryId} = req.query
       if(ObjectId.isValid(queryId) && ObjectId.isValid(req.user._id)){
-        const issue = await Issue.findOne({"_id": queryId})
+        const issue = await Issue.findOne({"_id": queryId, "createdBy": req.user._id})
         if(issue === null){
           return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist')
         }
@@ -43,14 +43,18 @@ const delete_query = async (req,res) => {
       const checker = regex.test(req.user.username)
       if(ObjectId.isValid(queryId) && checker){
         const status = await Issue.findOneAndDelete({"_id" : queryId, "username": req.user.username})
+        if(status){
         const resp = await Response.deleteMany({"issue": queryId}).lean().exec()
         const con = await Convo.deleteMany({"issue": queryId}).lean().exec()
         const msg = await Msg.deleteMany({"issue": queryId}).lean().exec()
-        if(status && resp && con && msg){
+        if(resp && con && msg){
           return res.status(200).redirect('/query/list')
         } else {
           return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query')
         }
+      } else {
+        return res.status(403).redirect('/error?error_details=Unable_To_Find_Query')
+      }
       } else {
         return res.status(404).redirect('/error?error_details=Invalid_URL')
       }
@@ -90,7 +94,7 @@ const save_edit = async (req,res) => {
     const regex = /^[a-zA-Z0-9_]+$/
     const checker = regex.test(req.user.username)
     if(ObjectId.isValid(queryId) && checker){
-      const second = await Issue.findOne({"repo_link": repo_link})
+      const second = await Issue.findOne({"repo_link": repo_link, "createdBy": req.user._id})
       if(queryId.toString() === second._id.toString() && second.username === req.user.username){
         const first = await Issue.findOneAndUpdate({"_id": queryId},{
           // username: req.user.username,
@@ -106,7 +110,7 @@ const save_edit = async (req,res) => {
           return res.status(403).redirect('/error?error_details=Unable_To_Edit_Query')
         }
       }else {
-        return res.status(403).redirect('/error?error_details=Already_Exists')
+        return res.status(403).redirect('/error?error_details=Unable_To_Find_Valid_Query')
       }
     } else {
       return res.status(404).redirect('/error?error_details=Invalid_URL')

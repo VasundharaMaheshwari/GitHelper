@@ -270,9 +270,9 @@
       <p><i class="fas fa-align-left"></i><strong>Description:</strong> {{description}}</p>
 
       {{#if user}}
-      <form action="/query/respond" method="GET">
-        <input type="hidden" name="_id" value="{{_id}}" required readonly hidden>
-        <input type="hidden" name="username" value="{{username}}" required readonly hidden>
+      <form action="/query/respond" method="POST">
+        <input type="text" name="issue_id" value={{issue_id}} required readonly>
+        <input type="text" name="creator" value={{creator}} required readonly>
         <div class="btn-container">
           <button type="submit" class="btn"><i class="fas fa-reply"></i> Respond</button>
           <a href="/#queries" class="btn query"><i class="fas fa-arrow-left"></i> Back</a>

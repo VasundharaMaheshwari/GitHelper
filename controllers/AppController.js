@@ -71,39 +71,11 @@ const save = async (req,res) => {
       return res.status(500).redirect('/error?error_details=Error_Occurred')
     }}
 
-const responder = async (req,res) => {
-  try{
-    const errors = validationResult(req)
-    if(errors.isEmpty()){
-  const {username,_id} = req.query
-  const regex = /^[a-zA-Z0-9_]+$/
-  const checker = regex.test(req.user.username)
-  if(ObjectId.isValid(_id) && checker && ObjectId.isValid(req.user._id)){
-    const user = await GHUser.findOne({username: username})
-    if(username !== req.user.username && user !== null){
-      return res.status(200).render('main.hbs',{layout: "response.hbs",
-      _id: req.user._id,
-      issue_id: _id,
-      creator: user._id})
-    } else {
-      return res.status(403).redirect('/error?error_details=Not_Allowed')
-    }
-  }
-  else {
-    return res.status(400).redirect('/error?error_details=Invalid_URL')
-  }
-}
-return res.send("Oops! Error Occurred...")
-} catch(err) {
-  return res.status(500).redirect('/error?error_details=Error_Occurred')
-}
-}
-
 const save_response = async (req,res) => {
   try{
     const errors = validationResult(req)
     if(errors.isEmpty()){
-  const {issue_id,creator,github_id} = req.body
+  const {issue_id,creator} = req.body
   const regex = /^[a-zA-Z0-9_]+$/
   const checker = regex.test(req.user.username)
   if(creator.toString() !== req.user._id.toString() && ObjectId.isValid(issue_id) && ObjectId.isValid(req.user._id) && checker){
@@ -113,7 +85,7 @@ const save_response = async (req,res) => {
       responder:{
         username : req.user.username,
         uid : req.user._id,
-        github_id : github_id
+        github_id : req.user.github_id
       },
       issue: issue_id,
       creator: creator,
@@ -133,4 +105,4 @@ return res.send("Oops! Error Occurred...")
   }
 }
   
-module.exports = { create,save,list,responder,save_response }
+module.exports = { create,save,list,save_response }
