@@ -23,7 +23,7 @@
     }
 
     body {
-      background-image: url("/Home1.jpg");
+      background-image: url("/1329272.png");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
@@ -250,11 +250,6 @@
       <span>Git Helper</span>
     </div>
     <div class="nav-links">
-      <a href="/error/faq"><i class="fas fa-question-circle"></i> FAQ</a>
-      {{#if user}}
-      <a href="/api/user"><i class="fas fa-user-circle"></i> Profile</a>
-      {{else}}
-      {{/if}}
     </div>
   </div>
 
@@ -268,21 +263,9 @@
       <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> {{github_id}}</p>
       <p><i class="fas fa-link"></i><strong>Repository Link:</strong> <a href="{{repo_link}}" class="repo-link" target="_blank"><i class="fas fa-external-link-alt"></i> {{repo_link}}</a></p>
       <p><i class="fas fa-align-left"></i><strong>Description:</strong> {{description}}</p>
-
-      {{#if user}}
-      <form action="/query/respond" method="GET">
-        <input type="hidden" name="_id" value="{{_id}}" required readonly hidden>
-        <input type="hidden" name="username" value="{{username}}" required readonly hidden>
-        <div class="btn-container">
-          <button type="submit" class="btn"><i class="fas fa-reply"></i> Respond</button>
-          <a href="/#queries" class="btn query"><i class="fas fa-arrow-left"></i> Back</a>
-        </div>
-      </form>
-      {{else}}
       <div class="btn-container">
-        <a href="/#queries" class="btn query"><i class="fas fa-arrow-left"></i> Back</a>
+        <a href="/home" class="btn query"><i class="fas fa-arrow-left"></i> Back</a>
       </div>
-      {{/if}}
     </div>
   </div>
 </body>

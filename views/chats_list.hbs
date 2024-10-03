@@ -22,7 +22,7 @@
     }
 
     body {
-      background-image: url('/image.jpg'); 
+      background-image: url('/moon.jpg'); 
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
@@ -52,7 +52,7 @@
     /* Back button icon */
     #back-icon {
       font-size: 30px;
-      color: #e1b12c;
+      color: white;
       cursor: pointer;
       align-self: flex-start;
       transition: transform 0.2s;
@@ -64,7 +64,7 @@
 
     .header {
       font-size: 32px; 
-      color: #e1b12c;
+      color: white;
       text-align: center;
       margin-bottom: 20px;
       position: relative;
@@ -74,7 +74,7 @@
       content: '';
       display: block;
       height: 3px; 
-      background: #e1b12c;
+      background: white;
       margin-top: 5px;
       width: 60%; 
       margin-left: auto;
@@ -101,36 +101,36 @@
     }
 
     .user {
-  background-color: #7a7f9d      ; /* Original background color */
-  padding: 15px;
-  margin-bottom: 15px; 
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 20px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
+      background-color: white;
+      padding: 15px;
+      margin-bottom: 15px; 
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 20px; /
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
 
-.user:hover {
-  background-color: #938db5           ; /* Hover background color */
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
-}
+    .user:hover {
+      background-color: lightgrey;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+    }
 
-.username {
-  font-weight: bold;
-  color: #1c3879           ; /* Updated color for username */
-  display: flex;
-  align-items: center;
-}
+    .username {
+      font-weight: bold;
+      color: #164ba1;
+      display: flex;
+      align-items: center;
+    }
 
-.username i {
-  margin-right: 10px;
-  color: #1c3879; /* Updated color for username icon */
-}
+    .username i {
+      margin-right: 10px;
+      color: #164ba1;
+    }
 
     .no-chats {
       font-size: 20px;
@@ -151,7 +151,7 @@
     }
 
     .user-list-container::-webkit-scrollbar-thumb {
-      background-color: #1c3879; 
+      background-color: #f5d8b382; 
       border-radius: 10px;
     }
 
@@ -179,7 +179,7 @@
 
   <div class="chat-container">
     <!-- Back icon -->
-    <i id="back-icon" class="fas fa-arrow-left" onclick="window.location.href='/home#queries';"></i>
+    <i id="back-icon" class="fas fa-arrow-left" onclick="window.location.href='/api/user';"></i>
 
     <!-- Header for Chat Users -->
     <div class="header">
