@@ -98,8 +98,8 @@
       <p><strong>Description:</strong> {{description}}</p>
       {{#if user}}
       <form action="/query/respond" method="POST">
-        <input type="text" name="issue_id" value={{issue_id}} required readonly>
-        <input type="text" name="creator" value={{creator}} required readonly>
+        <input type="hidden" name="issue_id" value={{issue_id}} required readonly>
+        <input type="hidden" name="creator" value={{creator}} required readonly>
         <div class="btn-container">
           <button type="submit" class="btn">Respond</button>
           <button type="button" class="btn" id="home-btn"><a class="query" href="/">Go To Homepage</a></button>
