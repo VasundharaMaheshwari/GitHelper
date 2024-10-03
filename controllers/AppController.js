@@ -92,7 +92,7 @@ const save_response = async (req,res) => {
       approved: false
     })
     await response_.save()
-    return res.status(201).redirect('/home')} else {
+    return res.status(201).redirect('/home#queries')} else {
       return res.status(403).redirect('/error?error_details=Already_Responded')
     }
   }else{
