@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator')
+const { Contact } = require('../models/Contact')
 
 const error = (req,res) => {
   const errors = validationResult(req)
@@ -10,4 +11,16 @@ const error = (req,res) => {
     return res.send("Oops! Error Occurred...")
 }
 
-module.exports = { error }
+const contactus = async (req,res) => {
+  const {name,email,message} = req.body
+  const contact = new Contact({
+    name: name,
+    email: email,
+    message: message
+  })
+
+  await contact.save()
+  return res.status(200).redirect('/home')
+}
+
+module.exports = { error,contactus }
