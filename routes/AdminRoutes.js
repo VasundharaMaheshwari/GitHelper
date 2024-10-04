@@ -5,7 +5,10 @@ const { idcheck } = require('../validators/AdminValidators')
 const AdminRouter = express.Router()
 
 AdminRouter.get('/', (req,res) => {
-        return res.status(200).render('admin.hbs')})
+        return res.status(200).render('main.hbs',{layout: "admin.hbs",
+             username: req.user.username,
+             email: req.user.email,
+        })})
 
 AdminRouter.get('/home', loader)
 

@@ -84,6 +84,7 @@ try{
     res.status(200).render('main.hbs',{layout: "user.hbs",
     username: user.username,
     email: user.email,
+    github_id: user.github_id
     })
     } else {
       if(user && user.role === "Admin"){
