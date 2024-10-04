@@ -55,6 +55,14 @@
       transform: rotate(10deg);
     }
 
+    .logo-container span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
+
     /* Container Styling */
     .issues-container {
       background: rgba(255, 255, 255, 0.15);
@@ -119,12 +127,13 @@
     }
 
     a {
-      color: #ff8a00;
+      color: #1e90ff;
       text-decoration: none;
     }
 
     a:hover {
       text-decoration: underline;
+      color: #ff8a00;
     }
 
     /* Buttons Styling */
@@ -226,7 +235,7 @@
             </div>
             <p><strong>Skillset:</strong> {{skillset}}</p>
             <p><strong>GitHub ID:</strong> {{github_id}}</p>
-            <p><strong>Repository Link:</strong> <a href="{{repo_link}}" target="_blank">{{repo_link}}</a></p>
+            <p><strong>Repository Link:</strong> <a href="{{repo_link}}" target="_blank"><i class="fas fa-external-link-alt"></i>{{repo_link}}</a></p>
             <p><strong>Description:</strong> {{description}}</p>
           </div>
         {{/each}}

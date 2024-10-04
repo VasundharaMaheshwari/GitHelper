@@ -53,7 +53,7 @@
     }
 
     .logo-section img {
-      height: 50px;
+      height: 40px;
       margin-right: 10px;
       transition: transform 0.3s ease;
     }
@@ -63,7 +63,7 @@
     }
 
     .logo-section span {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: bold;
       letter-spacing: 2px;
       color: #fff;
@@ -83,7 +83,7 @@
     }
 
     h1 {
-      font-size: 42px;
+      font-size: 32px;
       margin-bottom: 30px;
       text-align: center;
       color: #fff;
@@ -121,7 +121,7 @@
     }
 
     .response-info p {
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 12px;
     }
 
@@ -142,7 +142,8 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: 18px;
+      font-size: 16px;
+      font-weight: bold;
     }
 
     .btn:hover {
@@ -159,13 +160,15 @@
     }
 
     .github-id {
-      color: #fff;
+      color: #1e90ff;
       text-decoration: none;
       transition: color 0.3s ease;
+      font-weight: 700;
     }
 
     .github-id:hover {
-      color: #6a11cb;
+      color: #ff8a00;
+      text-decoration: underline;
     }
 
     /* Scroll-to-top button */
@@ -207,7 +210,7 @@
           <div class="response">
             <div class="response-info">
               <p><i class="fas fa-user"></i> <strong>Username:</strong> {{responder.username}}</p>
-              <p><i class="fab fa-github"></i> <strong>GitHub ID:</strong> <a class="github-id" href="https://github.com/{{responder.github_id}}" target="_blank">{{responder.github_id}}</a></p>
+              <p><i class="fab fa-github"></i> <strong>GitHub ID:</strong> <a class="github-id" href="https://github.com/{{responder.github_id}}" target="_blank"><i class="fas fa-external-link-alt"></i>{{responder.github_id}}</a></p>
             </div>
             <div class="action-buttons">
               <form id="convo" action="/chat/start" method="POST">
