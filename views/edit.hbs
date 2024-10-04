@@ -143,8 +143,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 80vh; 
-      margin-top: 55px; 
+      height: 70vh; 
+      margin-top: 100px; 
       animation: fadeIn 1s ease-in-out; 
     }
 
@@ -238,7 +238,7 @@
     .form-container button {
       width: 100%;
       padding: 14px;
-      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
       color: #fff;
       border: none;
       border-radius: 30px;
@@ -255,7 +255,7 @@
     }
 
     .form-container button:hover {
-      background-image: linear-gradient(45deg, #e60039, #e63900);
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
       transform: translateY(-3px);
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
     }
@@ -337,7 +337,7 @@
   <!-- Main Container -->
   <div class="container">
     <div class="form-container">
-      <h2>Edit Query</h2>
+      <h2><i class="fas fa-edit"></i> Edit Query</h2>
       <form id="issue-form" action="/query_work/edit_query?queryId={{queryId}}" method="post" onsubmit="return validateForm()">
 
         <div class="form-group"><i class="fas fa-phone-alt"></i>
