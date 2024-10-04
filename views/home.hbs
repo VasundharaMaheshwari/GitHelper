@@ -493,6 +493,10 @@
         margin: 5px 0;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       .hero h1 {
         font-size: 32px;
       }
@@ -575,11 +579,11 @@
   </div>
 
   <!-- Hero Section -->
-  <section class="hero">
-    <h1>Welcome to Git Helper</h1>
-    <p>Your one-stop solution for managing Git queries and enhancing your development workflow.</p>
-    <a href="#queries" class="btn"><i class="fas fa-rocket"></i> Get Started</a>
-  </section>
+<section class="hero">
+  <h1>Welcome to Git Helper</h1>
+  <p>Your one-stop solution for managing Git queries and enhancing your development workflow.</p>
+  <a href="#queries" class="btn scroll-btn"><i class="fas fa-rocket"></i> Get Started</a>
+</section>
 
   <!-- Features Section -->
   <section class="features" id="features">
@@ -679,6 +683,17 @@
       }
     });
   </script>
+  <script>
+  document.querySelector('.scroll-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    document.querySelector(targetId).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+</script>
+
 </body>
 </html>
 
