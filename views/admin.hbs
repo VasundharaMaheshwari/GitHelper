@@ -28,7 +28,16 @@
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
-      min-height: 100vh;
+      height: 100vh;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
     }
 
     /* Navbar styling */
@@ -67,44 +76,76 @@
       text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
     }
 
+    /* Navbar buttons */
     .buttons {
       display: flex;
       gap: 15px;
     }
 
     .buttons a {
-      color: white;
-      text-decoration: none;
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      display: inline-block;
       padding: 10px 20px;
-      border-radius: 20px;
-      transition: background 0.3s ease;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .buttons a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .buttons a:hover::after {
+      width: 100%;
     }
 
     .buttons a:hover {
-      background: linear-gradient(45deg, #5d09b1, #1f65e3);
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 100px auto; /* Margin adjusted for navbar */
-      padding: 0 20px;
+     /* Welcome Line */
+    .welcome-line {
+      text-align: center;
+      margin-top: 120px;
     }
 
+    .welcome-line h2 {
+      font-size: 40px;
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    /* Content layout */
     .content-container {
       display: flex;
       width: 100%;
-      margin-top: 20px;
+      margin-top: 30px;
       gap: 50px;
     }
 
+    /* Left Section - Buttons */
     .left-section {
       flex: 0 0 25%;
       padding: 20px;
       background: rgba(255, 255, 255, 0.15);
       border-radius: 15px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     }
 
@@ -121,59 +162,67 @@
       padding: 12px;
       border-radius: 8px;
       text-decoration: none;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     .button-container a:hover {
       background: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: translateX(5px);
     }
 
+    /* Right Section - User Details */
     .right-section {
       flex: 0 0 75%;
       padding: 20px;
       background: rgba(255, 255, 255, 0.15);
       border-radius: 15px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    .user-details {
-      color: white;
+      animation: slideIn 1s ease-out;
     }
 
     .user-details h2 {
-      font-size: 28px;
-      margin-bottom: 15px;
+      font-size: 32px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     }
 
     .user-details p {
       font-size: 18px;
       margin-bottom: 10px;
+      animation: fadeIn 1.5s ease-in-out;
     }
 
-    /* Profile picture styling */
+    /* Profile Picture */
     .profile-picture {
-      width: 150px; /* Adjust size */
-      height: 150px; /* Must be the same as width to form a circle */
-      border-radius: 50%; /* Makes the image circular */
-      object-fit: cover; /* Ensures the image fits within the circle */
-      margin-bottom: 15px; /* Adds space between the image and the button */
-      display: block; /* Ensures the image behaves as a block-level element */
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      display: block;
       margin-left: auto;
-      margin-right: auto; /* Centers the image horizontally */
+      margin-right: auto;
+      border: 3px solid #fff;
+      transition: transform 0.3s ease, border-color 0.3s ease;
     }
 
-    .welcome-line {
-      text-align: center;
-      margin-top: 30px; /* Margin adjusted for the welcome line */
-      margin-bottom: 30px;
+    .profile-picture:hover {
+      transform: scale(1.1);
+      border-color: #6a11cb;
     }
 
-    .welcome-line h2 {
-      font-size: 36px;
-      color: white;
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
+    @keyframes slideIn {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -181,7 +230,7 @@
   <div class="navbar">
     <!-- Left: GitHelper Logo -->
     <div class="logo-section">
-      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <img src="/logo.jpeg" alt="Git Helper Logo">
       <span>Git Helper</span>
     </div>
     
@@ -197,6 +246,7 @@
     <div class="welcome-line">
       <h2>Welcome, Admin!</h2>
     </div>
+
     <!-- Content Container: Left Buttons and Right User Details -->
     <div class="content-container">
       <!-- Left Section: Navigation Buttons -->
@@ -217,7 +267,6 @@
           <p>Email: {{email}}</p>
           <p>Contact: {{contact}}</p>
           <p>GitHub ID: {{githubID}}</p>
-          <p>Other details...</p>
         </div>
       </div>
     </div>
