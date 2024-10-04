@@ -35,25 +35,80 @@
       position: relative; /* Ensure body is the positioning context for the back button */
     }
 
-    .navbar {
-      background: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+.navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
+      background: transparent; 
+      position: fixed;
       width: 100%;
-      max-width: 1200px; /* Center align navbar with container */
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      position: absolute;
       top: 0;
-      left: 0;
+      z-index: 1000;
+      transition: background 0.3s ease;
     }
 
-    .logo {
+    .navbar:hover {
+      background: rgba(0, 0, 0, 0.3); 
+    }
+
+    .navbar .logo {
       display: flex;
       align-items: center;
-      color: white;
+    }
+
+    .navbar .logo img {
       height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar .logo img:hover {
+      transform: rotate(10deg);
+    }
+
+    .navbar .logo span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .navbar .nav-links a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .navbar .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .navbar .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .navbar .nav-links a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
     .btn-back {
@@ -205,13 +260,14 @@
 
 <body>
   <div class="navbar">
-    <div>
-      <img src="/logo.jpeg" alt="Logo" class="logo">
+    <div class="logo">
+      <a href="/admin"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
       <span>Git Helper</span>
     </div>
+    <div class="nav-links">
+      <a href="/admin"><i class="fas fa-arrow-left"></i><span style="margin-left: 5px;">Go Back</span></a>
+    </div>
   </div>
-  
-  <a href="/api/user" class="btn-back"><i class="fas fa-arrow-left"></i> Go Back</a>
 
   <div class="container">
     <h1>User Details</h1>
