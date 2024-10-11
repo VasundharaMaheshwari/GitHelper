@@ -101,6 +101,29 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .logo img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar .logo img:hover {
+      transform: rotate(10deg);
+    }
+
+    .navbar .logo span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
+
     /* Container Styles */
     .container {
       background-color: rgba(0, 0, 0, 0.6); 
@@ -112,7 +135,7 @@
       width: 90%;
       margin: 100px auto; 
       backdrop-filter: blur(10px);
-      animation: fadeIn 1.2s ease-in-out;
+      {{!-- animation: fadeIn 1.2s ease-in-out; --}}
     }
 
     h1 {
@@ -123,7 +146,7 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      animation: slideInDown 1s ease-out;
+      {{!-- animation: slideInDown 1s ease-out; --}}
     }
 
     .issue-details p {
