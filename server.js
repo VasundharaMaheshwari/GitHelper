@@ -40,8 +40,6 @@ io.on('connection', (socket) => {
   socket.on('user-message', async (message) => {
     const { sender, receiver, msg, convoId, ip } = message;
 
-    console.log(ip)
-
     if(typeof msg !== 'string' || !msg.trim() || !ObjectId.isValid(sender) || !ObjectId.isValid(receiver) || !ObjectId.isValid(convoId)){
       socket.emit('chat_rule',{type: "type", message: "Invalid message format"})
       return
