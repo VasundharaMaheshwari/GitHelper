@@ -38,7 +38,9 @@ io.on('connection', (socket) => {
   }
 
   socket.on('user-message', async (message) => {
-    const { sender, receiver, msg, convoId } = message;
+    const { sender, receiver, msg, convoId, ip } = message;
+
+    console.log(ip)
 
     if(typeof msg !== 'string' || !msg.trim() || !ObjectId.isValid(sender) || !ObjectId.isValid(receiver) || !ObjectId.isValid(convoId)){
       socket.emit('chat_rule',{type: "type", message: "Invalid message format"})
@@ -52,7 +54,7 @@ io.on('connection', (socket) => {
 
     try{
 
-    await rateLimiter.consume(socket.handshake.address)
+    await rateLimiter.consume(ip)
 
     const sockettx = getid(sender, receiver);  
     const socketrx = getid(receiver, sender);  

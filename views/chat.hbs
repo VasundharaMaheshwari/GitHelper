@@ -272,6 +272,7 @@
   <input type="hidden" id="senderUserId" value="{{senderUserId}}" required readonly>
   <input type="hidden" id="receiverUserId" value="{{receiverUserId}}" required readonly>
   <input type="hidden" id="convoId" value="{{convoId}}" required readonly>
+  <input type="hidden" id="ip" value="{{ip}}" required readonly>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -289,6 +290,7 @@
   const sendBtn = document.getElementById("sendBtn");
   const messageInput = document.getElementById("message");
   const chatContainer = document.getElementById("chat-container");
+  const ip = document.getElementById("ip");
 
   function validateMessage(msg) {
     if (typeof msg !== 'string') {
@@ -312,7 +314,8 @@
       convoId: convo.value,
       receiver: receiver.value,
       msg: msg,
-      sender: sender.value
+      sender: sender.value,
+      ip: ip.value
     };
 
     socket.emit('user-message', jsonMsg);
