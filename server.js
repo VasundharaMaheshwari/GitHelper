@@ -21,6 +21,12 @@ app.use(express.static('public', { setHeaders: (res, path) => {
     res.setHeader('Content-Type', 'image/png');
   }
 }})); 
+const { RateLimiterMemory } = require('rate-limiter-flexible')
+
+const rateLimiter = new RateLimiterMemory({
+  points: 10,
+  duration: 60
+})
 
 io.on('connection', (socket) => {
   const { userId, receiverId } = socket.handshake.auth;
@@ -44,6 +50,10 @@ io.on('connection', (socket) => {
       return
     }
 
+    try{
+
+    await rateLimiter.consume(socket.id)
+
     const sockettx = getid(sender, receiver);  
     const socketrx = getid(receiver, sender);  
 
@@ -55,7 +65,7 @@ io.on('connection', (socket) => {
       io.to(socketrx).emit('received-message', msg);
     }
 
-    try{
+    
       const newMessage = new Msg({
         sender: sender,
         receiver: receiver,
@@ -65,7 +75,9 @@ io.on('connection', (socket) => {
 
       await newMessage.save()
 
-    } catch (err) {
+    } catch (rejRes) {
+      const time = Math.floor(rejRes.msBeforeNext/1000)
+      socket.emit('chat_rule',{type: "ddos", message: `Message limit exceeded. Wait for ${time} seconds.`})
     }
 });
 
@@ -101,7 +113,7 @@ const { restrict,less_restrict,admin,query_check } = require('./middlewares/midd
 app.disable("x-powered-by")
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 
 app.use(cookie_parser())
 
