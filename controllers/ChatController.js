@@ -86,10 +86,11 @@ const convo = await Convo.findOne({"response": resId})
 const msg = await Msg.find({convoId: convo._id}).sort({createdAt: 1 })
 
 const xForwardedFor = req.headers['x-forwarded-for'];
+let ip
         if (xForwardedFor) {
-         const ip = xForwardedFor.split(',')[0].trim();
+         ip = xForwardedFor.split(',')[0].trim();
         } else {
-         const ip = req.ip
+         ip = req.ip
         }
 
     return res.status(200).render('main.hbs',{layout: "chat.hbs",
