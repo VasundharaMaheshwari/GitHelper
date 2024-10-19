@@ -93,7 +93,7 @@ const { restrict,less_restrict,admin,query_check } = require('./middlewares/midd
 app.disable("x-powered-by")
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 
 app.use(cookie_parser())
 
