@@ -12,7 +12,6 @@
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "crypto-js": "^4.2.0",
-    "dompurify": "^3.1.7",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-handlebars": "^7.1.2",
@@ -21,6 +20,7 @@
     "hbs": "^4.2.0",
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.2",
+    "rate-limiter-flexible": "^5.0.3",
     "socket.io": "^4.7.5",
     "uuid": "^9.0.1"
   },
