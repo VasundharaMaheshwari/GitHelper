@@ -6,11 +6,12 @@ const { validationResult } = require('express-validator')
 
 const create = async (req,res) => {
   try{
-    if(ObjectId.isValid(req.user._id)){
+    if(ObjectId.isValid(req.user._id) && /^[a-zA-Z0-9-]{1,39}$/.test(req.user.github_id)){
       const hey = await GHUser.findOne({"_id": req.user._id})
       if(hey){
     return res.status(200).render('main.hbs',{layout: "create.hbs",
-      _id: req.user._id
+      _id: req.user._id,
+      github_id: req.user.github_id
     })
   } else {
     return res.status(403).redirect('/error?error_details=Not_Allowed')

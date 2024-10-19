@@ -34,36 +34,44 @@ const edit = async (req,res) => {
     }
 }
 
-const delete_query = async (req,res) => {
-    try {
-      const errors = validationResult(req)
-      if(errors.isEmpty()){
-      const {queryId} = req.query
-      const regex = /^[a-zA-Z0-9_]+$/
-      const checker = regex.test(req.user.username)
-      if(ObjectId.isValid(queryId) && checker){
-        const status = await Issue.findOneAndDelete({"_id" : queryId, "username": req.user.username})
-        if(status){
-        const resp = await Response.deleteMany({"issue": queryId}).lean().exec()
-        const con = await Convo.deleteMany({"issue": queryId}).lean().exec()
-        const msg = await Msg.deleteMany({"issue": queryId}).lean().exec()
-        if(resp && con && msg){
-          return res.status(200).redirect('/query/list')
-        } else {
-          return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query')
-        }
-      } else {
-        return res.status(403).redirect('/error?error_details=Unable_To_Find_Query')
+const delete_query = async (req, res) => {
+  try {
+      const errors = validationResult(req);
+      if (errors.isEmpty()) {
+          const { queryId } = req.query;
+          const regex = /^[a-zA-Z0-9_]+$/;
+          const checker = regex.test(req.user.username);
+          if (ObjectId.isValid(queryId) && checker) {
+              const issue = await Issue.findOneAndDelete({ "_id": queryId, "username": req.user.username });
+              if (issue) {
+                  const responses = await Response.find({ "issue": queryId }).lean();
+                  
+                  const responseIds = responses.map(response => response._id);
+
+                  const respDeleteStatus = await Response.deleteMany({ "issue": queryId }).lean().exec();
+
+                  const conDeleteStatus = await Convo.deleteMany({ "response": { $in: responseIds } }).lean().exec();
+
+                  const msgDeleteStatus = await Msg.deleteMany({ "issue": queryId }).lean().exec();
+
+                  if (respDeleteStatus && conDeleteStatus && msgDeleteStatus) {
+                      return res.status(200).redirect('/query/list');
+                  } else {
+                      return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query');
+                  }
+              } else {
+                  return res.status(403).redirect('/error?error_details=Unable_To_Find_Query');
+              }
+          } else {
+              return res.status(404).redirect('/error?error_details=Invalid_URL');
+          }
       }
-      } else {
-        return res.status(404).redirect('/error?error_details=Invalid_URL')
-      }
-    }
-    return res.send("Oops! Error Occurred...")
-    } catch(err) {
-      return res.status(500).redirect('/error?error_details=Error_Occurred')
-    }
+      return res.send("Oops! Error Occurred...");
+  } catch (err) {
+      return res.status(500).redirect('/error?error_details=Error_Occurred');
   }
+};
+
 
 const show_res = async (req,res) => {
     try{
