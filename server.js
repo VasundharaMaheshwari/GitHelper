@@ -30,6 +30,7 @@ const rateLimiter = new RateLimiterMemory({
 
 io.on('connection', (socket) => {
   const { userId, receiverId } = socket.handshake.auth;
+  console.log(socket.handshake.address)
 
   if(!getid(userId,receiverId)){
   setid(userId, receiverId, socket.id);
@@ -52,7 +53,7 @@ io.on('connection', (socket) => {
 
     try{
 
-    await rateLimiter.consume(socket.id)
+    await rateLimiter.consume(socket.handshake.address)
 
     const sockettx = getid(sender, receiver);  
     const socketrx = getid(receiver, sender);  
