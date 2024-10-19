@@ -1,7 +1,7 @@
 const express =  require('express')
 const ErrorRouter = express.Router()
 const { error, contactus } = require('../controllers/ErrorController')
-const { ErrorCheck } = require('../validators/ErrorValidators')
+const { ErrorCheck,msgCheck } = require('../validators/ErrorValidators')
 
 ErrorRouter.get('/',ErrorCheck,error)
 
@@ -29,6 +29,6 @@ ErrorRouter.get('/contact',(req,res) => {
     })
 })
 
-ErrorRouter.post('/send',contactus)
+ErrorRouter.post('/send',msgCheck,contactus)
 
 module.exports = ErrorRouter
