@@ -82,6 +82,9 @@
         <label for="contact_info">Contact Info</label>
         <input type="tel" id="contact_info" name="contact_info" required>
       </div>
+
+      <input type="text" id="github_id" value="{{github_id}}" name="github_id" readonly hidden required>
+
       <div class="form-group">
         <label for="skillset">Skill Set</label>
         <input type="text" id="skillset" name="skillset" required>
@@ -107,9 +110,10 @@
   <script>
 function validateForm() {
   var repoLink = document.getElementById('repo_link').value;
-  var repoRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_]+(\/)?$/;
+  var githubId = document.getElementById('github_id').value;
+  var repoRegex = new RegExp(`^(https?:\/\/)?(www\.)?github\.com\/${githubId}\/[a-zA-Z0-9-_]+(\/)?$`);
   if (!repoRegex.test(repoLink)) {
-    document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link.";
+    document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link of your own.";
     return false;
   }
 
