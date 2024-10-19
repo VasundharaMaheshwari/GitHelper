@@ -176,6 +176,13 @@
       color: #1c3879;
     }
 
+    .error-message {
+      color: #ff4b2b;
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+
     @media (max-width: 768px) {
       .container {
         padding: 20px;
@@ -202,16 +209,44 @@
       }
     }
   </style>
+    <script>
+      function validateForm() {
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var message = document.getElementById("message").value;
+
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("error-message").innerText = "Invalid email address";
+        return false;
+      }
+
+      var nameRegex = /^[A-Za-z]+(?: [A-Za-z]+){0,2}$/;
+      if (!nameRegex.test(name)) {
+        document.getElementById("error-message").innerText = "Name can only contain letters.";
+        return false;
+      }
+
+      var messageRegex = /^[A-Za-z0-9\s.,!?']*$/;
+      if (!messageRegex.test(message)) {
+        document.getElementById("error-message").innerText = "Invalid message format";
+        return false;
+      }
+
+      return true;
+    }
+  </script>
 </head>
 <body>
   <div class="container">
     <h1><i class="fas fa-envelope icon-large"></i> Contact Us</h1>
     <p>If you have any questions, feel free to contact us using the form below. We'd love to hear from you!</p>
     
-    <form action="/error/send" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" required></textarea>
+    <form action="/error/send" method="POST" onsubmit="return validateForm()">
+      <input type="text" id="name" name="name" placeholder="Your Name" required>
+      <input type="email" id="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" id="message" placeholder="Your Message" required></textarea>
+      <p id="error-message" class="error-message"></p>
       <button type="submit" class="btn"><i class="fas fa-paper-plane icon"></i> Send Message</button>
     </form>
 

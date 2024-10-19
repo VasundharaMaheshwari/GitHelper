@@ -13,7 +13,7 @@ ChatRouter.get('/list',chatlist)
 ChatRouter.get('/chats',checkchat,chat_check,chatting)
 
 ChatRouter.post('/chats',(req,res) => {
-    return res.status(200).send("User Page + Admin Page fix... Contact us validation both... Forgot password... Chat Input Santiation + Rate Limit... Task Tracking... See ongoing responses and closing responses == delete convo and messages from either side and vice versa if initiator...")
+    return res.status(200).send("Add input size validation everywhere... Contact us validation both... Forgot password... Chat Input Santiation + Rate Limit... Task Tracking... See ongoing responses and closing responses == delete convo and messages from either side and vice versa if initiator...")
 })
 
 module.exports = ChatRouter
