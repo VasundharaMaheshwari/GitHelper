@@ -139,11 +139,10 @@ const tracker = async (req,res) => {
       }
 
       tasks.push(task)
-
-      return res.status(200).render('main.hbs',{layout: "tasks.hbs",
-        tasks: tasks
-      })
     }
+    return res.status(200).render('main.hbs',{layout: "tasks.hbs",
+      tasks: tasks
+    })
     } else {
       return res.status(403).redirect('/error?error_details=Not_Allowed')
     }
