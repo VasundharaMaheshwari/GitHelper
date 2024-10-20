@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Details</title>
+  <title>Banned User Details</title>
 
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
 
@@ -169,7 +169,7 @@
     }
 
     h2 {
-      font-size: 20px;
+      font-size: 24px;
       margin-bottom: 20px;
       color: white;
       text-align: center;
@@ -264,6 +264,24 @@
     .btn-delete:hover {
       background: linear-gradient(45deg, #5d09b1, #1f65e3);
     }
+
+    .banned-users h4 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: white;
+      justify-items: center;
+      text-align: center;
+      align-items: center;
+    }
+
+    .banned-users p {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: white;
+      justify-items: center;
+      text-align: center;
+      align-items: center;
+    }
   </style>
 </head>
 
@@ -277,29 +295,23 @@
       <a href="/admin"><i class="fas fa-arrow-left"></i><span style="margin-left: 5px;">Go Back</span></a>
     </div>
   </div>
-<br><br>
+<br> <br>
   <div class="container">
-    <h1>User Details</h1>
-    <div class="user-list">
-      {{#if users.length}}
-        {{#each users}}
-          <div class="user">
-            <p><i class="fas fa-user"></i><strong>Username:</strong> {{username}}</p>
-            <p><i class="fas fa-envelope"></i><strong>Email:</strong> {{email}}</p>
-            <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> {{github_id}}</p>
-            <p><i class="fas fa-calendar-alt"></i><strong>Registered At:</strong> {{createdAt}}</p>
-            <div class="btn-container">
-              <form action="/admin/delete-user" method="GET">
-                <input type="hidden" name="_id" value="{{_id}}" readonly required hidden>
-                <button type="submit" class="btn btn-delete">Delete User</button>
-              </form>
-            </div>
+    <h1>Banned Users</h1>
+        <div class="user-list">
+              {{#if bannedUsers.length}}
+                {{#each bannedUsers}}
+                <div class="user">
+                    <p><i class="fas fa-envelope"></i><strong>Email: </strong>{{this.email}} </p>
+                    <p><i class="fab fa-github"></i><strong>Github ID: </strong>{{this.github_id}} </p>
+                    <p><i class="fas fa-calendar-alt"></i><strong>Date Banned: </strong>{{this.createdAt}} </p>
+                </div>
+                {{/each}}
+            {{else}} <br>
+               <h4>No users are currently banned.</h4>
+            {{/if}}
           </div>
-        {{/each}}
-      {{else}}
-        <h2><strong>No users found.</strong></h2>
-      {{/if}}
-    </div>
+  </div>
   </div>
 </body>
 </html>

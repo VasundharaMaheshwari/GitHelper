@@ -194,19 +194,6 @@
       animation: fadeIn 1.5s ease-in-out;
     }
 
-    .banned-users h2 {
-      font-size: 32px;
-      margin-bottom: 20px;
-      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-    }
-
-    .banned-users p {
-      font-size: 18px;
-      margin-bottom: 10px;
-      animation: fadeIn 1.5s ease-in-out;
-    }
-
-
     /* Profile Picture */
     .profile-picture {
       width: 150px;
@@ -269,6 +256,7 @@
           <img src="/pfp.jpeg" alt="Admin Profile Picture" class="profile-picture">
           <a href="/admin/home"><i class="fas fa-list"></i> List of Queries</a>
           <a href="/admin/userlist"><i class="fas fa-users"></i> List of Users</a>
+          <a href="/admin/banlist"><i class="fas fa-ban"></i> List of Banned Users</a>
         </div>
       </div>
 
@@ -280,19 +268,6 @@
           <p><strong>Email: </strong>{{email}}</p>
           <p><strong>Github ID: </strong>{{github_id}}</p>
         </div>
-        <br>
-          <div class="banned-users">
-            <h2>Banned Users</h2>
-              {{#if bannedUsers.length}}
-                {{#each bannedUsers}}
-                    <p><strong>Email: </strong>{{this.email}} </p>
-                    <p><strong>Github ID: </strong>{{this.github_id}} </p>
-                    <p><strong>Date Banned: </strong>{{this.createdAt}} </p><br>
-                {{/each}}
-            {{else}}
-               <p>No users are currently banned.</p>
-            {{/if}}
-          </div>
   </div>
 
   <script>
