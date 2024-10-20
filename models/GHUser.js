@@ -18,6 +18,11 @@ const GHUser_Schema = new Schema({
     role: {
         type: String,
         required: true
+    },
+    github_id: {
+        type: String,
+        required: true,
+        unique: true
     }
 },
 {timestamps: true})

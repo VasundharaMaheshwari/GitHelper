@@ -5,4 +5,10 @@ const { ErrorCheck } = require('../validators/ErrorValidators')
 
 ErrorRouter.get('/',ErrorCheck,error)
 
+ErrorRouter.get('/faq',(req,res) => {
+    return res.status(200).render('main.hbs', {
+        layout: 'faq.hbs'
+      })
+})
+
 module.exports = ErrorRouter

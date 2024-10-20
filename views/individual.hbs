@@ -97,9 +97,9 @@
       <p><strong>Repository Link:</strong> <a href={{repo_link}} class="repo-link" target="_blank">{{repo_link}}</a></p>
       <p><strong>Description:</strong> {{description}}</p>
       {{#if user}}
-      <form action="/query/respond" method="GET">
-        <input type="hidden" name="_id" value={{_id}} required readonly hidden>
-        <input type="hidden" name="username" value={{username}} required readonly hidden>
+      <form action="/query/respond" method="POST">
+        <input type="hidden" name="issue_id" value={{issue_id}} required readonly>
+        <input type="hidden" name="creator" value={{creator}} required readonly>
         <div class="btn-container">
           <button type="submit" class="btn">Respond</button>
           <button type="button" class="btn" id="home-btn"><a class="query" href="/">Go To Homepage</a></button>

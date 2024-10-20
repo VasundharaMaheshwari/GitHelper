@@ -54,6 +54,7 @@
       text-decoration: none;
       transition: background-color 0.3s ease;
       cursor: pointer;
+      margin: 5px 0;
     }
 
     .btn:hover {
@@ -61,11 +62,33 @@
     }
 
     .response {
-      margin-bottom: 20px; 
-      padding: 20px; 
-      background-color: #ffffff; 
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    form {
+      display: inline;
+    }
+
+    .github-id {
+      color: #333;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .github-id:hover {
+      text-decoration: underline;
+      color: #6c5b7b;
+    }
   </style>
 </head>
 <body>
@@ -76,7 +99,20 @@
         {{#each responses}}
           <div class="response">
             <p><strong>Username:</strong> {{responder.username}}</p>
-            <p><strong>GitHub ID:</strong> {{responder.github_id}}</p>
+            <p>
+              <strong>GitHub ID:</strong>
+              <a class="github-id" href="https://github.com/{{responder.github_id}}" target="_blank">{{responder.github_id}}</a>
+            </p>
+            <div class="action-buttons">
+              <form id="convo" action="/chat/start" method="POST">
+                <input type="hidden" id="username" name="username" value="{{responder.username}}" readonly required>
+                <input type="hidden" id="response" name="response" value="{{_id}}" readonly required>
+                {{#if approved}}
+                {{else}}
+                <button type="submit" class="btn">Approve</button>
+                {{/if}}
+              </form>
+            </div>
           </div>
         {{/each}}
       {{else}}

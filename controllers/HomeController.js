@@ -9,7 +9,7 @@ const refresh = async (req, res) => {
     try {
       const userGH = ObjectId.isValid(req.user?._id) ? req.user?._id : null 
       const user = await GHUser.findOne({"_id": userGH})
-      if(user && user.role == "Admin"){
+      if(user && user.role === "Admin"){
         return res.status(403).redirect('/admin/home')
       }
       const issues = await Issue.find().lean().exec();
@@ -35,13 +35,13 @@ const details = async (req,res) => {
   const usernameRegex = /^[a-zA-Z0-9_]+$/
   const usernameGH = (req) => usernameRegex.test(req.user?.username)
   const usercheck = usernameGH ? req.user?.username : null
-  if(user?.role == "Admin" || usercheck == issue_details.username){
+  if(user?.role === "Admin" || usercheck === issue_details.username){
     user = null
   }
-  if(issue_details != null){
+  if(issue_details !== null){
     return res.status(200).render('main.hbs',{layout: "individual.hbs",
-    _id: _id,
-    username: issue_details.username,
+    issue_id: _id,
+    creator: issue_details.createdBy,
     contact_info: issue_details.contact_info,
     skillset: issue_details.skillset,
     github_id: issue_details.github_id,
@@ -66,7 +66,7 @@ const logout = (req,res) => {
   try{
   delUser(res.cookie?.uid)
   res.clearCookie('uid')
-  return res.status(200).redirect('/api/login')
+  return res.status(200).redirect('/')
   } catch (err) {
     return res.status(500).redirect('/error?error_details=Failed_To_Logout')
   }

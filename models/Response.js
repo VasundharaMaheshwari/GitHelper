@@ -24,6 +24,10 @@ const Response_Schema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'GHUsers'
+    },
+    approved: {
+        type: Boolean,
+        required: true
     }
 },{timestamps: true})
 
