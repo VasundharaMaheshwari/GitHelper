@@ -135,7 +135,9 @@ const contact_limit = limiter({
     // requestWasSuccessful: (req, res) => res.status < 400,
     // skipFailedRequests: true,
     handler: (req,res) => {
-        return res.status(429).send("Not Allowed")
+        const date = new Date(req.rateLimit.resetTime)
+        req.rateLimit.resetTime = date.toLocaleString()
+        return res.status(429).redirect(`/error?error_details=Chat_Disabled_Till_${req.rateLimit.resetTime}`)
     },
     keyGenerator: (req) => {
         const xForwardedFor = req.headers['x-forwarded-for'];
