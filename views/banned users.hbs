@@ -265,14 +265,12 @@
       background: linear-gradient(45deg, #5d09b1, #1f65e3);
     }
 
-    .user-list h4 {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: white;
-      justify-items: center;
-      text-align: center;
-      align-items: center;
-    }
+.no-issues {
+    text-align: center; /* Center align the text */
+    font-size: 20px; /* Set font size to 20px */
+    margin: 20px 0; /* Optional: Add some vertical spacing */
+    color: white;
+}
 
     .banned-users p {
       font-size: 18px;
@@ -327,7 +325,7 @@
                 </div>
                 {{/each}}
             {{else}} <br>
-               <h4>No users are currently banned.</h4>
+               <p class="no-issues">No users are currently banned.</p>
             {{/if}}
           </div>
   </div>

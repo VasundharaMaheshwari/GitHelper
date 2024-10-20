@@ -225,6 +225,12 @@
       background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
       transform: scale(1.15);
     }
+
+    .no-issues {
+    text-align: center; /* Center align the text */
+    font-size: 20px; /* Set font size to 20px */
+    margin: 20px 0; /* Optional: Add some vertical spacing */
+}
   </style>
 </head>
 <body>
@@ -259,7 +265,7 @@
           </div>
         {{/each}}
       {{else}}
-        <p>No open queries found.</p>
+        <p class="no-issues">No open queries found.</p>
       {{/if}}
     </div>
 
