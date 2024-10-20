@@ -282,6 +282,25 @@
       text-align: center;
       align-items: center;
     }
+
+.scroll-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 50%;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      z-index: 1001;
+    }
+
+    .scroll-top:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.15);
+    }
   </style>
 </head>
 
@@ -313,6 +332,21 @@
           </div>
   </div>
   </div>
+
+  <div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script>
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
 </body>
 </html>
 
