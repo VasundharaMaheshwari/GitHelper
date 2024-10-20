@@ -105,5 +105,51 @@ return res.send("Oops! Error Occurred...")
     return res.status(500).redirect('/error?error_details=Error_Occurred')
   }
 }
+
+const tracker = async (req,res) => {
+  try{
+    if(ObjectId.isValid(req.user._id)){
+    const responses = await Response.find({$or: [{"responder.uid": req.user._id},{"creator": req.user._id}], "approved": true})
+    const tasks = []
+    for(const response of responses){
+      const issue_id = response.issue
+      const responder_uid = response.responder.uid
+      const creator = response.creator
+      const assignedAt = response.updatedAt
+
+      const issue = await Issue.findById(issue_id)
+      const assignedTo = await GHUser.findById(responder_uid)
+      const assignedBy = await GHUser.findById(creator)
+
+      if(!issue || !assignedBy || !assignedTo){
+        continue
+      }
+
+      const task = {
+        assigned_by: {
+          username: assignedBy.username,
+          github_id: assignedBy.github_id
+        },
+        assigned_to: {
+          username: assignedTo.username,
+          github_id: assignedTo.github_id
+        },
+        description: issue.description,
+        assigned_at: assignedAt
+      }
+
+      tasks.push(task)
+
+      return res.status(200).render('main.hbs',{layout: "tasks.hbs",
+        tasks: tasks
+      })
+    }
+    } else {
+      return res.status(403).redirect('/error?error_details=Not_Allowed')
+    }
+  } catch (err) {
+    return res.status(500).redirect('/error?error_details=Error_Occurred')
+  }
+}
   
-module.exports = { create,save,list,save_response }
+module.exports = { create,save,list,save_response,tracker }
