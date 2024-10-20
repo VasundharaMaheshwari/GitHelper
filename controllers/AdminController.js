@@ -150,4 +150,16 @@ return res.send("Oops! Error Occurred...")
   }
 }
 
-module.exports = { loader,deleter,userlist,usermod,viewer }
+const detailsBan =  async (req,res) => {
+  try{
+    const bannedUsers = await Block.find().lean().exec()
+  return res.status(200).render('main.hbs',{layout: "admin.hbs",
+       username: req.user.username,
+       email: req.user.email,
+       github_id: req.user.github_id,
+       bannedUsers: bannedUsers
+  })}  catch (err) {
+    return res.status(500).redirect('/error?error_details=Error_Occurred')
+  } }
+
+module.exports = { loader,deleter,userlist,usermod,viewer,detailsBan }

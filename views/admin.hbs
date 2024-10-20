@@ -194,6 +194,19 @@
       animation: fadeIn 1.5s ease-in-out;
     }
 
+    .banned-users h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .banned-users p {
+      font-size: 18px;
+      margin-bottom: 10px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+
     /* Profile Picture */
     .profile-picture {
       width: 150px;
@@ -263,11 +276,23 @@
       <div class="right-section">
         <div class="user-details">
           <h2>Admin Information</h2>
-          <p>Username: {{username}}</p>
-          <p>Email: {{email}}</p>
+          <p><strong>Username: </strong>{{username}}</p>
+          <p><strong>Email: </strong>{{email}}</p>
+          <p><strong>Github ID: </strong>{{github_id}}</p>
         </div>
-      </div>
-    </div>
+        <br>
+          <div class="banned-users">
+            <h2>Banned Users</h2>
+              {{#if bannedUsers.length}}
+                {{#each bannedUsers}}
+                    <p><strong>Email: </strong>{{this.email}} </p>
+                    <p><strong>Github ID: </strong>{{this.github_id}} </p>
+                    <p><strong>Date Banned: </strong>{{this.createdAt}} </p><br>
+                {{/each}}
+            {{else}}
+               <p>No users are currently banned.</p>
+            {{/if}}
+          </div>
   </div>
 
   <script>

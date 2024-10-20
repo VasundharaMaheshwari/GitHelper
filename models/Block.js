@@ -6,7 +6,7 @@ const Block_Schema = new Schema({
         required: true,
         unique: true
     },
-    github_id:{
+    "github_id": {
         type: String,
         required: true,
         unique: true
