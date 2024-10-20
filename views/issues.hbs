@@ -88,7 +88,7 @@
       }
     }
 
-    h2 {
+    h1 {
       font-size: 28px;
       margin-bottom: 25px;
       text-align: center;
@@ -231,6 +231,53 @@
     font-size: 20px; /* Set font size to 20px */
     margin: 20px 0; /* Optional: Add some vertical spacing */
 }
+
+    .modal {
+  display: none; /* Hidden by default */
+  position: fixed; 
+  z-index: 1002; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  background-color: #222;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; 
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content p {
+  margin-bottom: 0px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-container-modal {
+  display: flex; /* Flex container for buttons */
+  justify-content: space-evenly; /* Space between buttons */
+  margin-top: 20px; /* Margin above buttons */
+}
   </style>
 </head>
 <body>
@@ -242,7 +289,7 @@
 
   <!-- Main Issues Container -->
   <div class="issues-container">
-    <h2>Opened Queries</h2>
+    <h1>Opened Queries</h1>
     <div class="issue-list">
       {{#if issues.length}}
         {{#each issues}}
@@ -289,15 +336,46 @@
     });
   </script>
 
+  
+<!-- Existing HTML code -->
+
+<!-- Delete Confirmation Modal -->
+<div id="delete-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Confirm Deletion</h2><br><br>
+    <p>Are you sure you want to delete this query?</p><br>
+        <div class="btn-container-modal">
+    <button id="confirm-delete" class="btn" onclick="">Delete</button>
+    <button class="btn" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
   <!-- Script Functions -->
   <script>
     function editQuery(queryId) {      
       window.location.href = `/query_work/edit?queryId=${queryId}`;
     }
 
-    function deleteQuery(queryId) {
-      window.location.href = `/query_work/delete?queryId=${queryId}`;
-    }
+  let currentQueryId = null;
+
+  function deleteQuery(queryId) {
+    currentQueryId = queryId; // Store the current query ID
+    document.getElementById('delete-modal').style.display = 'block'; // Show the modal
+  }
+
+  function confirmDelete() {
+    window.location.href = `/query_work/delete?queryId=${currentQueryId}`; // Redirect to delete
+  }
+
+  function closeModal() {
+    document.getElementById('delete-modal').style.display = 'none'; // Hide the modal
+  }
+
+  // Add this function to confirm the delete action
+  document.getElementById('confirm-delete').onclick = confirmDelete;
+
 
     function responseQuery(queryId) {
       window.location.href = `/query_work/response?queryId=${queryId}`;
