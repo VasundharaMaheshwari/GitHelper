@@ -2,6 +2,7 @@ const express =  require('express')
 const ErrorRouter = express.Router()
 const { error, contactus } = require('../controllers/ErrorController')
 const { ErrorCheck,msgCheck } = require('../validators/ErrorValidators')
+const { contact_limit } = require('../middlewares/rate_limiter')
 
 ErrorRouter.get('/',ErrorCheck,error)
 
@@ -29,6 +30,6 @@ ErrorRouter.get('/contact',(req,res) => {
     })
 })
 
-ErrorRouter.post('/send',msgCheck,contactus)
+ErrorRouter.post('/send',msgCheck,contact_limit,contactus)
 
 module.exports = ErrorRouter

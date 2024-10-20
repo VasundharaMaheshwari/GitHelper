@@ -128,4 +128,22 @@ const overall_limit = limiter({
       }
 })
 
-module.exports = { register_limit,login_limit,issue_limit,response_limit,login_limit_ip,edit_limit,convo_limit,overall_limit }
+const contact_limit = limiter({
+    windowMs: 15*60*1000,
+    max: 5,
+    legacyHeaders: false,
+    // requestWasSuccessful: (req, res) => res.status < 400,
+    // skipFailedRequests: true,
+    handler: (req,res) => {
+        return res.status(429).send("Not Allowed")
+    },
+    keyGenerator: (req) => {
+        const xForwardedFor = req.headers['x-forwarded-for'];
+        if (xForwardedFor) {
+          return xForwardedFor.split(',')[0].trim();
+        }
+        return req.ip;
+      }
+})
+
+module.exports = { register_limit,login_limit,issue_limit,response_limit,login_limit_ip,edit_limit,convo_limit,overall_limit,contact_limit }
