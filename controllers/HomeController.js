@@ -41,6 +41,7 @@ const details = async (req,res) => {
   if(issue_details !== null){
     return res.status(200).render('main.hbs',{layout: "individual.hbs",
     issue_id: _id,
+    username: issue_details.username,
     creator: issue_details.createdBy,
     contact_info: issue_details.contact_info,
     skillset: issue_details.skillset,
