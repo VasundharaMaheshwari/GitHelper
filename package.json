@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "run": "nodemon server.js"
+    "run": "nodemon server.js",
+    "lint": "eslint . --fix"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,9 @@
   },
   "description": "",
   "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "eslint": "^9.13.0",
+    "globals": "^15.11.0",
     "nodemon": "^3.1.0",
     "run-script": "^0.1.1"
   }
