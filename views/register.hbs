@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Register Form</title>
-
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <style>
     * {
       box-sizing: border-box;
@@ -33,7 +30,7 @@
       align-items: center;
       position: relative;
       color: #f0f0f0;
-      overflow: hidden; 
+      overflow: hidden;
     }
 
     /* Navbar Styles */
@@ -42,7 +39,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; 
+      background: transparent;
       position: fixed;
       width: 100%;
       top: 0;
@@ -110,46 +107,50 @@
 
     /* Register Container */
     /* Increased max-width and padding of register-container */
-.register-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 1000px; /* Increased from 900px */
-  padding-top: 100px;
-  padding-bottom: 0;
-}
+    .register-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 1000px;
+      /* Increased from 900px */
+      padding-top: 100px;
+      padding-bottom: 0;
+    }
 
-/* Adjusted size and padding of the register-box */
-.register-box {
-  display: flex;
-  align-items: stretch;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 20px;
-  padding: 40px; /* Increased padding */
-  backdrop-filter: blur(10px);
-  width: 100%;
-  max-height: 90vh; /* Increased max-height */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
+    /* Adjusted size and padding of the register-box */
+    .register-box {
+      display: flex;
+      align-items: stretch;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+      padding: 40px;
+      /* Increased padding */
+      backdrop-filter: blur(10px);
+      width: 100%;
+      max-height: 90vh;
+      /* Increased max-height */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
 
     /* Logo section adjustments */
-.logo-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  padding-right: 30px; /* Increased padding */
-}
+    .logo-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      padding-right: 30px;
+      /* Increased padding */
+    }
 
-.logo-image {
-  width: 120px; /* Slightly increased logo size */
-  height: 120px;
-  margin-bottom: 30px;
-}
+    .logo-image {
+      width: 120px;
+      /* Slightly increased logo size */
+      height: 120px;
+      margin-bottom: 30px;
+    }
 
     .logo-text h1 {
       font-size: 36px;
@@ -164,80 +165,94 @@
     }
 
     /* Partition line adjustments */
-.partition {
-  width: 1px; /* Ensures it displays as a vertical line */
-  background-color: rgba(255, 255, 255, 0.3); /* Adds visibility */
-  margin: 0 40px;
-}
+    .partition {
+      width: 1px;
+      /* Ensures it displays as a vertical line */
+      background-color: rgba(255, 255, 255, 0.3);
+      /* Adds visibility */
+      margin: 0 40px;
+    }
 
-/* Illustration adjustments */
-.illustration-container {
-  display: flex;
-  justify-content: center; /* Center the illustration */
-  align-items: center;
-  margin: 20px 0; /* Adds some margin to separate it from other elements */
-}
+    /* Illustration adjustments */
+    .illustration-container {
+      display: flex;
+      justify-content: center;
+      /* Center the illustration */
+      align-items: center;
+      margin: 20px 0;
+      /* Adds some margin to separate it from other elements */
+    }
 
-.illustration-icon {
-  font-size: 150px; /* Increase the size of the icon */
-  color: #fff; /* Ensures the icon stays visible against the background */
-  margin-top: 20px; /* Adds a bit more space above the icon */
-}    
+    .illustration-icon {
+      font-size: 150px;
+      /* Increase the size of the icon */
+      color: #fff;
+      /* Ensures the icon stays visible against the background */
+      margin-top: 20px;
+      /* Adds a bit more space above the icon */
+    }
+
     .illustration-icon:hover {
-      color: #ff4b2b; 
-      transform: scale(1.1); 
+      color: #ff4b2b;
+      transform: scale(1.1);
       transition: all 0.3s ease;
     }
 
     .register-form {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  padding-left: 30px; /* Increased padding */
-}
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      padding-left: 30px;
+      /* Increased padding */
+    }
 
-.form-group {
-  margin-bottom: 20px; /* Increased spacing between form groups */
-  position: relative;
-}
+    .form-group {
+      margin-bottom: 20px;
+      /* Increased spacing between form groups */
+      position: relative;
+    }
 
-.form-group label {
-  color: #fff;
-  font-size: 15px; /* Increased label font size */
-  margin-bottom: 8px;
-  display: block;
-}
+    .form-group label {
+      color: #fff;
+      font-size: 15px;
+      /* Increased label font size */
+      margin-bottom: 8px;
+      display: block;
+    }
 
-.input-container {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
+    .input-container {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
 
     .input-container input {
-  width: 100%;
-  padding: 12px 12px 12px 55px; /* Increased padding inside input */
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  font-size: 15px; /* Slightly increased input font size */
-}
+      width: 100%;
+      padding: 12px 12px 12px 55px;
+      /* Increased padding inside input */
+      border: none;
+      border-radius: 5px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 15px;
+      /* Slightly increased input font size */
+    }
 
     .input-container input:focus {
       background: rgba(255, 255, 255, 0.3);
     }
 
     .input-icon {
-  position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #ccc;
-  font-size: 20px; /* Slightly increased icon size */
-}
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ccc;
+      font-size: 20px;
+      /* Slightly increased icon size */
+    }
 
     .input-divider {
       position: absolute;
@@ -249,28 +264,32 @@
     }
 
     /* Increased spacing between GitHub ID and Password fields */
-.form-group:last-of-type {
-  margin-top: 30px; /* Adjust margin between GitHub ID and next field (password) */
-}
+    .form-group:last-of-type {
+      margin-top: 30px;
+      /* Adjust margin between GitHub ID and next field (password) */
+    }
 
     /* Increased button size and padding */
-.register-button {
-  width: 100%;
-  background-image: linear-gradient(45deg, #ff416c, #ff4b2b);
-  color: #fff;
-  border: none;
-  padding: 18px; /* Increased padding */
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
-  font-size: 20px; /* Increased button font size */
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px; /* Increased margin-top for spacing */
-  transition: transform 0.3s ease, background-image 0.3s ease;
-}
+    .register-button {
+      width: 100%;
+      background-image: linear-gradient(45deg, #ff416c, #ff4b2b);
+      color: #fff;
+      border: none;
+      padding: 18px;
+      /* Increased padding */
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+      font-size: 20px;
+      /* Increased button font size */
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 15px;
+      /* Increased margin-top for spacing */
+      transition: transform 0.3s ease, background-image 0.3s ease;
+    }
 
     .register-button:hover {
       background-image: linear-gradient(45deg, #e60039, #e63900);
@@ -296,18 +315,18 @@
     }
 
     /* Adjust spacing between form and register button */
-.login-link {
-  text-align: center;
-  margin-top: 20px;
-  color: #ccc;
-  font-size: 16px;
-}
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      color: #ccc;
+      font-size: 16px;
+    }
 
-.login-link a {
-  color: #ff4b2b;
-  text-decoration: none;
-  font-size: 16px;
-}
+    .login-link a {
+      color: #ff4b2b;
+      text-decoration: none;
+      font-size: 16px;
+    }
 
     /* Responsive Styles */
     @media (max-width: 992px) {
@@ -332,14 +351,13 @@
       }
 
       .illustration-icon {
-        font-size: 80px; 
-    }
+        font-size: 80px;
+      }
   </style>
-
   <script>
     var sha256 = function sha256(ascii) {
       function rightRotate(value, amount) {
-          return (value>>>amount) | (value<<(32 - amount));
+        return (value >>> amount) | (value << (32 - amount));
       };
       var mathPow = Math.pow;
       var maxWord = mathPow(2, 32);
@@ -347,62 +365,62 @@
       var i, j;
       var result = '';
       var words = [];
-      var asciiBitLength = ascii[lengthProperty]*8;
+      var asciiBitLength = ascii[lengthProperty] * 8;
       var hash = sha256.h = sha256.h || [];
       var k = sha256.k = sha256.k || [];
       var primeCounter = k[lengthProperty];
       var isComposite = {};
       for (var candidate = 2; primeCounter < 64; candidate++) {
-          if (!isComposite[candidate]) {
-              for (i = 0; i < 313; i += candidate) {
-                  isComposite[i] = candidate;
-              }
-              hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-              k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+        if (!isComposite[candidate]) {
+          for (i = 0; i < 313; i += candidate) {
+            isComposite[i] = candidate;
           }
+          hash[primeCounter] = (mathPow(candidate, .5) * maxWord) | 0;
+          k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+        }
       }
       ascii += '\x80';
-      while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
+      while (ascii[lengthProperty] % 64 - 56) ascii += '\x00';
       for (i = 0; i < ascii[lengthProperty]; i++) {
-          j = ascii.charCodeAt(i);
-          if (j>>8) return;
-          words[i>>2] |= j << ((3 - i)%4)*8;
+        j = ascii.charCodeAt(i);
+        if (j >> 8) return;
+        words[i >> 2] |= j << ((3 - i) % 4) * 8;
       }
-      words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+      words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
       words[words[lengthProperty]] = (asciiBitLength);
       for (j = 0; j < words[lengthProperty];) {
-          var w = words.slice(j, j += 16);
-          var oldHash = hash;
-          hash = hash.slice(0, 8);
-          for (i = 0; i < 64; i++) {
-              var i2 = i + j;
-              var w15 = w[i - 15], w2 = w[i - 2];
-              var a = hash[0], e = hash[4];
-              var temp1 = hash[7]
-                  + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
-                  + ((e&hash[5])^((~e)&hash[6]))
-                  + k[i]
-                  + (w[i] = (i < 16) ? w[i] : (
-                          w[i - 16]
-                          + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
-                          + w[i - 7]
-                          + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
-                      )|0
-                  );
-              var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
-                  + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
-              hash = [(temp1 + temp2)|0].concat(hash);
-              hash[4] = (hash[4] + temp1)|0;
-          }
-          for (i = 0; i < 8; i++) {
-              hash[i] = (hash[i] + oldHash[i])|0;
-          }
+        var w = words.slice(j, j += 16);
+        var oldHash = hash;
+        hash = hash.slice(0, 8);
+        for (i = 0; i < 64; i++) {
+          var i2 = i + j;
+          var w15 = w[i - 15], w2 = w[i - 2];
+          var a = hash[0], e = hash[4];
+          var temp1 = hash[7]
+            + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+            + ((e & hash[5]) ^ ((~e) & hash[6]))
+            + k[i]
+            + (w[i] = (i < 16) ? w[i] : (
+              w[i - 16]
+              + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+              + w[i - 7]
+              + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+            ) | 0
+            );
+          var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+            + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+          hash = [(temp1 + temp2) | 0].concat(hash);
+          hash[4] = (hash[4] + temp1) | 0;
+        }
+        for (i = 0; i < 8; i++) {
+          hash[i] = (hash[i] + oldHash[i]) | 0;
+        }
       }
       for (i = 0; i < 8; i++) {
-          for (j = 3; j + 1; j--) {
-              var b = (hash[i]>>(j*8))&255;
-              result += ((b < 16) ? '0' : '') + b.toString(16);
-          }
+        for (j = 3; j + 1; j--) {
+          var b = (hash[i] >> (j * 8)) & 255;
+          result += ((b < 16) ? '0' : '') + b.toString(16);
+        }
       }
       return result;
     };
@@ -454,7 +472,6 @@
       <a href="/error/faq"><i class="fas fa-question-circle"></i> FAQ</a>
     </div>
   </div>
-
   <div class="register-container">
     <div class="register-box">
       <div class="logo-section">
@@ -463,16 +480,12 @@
           <h1>Git Helper</h1>
         </div>
       </div>
-
       <div class="partition"></div>
-
       <div class="illustration-container">
         <i class="fas fa-user-plus illustration-icon" aria-hidden="true"></i>
       </div>
-
-      
-      <form id="register-form" class="register-form" action="/api/register" method="post" onsubmit="return validateForm()">
-
+      <form id="register-form" class="register-form" action="/api/register" method="post"
+        onsubmit="return validateForm()">
         <div class="form-group">
           <label for="username">Username</label>
           <div class="input-container">
@@ -481,7 +494,6 @@
             <input type="text" id="username" placeholder="Username" name="username" required>
           </div>
         </div>
-
         <div class="form-group">
           <label for="email">Email</label>
           <div class="input-container">
@@ -490,16 +502,14 @@
             <input type="email" placeholder="Email" id="email" name="email" required>
           </div>
         </div>
-
-          <div class="form-group">
-  <label for="github-id">GitHub ID</label>
-  <div class="input-container">
-    <i class="fab fa-github input-icon"></i>
-    <div class="input-divider"></div>
-    <input type="text" placeholder="GitHub ID" id="github_id" name="github_id" required>
-  </div>
-</div>
-
+        <div class="form-group">
+          <label for="github-id">GitHub ID</label>
+          <div class="input-container">
+            <i class="fab fa-github input-icon"></i>
+            <div class="input-divider"></div>
+            <input type="text" placeholder="GitHub ID" id="github_id" name="github_id" required>
+          </div>
+        </div>
         <div class="form-group">
           <label for="password">Password</label>
           <div class="input-container">
@@ -508,7 +518,6 @@
             <input type="password" placeholder="Password" id="password" required>
           </div>
         </div>
-
         <div class="form-group">
           <label for="confirm-password">Confirm Password</label>
           <div class="input-container">
@@ -518,9 +527,7 @@
             <input type="password" name="encryptedpassword" id="encryptedpassword" required readonly hidden>
           </div>
         </div>
-
         <button type="submit" class="register-button"><i class="fas fa-rocket"></i> Register</button>
-        
         <p id="error-message" class="error-message"></p>
         <div class="login-link">
           <p>Already have an account? <a href="/api/login">Login</a></p>
@@ -528,6 +535,6 @@
       </form>
     </div>
   </div>
-
 </body>
+
 </html>

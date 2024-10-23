@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Error Page</title>
-
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     * {
       box-sizing: border-box;
@@ -42,7 +39,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; 
+      background: transparent;
       position: fixed;
       width: 100%;
       top: 0;
@@ -51,7 +48,7 @@
     }
 
     .navbar:hover {
-      background: rgba(0, 0, 0, 0.3); 
+      background: rgba(0, 0, 0, 0.3);
     }
 
     .navbar .logo {
@@ -76,7 +73,7 @@
       color: #fff;
       text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
     }
-    
+
     /* Error Container Styles */
     .error-container {
       display: flex;
@@ -103,7 +100,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      {{!-- animation: slideInDown 1s ease-out; --}}
+
+        {
+          {
+          !-- animation: slideInDown 1s ease-out;
+          --
+        }
+      }
     }
 
     h2 i {
@@ -146,13 +149,27 @@
 
     /* Animations */
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     @keyframes slideInDown {
-      from { transform: translateY(-100px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      from {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     /* Responsive Styles */
@@ -192,28 +209,27 @@
       }
     }
   </style>
-
   <script>
     function goBack() {
       window.history.back();
     }
   </script>
 </head>
+
 <body>
   <!-- Navbar -->
   <div class="navbar">
     <div class="logo">
-      <img src="logo.jpeg" alt="Git Helper Logo"> 
+      <img src="logo.jpeg" alt="Git Helper Logo">
       <span>Git Helper</span>
     </div>
   </div>
-
   <!-- Error Container -->
   <div class="error-container">
     <h2><i class="fas fa-exclamation-circle"></i>ERROR!!</h2>
     <p>{{error_message}}</p>
     <button class="btn" onclick="goBack()"><i class="fas fa-arrow-left"></i>Go Back</button>
   </div>
-
 </body>
+
 </html>

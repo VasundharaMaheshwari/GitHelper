@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FAQ & Tutorial - GitHelper</title>
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     * {
       box-sizing: border-box;
@@ -31,8 +29,8 @@
       justify-content: center;
       align-items: flex-start;
       flex-direction: column;
-      padding-top: 80px; 
-      backdrop-filter: brightness(0.8); 
+      padding-top: 80px;
+      backdrop-filter: brightness(0.8);
       color: #f0f0f0;
     }
 
@@ -47,12 +45,12 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; 
+      background: transparent;
       transition: background 0.3s ease;
     }
 
     .navbar:hover {
-      background: rgba(0, 0, 0, 0.3); 
+      background: rgba(0, 0, 0, 0.3);
     }
 
     .navbar .logo {
@@ -102,8 +100,6 @@
       margin-right: 4px;
     }
 
-
-
     .navbar .nav-links a::after {
       content: '';
       position: absolute;
@@ -132,7 +128,7 @@
       margin: 40px auto;
       padding: 40px;
       border-radius: 12px;
-      background-color: rgba(0, 0, 0, 0.5); 
+      background-color: rgba(0, 0, 0, 0.5);
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(8px);
       transition: background-color 0.6s ease, box-shadow 0.6s ease;
@@ -154,22 +150,25 @@
       margin-bottom: 40px;
     }
 
-    .faq-section, .tutorial-section {
+    .faq-section,
+    .tutorial-section {
       flex: 1;
       padding: 25px;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.2); 
+      background: rgba(255, 255, 255, 0.2);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.6s ease-in-out, box-shadow 0.6s ease;
       position: relative;
     }
 
-    .faq-section:hover, .tutorial-section:hover {
+    .faq-section:hover,
+    .tutorial-section:hover {
       transform: translateY(-8px);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .faq-section h2, .tutorial-section h2 {
+    .faq-section h2,
+    .tutorial-section h2 {
       font-size: 26px;
       margin-bottom: 12px;
       color: #6c5b7b;
@@ -178,29 +177,33 @@
       align-items: center;
     }
 
-    .faq-section h2 i, .tutorial-section h2 i {
+    .faq-section h2 i,
+    .tutorial-section h2 i {
       margin-right: 8px;
       color: #ff416c;
     }
 
-    .faq-section p, .tutorial-section p {
+    .faq-section p,
+    .tutorial-section p {
       font-size: 16px;
       margin-bottom: 12px;
       color: #f0f0f0;
       line-height: 1.6;
     }
 
-    .faq-question, .tutorial-question {
+    .faq-question,
+    .tutorial-question {
       font-weight: bold;
       color: #6c5b7b;
       cursor: pointer;
       position: relative;
       padding-right: 25px;
-      margin-bottom: 0px; 
+      margin-bottom: 0px;
     }
 
-    .faq-question::after, .tutorial-question::after {
-      content: '\f078'; 
+    .faq-question::after,
+    .tutorial-question::after {
+      content: '\f078';
       font-family: 'Font Awesome 5 Free';
       font-weight: 900;
       position: absolute;
@@ -208,14 +211,16 @@
       transition: transform 0.6s ease;
     }
 
-    .faq-question.active::after, .tutorial-question.active::after {
+    .faq-question.active::after,
+    .tutorial-question.active::after {
       transform: rotate(180deg);
     }
 
-    .faq-answer, .tutorial-answer {
+    .faq-answer,
+    .tutorial-answer {
       max-height: 0;
       opacity: 0;
-      transition: max-height 0.6s ease, opacity 0.6s ease; 
+      transition: max-height 0.6s ease, opacity 0.6s ease;
       overflow: hidden;
       background-color: rgba(255, 255, 255, 0.7);
       color: #333333;
@@ -225,8 +230,9 @@
       transition: max-height 0.6s ease, opacity 0.6s ease, background-color 0.6s ease, color 0.6s ease;
     }
 
-    .faq-answer.show, .tutorial-answer.show {
-      max-height: 500px; 
+    .faq-answer.show,
+    .tutorial-answer.show {
+      max-height: 500px;
       opacity: 1;
       background-color: rgba(0, 0, 0, 0.7);
       color: #ffffff;
@@ -267,21 +273,25 @@
     }
 
     /* Additional Enhancements */
-    .faq-section, .tutorial-section {
-      background-color: rgba(255, 255, 255, 0.1); 
+    .faq-section,
+    .tutorial-section {
+      background-color: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(5px);
     }
 
-    .faq-section h2, .tutorial-section h2 {
+    .faq-section h2,
+    .tutorial-section h2 {
       color: #ffffff;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
 
-    .faq-section p, .tutorial-section p {
+    .faq-section p,
+    .tutorial-section p {
       color: #d1d1d1;
     }
 
-    .faq-question, .tutorial-question {
+    .faq-question,
+    .tutorial-question {
       color: #ffffff;
     }
 
@@ -289,15 +299,16 @@
     .hidden {
       max-height: 0;
       opacity: 0;
-      transition: max-height 0s ease, opacity 0s ease; 
+      transition: max-height 0s ease, opacity 0s ease;
     }
 
     .hidden.show {
-      max-height: 1000px; 
+      max-height: 1000px;
       opacity: 1;
     }
   </style>
 </head>
+
 <body>
   <!-- Navbar -->
   <div class="navbar">
@@ -309,96 +320,93 @@
       <a href="/"><i class="fas fa-home"></i>Home</a>
     </div>
   </div>
-
   <!-- Main Container -->
   <div class="container">
     <h1>FAQ & Tutorial</h1>
-
     <div class="content-section">
       <!-- FAQ Section -->
       <div class="faq-section">
         <h2><i class="fas fa-question-circle"></i>Frequently Asked Questions:</h2>
-
         <div class="faq-item">
           <h3 class="faq-question" onclick="toggleFaqItem(this)">What is GitHelper?</h3>
           <div class="faq-answer">
-            <p>GitHelper: Empowering the Final Push is a platform designed to connect maintainers with aspiring contributors. It helps improve the quality of contributions made while reducing maintainer fatigue.</p>
+            <p>GitHelper: Empowering the Final Push is a platform designed to connect maintainers with aspiring
+              contributors. It helps improve the quality of contributions made while reducing maintainer fatigue.</p>
           </div>
         </div>
-
         <div class="faq-item">
           <h3 class="faq-question" onclick="toggleFaqItem(this)">Why can't I perform an action?</h3>
           <div class="faq-answer">
-            <p>If you're unable to perform certain actions, it might be due to a rate limit. This happens when you're moving too fast, so please slow down and try again later.</p>
+            <p>If you're unable to perform certain actions, it might be due to a rate limit. This happens when you're
+              moving too fast, so please slow down and try again later.</p>
           </div>
         </div>
-
         <div class="faq-item">
           <h3 class="faq-question" onclick="toggleFaqItem(this)">How do maintainers communicate with contributors?</h3>
           <div class="faq-answer">
-            <p>Maintainers are the only ones who can initiate conversations with contributors to prevent spam. They can view the GitHub profiles of respondents and start chats if skills match.</p>
+            <p>Maintainers are the only ones who can initiate conversations with contributors to prevent spam. They can
+              view the GitHub profiles of respondents and start chats if skills match.</p>
           </div>
         </div>
-
         <div class="faq-item hidden" id="faq-hidden">
           <h3 class="faq-question" onclick="toggleFaqItem(this)">Why did my account disappear?</h3>
           <div class="faq-answer">
-            <p>If your account has disappeared, it’s likely that you violated platform rules and it was deleted by an admin.</p>
+            <p>If your account has disappeared, it’s likely that you violated platform rules and it was deleted by an
+              admin.</p>
           </div>
-
           <h3 class="faq-question" onclick="toggleFaqItem(this)">Can I get my account back after it's deleted?</h3>
           <div class="faq-answer">
-            <p>If your account was deleted due to breaking the rules, it cannot be restored. Please follow the guidelines to avoid this in the future.</p>
+            <p>If your account was deleted due to breaking the rules, it cannot be restored. Please follow the
+              guidelines to avoid this in the future.</p>
           </div>
         </div>
       </div>
-
       <!-- Tutorial Section -->
       <div class="tutorial-section">
         <h2><i class="fas fa-book"></i>Tutorial:</h2>
-
         <div class="tutorial-item">
           <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How to Register an Account?</h3>
           <div class="tutorial-answer">
-            <p>To register, click on the Register link in the navbar, fill in your details, and submit. Once registered, you can log in and begin contributing.</p>
+            <p>To register, click on the Register link in the navbar, fill in your details, and submit. Once registered,
+              you can log in and begin contributing.</p>
           </div>
         </div>
-
         <div class="tutorial-item">
           <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How to Login?</h3>
           <div class="tutorial-answer">
-            <p>Navigate to the Login page, enter your credentials, and hit submit. You'll now have access to your account dashboard.</p>
+            <p>Navigate to the Login page, enter your credentials, and hit submit. You'll now have access to your
+              account dashboard.</p>
           </div>
         </div>
-
         <div class="tutorial-item">
           <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How to Open a Query?</h3>
           <div class="tutorial-answer">
-            <p>After logging in, you can click the Open Query button to create a new issue. Fill out the necessary information, including a title, description, and a GitHub repository link, and submit it. Your query will then be visible to aspiring contributors.</p>
+            <p>After logging in, you can click the Open Query button to create a new issue. Fill out the necessary
+              information, including a title, description, and a GitHub repository link, and submit it. Your query will
+              then be visible to aspiring contributors.</p>
           </div>
         </div>
-
         <div class="tutorial-item hidden" id="tutorial-hidden">
           <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How to View Open Queries?</h3>
           <div class="tutorial-answer">
-            <p>Head to the homepage where you can browse all the currently open queries. Each query will display the maintainer’s GitHub ID, skill set expected, and repository link.</p>
+            <p>Head to the homepage where you can browse all the currently open queries. Each query will display the
+              maintainer’s GitHub ID, skill set expected, and repository link.</p>
           </div>
-
-          <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How can maintainers initiate conversations?</h3>
+          <h3 class="tutorial-question" onclick="toggleTutorialItem(this)">How can maintainers initiate conversations?
+          </h3>
           <div class="tutorial-answer">
-            <p>Maintainers can view the responses to their queries and initiate conversations when they find a suitable match.</p>
+            <p>Maintainers can view the responses to their queries and initiate conversations when they find a suitable
+              match.</p>
           </div>
         </div>
       </div>
     </div>
-
     <!-- Show More Buttons Aligned -->
     <div class="show-more-container">
       <button class="show-more-btn" id="faq-show-more" onclick="toggleFaqHidden()">Show More FAQ</button>
       <button class="show-more-btn" id="tutorial-show-more" onclick="toggleTutorialHidden()">Show More Tutorial</button>
     </div>
   </div>
-
   <script>
     // Toggle Hidden FAQ Section
     function toggleFaqHidden() {
@@ -459,4 +467,5 @@
     }
   </script>
 </body>
+
 </html>

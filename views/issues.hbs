@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Opened Queries</title>
-
   <!-- Favicon -->
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     * {
       box-sizing: border-box;
@@ -74,7 +71,13 @@
       max-width: 800px;
       max-height: 80vh;
       overflow-y: auto;
-      {{!-- animation: fadeIn 1.2s ease-in-out; --}}
+
+        {
+          {
+          !-- animation: fadeIn 1.2s ease-in-out;
+          --
+        }
+      }
     }
 
     @keyframes fadeIn {
@@ -82,6 +85,7 @@
         opacity: 0;
         transform: translateY(20px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -228,66 +232,73 @@
     }
 
     .no-issues {
-    text-align: center; /* Center align the text */
-    font-size: 20px; /* Set font size to 20px */
-    margin: 20px 0; /* Optional: Add some vertical spacing */
-}
+      text-align: center;
+      /* Center align the text */
+      font-size: 20px;
+      /* Set font size to 20px */
+      margin: 20px 0;
+      /* Optional: Add some vertical spacing */
+    }
 
     .modal {
-  display: none; /* Hidden by default */
-  position: fixed; 
-  z-index: 1002; 
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
-  background-color: rgba(0, 0, 0, 0.7);
-}
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      z-index: 1002;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
 
-.modal-content {
-  background-color: #222;
-  margin: 15% auto; 
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; 
-  max-width: 400px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
+    .modal-content {
+      background-color: #222;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
 
-.modal-content p {
-  margin-bottom: 0px;
-}
+    .modal-content p {
+      margin-bottom: 0px;
+    }
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
 
-.close:hover,
-.close:focus {
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
-}
+    .close:hover,
+    .close:focus {
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+    }
 
-.btn-container-modal {
-  display: flex; /* Flex container for buttons */
-  justify-content: space-evenly; /* Space between buttons */
-  margin-top: 20px; /* Margin above buttons */
-}
+    .btn-container-modal {
+      display: flex;
+      /* Flex container for buttons */
+      justify-content: space-evenly;
+      /* Space between buttons */
+      margin-top: 20px;
+      /* Margin above buttons */
+    }
   </style>
 </head>
+
 <body>
   <!-- Logo and Header -->
   <div class="logo-container">
     <img src="/logo.jpeg" alt="Logo">
     <span>Git Helper</span>
   </div>
-
   <!-- Main Issues Container -->
   <div class="issues-container">
     <h1>Opened Queries</h1>
@@ -296,7 +307,7 @@
         {{#each issues}}
           <div class="issue">
             <div class="edit-delete-buttons">
-              <button class="edit-button" onclick="editQuery('{{_id}}')"> 
+              <button class="edit-button" onclick="editQuery('{{_id}}')">
                 <i class="fas fa-edit"></i>Edit
               </button>
               <button class="delete-button" onclick="deleteQuery('{{_id}}')">
@@ -308,26 +319,25 @@
             </div>
             <p><strong>Skillset:</strong> {{skillset}}</p>
             <p><strong>GitHub ID:</strong> {{github_id}}</p>
-            <p><strong>Repository Link: <a href="{{repo_link}}" target="_blank"><i class="fas fa-external-link-alt"></i>{{repo_link}}</a></strong></p>
+            <p><strong>Repository Link: <a href="{{repo_link}}" target="_blank"><i
+                    class="fas fa-external-link-alt"></i>{{repo_link}}</a></strong></p>
             <p><strong>Description:</strong> {{description}}</p>
           </div>
         {{/each}}
       {{else}}
-        <br><p class="no-issues">No open queries found.</p><br>
+        <br>
+        <p class="no-issues">No open queries found.</p><br>
       {{/if}}
     </div>
-
     <div id="home-btn">
       <a href="/api/user" class="btn">Back To Dashboard</a>
     </div>
   </div>
-
-<div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
+  <div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
     <i class="fas fa-arrow-up"></i>
   </div>
-
   <script>
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
@@ -336,46 +346,42 @@
       }
     });
   </script>
-
-  
-<!-- Existing HTML code -->
-
-<!-- Delete Confirmation Modal -->
-<div id="delete-modal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <h2>Confirm Deletion</h2><br><br>
-    <p>Are you sure you want to delete this query?</p><br>
-        <div class="btn-container-modal">
-    <button id="confirm-delete" class="btn" onclick="">Delete</button>
-    <button class="btn" onclick="closeModal()">Cancel</button>
+  <!-- Existing HTML code -->
+  <!-- Delete Confirmation Modal -->
+  <div id="delete-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Confirm Deletion</h2><br><br>
+      <p>Are you sure you want to delete this query?</p><br>
+      <div class="btn-container-modal">
+        <button id="confirm-delete" class="btn" onclick="">Delete</button>
+        <button class="btn" onclick="closeModal()">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
-
   <!-- Script Functions -->
   <script>
-    function editQuery(queryId) {      
+    function editQuery(queryId) {
       window.location.href = `/query_work/edit?queryId=${queryId}`;
     }
 
-  let currentQueryId = null;
+    let currentQueryId = null;
 
-  function deleteQuery(queryId) {
-    currentQueryId = queryId; // Store the current query ID
-    document.getElementById('delete-modal').style.display = 'block'; // Show the modal
-  }
+    function deleteQuery(queryId) {
+      currentQueryId = queryId; // Store the current query ID
+      document.getElementById('delete-modal').style.display = 'block'; // Show the modal
+    }
 
-  function confirmDelete() {
-    window.location.href = `/query_work/delete?queryId=${currentQueryId}`; // Redirect to delete
-  }
+    function confirmDelete() {
+      window.location.href = `/query_work/delete?queryId=${currentQueryId}`; // Redirect to delete
+    }
 
-  function closeModal() {
-    document.getElementById('delete-modal').style.display = 'none'; // Hide the modal
-  }
+    function closeModal() {
+      document.getElementById('delete-modal').style.display = 'none'; // Hide the modal
+    }
 
-  // Add this function to confirm the delete action
-  document.getElementById('confirm-delete').onclick = confirmDelete;
+    // Add this function to confirm the delete action
+    document.getElementById('confirm-delete').onclick = confirmDelete;
 
 
     function responseQuery(queryId) {
@@ -383,6 +389,5 @@
     }
   </script>
 </body>
+
 </html>
-
-

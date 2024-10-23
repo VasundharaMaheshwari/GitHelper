@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Query Details</title>
-  
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     /* Reset and Base Styles */
     * {
@@ -38,7 +35,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; 
+      background: transparent;
       position: fixed;
       width: 100%;
       top: 0;
@@ -47,7 +44,7 @@
     }
 
     .navbar:hover {
-      background: rgba(0, 0, 0, 0.3); 
+      background: rgba(0, 0, 0, 0.3);
     }
 
     .navbar .logo {
@@ -103,14 +100,14 @@
 
     /* Container Styles */
     .container {
-      background-color: rgba(0, 0, 0, 0.6); 
-      padding: 50px 30px; 
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 50px 30px;
       border-radius: 15px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
       text-align: center;
       max-width: 800px;
       width: 90%;
-      margin: 100px auto; 
+      margin: 100px auto;
       backdrop-filter: blur(10px);
       animation: fadeIn 1.2s ease-in-out;
     }
@@ -123,7 +120,13 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      {{!-- animation: slideInDown 1s ease-out; --}}
+
+        {
+          {
+          !-- animation: slideInDown 1s ease-out;
+          --
+        }
+      }
     }
 
     .issue-details p {
@@ -137,7 +140,7 @@
     }
 
     .repo-link {
-      color: #1e90ff; 
+      color: #1e90ff;
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s ease;
@@ -199,13 +202,27 @@
 
     /* Animations */
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     @keyframes slideInDown {
-      from { transform: translateY(-100px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      from {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     /* Responsive Styles */
@@ -223,7 +240,7 @@
       }
 
       .container {
-        margin: 120px 20px 40px 20px; 
+        margin: 120px 20px 40px 20px;
         padding: 30px 20px;
       }
 
@@ -242,22 +259,22 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Navbar -->
   <div class="navbar">
     <div class="logo">
-      <img src="/logo.jpeg" alt="Git Helper Logo"> 
+      <img src="/logo.jpeg" alt="Git Helper Logo">
       <span>Git Helper</span>
     </div>
     <div class="nav-links">
       <a href="/error/faq"><i class="fas fa-question-circle"></i> FAQ</a>
       {{#if user}}
-      <a href="/api/user"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="/api/user"><i class="fas fa-user-circle"></i> Profile</a>
       {{else}}
       {{/if}}
     </div>
   </div>
-
   <!-- Container for Query Details -->
   <div class="container">
     <h1><i class="fas fa-info-circle"></i> Query Details</h1>
@@ -266,25 +283,25 @@
       <p><i class="fas fa-phone"></i><strong>Contact Info:</strong> {{contact_info}}</p>
       <p><i class="fas fa-code"></i><strong>Skill Set:</strong> {{skillset}}</p>
       <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> {{github_id}}</p>
-      <p><i class="fas fa-link"></i><strong>Repository Link:</strong> <a href="{{repo_link}}" class="repo-link" target="_blank"><i class="fas fa-external-link-alt"></i> {{repo_link}}</a></p>
+      <p><i class="fas fa-link"></i><strong>Repository Link:</strong> <a href="{{repo_link}}" class="repo-link"
+          target="_blank"><i class="fas fa-external-link-alt"></i> {{repo_link}}</a></p>
       <p><i class="fas fa-align-left"></i><strong>Description:</strong> {{description}}</p>
-
       {{#if user}}
-      <form action="/query/respond" method="POST">
-        <input type="hidden" name="issue_id" value={{issue_id}} required readonly>
-        <input type="hidden" name="creator" value={{creator}} required readonly>
+        <form action="/query/respond" method="POST">
+          <input type="hidden" name="issue_id" value={{issue_id}} required readonly>
+          <input type="hidden" name="creator" value={{creator}} required readonly>
+          <div class="btn-container">
+            <button type="submit" class="btn"><i class="fas fa-reply"></i> Respond</button>
+            <a href="/#queries" class="btn query"><i class="fas fa-arrow-left"></i> Back</a>
+          </div>
+        </form>
+      {{else}}
         <div class="btn-container">
-          <button type="submit" class="btn"><i class="fas fa-reply"></i> Respond</button>
           <a href="/#queries" class="btn query"><i class="fas fa-arrow-left"></i> Back</a>
         </div>
-      </form>
-      {{else}}
-      <div class="btn-container">
-        <a href="/#queries" class="btn query"><i class="fas fa-arrow-left"></i> Back</a>
-      </div>
       {{/if}}
     </div>
   </div>
 </body>
-</html>
 
+</html>

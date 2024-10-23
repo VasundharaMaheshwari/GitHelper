@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us</title>
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     * {
       box-sizing: border-box;
@@ -34,12 +32,14 @@
     }
 
     .container {
-      background-color: rgba(0, 0, 0, 0.6); /* Increased transparency */
+      background-color: rgba(0, 0, 0, 0.6);
+      /* Increased transparency */
       padding: 40px;
       border-radius: 15px;
-      max-width: 600px; 
+      max-width: 600px;
       width: 100%;
-      backdrop-filter: blur(10px); /* Enhanced blur effect */
+      backdrop-filter: blur(10px);
+      /* Enhanced blur effect */
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
       text-align: center;
       animation: fadeIn 1.5s ease-in-out;
@@ -49,21 +49,25 @@
       from {
         opacity: 0;
       }
+
       to {
         opacity: 1;
       }
     }
 
     h1 {
-      font-size: 40px; /* Increased size of the heading */
+      font-size: 40px;
+      /* Increased size of the heading */
       color: #f5d8b3;
       margin-bottom: 20px;
     }
 
     .icon-large {
-      font-size: 1.2em; /* Increase the icon size */
+      font-size: 1.2em;
+      /* Increase the icon size */
       margin-right: 10px;
-      vertical-align: middle; /* Align the icon with the text */
+      vertical-align: middle;
+      /* Align the icon with the text */
     }
 
     p {
@@ -93,7 +97,7 @@
     }
 
     textarea {
-      height: 120px; 
+      height: 120px;
       resize: none;
     }
 
@@ -130,26 +134,32 @@
 
     .contact-info div {
       display: flex;
-      align-items: center; /* Ensure icons and text are vertically aligned */
+      align-items: center;
+      /* Ensure icons and text are vertically aligned */
       flex: 1;
       text-align: left;
-      transition: transform 0.2s; /* Smooth transition */
+      transition: transform 0.2s;
+      /* Smooth transition */
     }
 
     .contact-info div p {
-      line-height: 1.5; /* Adjust as needed for alignment */
-      margin: 0; /* Remove any margin that might cause misalignment */
+      line-height: 1.5;
+      /* Adjust as needed for alignment */
+      margin: 0;
+      /* Remove any margin that might cause misalignment */
     }
 
     .contact-info div:hover {
-      transform: scale(1.05); /* Scale effect on hover */
+      transform: scale(1.05);
+      /* Scale effect on hover */
     }
 
     .icon {
       color: #f5d8b3;
       margin-right: 10px;
       flex-shrink: 0;
-      font-size: 1.4em; /* Increase icon size to match text */
+      font-size: 1.4em;
+      /* Increase icon size to match text */
     }
 
     #back-btn {
@@ -163,7 +173,7 @@
       border-radius: 10px;
       text-decoration: none;
       transition: background 0.3s ease;
-      display: inline-flex; 
+      display: inline-flex;
       align-items: center;
       font-weight: bold;
     }
@@ -194,7 +204,7 @@
       }
 
       p {
-        font-size: 14px; 
+        font-size: 14px;
       }
 
       .contact-info {
@@ -209,8 +219,8 @@
       }
     }
   </style>
-    <script>
-      function validateForm() {
+  <script>
+    function validateForm() {
       var name = document.getElementById("name").value;
       var email = document.getElementById("email").value;
       var message = document.getElementById("message").value;
@@ -237,11 +247,11 @@
     }
   </script>
 </head>
+
 <body>
   <div class="container">
     <h1><i class="fas fa-envelope icon-large"></i> Contact Us</h1>
     <p>If you have any questions, feel free to contact us using the form below. We'd love to hear from you!</p>
-    
     <form action="/error/send" method="POST" onsubmit="return validateForm()">
       <input type="text" id="name" name="name" placeholder="Your Name" required>
       <input type="email" id="email" name="email" placeholder="Your Email" required>
@@ -249,7 +259,6 @@
       <p id="error-message" class="error-message"></p>
       <button type="submit" class="btn"><i class="fas fa-paper-plane icon"></i> Send Message</button>
     </form>
-
     <div class="contact-info">
       <div>
         <i class="fas fa-phone-alt icon"></i>
@@ -260,10 +269,10 @@
         <p>githelper@gmail.com</p>
       </div>
     </div>
-
     <div id="back-btn">
       <a href="/home#queries"><i class="fas fa-arrow-left icon"></i> Back</a>
     </div>
   </div>
 </body>
+
 </html>

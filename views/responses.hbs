@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Response Details</title>
-
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     * {
       box-sizing: border-box;
@@ -191,15 +188,18 @@
       transform: scale(1.15);
     }
 
-        .no-issues {
-    text-align: center; /* Center align the text */
-    font-size: 20px; /* Set font size to 20px */
-    margin: 20px 0; /* Optional: Add some vertical spacing */
-    color: white;
-}
-
+    .no-issues {
+      text-align: center;
+      /* Center align the text */
+      font-size: 20px;
+      /* Set font size to 20px */
+      margin: 20px 0;
+      /* Optional: Add some vertical spacing */
+      color: white;
+    }
   </style>
 </head>
+
 <body>
   <!-- Navbar -->
   <div class="navbar" id="navbar">
@@ -208,7 +208,6 @@
       <span>Git Helper</span>
     </div>
   </div>
-
   <div class="container">
     <h1><i class="fas fa-comments"></i> Response Details</h1>
     <div class="response-details">
@@ -217,7 +216,9 @@
           <div class="response">
             <div class="response-info">
               <p><i class="fas fa-user"></i> <strong>Username:</strong> {{responder.username}}</p>
-              <p><i class="fab fa-github"></i> <strong>GitHub ID:</strong> <a class="github-id" href="https://github.com/{{responder.github_id}}" target="_blank"><i class="fas fa-external-link-alt"></i>{{responder.github_id}}</a></p>
+              <p><i class="fab fa-github"></i> <strong>GitHub ID:</strong> <a class="github-id"
+                  href="https://github.com/{{responder.github_id}}" target="_blank"><i
+                    class="fas fa-external-link-alt"></i>{{responder.github_id}}</a></p>
             </div>
             <div class="action-buttons">
               <form id="convo" action="/chat/start" method="POST">
@@ -225,7 +226,7 @@
                 <input type="hidden" name="response" value="{{_id}}">
                 {{#if approved}}
                 {{else}}
-                <button type="submit" class="btn"><i class="fas fa-check-circle"></i> Approve</button>
+                  <button type="submit" class="btn"><i class="fas fa-check-circle"></i> Approve</button>
                 {{/if}}
               </form>
             </div>
@@ -240,14 +241,12 @@
       <a href="/api/user" class="btn"><i class="fas fa-tachometer-alt"></i> Back to Dashboard</a>
     </div>
   </div>
-
   <!-- Scroll-to-top button -->
   <div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
     <i class="fas fa-arrow-up"></i>
   </div>
-
   <script>
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
@@ -257,4 +256,5 @@
     });
   </script>
 </body>
+
 </html>

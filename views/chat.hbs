@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat with {{receiverUsername}}</title>
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     * {
       box-sizing: border-box;
@@ -52,7 +50,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; 
+      background: transparent;
       position: fixed;
       width: 100%;
       top: 0;
@@ -143,6 +141,7 @@
         opacity: 0;
         transform: translateY(10px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -249,12 +248,12 @@
     }
   </style>
 </head>
+
 <body>
   <div class="header">
     <button class="back-btn" onclick="window.history.back()"><i class="fas fa-arrow-left"></i></button>
     <i class="fas fa-comments"></i> Chat with {{receiverUsername}}
   </div>
-
   <div class="chat-container" id="chat-container">
     {{#each messages}}
       <div class="message {{#ifCond sender ../senderUserId}}sender{{else}}receiver{{/ifCond}}">
@@ -263,105 +262,100 @@
       </div>
     {{/each}}
   </div>
-
   <div class="input-container">
     <input type="text" id="message" placeholder="Type a message...">
     <button id="sendBtn"><i class="fas fa-paper-plane"></i> Send</button>
   </div>
-
   <input type="hidden" id="senderUserId" value="{{senderUserId}}" required readonly>
   <input type="hidden" id="receiverUserId" value="{{receiverUserId}}" required readonly>
   <input type="hidden" id="convoId" value="{{convoId}}" required readonly>
   <input type="hidden" id="ip" value="{{ip}}" required readonly>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const sender = document.getElementById('senderUserId');
+    const receiver = document.getElementById('receiverUserId');
+    const convo = document.getElementById('convoId');
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  const sender = document.getElementById('senderUserId');
-  const receiver = document.getElementById('receiverUserId');
-  const convo = document.getElementById('convoId');
+    const socket = io({
+      auth: {
+        userId: sender.value,
+        receiverId: receiver.value
+      }
+    });
 
-  const socket = io({
-    auth: {
-      userId: sender.value,
-      receiverId: receiver.value
+    const sendBtn = document.getElementById("sendBtn");
+    const messageInput = document.getElementById("message");
+    const chatContainer = document.getElementById("chat-container");
+    const ip = document.getElementById("ip");
+
+    function validateMessage(msg) {
+      if (typeof msg !== 'string') {
+        alert('Message must be a string.');
+        return false;
+      }
+      if (msg.trim().length === 0 || msg.length > 500) {
+        alert('Message length must be between 1 and 500 characters.');
+        return false;
+      }
+      return true;
     }
-  });
 
-  const sendBtn = document.getElementById("sendBtn");
-  const messageInput = document.getElementById("message");
-  const chatContainer = document.getElementById("chat-container");
-  const ip = document.getElementById("ip");
+    function sendMessage() {
+      const msg = messageInput.value;
+      messageInput.value = '';
 
-  function validateMessage(msg) {
-    if (typeof msg !== 'string') {
-      alert('Message must be a string.');
-      return false;
+      if (!validateMessage(msg)) return;
+
+      const jsonMsg = {
+        convoId: convo.value,
+        receiver: receiver.value,
+        msg: msg,
+        sender: sender.value,
+        ip: ip.value
+      };
+
+      socket.emit('user-message', jsonMsg);
     }
-    if (msg.trim().length === 0 || msg.length > 500) {
-      alert('Message length must be between 1 and 500 characters.');
-      return false;
+
+    sendBtn.addEventListener("click", sendMessage);
+
+    messageInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+
+    function appendMessage(msg, type) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message', type);
+      messageDiv.innerText = msg;
+
+      chatContainer.appendChild(messageDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
     }
-    return true;
-  }
 
-  function sendMessage() {
-    const msg = messageInput.value;
-    messageInput.value = ''; 
+    socket.on('received-message', (msg) => {
+      appendMessage(msg, 'receiver');
+    });
 
-    if (!validateMessage(msg)) return;
+    socket.on('sent-message', (msg) => {
+      appendMessage(msg, 'sender');
+    });
 
-    const jsonMsg = {
-      convoId: convo.value,
-      receiver: receiver.value,
-      msg: msg,
-      sender: sender.value,
-      ip: ip.value
-    };
-
-    socket.emit('user-message', jsonMsg);
-  }
-
-  sendBtn.addEventListener("click", sendMessage);
-
-  messageInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault(); 
-      sendMessage();
-    }
-  });
-
-  function appendMessage(msg, type) {
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message', type);
-    messageDiv.innerText = msg;
-
-    chatContainer.appendChild(messageDiv);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-  }
-
-  socket.on('received-message', (msg) => {
-    appendMessage(msg, 'receiver');
-  });
-
-  socket.on('sent-message', (msg) => {
-    appendMessage(msg, 'sender');
-  });
-
-  socket.on('error', (msg) => {
-    alert(msg.message)
-    window.history.back()
-  });
-
-  socket.on('chat_rule', (msg) => {
+    socket.on('error', (msg) => {
       alert(msg.message)
-  });
+      window.history.back()
+    });
 
-  document.addEventListener("DOMContentLoaded", function() {
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-  });
-</script>
+    socket.on('chat_rule', (msg) => {
+      alert(msg.message)
+    });
 
+    document.addEventListener("DOMContentLoaded", function () {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    });
+  </script>
 </body>
+
 </html>
-
-

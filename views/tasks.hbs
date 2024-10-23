@@ -1,177 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Response Details</title>
-
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
 
-body {
-  background-image: url("/1329272.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  background-size: cover;
-  height: 100vh;
-  color: white;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
+    body {
+      background-image: url("/1329272.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
+      color: white;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background: transparent;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-  transition: background 0.3s ease;
-}
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: background 0.3s ease;
+    }
 
-.logo-section {
-  display: flex;
-  align-items: center;
-}
+    .logo-section {
+      display: flex;
+      align-items: center;
+    }
 
-.logo-section img {
-  height: 40px;
-  margin-right: 10px;
-  transition: transform 0.3s ease;
-}
+    .logo-section img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
 
-.logo-section img:hover {
-  transform: rotate(10deg);
-}
+    .logo-section img:hover {
+      transform: rotate(10deg);
+    }
 
-.logo-section span {
-  font-size: 24px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  color: #fff;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-}
+    .logo-section span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
 
-.container {
-  width: 90%;
-  max-width: 1100px;
-  margin: 120px auto;
-  padding: 25px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  backdrop-filter: blur(15px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
-}
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 120px auto;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+    }
 
-h1 {
-  font-size: 32px;
-  margin-bottom: 30px;
-  text-align: center;
-  color: #fff;
-  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
-}
+    h1 {
+      font-size: 32px;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #fff;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+    }
 
-.task-details {
-  margin-bottom: 20px;
-}
+    .task-details {
+      margin-bottom: 20px;
+    }
 
-h2 {
-  color: white;
-  font-weight: bold;
-  justify-items: center;
-  text-align: center;
-  align-items: center;
-  font-size: 20px;
+    h2 {
+      color: white;
+      font-weight: bold;
+      justify-items: center;
+      text-align: center;
+      align-items: center;
+      font-size: 20px;
+    }
 
-}
+    .task {
+      font-size: 16px;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      color: white;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.task {
-  font-size: 16px;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 15px;
-  color: white;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    .task:hover {
+      transform: scale(1.02);
+      background-color: rgba(0, 0, 0, 0.8);
+    }
 
-.task:hover {
-  transform: scale(1.02);
-  background-color: rgba(0, 0, 0, 0.8);
-}
+    .task p {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
 
-.task p {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-}
+    .task p i {
+      margin-right: 8px;
+    }
 
-.task p i {
-  margin-right: 8px; 
-}
+    .task p a.github-id i {
+      margin-right: 0;
+    }
 
-.task p a.github-id i {
-  margin-right: 0; 
-}
+    .github-id {
+      color: #1e90ff;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+    }
 
-.github-id {
-  color: #1e90ff;
-  text-decoration: none;
-  font-weight: 700;
-  transition: color 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-}
+    .github-id i {
+      margin-left: 5px;
+    }
 
-.github-id i {
-  margin-left: 5px;
-}
+    .github-id:hover {
+      color: #ff8a00;
+    }
 
-.github-id:hover {
-  color: #ff8a00;
-}
+    .btn {
+      padding: 12px 24px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 12px;
+      font-size: 16px;
+    }
 
-.btn {
-  padding: 12px 24px;
-  background-image: linear-gradient(45deg, #6a11cb, #2575fc);
-  color: #fff;
-  border-radius: 30px;
-  text-decoration: none;
-  transition: background-image 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 12px;
-  font-size: 16px;
-}
+    .btn:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.02);
+    }
 
-.btn:hover {
-  background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
-  transform: scale(1.02);
-}
-
-.scroll-top {
+    .scroll-top {
       position: fixed;
       bottom: 30px;
       right: 30px;
@@ -190,14 +186,18 @@ h2 {
       transform: scale(1.15);
     }
 
-        .no-issues {
-    text-align: center; /* Center align the text */
-    font-size: 20px; /* Set font size to 20px */
-    margin: 20px 0; /* Optional: Add some vertical spacing */
-    color: white;
-}
+    .no-issues {
+      text-align: center;
+      /* Center align the text */
+      font-size: 20px;
+      /* Set font size to 20px */
+      margin: 20px 0;
+      /* Optional: Add some vertical spacing */
+      color: white;
+    }
   </style>
 </head>
+
 <body>
   <!-- Navbar -->
   <div class="navbar" id="navbar">
@@ -206,33 +206,35 @@ h2 {
       <span>Git Helper</span>
     </div>
   </div>
-
-<div class="container">
+  <div class="container">
     <h1>Task Tracking</h1>
     <div class="task-details">
       {{#if tasks.length}}
         {{#each tasks}}
           <div class="task">
             <p><strong><i class="fas fa-calendar-alt"></i> Assigned at:</strong> {{assigned_at}}</p>
-            <p><strong><i class="fas fa-user-check"></i>Assigned by:</strong> {{assigned_by.username}} (GitHub: <a class="github-id" href="https://github.com/{{assigned_by.github_id}}" target="_blank"><i class="fas fa-external-link-alt"></i>{{assigned_by.github_id}}</a>)</p>
-            <p><strong><i class="fas fa-user-edit"></i>Assigned to:</strong> {{assigned_to.username}} (GitHub: <a class="github-id" href="https://github.com/{{assigned_to.github_id}}" target="_blank"><i class="fas fa-external-link-alt"></i>{{assigned_to.github_id}}</a>)</p>
+            <p><strong><i class="fas fa-user-check"></i>Assigned by:</strong> {{assigned_by.username}} (GitHub: <a
+                class="github-id" href="https://github.com/{{assigned_by.github_id}}" target="_blank"><i
+                  class="fas fa-external-link-alt"></i>{{assigned_by.github_id}}</a>)</p>
+            <p><strong><i class="fas fa-user-edit"></i>Assigned to:</strong> {{assigned_to.username}} (GitHub: <a
+                class="github-id" href="https://github.com/{{assigned_to.github_id}}" target="_blank"><i
+                  class="fas fa-external-link-alt"></i>{{assigned_to.github_id}}</a>)</p>
             <p><strong><i class="fas fa-tasks"></i> Task:</strong> {{description}}</p>
           </div>
         {{/each}}
       {{else}}
-        <br><p class="no-issues">No tasks found.</p><br>
+        <br>
+        <p class="no-issues">No tasks found.</p><br>
       {{/if}}
     </div>
     <a href="/api/user" class="btn">Back to Dashboard</a>
   </div>
-
   <!-- Scroll-to-top button -->
   <div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
     <i class="fas fa-arrow-up"></i>
   </div>
-
   <script>
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
@@ -242,4 +244,5 @@ h2 {
     });
   </script>
 </body>
+
 </html>

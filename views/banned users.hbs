@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Banned User Details</title>
-
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <style>
     * {
       box-sizing: border-box;
@@ -32,15 +29,16 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative; /* Ensure body is the positioning context for the back button */
+      position: relative;
+      /* Ensure body is the positioning context for the back button */
     }
 
-.navbar {
+    .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; 
+      background: transparent;
       position: fixed;
       width: 100%;
       top: 0;
@@ -49,7 +47,7 @@
     }
 
     .navbar:hover {
-      background: rgba(0, 0, 0, 0.3); 
+      background: rgba(0, 0, 0, 0.3);
     }
 
     .navbar .logo {
@@ -125,12 +123,15 @@
       transition: background 0.3s ease;
       font-size: 16px;
       position: absolute;
-      top: 15px; /* Distance from the top of the viewport */
-      right: 15px; /* Distance from the right of the viewport */
+      top: 15px;
+      /* Distance from the top of the viewport */
+      right: 15px;
+      /* Distance from the right of the viewport */
     }
 
     .btn-back i {
-      margin-right: 8px; /* Space between icon and text */
+      margin-right: 8px;
+      /* Space between icon and text */
     }
 
     .btn-back:hover {
@@ -138,25 +139,29 @@
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.25); /* Subtle gradient for container */
+      background: rgba(255, 255, 255, 0.25);
+      /* Subtle gradient for container */
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
       max-width: 800px;
       width: 100%;
       height: 85vh;
-      overflow-y: scroll; /* Allows scrolling */
+      overflow-y: scroll;
+      /* Allows scrolling */
       overflow-x: hidden;
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       position: relative;
-      border: 1px solid rgba(255, 255, 255, 0.4); /* Light border for definition */
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      /* Light border for definition */
     }
 
     /* Hide the scrollbar */
     .container::-webkit-scrollbar {
       width: 0px;
-      background: transparent; /* Optional: Hide scrollbar background */
+      background: transparent;
+      /* Optional: Hide scrollbar background */
     }
 
     h1 {
@@ -265,12 +270,15 @@
       background: linear-gradient(45deg, #5d09b1, #1f65e3);
     }
 
-.no-issues {
-    text-align: center; /* Center align the text */
-    font-size: 20px; /* Set font size to 20px */
-    margin: 20px 0; /* Optional: Add some vertical spacing */
-    color: white;
-}
+    .no-issues {
+      text-align: center;
+      /* Center align the text */
+      font-size: 20px;
+      /* Set font size to 20px */
+      margin: 20px 0;
+      /* Optional: Add some vertical spacing */
+      color: white;
+    }
 
     .banned-users p {
       font-size: 18px;
@@ -281,7 +289,7 @@
       align-items: center;
     }
 
-.scroll-top {
+    .scroll-top {
       position: fixed;
       bottom: 30px;
       right: 30px;
@@ -312,31 +320,29 @@
       <a href="/admin"><i class="fas fa-arrow-left"></i><span style="margin-left: 5px;">Go Back</span></a>
     </div>
   </div>
-<br> <br>
+  <br> <br>
   <div class="container">
     <h1>Banned Users</h1>
-        <div class="user-list">
-              {{#if bannedUsers.length}}
-                {{#each bannedUsers}}
-                <div class="user">
-                    <p><i class="fas fa-envelope"></i><strong>Email: </strong>{{this.email}} </p>
-                    <p><i class="fab fa-github"></i><strong>Github ID: </strong>{{this.github_id}} </p>
-                    <p><i class="fas fa-calendar-alt"></i><strong>Date Banned: </strong>{{this.createdAt}} </p>
-                </div>
-                {{/each}}
-            {{else}} <br>
-               <p class="no-issues">No users are currently banned.</p>
-            {{/if}}
+    <div class="user-list">
+      {{#if bannedUsers.length}}
+        {{#each bannedUsers}}
+          <div class="user">
+            <p><i class="fas fa-envelope"></i><strong>Email: </strong>{{this.email}} </p>
+            <p><i class="fab fa-github"></i><strong>Github ID: </strong>{{this.github_id}} </p>
+            <p><i class="fas fa-calendar-alt"></i><strong>Date Banned: </strong>{{this.createdAt}} </p>
           </div>
+        {{/each}}
+      {{else}} <br>
+        <p class="no-issues">No users are currently banned.</p>
+      {{/if}}
+    </div>
   </div>
   </div>
-
   <div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
     <i class="fas fa-arrow-up"></i>
   </div>
-
   <script>
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
@@ -346,5 +352,5 @@
     });
   </script>
 </body>
-</html>
 
+</html>

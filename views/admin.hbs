@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Page - Git Helper</title>
-
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     * {
       box-sizing: border-box;
@@ -22,7 +19,7 @@
     }
 
     /* Body background and layout */
-      body {
+    body {
       background-image: url("/1329272.png");
       background-repeat: no-repeat;
       background-position: center center;
@@ -46,7 +43,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; 
+      background: transparent;
       position: fixed;
       width: 100%;
       top: 0;
@@ -118,7 +115,7 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
-     /* Welcome Line */
+    /* Welcome Line */
     .welcome-line {
       text-align: center;
       margin-top: 120px;
@@ -215,51 +212,60 @@
 
     /* Animations */
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     @keyframes slideIn {
-      from { transform: translateX(50px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+      from {
+        transform: translateX(50px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
+
 <body>
-   <!-- Navbar with GitHelper logo on the left and Home/Logout buttons on the right -->
+  <!-- Navbar with GitHelper logo on the left and Home/Logout buttons on the right -->
   <div class="navbar">
     <!-- Left: GitHelper Logo -->
     <div class="logo-section">
       <img src="/logo.jpeg" alt="Git Helper Logo">
       <span>Git Helper</span>
     </div>
-    
     <!-- Right: Home and Logout Buttons -->
     <div class="buttons">
       <a href="/home/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
   </div>
-
   <!-- Main Container -->
   <div class="container">
     <!-- Welcome Line -->
     <div class="welcome-line">
       <h2>Welcome, Admin!</h2>
     </div>
-
     <!-- Content Container: Left Buttons and Right User Details -->
     <div class="content-container">
       <!-- Left Section: Navigation Buttons -->
       <div class="left-section">
         <div class="button-container">
-           <!-- Default Profile Picture -->
+          <!-- Default Profile Picture -->
           <img src="/pfp.jpeg" alt="Admin Profile Picture" class="profile-picture">
           <a href="/admin/home"><i class="fas fa-list"></i> List of Queries</a>
           <a href="/admin/userlist"><i class="fas fa-users"></i> List of Users</a>
           <a href="/admin/banlist"><i class="fas fa-ban"></i> List of Banned Users</a>
         </div>
       </div>
-
       <!-- Right Section: User Details -->
       <div class="right-section">
         <div class="user-details">
@@ -268,24 +274,18 @@
           <p><strong>Email: </strong>{{email}}</p>
           <p><strong>Github ID: </strong>{{github_id}}</p>
         </div>
-  </div>
-
-  <script>
-    document.getElementById("logout-btn").addEventListener("click", function() {
-      window.location.href = "/home/logout"; 
-    });
-    document.getElementById("mod-btn").addEventListener("click", function() {
-      window.location.href = "/admin/userlist"; 
-    });
-    document.getElementById("home-btn").addEventListener("click", function() {
-      window.location.href = "/"; 
-    });
-  </script>
+      </div>
+      <script>
+        document.getElementById("logout-btn").addEventListener("click", function () {
+          window.location.href = "/home/logout";
+        });
+        document.getElementById("mod-btn").addEventListener("click", function () {
+          window.location.href = "/admin/userlist";
+        });
+        document.getElementById("home-btn").addEventListener("click", function () {
+          window.location.href = "/";
+        });
+      </script>
 </body>
+
 </html>
-
-
-
-
-
-

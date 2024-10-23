@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Opened Queries</title>
-  
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <style>
     * {
       box-sizing: border-box;
@@ -37,7 +34,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: transparent; 
+      background: transparent;
       position: fixed;
       width: 100%;
       top: 0;
@@ -111,10 +108,10 @@
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      background: rgba(0, 0, 0, 0.3); 
+      background: rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(5px);
       animation: fadeIn 2s ease-in-out;
-      padding-top: 80px; 
+      padding-top: 80px;
     }
 
     .hero h1 {
@@ -155,7 +152,7 @@
       padding: 60px 20px;
       text-align: center;
       animation: fadeIn 1.2s ease-in-out;
-      min-height: 100vh; 
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -246,7 +243,7 @@
       padding: 60px 20px;
       text-align: center;
       animation: fadeIn 1.2s ease-in-out;
-      min-height: 100vh; 
+      min-height: 100vh;
     }
 
     .testimonials h2 {
@@ -326,8 +323,13 @@
     }
 
     @keyframes growWidth {
-      from { width: 0; }
-      to { width: 60px; }
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 60px;
+      }
     }
 
     .issue {
@@ -388,7 +390,7 @@
     }
 
     .repo-link {
-      color: #1e90ff; 
+      color: #1e90ff;
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s ease;
@@ -434,7 +436,7 @@
       bottom: 0;
       width: 100%;
       backdrop-filter: blur(10px);
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .footer a {
@@ -448,31 +450,58 @@
       color: #ff416c;
     }
 
-   .footer-link i {
-     margin-right: 8px; 
-   }
+    .footer-link i {
+      margin-right: 8px;
+    }
 
     /* Animations */
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     @keyframes slideDown {
-      from { transform: translateY(-30px); }
-      to { transform: translateY(0); }
+      from {
+        transform: translateY(-30px);
+      }
+
+      to {
+        transform: translateY(0);
+      }
     }
 
     @keyframes slideInDown {
-      from { transform: translateY(-100px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      from {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     /* Features Animations */
     @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
     }
 
     .features .feature {
@@ -539,7 +568,7 @@
       }
     }
 
-        /* Scroll-to-top button */
+    /* Scroll-to-top button */
     .scroll-top {
       position: fixed;
       bottom: 30px;
@@ -560,11 +589,12 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Navbar -->
   <div class="navbar">
     <div class="logo">
-      <img src="logo.jpeg" alt="Git Helper Logo"> 
+      <img src="logo.jpeg" alt="Git Helper Logo">
       <span>Git Helper</span>
     </div>
     <div class="nav-links">
@@ -577,14 +607,12 @@
       {{/if}}
     </div>
   </div>
-
   <!-- Hero Section -->
-<section class="hero">
-  <h1>Welcome to Git Helper</h1>
-  <p>Your one-stop solution for managing Git queries and enhancing your development workflow.</p>
-  <a href="#queries" class="btn scroll-btn"><i class="fas fa-rocket"></i> Get Started</a>
-</section>
-
+  <section class="hero">
+    <h1>Welcome to Git Helper</h1>
+    <p>Your one-stop solution for managing Git queries and enhancing your development workflow.</p>
+    <a href="#queries" class="btn scroll-btn"><i class="fas fa-rocket"></i> Get Started</a>
+  </section>
   <!-- Features Section -->
   <section class="features" id="features">
     <h2>Our Features</h2>
@@ -592,7 +620,8 @@
       <div class="feature">
         <i class="fas fa-comments"></i>
         <h3>Chatting</h3>
-        <p>Enable real-time communication between maintainer and contributor to facilitate discussions about ongoing issues or projects.</p>
+        <p>Enable real-time communication between maintainer and contributor to facilitate discussions about ongoing
+          issues or projects.</p>
       </div>
       <div class="feature">
         <i class="fas fa-tasks"></i>
@@ -602,40 +631,47 @@
       <div class="feature">
         <i class="fas fa-sitemap"></i>
         <h3>Centralized Platform</h3>
-        <p>Showcases various repositories that are in need of contributions, allowing users to easily find projects they can help with.</p>
+        <p>Showcases various repositories that are in need of contributions, allowing users to easily find projects they
+          can help with.</p>
       </div>
       <div class="feature extra-feature">
         <i class="fas fa-code"></i>
         <h3>Code Wanted Posting</h3>
-        <p>Post requests for specific code contributions or assistance, fostering collaboration and knowledge sharing.</p>
+        <p>Post requests for specific code contributions or assistance, fostering collaboration and knowledge sharing.
+        </p>
       </div>
       <div class="feature extra-feature">
         <i class="fas fa-user-cog"></i>
         <h3>Skillset Specification</h3>
-        <p>Maintainers can specify the required technical skills for the issue making it easier for contributors to identify tasks that match their expertise.</p>
+        <p>Maintainers can specify the required technical skills for the issue making it easier for contributors to
+          identify tasks that match their expertise.</p>
       </div>
     </div>
   </section>
-
   <!-- Testimonials Section -->
   <section class="testimonials" id="testimonials">
     <h2>Why Git Helper?</h2>
     <div class="testimonial-grid">
       <div class="testimonial">
-        <p>The platform provides maintainers of open-source projects with tools to manage contributions more effectively, reducing the administrative burden and allowing them to focus on critical development work.</p><br>
+        <p>The platform provides maintainers of open-source projects with tools to manage contributions more
+          effectively, reducing the administrative burden and allowing them to focus on critical development work.</p>
+        <br>
         <p class="user">Empowering Open-Source Maintainers</p>
       </div>
       <div class="testimonial">
-        <p>By enabling contributors to browse tasks, respond to issues, and collaborate with others, the platform strengthens community-driven development, fostering a more collaborative and scalable open-source environment.</p>
+        <p>By enabling contributors to browse tasks, respond to issues, and collaborate with others, the platform
+          strengthens community-driven development, fostering a more collaborative and scalable open-source environment.
+        </p>
         <p class="user">Facilitating Open-Source Collaboration</p>
       </div>
       <div class="testimonial">
-        <p>The platform streamlines the workflow for contributors by offering a clear system for managing tasks and communication, making it easier to contribute to open-source projects and reducing entry barriers for new developers.</p>
+        <p>The platform streamlines the workflow for contributors by offering a clear system for managing tasks and
+          communication, making it easier to contribute to open-source projects and reducing entry barriers for new
+          developers.</p>
         <p class="user">Improving Contribution Workflow in Open-Source</p>
       </div>
     </div>
   </section>
-
   <!-- Container for Open Queries -->
   <div class="container" id="queries">
     <h1>Current Open Queries</h1>
@@ -646,7 +682,8 @@
           <p><span>Username:</span> {{username}}</p>
           <p><span>Skill Set:</span> {{skillset}}</p>
           <p><span>GitHub ID:</span> {{github_id}}</p>
-          <p><span>Repository Link:</span> <a href="{{repo_link}}" class="repo-link" target="_blank"><i class="fas fa-external-link-alt"></i> {{repo_link}}</a></p>
+          <p><span>Repository Link:</span> <a href="{{repo_link}}" class="repo-link" target="_blank"><i
+                class="fas fa-external-link-alt"></i> {{repo_link}}</a></p>
           <form action="/home/view" method="GET">
             <input type="hidden" name="_id" value="{{_id}}" required readonly hidden>
             <button type="submit" class="btn"><i class="fas fa-eye"></i> View Query</button>
@@ -657,24 +694,21 @@
       <p class="no-issues">No open queries found.</p>
     {{/if}}
   </div>
-
   <!-- Footer -->
   <div class="footer">
     <p>&copy; 2024 Git Helper. All rights reserved.</p>
     <p class="footer-link">
-      <a href="/error/terms"><i class="fas fa-file-contract"></i>Terms of Service</a> | 
-      <a href="/error/privacy"><i class="fas fa-user-shield"></i>Privacy Policy</a> | 
+      <a href="/error/terms"><i class="fas fa-file-contract"></i>Terms of Service</a> |
+      <a href="/error/privacy"><i class="fas fa-user-shield"></i>Privacy Policy</a> |
       <a href="/error/contact"><i class="fas fa-envelope"></i> Contact Us</a>
     </p>
   </div>
-
-    <!-- Scroll-to-top button -->
+  <!-- Scroll-to-top button -->
   <div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
     <i class="fas fa-arrow-up"></i>
   </div>
-
   <script>
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
@@ -684,17 +718,15 @@
     });
   </script>
   <script>
-  document.querySelector('.scroll-btn').addEventListener('click', function(e) {
-    e.preventDefault();
-    const targetId = this.getAttribute('href');
-    document.querySelector(targetId).scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
+    document.querySelector('.scroll-btn').addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      document.querySelector(targetId).scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
     });
-  });
-</script>
-
+  </script>
 </body>
+
 </html>
-
-
