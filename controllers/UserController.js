@@ -16,7 +16,7 @@ const register = async (req, res) => {
       const { username, email, encryptedpassword, github_id } = req.body;
 
       const user = await GHUser.findOne({ $or: [{ username: username }, { email: email }, { github_id: github_id }] });
-      const emailcheck2 = await Block.findOne({ email: email });
+      const emailcheck2 = await Block.findOne({ $or: [{ email: email }, { github_id: github_id }] });
 
       if (emailcheck2 === null) {
 
