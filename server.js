@@ -124,7 +124,8 @@ app.use(cookie_parser());
 app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store');
   res.set('X-Frame-Options', 'DENY');
-  res.set('Server', 'webserver');
+  res.removeHeader('Server');
+  res.removeHeader('x-render-origin-server');
   next();
 });
 
