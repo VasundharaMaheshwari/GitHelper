@@ -123,6 +123,8 @@ app.use(cookie_parser());
 
 app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store');
+  res.set('X-Frame-Options', 'DENY');
+  res.set('Server', 'webserver');
   next();
 });
 
