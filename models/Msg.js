@@ -21,8 +21,8 @@ const Msg_Schema = new Schema({
     ref: 'GHUser'
   }
 },
-{timestamps:true});
+{ timestamps: true });
 
-const Msg = mongoose.model('Msg',Msg_Schema);
+const Msg = mongoose.model('Msg', Msg_Schema);
 
 module.exports = { Msg };

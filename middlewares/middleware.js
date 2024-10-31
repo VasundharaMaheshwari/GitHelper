@@ -2,21 +2,21 @@ const { ObjectId } = require('mongodb');
 const { getUser } = require('../services/auth');
 const { Response } = require('../models/Response');
 
-const restrict = async (req,res,next) => {
+const restrict = async (req, res, next) => {
   const UserUID = req.cookies?.uid;
-  if(!UserUID){
+  if (!UserUID) {
     return res.status(401).redirect('/api/login');
   }
   const user = getUser(UserUID);
-  if(!user){
+  if (!user) {
     return res.status(401).redirect('/api/login');
   }
 
-  if(user.role === 'Admin'){
+  if (user.role === 'Admin') {
     return res.status(403).redirect('/admin');
   }
 
-  if(user.role !== 'User'){
+  if (user.role !== 'User') {
     return res.status(401).redirect('/error?error_details=Access_Denied');
   }
 
@@ -24,30 +24,30 @@ const restrict = async (req,res,next) => {
   next();
 };
 
-const less_restrict = async (req,res,next) => {
+const less_restrict = async (req, res, next) => {
   const UserUID = req.cookies?.uid;
-    
+
   const user = getUser(UserUID);
 
   req.user = user;
   next();
 };
 
-const admin = async (req,res,next) => {
+const admin = async (req, res, next) => {
   const UserUID = req.cookies?.uid;
-  if(!UserUID){
+  if (!UserUID) {
     return res.status(401).redirect('/api/login');
   }
   const user = getUser(UserUID);
-  if(!user){
+  if (!user) {
     return res.status(401).redirect('/api/login');
   }
 
-  if(user.role === 'User'){
+  if (user.role === 'User') {
     return res.status(403).redirect('/api/user');
   }
 
-  if(user.role !== 'Admin'){
+  if (user.role !== 'Admin') {
     return res.status(401).redirect('/error?error_details=Access_Denied');
   }
 
@@ -55,10 +55,10 @@ const admin = async (req,res,next) => {
   next();
 };
 
-const loggedIn = async (req,res,next) => {
+const loggedIn = async (req, res, next) => {
   const UserUID = req.cookies?.uid;
   const user = getUser(UserUID);
-  if(user){
+  if (user) {
     return res.status(400).redirect('/api/user');
   }
 
@@ -66,50 +66,50 @@ const loggedIn = async (req,res,next) => {
   next();
 };
 
-const query_check = async (req,res,next) => {
+const query_check = async (req, res, next) => {
   const UserUID = req.cookies?.uid;
-  if(!UserUID){
+  if (!UserUID) {
     return res.status(401).redirect('/api/login');
   }
   const user = getUser(UserUID);
-  if(!user){
+  if (!user) {
     return res.status(401).redirect('/api/login');
   }
-  if(user.role === 'Admin'){
+  if (user.role === 'Admin') {
     return res.status(403).redirect('/admin');
   }
-  const {queryId} = req.query;
-  if(!ObjectId.isValid(queryId)){
+  const { queryId } = req.query;
+  if (!ObjectId.isValid(queryId)) {
     return res.status(404).redirect('/query/list');
   }
   req.user = user;
   next();
 };
 
-const chat_check = async (req,res,next) => {
+const chat_check = async (req, res, next) => {
   const UserUID = req.cookies?.uid;
-  if(!UserUID){
+  if (!UserUID) {
     return res.status(401).redirect('/api/login');
   }
   const user = getUser(UserUID);
-  if(!user){
+  if (!user) {
     return res.status(401).redirect('/api/login');
   }
-  if(user.role === 'Admin'){
+  if (user.role === 'Admin') {
     return res.status(403).redirect('/admin');
   }
-  const {resId} = req.query;
-  if(!ObjectId.isValid(resId)){
+  const { resId } = req.query;
+  if (!ObjectId.isValid(resId)) {
     return res.status(404).redirect('/query/list');
   }
 
-  const response_approved = await Response.findOne({'_id': resId, $or: [{'responder.uid': user._id},{'creator': user._id}]});
+  const response_approved = await Response.findOne({ '_id': resId, $or: [{ 'responder.uid': user._id }, { 'creator': user._id }] });
 
-  if(!response_approved){
+  if (!response_approved) {
     return res.status(404).redirect('/query/list');
   }
 
-  if(!response_approved.approved){
+  if (!response_approved.approved) {
     return res.status(404).redirect('/error?error_details=Not_Allowed_Response_Approval_Pending');
   }
 
@@ -117,4 +117,4 @@ const chat_check = async (req,res,next) => {
   next();
 };
 
-module.exports = { restrict,less_restrict,admin,loggedIn,query_check,chat_check };
+module.exports = { restrict, less_restrict, admin, loggedIn, query_check, chat_check };

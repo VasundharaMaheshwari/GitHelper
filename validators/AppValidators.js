@@ -9,7 +9,7 @@ const saveIssue = [body('contact_info').trim().notEmpty().matches(/^[0-9]{10}$/)
     if (!repoRegex.test(value)) {
       throw new Error('Invalid GitHub repository link.');
     }
-    return true; 
+    return true;
   }),
   body('description').trim().notEmpty().matches(/^[a-zA-Z0-9.,!?;:\s]+$/)
 ];
@@ -19,4 +19,4 @@ const saveRes = [body('issue_id').trim().notEmpty().matches(/^[a-fA-F0-9]{24}$/)
   // body('github_id').trim().notEmpty().matches(/^[a-zA-Z0-9-]{1,39}$/)
 ];
 
-module.exports = { saveIssue,saveRes };
+module.exports = { saveIssue, saveRes };

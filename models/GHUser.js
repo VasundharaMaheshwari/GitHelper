@@ -25,7 +25,7 @@ const GHUser_Schema = new Schema({
     unique: true
   }
 },
-{timestamps: true});
+{ timestamps: true });
 
 const GHUser = mongoose.model('GHUser', GHUser_Schema);
 module.exports = { GHUser };

@@ -28,8 +28,8 @@ const Issue_Schema = new Schema({
     ref: 'GHUsers',
     required: true
   }
-}, {timestamps: true});
+}, { timestamps: true });
 
-const Issue = mongoose.model('Issue',Issue_Schema);
+const Issue = mongoose.model('Issue', Issue_Schema);
 
 module.exports = { Issue };

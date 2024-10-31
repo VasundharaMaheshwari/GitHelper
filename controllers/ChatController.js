@@ -5,14 +5,14 @@ const { Convo } = require('../models/Convo');
 const { GHUser } = require('../models/GHUser');
 const { Msg } = require('../models/Msg');
 
-const chatload = async (req,res) => {
-  try{
+const chatload = async (req, res) => {
+  try {
     const error = validationResult(req);
     const checker2 = ObjectId.isValid(req.user._id);
-    if(checker2 && error.isEmpty()){
-      const {username,response} = req.body;
-      const checker = await Response.findOneAndUpdate({'_id': response},{'approved': true});
-      if(checker) {
+    if (checker2 && error.isEmpty()) {
+      const { username, response } = req.body;
+      const checker = await Response.findOneAndUpdate({ '_id': response }, { 'approved': true });
+      if (checker) {
         return res.status(400).redirect(`/chat/chats?username=${username}&resId=${response}`);
       } else {
         return res.status(400).redirect('/error?error_details=Invalid_URL');
@@ -29,24 +29,24 @@ const chatload = async (req,res) => {
 const chatlist = async (req, res) => {
   try {
     const checker2 = ObjectId.isValid(req.user._id);
-    if(checker2){
+    if (checker2) {
       const userId = req.user._id;
-  
+
       const conversations = await Convo.find({
         $or: [
           { initiator: userId },
           { receiver: userId }
         ]
       })
-        .populate('initiator', 'username _id') 
-        .populate('receiver', 'username _id'); 
-  
+        .populate('initiator', 'username _id')
+        .populate('receiver', 'username _id');
+
       const users = conversations.map(convo => {
         return convo.initiator._id.equals(userId)
           ? { username: convo.receiver.username, userId: convo.receiver._id, response: convo.response }
           : { username: convo.initiator.username, userId: convo.initiator._id, response: convo.response };
       });
-  
+
       return res.status(200).render('main.hbs', {
         layout: 'chats_list.hbs',
         users: users
@@ -59,20 +59,20 @@ const chatlist = async (req, res) => {
   }
 };
 
-const chatting = async (req,res) => {
-  try{
-    if(ObjectId.isValid(req.user._id)){
-      const {username,resId} = req.query;
+const chatting = async (req, res) => {
+  try {
+    if (ObjectId.isValid(req.user._id)) {
+      const { username, resId } = req.query;
       const receiver = await GHUser.findOne({ 'username': username });
       if (!receiver || receiver._id.toString() === req.user._id.toString()) {
         return res.status(404).redirect('/error?error_details=Receiver_Not_Found');
       }
-      const response_check = await Response.findOne({'_id': resId, $or: [{'responder.uid': receiver._id},{'creator': receiver._id}]});
+      const response_check = await Response.findOne({ '_id': resId, $or: [{ 'responder.uid': receiver._id }, { 'creator': receiver._id }] });
       if (!response_check) {
         return res.status(404).redirect('/error?error_details=Response_Not_Found');
       }
-      const convo_check = await Convo.findOne({'response': resId});
-      if(convo_check === null){
+      const convo_check = await Convo.findOne({ 'response': resId });
+      if (convo_check === null) {
         const convo_ = new Convo({
           initiator: req.user._id,
           receiver: receiver._id,
@@ -81,9 +81,9 @@ const chatting = async (req,res) => {
         await convo_.save();
       }
 
-      const convo = await Convo.findOne({'response': resId});
+      const convo = await Convo.findOne({ 'response': resId });
 
-      const msg = await Msg.find({convoId: convo._id}).sort({createdAt: 1 });
+      const msg = await Msg.find({ convoId: convo._id }).sort({ createdAt: 1 });
 
       const xForwardedFor = req.headers['x-forwarded-for'];
       let ip;
@@ -93,7 +93,8 @@ const chatting = async (req,res) => {
         ip = req.ip;
       }
 
-      return res.status(200).render('main.hbs',{layout: 'chat.hbs',
+      return res.status(200).render('main.hbs', {
+        layout: 'chat.hbs',
         receiverUsername: username,
         receiverUserId: receiver._id,
         senderUserId: req.user._id,
@@ -111,4 +112,4 @@ const chatting = async (req,res) => {
   }
 };
 
-module.exports = { chatload,chatlist,chatting };
+module.exports = { chatload, chatlist, chatting };

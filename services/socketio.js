@@ -1,5 +1,5 @@
-const socketIdToMapping = new Map(); 
-const userIdtoSocketMap = new Map(); 
+const socketIdToMapping = new Map();
+const userIdtoSocketMap = new Map();
 
 const setid = (userId, receiverId, socketid) => {
   if (!userIdtoSocketMap.has(userId)) {

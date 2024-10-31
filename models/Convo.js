@@ -17,8 +17,8 @@ const Convo_Schema = new Schema({
     ref: 'Response'
   }
 },
-{timestamps: true});
+{ timestamps: true });
 
-const Convo = mongoose.model('Convo',Convo_Schema);
+const Convo = mongoose.model('Convo', Convo_Schema);
 
 module.exports = { Convo };

@@ -1,4 +1,4 @@
-const {Schema, default: mongoose} = require('mongoose');
+const { Schema, default: mongoose } = require('mongoose');
 
 const Response_Schema = new Schema({
   responder: {
@@ -29,8 +29,8 @@ const Response_Schema = new Schema({
     type: Boolean,
     required: true
   }
-},{timestamps: true});
+}, { timestamps: true });
 
-const Response = mongoose.model('Response',Response_Schema);
+const Response = mongoose.model('Response', Response_Schema);
 
 module.exports = { Response };

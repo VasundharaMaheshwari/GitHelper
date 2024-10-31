@@ -12,8 +12,8 @@ const Block_Schema = new Schema({
     unique: true
   }
 },
-{timestamps:true});
+{ timestamps: true });
 
-const Block = mongoose.model('Block',Block_Schema);
+const Block = mongoose.model('Block', Block_Schema);
 
 module.exports = { Block };

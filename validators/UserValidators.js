@@ -8,4 +8,4 @@ const registerCheck = [body('username').trim().notEmpty().matches(/^[a-zA-Z0-9_]
 const loginCheck = [body('username').trim().notEmpty().matches(/^[a-zA-Z0-9_]+$/),
   body('encryptedpassword').trim().notEmpty().matches(/^[a-fA-F0-9]{64}$/)];
 
-module.exports = { registerCheck,loginCheck };
+module.exports = { registerCheck, loginCheck };
