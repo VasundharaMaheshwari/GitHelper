@@ -1,8 +1,6 @@
 const { Issue } = require('../models/Issue');
 const { ObjectId } = require('mongodb');
 const { validationResult } = require('express-validator');
-
-const { delUser } = require('../services/auth');
 const { GHUser } = require('../models/GHUser');
 
 const refresh = async (req, res) => {
@@ -68,8 +66,8 @@ const details = async (req, res) => {
 
 const logout = (req, res) => {
   try {
-    delUser(res.cookie?.uid);
-    res.clearCookie('uid');
+    req.session.destroy();
+    res.clearCookie('session');
     return res.status(200).redirect('/');
   } catch {
     return res.status(500).redirect('/error?error_details=Failed_To_Logout');

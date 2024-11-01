@@ -2,6 +2,29 @@ const express = require('express');
 const connectDB = require('./databases/db');
 const app = express();
 
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const store = new MongoDBStore({
+  uri: process.env.MONGO_URI,
+  collection: 'sessions'
+});
+
+let sess = {
+  name: 'session',
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false, sameSite: true, httpOnly: true, maxAge: 1000 * 60 * 60 * 2 },
+  store: store
+};
+
+if (app.get('env') === 'production') {
+  sess.cookie.secure = true;
+}
+
+app.use(session(sess));
+
 const http = require('http');
 
 const hbs = require('hbs');
@@ -102,7 +125,7 @@ app.use(express.static('public', {
 
 app.set('trust proxy', 1);
 
-const cookie_parser = require('cookie-parser');
+// const cookie_parser = require('cookie-parser');
 
 const UserRouter = require('./routes/UserRoutes');
 const APIRouter = require('./routes/AppRoutes');
@@ -119,7 +142,7 @@ app.disable('x-powered-by');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: '1mb' }));
 
-app.use(cookie_parser());
+// app.use(cookie_parser());
 
 app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store');

@@ -4,9 +4,9 @@ const { idcheck } = require('../validators/AdminValidators');
 
 const AdminRouter = express.Router();
 
-AdminRouter.get('/', detailsBan);
+AdminRouter.get('/', loader);
 
-AdminRouter.get('/home', loader);
+AdminRouter.get('/home', detailsBan);
 
 AdminRouter.get('/banlist', bannedUsers);
 

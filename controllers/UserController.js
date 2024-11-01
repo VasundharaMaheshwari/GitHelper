@@ -6,8 +6,8 @@ const { validationResult } = require('express-validator');
 
 require('dotenv').config();
 
-const { v4: uuidv4 } = require('uuid');
-const { setUser } = require('../services/auth');
+// const { v4: uuidv4 } = require('uuid');
+// const { setUser } = require('../services/auth');
 
 const register = async (req, res) => {
   try {
@@ -63,13 +63,7 @@ const login = async (req, res) => {
           return res.status(401).redirect('/error?error_details=Incorrect_Password');
         } else {
 
-          const sessionId = uuidv4();
-          setUser(sessionId, user);
-          res.cookie('uid', sessionId, {
-            sameSite: 'Strict',
-            httpOnly: true,
-            secure: true
-          });
+          req.session.userId = user._id;
 
           return res.status(200).redirect('/api/user');
         }
@@ -77,7 +71,7 @@ const login = async (req, res) => {
     }
     return res.send('Oops! Error Occurred...');
   } catch {
-    return res.status(500).redirect('/error?error_details=Unexpected_Error_Occurred');
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
   }
 };
 

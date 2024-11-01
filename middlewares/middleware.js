@@ -1,13 +1,12 @@
 const { ObjectId } = require('mongodb');
-const { getUser } = require('../services/auth');
 const { Response } = require('../models/Response');
+const { GHUser } = require('../models/GHUser');
 
 const restrict = async (req, res, next) => {
-  const UserUID = req.cookies?.uid;
-  if (!UserUID) {
+  if (!req.session.userId) {
     return res.status(401).redirect('/api/login');
   }
-  const user = getUser(UserUID);
+  const user = await GHUser.findById(req.session.userId);
   if (!user) {
     return res.status(401).redirect('/api/login');
   }
@@ -25,20 +24,19 @@ const restrict = async (req, res, next) => {
 };
 
 const less_restrict = async (req, res, next) => {
-  const UserUID = req.cookies?.uid;
+  const UserUID = req.session?.userId;
 
-  const user = getUser(UserUID);
+  const user = await GHUser.findById(UserUID);
 
   req.user = user;
   next();
 };
 
 const admin = async (req, res, next) => {
-  const UserUID = req.cookies?.uid;
-  if (!UserUID) {
+  if (!req.session.userId) {
     return res.status(401).redirect('/api/login');
   }
-  const user = getUser(UserUID);
+  const user = await GHUser.findById(req.session.userId);
   if (!user) {
     return res.status(401).redirect('/api/login');
   }
@@ -56,8 +54,8 @@ const admin = async (req, res, next) => {
 };
 
 const loggedIn = async (req, res, next) => {
-  const UserUID = req.cookies?.uid;
-  const user = getUser(UserUID);
+  const UserUID = req.session?.userId;
+  const user = await GHUser.findById(UserUID);
   if (user) {
     return res.status(400).redirect('/api/user');
   }
@@ -66,12 +64,22 @@ const loggedIn = async (req, res, next) => {
   next();
 };
 
+const logOut = async (req, res, next) => {
+  const UserUID = req.session?.userId;
+  const user = await GHUser.findById(UserUID);
+  if (!user) {
+    return res.status(400).redirect('/api/login');
+  }
+
+  req.user = user;
+  next();
+};
+
 const query_check = async (req, res, next) => {
-  const UserUID = req.cookies?.uid;
-  if (!UserUID) {
+  if (!req.session.userId) {
     return res.status(401).redirect('/api/login');
   }
-  const user = getUser(UserUID);
+  const user = await GHUser.findById(req.session.userId);
   if (!user) {
     return res.status(401).redirect('/api/login');
   }
@@ -87,11 +95,10 @@ const query_check = async (req, res, next) => {
 };
 
 const chat_check = async (req, res, next) => {
-  const UserUID = req.cookies?.uid;
-  if (!UserUID) {
+  if (!req.session.userId) {
     return res.status(401).redirect('/api/login');
   }
-  const user = getUser(UserUID);
+  const user = await GHUser.findById(req.session.userId);
   if (!user) {
     return res.status(401).redirect('/api/login');
   }
@@ -117,4 +124,4 @@ const chat_check = async (req, res, next) => {
   next();
 };
 
-module.exports = { restrict, less_restrict, admin, loggedIn, query_check, chat_check };
+module.exports = { restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut };
