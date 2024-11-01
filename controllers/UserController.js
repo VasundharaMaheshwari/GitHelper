@@ -50,7 +50,7 @@ const login = async (req, res) => {
   try {
     const error = validationResult(req);
     if (error.isEmpty()) {
-      const { username, encryptedpassword } = req.body;
+      const { username, encryptedpassword, remember } = req.body;
 
       const user = await GHUser.findOne({ username: username });
 
@@ -64,6 +64,10 @@ const login = async (req, res) => {
         } else {
 
           req.session.userId = user._id;
+
+          if (remember) {
+            req.session.cookie.maxAge = 24 * 60 * 60 * 1000;
+          }
 
           return res.status(200).redirect('/api/user');
         }
