@@ -12,7 +12,7 @@ const restrict = async (req, res, next) => {
   }
 
   if (user.role === 'Admin') {
-    return res.status(403).redirect('/admin');
+    return res.status(403).redirect('/admin/home');
   }
 
   if (user.role !== 'User') {
@@ -84,7 +84,7 @@ const query_check = async (req, res, next) => {
     return res.status(401).redirect('/api/login');
   }
   if (user.role === 'Admin') {
-    return res.status(403).redirect('/admin');
+    return res.status(403).redirect('/admin/home');
   }
   const { queryId } = req.query;
   if (!ObjectId.isValid(queryId)) {
@@ -103,7 +103,7 @@ const chat_check = async (req, res, next) => {
     return res.status(401).redirect('/api/login');
   }
   if (user.role === 'Admin') {
-    return res.status(403).redirect('/admin');
+    return res.status(403).redirect('/admin/home');
   }
   const { resId } = req.query;
   if (!ObjectId.isValid(resId)) {
