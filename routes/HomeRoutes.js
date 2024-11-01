@@ -2,7 +2,7 @@ const express = require('express');
 const HomeRouter = express.Router();
 const { refresh, details, logout } = require('../controllers/HomeController');
 const { homecheck } = require('../validators/HomeValidators');
-const { logOut } = require('../middlewares/middleware')
+const { logOut } = require('../middlewares/middleware');
 
 HomeRouter.get('/', refresh);
 
