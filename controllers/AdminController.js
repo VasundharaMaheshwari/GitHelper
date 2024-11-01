@@ -6,6 +6,7 @@ const { Convo } = require('../models/Convo');
 const { Block } = require('../models/Block');
 const { validationResult } = require('express-validator');
 const { Msg } = require('../models/Msg');
+const { default: mongoose } = require('mongoose');
 
 const loader = async (req, res) => {
   try {
@@ -109,7 +110,10 @@ const usermod = async (req, res) => {
 
           await trial2.save();
 
-          if (user_resp && issue_resp && resp_resp && con_resp && msg_resp) {
+          const sessionCollection = mongoose.connection.collection('sessions');
+          const sess_resp = await sessionCollection.deleteMany({ 'session.userId': user._id });
+
+          if (user_resp && issue_resp && resp_resp && con_resp && msg_resp && sess_resp) {
             return res.status(200).redirect('/admin/userlist');
           } else {
             return res.status(403).redirect('/error?error_details=Unable_To_Delete_User');
