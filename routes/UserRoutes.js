@@ -19,4 +19,8 @@ UserRouter.get('/register', loggedIn, (req, res) => {
 
 UserRouter.get('/user', restrict, load);
 
+UserRouter.get('/forgot-password', loggedIn, (req, res) => {
+  return res.status(302).render('forgot.hbs');
+});
+
 module.exports = UserRouter;

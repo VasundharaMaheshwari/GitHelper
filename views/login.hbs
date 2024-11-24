@@ -326,8 +326,8 @@
     .error-message {
       color: #ff4b2b;
       font-size: 14px;
-      text-align: left;
-      margin-top: 5px;
+      text-align: center;
+      margin-top: 20px;
       margin-bottom: 0;
       height: auto;
       position: relative;
@@ -430,20 +430,19 @@
             <input type="password" placeholder="Enter your password" id="password" name="password" required>
             <input type="password" name="encryptedpassword" id="encryptedpassword" required readonly hidden>
           </div>
-          <p id="error-message" class="error-message"></p>
         </div>
         <div class="options">
           <label>
             <input type="checkbox" name="remember"> Remember Me
           </label>
-          <a href="#" class="forgot-password"><i class="fas fa-key"></i>Forgot Password?</a>
+          <a href="/api/forgot-password" class="forgot-password"><i class="fas fa-key"></i>Forgot Password?</a>
         </div>
         <button type="submit" class="login-button"><i class="fas fa-sign-in-alt"></i>LOGIN</button>
+        <p id="error-message" class="error-message"></p>
         <div class="register-link">
           <p>Don't have an account? <a href="/api/register">Register</a></p>
         </div>
       </form>
-      <p id="error-message" class="error-message"></p>
     </div>
   </div>
   <script>

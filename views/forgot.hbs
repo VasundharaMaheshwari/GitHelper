@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Forgot Password</title>
+    <link rel="icon" href="/logo.jpeg" type="image/icon type">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-image: url("/Home1.jpg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: #f0f0f0;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        /* Top Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            height: 40px;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar .logo img:hover {
+            transform: rotate(10deg);
+        }
+
+        .navbar .logo span {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+        }
+
+        .navbar .nav-links a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-left: 20px;
+            background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-image 0.5s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .navbar .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #fff;
+            transition: width 0.3s;
+        }
+
+        .navbar .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .navbar .nav-links a:hover {
+            background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 750px;
+            padding-top: 40px;
+            padding-bottom: 0;
+        }
+
+        .login-box {
+            display: flex;
+            align-items: stretch;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 800px;
+            min-height: 500px;
+            position: relative;
+        }
+
+        .login-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .logo-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding-right: 20px;
+        }
+
+        .logo-image {
+            width: 80px;
+            height: 80px;
+            margin-right: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-image:hover {
+            transform: rotate(10deg);
+        }
+
+        .logo-text h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 36px;
+            margin-bottom: 0;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .partition {
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 0 10px;
+        }
+
+        .login-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding-left: 20px;
+        }
+
+        .login-form img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+            padding: 50px;
+        }
+
+        .login-form img:hover {
+            transform: scale(1.05);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .form-group label {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container input {
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 10px 10px 10px 60px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            font-size: 14px;
+        }
+
+        .input-container input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .input-container input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 5px rgba(40, 116, 240, 0.7);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .input-divider {
+            position: absolute;
+            left: 45px;
+            top: 10px;
+            bottom: 10px;
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .login-button {
+            width: 100%;
+            background-image: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 18px;
+            transition: background-image 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-button i {
+            margin-right: 8px;
+        }
+
+        .login-button:hover {
+            background-image: linear-gradient(45deg, #e60039, #e63900);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .register-link {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .register-link a {
+            color: #ff4b2b;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: #ff416c;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #ff4b2b;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 0;
+            height: auto;
+            position: relative;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var email = document.getElementById("email").value;
+
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById("error-message").innerText = "Invalid email address";
+                return false;
+            }
+
+            document.getElementById("error-message").innerText = "";
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="/logo.jpeg" alt="Git Helper Logo">
+            <span>Git Helper</span>
+        </div>
+        <div class="nav-links">
+            <a href="/home"><i class="fas fa-home"></i> Home</a>
+            <a href="/api/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </div>
+    </div>
+    <!-- Forgot Password Form -->
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-section">
+                <img src="/logo.jpeg" alt="Logo" class="logo-image">
+                <div class="logo-text">
+                    <h1>Git Helper</h1>
+                </div>
+            </div>
+            <div class="partition"></div>
+            <div class="login-form">
+                <form action="/api/forgot-password" method="POST" onsubmit="return validateForm()">
+                    <img src="/pass.png" alt="Login Illustration">
+                    <div class="form-group">
+                        <label for="email">Enter your email address</label>
+                        <div class="input-container">
+                            <i class="fa fa-envelope input-icon"></i>
+                            <input type="email" name="email" id="email" placeholder="Your Email" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="login-button">
+                        <i class="fa fa-paper-plane"></i> Submit
+                    </button>
+                </form>
+                <p id="error-message" class="error-message"></p>
+                <div class="register-link">
+                    <p>Don't have an account? <a href="/api/register">Register</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
