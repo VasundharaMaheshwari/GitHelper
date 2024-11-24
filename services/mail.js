@@ -21,7 +21,6 @@ const response = {
   body: {
     name: 'User',
     intro: 'Thank you for reaching out! We have received your query and will get back to you shortly.',
-    outro: 'Best regards,\nGitHelper'
   }
 };
 
