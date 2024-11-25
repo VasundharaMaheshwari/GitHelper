@@ -24,8 +24,12 @@ UserRouter.get('/forgot-password', loggedIn, (req, res) => {
   return res.status(302).render('forgot.hbs');
 });
 
-UserRouter.get('/reset-password', loggedIn, (req, res) => {
-  return res.status(302).render('reset.hbs');
+UserRouter.get('/reset-password/:username', loggedIn, (req, res) => {
+  const { username } = req.params;
+  return res.status(302).render('main.hbs', {
+    layout: 'reset.hbs',
+    username: username
+  });
 });
 
 UserRouter.post('/forgot-password', forgotCheck, loggedIn, otpGen);
