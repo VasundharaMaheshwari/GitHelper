@@ -20,10 +20,10 @@ const mailGen = new mailgen({
 const response = {
   body: {
     name: 'User',
-    intro: 'Thank you for reaching out! We have received your query and will get back to you shortly.',
+    intro: 'Thank you for reaching out! We have received your query and will get back to you shortly.'
   }
 };
 
 const emessage = mailGen.generate(response);
 
-module.exports = { transporter, emessage };
+module.exports = { transporter, emessage, mailGen };

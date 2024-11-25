@@ -1,9 +1,10 @@
 const express = require('express');
 const UserRouter = express.Router();
 const { login, register, load } = require('../controllers/UserController');
+const { otpGen } = require('../controllers/UserController2');
 const { restrict, loggedIn } = require('../middlewares/middleware');
 const { register_limit, login_limit, login_limit_ip } = require('../middlewares/rate_limiter');
-const { registerCheck, loginCheck } = require('../validators/UserValidators');
+const { registerCheck, loginCheck, forgotCheck } = require('../validators/UserValidators');
 
 UserRouter.post('/login', loginCheck, login_limit_ip, login_limit, loggedIn, login);
 
@@ -22,5 +23,7 @@ UserRouter.get('/user', restrict, load);
 UserRouter.get('/forgot-password', loggedIn, (req, res) => {
   return res.status(302).render('forgot.hbs');
 });
+
+UserRouter.post('/forgot-password', forgotCheck, loggedIn, otpGen);
 
 module.exports = UserRouter;
