@@ -41,7 +41,7 @@ const otpGen = async (req, res) => {
           await OTP.updateOne({ email: email }, { otp: otp });
         }
 
-        return res.status(200).redirect('/api/login');
+        return res.status(200).redirect('/api/reset-password');
       } else {
         return res.status(404).redirect('/error?error_details=User_Not_Found');
       }

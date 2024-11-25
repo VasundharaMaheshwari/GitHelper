@@ -24,6 +24,10 @@ UserRouter.get('/forgot-password', loggedIn, (req, res) => {
   return res.status(302).render('forgot.hbs');
 });
 
+UserRouter.get('/reset-password', loggedIn, (req, res) => {
+  return res.status(302).render('reset.hbs');
+});
+
 UserRouter.post('/forgot-password', forgotCheck, loggedIn, otpGen);
 
 module.exports = UserRouter;
