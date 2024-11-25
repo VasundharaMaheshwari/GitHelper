@@ -10,7 +10,7 @@ const otpGen = async (req, res) => {
     if (errors.isEmpty()) {
       const { email } = req.body;
       const check_mail = await GHUser.findOne({ 'email': email });
-      if (check_mail) {
+      if (check_mail && check_mail.role !== 'Admin') {
         const otp = generate(4, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
         const forgot = {
           body: {
