@@ -186,19 +186,7 @@
             display: flex;
             flex-direction: column;
             padding-left: 20px;
-        }
-
-        .login-form img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
-            padding: 50px;
-        }
-
-        .login-form img:hover {
-            transform: scale(1.05);
+            padding-top: 90px;
         }
 
         .form-group {
@@ -316,17 +304,141 @@
             height: auto;
             position: relative;
         }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .input-container input {
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 10px 10px 10px 60px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            font-size: 14px;
+        }
+
+        .input-container input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .input-container input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 5px rgba(40, 116, 240, 0.7);
+        }
+
+        .input-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .input-divider {
+            position: absolute;
+            left: 45px;
+            top: 10px;
+            bottom: 10px;
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
     </style>
     <script>
-        function validateForm() {
-            var email = document.getElementById("email").value;
+        var sha256 = function sha256(ascii) {
+            function rightRotate(value, amount) {
+                return (value >>> amount) | (value << (32 - amount));
+            };
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiBitLength = ascii[lengthProperty] * 8;
+            var hash = sha256.h = sha256.h || [];
+            var k = sha256.k = sha256.k || [];
+            var primeCounter = k[lengthProperty];
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) {
+                        isComposite[i] = candidate;
+                    }
+                    hash[primeCounter] = (mathPow(candidate, .5) * maxWord) | 0;
+                    k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+                }
+            }
+            ascii += '\x80';
+            while (ascii[lengthProperty] % 64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j >> 8) return;
+                words[i >> 2] |= j << ((3 - i) % 4) * 8;
+            }
+            words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+            words[words[lengthProperty]] = (asciiBitLength);
+            for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash;
+                hash = hash.slice(0, 8);
+                for (i = 0; i < 64; i++) {
+                    var i2 = i + j;
+                    var w15 = w[i - 15], w2 = w[i - 2];
+                    var a = hash[0], e = hash[4];
+                    var temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                            w[i - 16]
+                            + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+                            + w[i - 7]
+                            + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+                        ) | 0
+                        );
+                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash = [(temp1 + temp2) | 0].concat(hash);
+                    hash[4] = (hash[4] + temp1) | 0;
+                }
+                for (i = 0; i < 8; i++) {
+                    hash[i] = (hash[i] + oldHash[i]) | 0;
+                }
+            }
+            for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                    var b = (hash[i] >> (j * 8)) & 255;
+                    result += ((b < 16) ? '0' : '') + b.toString(16);
+                }
+            }
+            return result;
+        };
 
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(email)) {
-                document.getElementById("error-message").innerText = "Invalid email address";
+        function validateForm() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm-password").value;
+
+            if (password !== confirmPassword) {
+                document.getElementById("error-message").innerText = "Passwords do not match";
                 return false;
             }
 
+            var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                document.getElementById("error-message").innerText = "Password must be at least 8 characters long and contain at least one letter, one number, and may include special characters.";
+                return false;
+            }
+
+            document.getElementById("encryptedpassword").value = sha256(password);
             document.getElementById("error-message").innerText = "";
             return true;
         }
@@ -371,7 +483,6 @@
 </head>
 
 <body>
-    <!-- Navbar -->
     <div class="navbar">
         <div class="logo">
             <img src="/logo.jpeg" alt="Git Helper Logo">
@@ -382,7 +493,6 @@
             <a href="/api/login"><i class="fas fa-sign-in-alt"></i> Login</a>
         </div>
     </div>
-    <!-- Forgot Password Form -->
     <div class="login-container">
         <div class="login-box">
             <div class="logo-section">
@@ -394,18 +504,29 @@
             <div class="partition"></div>
             <div class="login-form">
                 <form action="/api/reset-password/{{username}}" method="POST" onsubmit="return validateForm()">
-                    <img src="/otp.png" alt="Login Illustration">
                     <div class="form-group">
+                        <label for="password">Set a New Password</label>
+                        <div class="input-container">
+                            <i class="fa fa-key"></i>
+                            <input type="password" id="password" placeholder="New Password" required>
+                        </div>
+                        <label for="confirm-password">Confirm Password</label>
+                        <div class="input-container">
+                            <i class="fa fa-key"></i>
+                            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                            <input type="password" name="encryptedpassword" id="encryptedpassword" required readonly
+                                hidden>
+                        </div>
                         <label for="otp"><i class="fas fa-lock"></i> Enter OTP</label>
                         <div class="otp-container">
                             <input type="text" maxlength="1" class="otp-box" id="otp-1" oninput="moveNext(event, 1)"
-                                onkeydown="movePrev(event, 1); checkEnter(event)" />
+                                onkeydown="movePrev(event, 1); checkEnter(event)" required />
                             <input type="text" maxlength="1" class="otp-box" id="otp-2" oninput="moveNext(event, 2)"
-                                onkeydown="movePrev(event, 2); checkEnter(event)" />
+                                onkeydown="movePrev(event, 2); checkEnter(event)" required />
                             <input type="text" maxlength="1" class="otp-box" id="otp-3" oninput="moveNext(event, 3)"
-                                onkeydown="movePrev(event, 3); checkEnter(event)" />
+                                onkeydown="movePrev(event, 3); checkEnter(event)" required />
                             <input type="text" maxlength="1" class="otp-box" id="otp-4" oninput="moveNext(event, 4)"
-                                onkeydown="movePrev(event, 4); checkEnter(event)" />
+                                onkeydown="movePrev(event, 4); checkEnter(event)" required />
                         </div>
                     </div>
                     <button type="submit" class="login-button">
