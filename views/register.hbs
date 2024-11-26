@@ -427,13 +427,13 @@
       var confirmPassword = document.getElementById("confirm-password").value;
 
       if (password !== confirmPassword) {
-        document.getElementById("error-message").innerText = "Passwords do not match";
+        document.getElementById("error-message").innerText = "Passwords do not match.";
         return false;
       }
 
       var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(email)) {
-        document.getElementById("error-message").innerText = "Invalid email address";
+        document.getElementById("error-message").innerText = "Invalid email address.";
         return false;
       }
 

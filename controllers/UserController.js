@@ -92,7 +92,7 @@ const load = async (req, res) => {
         });
       } else {
         if (user && user.role === 'Admin') {
-          res.status(403).redirect('/admin/home');
+          return res.status(403).redirect('/admin/home');
         } else {
           return res.status(403).redirect('/home/logout');
         }

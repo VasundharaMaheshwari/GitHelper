@@ -426,9 +426,15 @@
         function validateForm() {
             var password = document.getElementById("password").value;
             var confirmPassword = document.getElementById("confirm-password").value;
+            var otp = getOTP();
+
+            if (otp.length !== 4 || isNaN(otp)) {
+                document.getElementById("error-message").innerText = "Invalid OTP entered.";
+                return false;
+            }
 
             if (password !== confirmPassword) {
-                document.getElementById("error-message").innerText = "Passwords do not match";
+                document.getElementById("error-message").innerText = "Passwords do not match.";
                 return false;
             }
 
@@ -439,6 +445,7 @@
             }
 
             document.getElementById("encryptedpassword").value = sha256(password);
+            document.getElementById("otp").value = otp;
             document.getElementById("error-message").innerText = "";
             return true;
         }
@@ -470,14 +477,8 @@
         function getOTP() {
             const otpBoxes = document.querySelectorAll(".otp-box");
             let otp = '';
-            otpBoxes.forEach(box => otp += box.value);
-            alert(`Your OTP is: ${otp}`);
-        }
-
-        function checkEnter(event) {
-            if (event.key === "Enter") {
-                getOTP();
-            }
+            otpBoxes.forEach(box => otp += box.value.trim());
+            return otp;
         }
     </script>
 </head>
@@ -503,7 +504,7 @@
             </div>
             <div class="partition"></div>
             <div class="login-form">
-                <form action="/api/reset-password/{{username}}" method="POST" onsubmit="return validateForm()">
+                <form action="/api/reset-password/{{id}}" method="POST" onsubmit="return validateForm()">
                     <div class="form-group">
                         <label for="password">Set a New Password</label>
                         <div class="input-container">
@@ -516,17 +517,18 @@
                             <input type="password" id="confirm-password" placeholder="Confirm Password" required>
                             <input type="password" name="encryptedpassword" id="encryptedpassword" required readonly
                                 hidden>
+                            <input type="text" name="otp" id="otp" hidden>
                         </div>
                         <label for="otp"><i class="fas fa-lock"></i> Enter OTP</label>
                         <div class="otp-container">
                             <input type="text" maxlength="1" class="otp-box" id="otp-1" oninput="moveNext(event, 1)"
-                                onkeydown="movePrev(event, 1); checkEnter(event)" required />
+                                onkeydown="movePrev(event, 1)" required />
                             <input type="text" maxlength="1" class="otp-box" id="otp-2" oninput="moveNext(event, 2)"
-                                onkeydown="movePrev(event, 2); checkEnter(event)" required />
+                                onkeydown="movePrev(event, 2)" required />
                             <input type="text" maxlength="1" class="otp-box" id="otp-3" oninput="moveNext(event, 3)"
-                                onkeydown="movePrev(event, 3); checkEnter(event)" required />
+                                onkeydown="movePrev(event, 3)" required />
                             <input type="text" maxlength="1" class="otp-box" id="otp-4" oninput="moveNext(event, 4)"
-                                onkeydown="movePrev(event, 4); checkEnter(event)" required />
+                                onkeydown="movePrev(event, 4)" required />
                         </div>
                     </div>
                     <button type="submit" class="login-button">
