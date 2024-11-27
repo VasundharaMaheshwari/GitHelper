@@ -172,7 +172,7 @@ app.get('/', (req, res) => {
   return res.status(302).redirect('/home');
 });
 
-server.listen(3000, async () => {
+server.listen(process.env.PORT, async () => {
   await connectDB();
   // console.log('http://localhost:3000');
 });
