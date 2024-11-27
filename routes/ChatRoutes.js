@@ -13,7 +13,7 @@ ChatRouter.get('/list', chatlist);
 ChatRouter.get('/chats', checkchat, chat_check, chatting);
 
 ChatRouter.post('/chats', (req, res) => {
-  return res.status(200).send('Rate limit for forgot password and not same as old pass... Dynamic loading for much content... Add input size validation everywhere... Task Tracking... See ongoing responses and closing responses == delete convo and messages from either side and vice versa if initiator...');
+  return res.status(200).send('Dynamic loading for much content... Add input size validation everywhere... Task Tracking... See ongoing responses and closing responses == delete convo and messages from either side and vice versa if initiator...');
 });
 
 module.exports = ChatRouter;

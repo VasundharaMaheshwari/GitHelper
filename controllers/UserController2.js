@@ -98,13 +98,19 @@ const passChange = async (req, res) => {
         if (user && otpc) {
           const { encryptedpassword, otp } = req.body;
           if (otpc.otp === Number(otp)) {
-            const encrypted = CryptoJS.AES.encrypt(encryptedpassword, process.env.SECRET_KEY).toString();
-            const passChange = await GHUser.findByIdAndUpdate(id, { password: encrypted });
-            const otpDel = await OTP.deleteOne({ email: user.email, otp: otpc.otp });
-            if (passChange && otpDel) {
-              return res.status(201).redirect('/api/login');
+            const decrypted = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8);
+
+            if (encryptedpassword !== decrypted) {
+              const encrypted = CryptoJS.AES.encrypt(encryptedpassword, process.env.SECRET_KEY).toString();
+              const passChange = await GHUser.findByIdAndUpdate(id, { password: encrypted });
+              const otpDel = await OTP.deleteOne({ email: user.email, otp: otpc.otp });
+              if (passChange && otpDel) {
+                return res.status(201).redirect('/api/login');
+              } else {
+                return res.status(403).redirect('/error?error_details=Unable_To_Reset_Password');
+              }
             } else {
-              return res.status(403).redirect('/error?error_details=Unable_To_Reset_Password');
+              return res.status(400).redirect('/error?error_details=New_Password_Cannot_Be_Same_As_Old_Password');
             }
           } else {
             return res.status(400).redirect('/error?error_details=Invalid_OTP');
