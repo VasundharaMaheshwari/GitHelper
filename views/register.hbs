@@ -321,6 +321,74 @@
       text-decoration: underline;
     }
 
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      z-index: 1002;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+      background-color: #00000081;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      background-image: linear-gradient(45deg, #ff416c, #ff4b2b);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      background-image: linear-gradient(45deg, #e60039, #e63900);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
     /* Responsive Styles */
     @media (max-width: 992px) {
       .register-box {
@@ -346,6 +414,11 @@
       .illustration-icon {
         font-size: 150px;
         /* Kept the size consistent */
+      }
+
+      .btn {
+        padding: 10px 20px;
+        font-size: 14px;
       }
     }
   </style>
@@ -530,6 +603,45 @@
       </form>
     </div>
   </div>
+  <div id="confirmModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Confirm Submission</h2><br>
+      <p>Are the details filled in by you correct?</p><br>
+      <p>Please remember that only the verified GitHub ID & Email will be recorded.</p>
+      <div class="btn-container">
+        <button id="confirmDelete" class="btn">Yes</button>
+        <button id="cancelDelete" class="btn">No</button>
+      </div>
+    </div>
+  </div>
 </body>
+<script>
+  document.getElementById("register-form").addEventListener("submit", function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    // Show the confirmation modal
+    const modal = document.getElementById("confirmModal");
+    modal.style.display = "block";
+
+    const closeModal = document.querySelector(".close");
+
+    // When the user clicks on <span> (x), close the modal
+    closeModal.onclick = function () {
+      modal.style.display = "none";
+    };
+
+    // Handle the "Yes" button
+    document.getElementById("confirmDelete").addEventListener("click", function () {
+      modal.style.display = "none";
+      e.target.submit(); // Programmatically submit the form
+    });
+
+    // Handle the "No" button
+    document.getElementById("cancelDelete").addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+  });
+</script>
 
 </html>

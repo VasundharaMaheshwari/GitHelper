@@ -18,12 +18,18 @@ const GHUser_Schema = new Schema({
   role: {
     type: String,
     required: true,
-    enum: ['User', 'Admin']
+    enum: ['User', 'Admin'],
+    default: 'User'
   },
   github_id: {
     type: String,
     required: true,
     unique: true
+  },
+  verified: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 },
 { timestamps: true });

@@ -27,7 +27,8 @@ const Response_Schema = new Schema({
   },
   approved: {
     type: Boolean,
-    required: true
+    required: true,
+    default: false
   }
 }, { timestamps: true });
 

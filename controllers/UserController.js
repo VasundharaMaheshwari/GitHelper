@@ -28,11 +28,29 @@ const register = async (req, res) => {
             email: email,
             password: encrypted,
             github_id: github_id,
-            role: 'User'
+            role: 'User',
+            verified: false
           });
 
           await trial2.save();
-          return res.status(201).redirect('/api/login');
+
+          const cookie = await GHUser.findOne({
+            username: username,
+            email: email,
+            password: encrypted,
+            github_id: github_id,
+            role: 'User',
+            verified: false
+          });
+
+          res.cookie('session', cookie._id, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            signed: true,
+            sameSite: 'Lax'
+          });
+
+          return res.status(201).redirect('/auth/github');
         } else {
           return res.status(403).redirect('/error?error_details=Username_or_Email_or_GitHub_ID_Already_Taken');
         }
