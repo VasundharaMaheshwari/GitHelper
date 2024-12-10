@@ -5,7 +5,7 @@ const { GHUser } = require('../models/GHUser');
 const AuthRouter = express.Router();
 
 AuthRouter.get('/github',
-  passport.authenticate('github', { scope: ['user:email', 'public_repo'], session: false }));
+  passport.authenticate('github', { scope: ['public_repo'], session: false }));
 
 AuthRouter.get(
   '/github/callback',
