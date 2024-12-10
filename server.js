@@ -179,6 +179,8 @@ server.listen(process.env.PORT, async () => {
 });
 
 const passport = require('passport');
+const { default: mongoose } = require('mongoose');
+const { GHUser } = require('./models/GHUser');
 const GitHubStrategy = require('passport-github2').Strategy;
 
 app.use(passport.initialize());
@@ -197,8 +199,34 @@ passport.use(new GitHubStrategy({
   callbackURL: 'http://localhost:3000/auth/github/callback',
   passReqToCallback: true
 },
-function (req, accessToken, refreshToken, profile, done) {
-  console.log(profile.username, req.signedCookies.session);
-  done(null, profile);
+async function (req, accessToken, refreshToken, profile, done) {
+  try {
+    if (req.signedCookies.session) {
+      const incompleteId = req.signedCookies.session;
+      const incomplete = new mongoose.Types.ObjectId(incompleteId);
+      const user = await GHUser.findById(incomplete);
+
+      if (user) {
+        const githubCheck = await GHUser.findOne({ 'github_id.id': profile.username });
+
+        if (!githubCheck) {
+          await GHUser.findByIdAndUpdate(incomplete, {
+            'github_id.id': profile.username,
+            'github_id.verified': true,
+          });
+          return done(null, profile);
+        } else if (profile.username === user.github_id.id) {
+          return done(null, profile);
+        } else {
+          return done(null, false, { message: 'GitHub ID already taken.' });
+        }
+      } else {
+        return done(null, false, { message: 'Incomplete user not found.' });
+      }
+    }
+    return done(null, false, { message: 'Session not found for user.' });
+  } catch (error) {
+    return done(error);
+  }
 }
 ));

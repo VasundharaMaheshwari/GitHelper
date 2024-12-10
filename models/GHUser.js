@@ -7,9 +7,16 @@ const GHUser_Schema = new Schema({
     unique: true
   },
   email: {
-    type: String,
-    required: true,
-    unique: true
+    address: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    verified: {
+      type: Boolean,
+      required: true,
+      default: false
+    }
   },
   password: {
     type: String,
@@ -22,9 +29,16 @@ const GHUser_Schema = new Schema({
     default: 'User'
   },
   github_id: {
-    type: String,
-    required: true,
-    unique: true
+    id: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    verified: {
+      type: Boolean,
+      required: true,
+      default: false
+    }
   },
   verified: {
     type: Boolean,

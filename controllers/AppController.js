@@ -6,13 +6,13 @@ const { validationResult } = require('express-validator');
 
 const create = async (req, res) => {
   try {
-    if (ObjectId.isValid(req.user._id) && /^[a-zA-Z0-9-]{1,39}$/.test(req.user.github_id)) {
+    if (ObjectId.isValid(req.user._id) && /^[a-zA-Z0-9-]{1,39}$/.test(req.user.github_id.id)) {
       const hey = await GHUser.findOne({ '_id': req.user._id });
       if (hey) {
         return res.status(200).render('main.hbs', {
           layout: 'create.hbs',
           _id: req.user._id,
-          github_id: req.user.github_id
+          github_id: req.user.github_id.id
         });
       } else {
         return res.status(403).redirect('/error?error_details=Not_Allowed');
@@ -39,7 +39,7 @@ const save = async (req, res) => {
             username: req.user.username,
             contact_info: contact_info,
             skillset: skillset,
-            github_id: req.user.github_id,
+            github_id: req.user.github_id.id,
             repo_link: repo_link,
             description: description,
             createdBy: req.user._id
@@ -91,7 +91,7 @@ const save_response = async (req, res) => {
             responder: {
               username: req.user.username,
               uid: req.user._id,
-              github_id: req.user.github_id
+              github_id: req.user.github_id.id
             },
             issue: issue_id,
             creator: creator,
@@ -134,11 +134,11 @@ const tracker = async (req, res) => {
         const task = {
           assigned_by: {
             username: assignedBy.username,
-            github_id: assignedBy.github_id
+            github_id: assignedBy.github_id.id
           },
           assigned_to: {
             username: assignedTo.username,
-            github_id: assignedTo.github_id
+            github_id: assignedTo.github_id.id
           },
           description: issue.description,
           assigned_at: assignedAt

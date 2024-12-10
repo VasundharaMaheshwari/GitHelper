@@ -103,11 +103,11 @@ const usermod = async (req, res) => {
               { 'sender': _id }, { 'receiver': _id }
             ]
           });
-          const OTP_resp = await OTP.deleteMany({ email: user.email });
+          const OTP_resp = await OTP.deleteMany({ email: user.email.address });
 
           const trial2 = new Block({
-            email: user.email,
-            github_id: user.github_id
+            email: user.email.address,
+            github_id: user.github_id.id
           });
 
           await trial2.save();
@@ -172,8 +172,8 @@ const detailsBan = async (req, res) => {
     return res.status(200).render('main.hbs', {
       layout: 'admin.hbs',
       username: req.user.username,
-      email: req.user.email,
-      github_id: req.user.github_id,
+      email: req.user.email.address,
+      github_id: req.user.github_id.id,
       //  bannedUsers: bannedUsers
     });
   } catch {

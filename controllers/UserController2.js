@@ -11,7 +11,7 @@ const otpGen = async (req, res) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
       const { email } = req.body;
-      const check_mail = await GHUser.findOne({ 'email': email });
+      const check_mail = await GHUser.findOne({ 'email.address': email });
       if (check_mail && check_mail.role !== 'Admin') {
         const otp = generate(4, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
         const forgot = {
@@ -63,7 +63,7 @@ const reset = async (req, res) => {
 
       if (ObjectId.isValid(id)) {
         const user = await GHUser.findById(id);
-        const otp = await OTP.findOne({ email: user?.email });
+        const otp = await OTP.findOne({ email: user?.email.address });
 
         if (user && otp) {
           return res.status(302).render('main.hbs', {
@@ -93,30 +93,32 @@ const passChange = async (req, res) => {
 
       if (ObjectId.isValid(id)) {
         const user = await GHUser.findById(id);
-        const otpc = await OTP.findOne({ email: user?.email });
-
-        if (user && otpc) {
-          const { encryptedpassword, otp } = req.body;
-          if (otpc.otp === Number(otp)) {
-            const decrypted = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8);
-
-            if (encryptedpassword !== decrypted) {
-              const encrypted = CryptoJS.AES.encrypt(encryptedpassword, process.env.SECRET_KEY).toString();
-              const passChange = await GHUser.findByIdAndUpdate(id, { password: encrypted });
-              const otpDel = await OTP.deleteOne({ email: user.email, otp: otpc.otp });
-              if (passChange && otpDel) {
-                return res.status(201).redirect('/api/login');
+        if (user) {
+          const otpc = await OTP.findOne({ email: user.email.address });
+          if (otpc) {
+            const { encryptedpassword, otp } = req.body;
+            if (otpc.otp === Number(otp)) {
+              const decrypted = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8);
+              const otpDel = await OTP.deleteOne({ email: user.email.address, otp: otpc.otp });
+              if (encryptedpassword !== decrypted) {
+                const encrypted = CryptoJS.AES.encrypt(encryptedpassword, process.env.SECRET_KEY).toString();
+                const passChange = await GHUser.findByIdAndUpdate(id, { password: encrypted });
+                if (passChange && otpDel) {
+                  return res.status(201).redirect('/api/login');
+                } else {
+                  return res.status(403).redirect('/error?error_details=Unable_To_Reset_Password');
+                }
               } else {
-                return res.status(403).redirect('/error?error_details=Unable_To_Reset_Password');
+                return res.status(400).redirect('/error?error_details=New_Password_Cannot_Be_Same_As_Old_Password');
               }
             } else {
-              return res.status(400).redirect('/error?error_details=New_Password_Cannot_Be_Same_As_Old_Password');
+              return res.status(400).redirect('/error?error_details=Invalid_OTP');
             }
           } else {
-            return res.status(400).redirect('/error?error_details=Invalid_OTP');
+            return res.status(403).redirect('/api/login');
           }
         } else {
-          return res.status(403).redirect('/api/login');
+          return res.status(404).redirect('/error?error_details=User_Not_Found');
         }
       } else {
         return res.status(400).redirect('/error?error_details=Invalid_URL');

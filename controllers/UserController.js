@@ -15,8 +15,8 @@ const register = async (req, res) => {
     if (errors.isEmpty()) {
       const { username, email, encryptedpassword, github_id } = req.body;
 
-      const user = await GHUser.findOne({ $or: [{ username: username }, { email: email }, { github_id: github_id }] });
-      const emailcheck2 = await Block.findOne({ $or: [{ email: email }, { github_id: github_id }] });
+      const user = await GHUser.findOne({ $or: [{ username: username }, { 'email.address': email }, { 'github_id.id': github_id }] });
+      const emailcheck2 = await Block.findOne({ $or: [{ 'email.address': email }, { 'github_id.id': github_id }] });
 
       if (emailcheck2 === null) {
 
@@ -25,9 +25,11 @@ const register = async (req, res) => {
 
           const trial2 = new GHUser({
             username: username,
-            email: email,
+            'email.address': email,
+            'email.verified': false,
             password: encrypted,
-            github_id: github_id,
+            'github_id.id': github_id,
+            'github_id.verified': false,
             role: 'User',
             verified: false
           });
@@ -36,9 +38,11 @@ const register = async (req, res) => {
 
           const cookie = await GHUser.findOne({
             username: username,
-            email: email,
+            'email.address': email,
+            'email.verified': false,
             password: encrypted,
-            github_id: github_id,
+            'github_id.id': github_id,
+            'github_id.verified': false,
             role: 'User',
             verified: false
           });
@@ -105,8 +109,8 @@ const load = async (req, res) => {
         res.status(200).render('main.hbs', {
           layout: 'user.hbs',
           username: user.username,
-          email: user.email,
-          github_id: user.github_id
+          email: user.email.address,
+          github_id: user.github_id.id
         });
       } else {
         if (user && user.role === 'Admin') {
