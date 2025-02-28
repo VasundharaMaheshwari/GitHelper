@@ -44,6 +44,10 @@ const GHUser_Schema = new Schema({
     type: Boolean,
     required: true,
     default: false
+  },
+  repos: {
+    type: [String],
+    default: []
   }
 },
 { timestamps: true });

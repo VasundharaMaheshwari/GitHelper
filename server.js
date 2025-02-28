@@ -214,6 +214,7 @@ async function (req, accessToken, refreshToken, profile, done) {
             'github_id.id': profile.username,
             'github_id.verified': true,
           });
+          profile.accessToken = accessToken;
           return done(null, profile);
         } else if (profile.username === user.github_id.id) {
           return done(null, profile);

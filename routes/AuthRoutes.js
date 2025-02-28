@@ -2,6 +2,7 @@ const express = require('express');
 const { default: mongoose } = require('mongoose');
 const passport = require('passport');
 const { GHUser } = require('../models/GHUser');
+const axios = require('axios');
 const AuthRouter = express.Router();
 
 AuthRouter.get('/github',
@@ -34,7 +35,23 @@ AuthRouter.get(
 
           return res.redirect('/api/register');
         }
+
         if (req.signedCookies.session) {
+          const repos_url = user._json.repos_url;
+          const accessToken = user.accessToken;
+
+          const response = await axios.get(repos_url, {
+            headers: { Authorization: `token ${accessToken}` },
+            params: { visibility: 'public', sort: 'updated', per_page: 100 },
+          });
+
+          const repoUrls = response.data.map((repo) => repo.html_url);
+
+          const incompleteId = req.signedCookies.session;
+          const incomplete = new mongoose.Types.ObjectId(incompleteId);
+
+          await GHUser.findByIdAndUpdate(incomplete, { repos: repoUrls });
+
           res.clearCookie('session');
         }
 
