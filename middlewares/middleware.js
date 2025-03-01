@@ -148,13 +148,13 @@ const loggedInPass = async (req, res, next) => {
 };
 
 const ghAuth = async (req, res, next) => {
-  if (!req.signedCookies?.session) {
+  if (!req.signedCookies?.verify) {
     return res.status(400).redirect('/api/register');
   }
-  const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.session));
+  const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.verify));
 
   if (user.verified) {
-    res.clearCookie('session');
+    res.clearCookie('verify');
     return res.status(400).redirect('/api/user');
   }
 
@@ -162,7 +162,7 @@ const ghAuth = async (req, res, next) => {
 };
 
 const gitCheck = async (req, res, next) => {
-  const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.session));
+  const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.verify));
 
   if (user.github_id.verified) {
     return res.status(400).redirect('/auth/email-verify');
@@ -172,10 +172,10 @@ const gitCheck = async (req, res, next) => {
 };
 
 const mailCheck = async (req, res, next) => {
-  const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.session));
+  const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.verify));
 
   if (user.email.verified) {
-    res.clearCookie('session');
+    res.clearCookie('verify');
     return res.status(400).redirect('/api/login');
   }
 

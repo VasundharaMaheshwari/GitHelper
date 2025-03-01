@@ -47,7 +47,7 @@ const register = async (req, res) => {
             verified: false
           });
 
-          res.cookie('session', cookie._id, {
+          res.cookie('verify', cookie._id, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             signed: true,
@@ -95,7 +95,7 @@ const login = async (req, res) => {
             return res.status(200).redirect('/api/user');
           }
 
-          res.cookie('session', user._id, {
+          res.cookie('verify', user._id, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             signed: true,

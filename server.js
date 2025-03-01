@@ -201,8 +201,8 @@ passport.use(new GitHubStrategy({
 },
 async function (req, accessToken, refreshToken, profile, done) {
   try {
-    if (req.signedCookies.session) {
-      const incompleteId = req.signedCookies.session;
+    if (req.signedCookies.verify) {
+      const incompleteId = req.signedCookies.verify;
       const incomplete = new mongoose.Types.ObjectId(incompleteId);
       const user = await GHUser.findById(incomplete);
 

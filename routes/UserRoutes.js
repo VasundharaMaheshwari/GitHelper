@@ -16,6 +16,9 @@ UserRouter.get('/login', loggedIn, (req, res) => {
 });
 
 UserRouter.get('/register', loggedIn, async (req, res) => {
+  if (req.signedCookies?.verify) {
+    res.clearCookie('verify');
+  }
   return res.status(302).render('register.hbs');
 });
 
