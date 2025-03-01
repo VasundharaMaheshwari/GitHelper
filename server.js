@@ -217,6 +217,10 @@ async function (req, accessToken, refreshToken, profile, done) {
           profile.accessToken = accessToken;
           return done(null, profile);
         } else if (profile.username === user.github_id.id) {
+          await GHUser.findByIdAndUpdate(incomplete, {
+            'github_id.verified': true,
+          });
+          profile.accessToken = accessToken;
           return done(null, profile);
         } else {
           return done(null, false, { message: 'GitHub ID already taken.' });
