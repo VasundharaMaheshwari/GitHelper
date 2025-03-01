@@ -154,10 +154,32 @@ const ghAuth = async (req, res, next) => {
   const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.session));
 
   if (user.verified) {
+    res.clearCookie('session');
     return res.status(400).redirect('/api/user');
   }
 
   next();
 };
 
-module.exports = { restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut, loggedInPass, ghAuth };
+const gitCheck = async (req, res, next) => {
+  const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.session));
+
+  if (user.github_id.verified) {
+    return res.status(400).redirect('/auth/email-verify');
+  }
+
+  next();
+};
+
+const mailCheck = async (req, res, next) => {
+  const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.session));
+
+  if (user.email.verified) {
+    res.clearCookie('session');
+    return res.status(400).redirect('/api/login');
+  }
+
+  next();
+};
+
+module.exports = { restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut, loggedInPass, ghAuth, gitCheck, mailCheck };

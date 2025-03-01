@@ -94,15 +94,20 @@ const login = async (req, res) => {
 
             return res.status(200).redirect('/api/user');
           }
-          if (!user.github_id.verified) {
-            res.cookie('session', user._id, {
-              httpOnly: true,
-              secure: process.env.NODE_ENV === 'production',
-              signed: true,
-              sameSite: 'Lax'
-            });
 
+          res.cookie('session', user._id, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            signed: true,
+            sameSite: 'Lax'
+          });
+
+          if (!user.github_id.verified) {
             return res.status(201).redirect('/auth/github');
+          }
+
+          if (!user.email.verified) {
+            return res.status(201).redirect('/auth/email-verify');
           }
         }
       }

@@ -3,13 +3,14 @@ const { default: mongoose } = require('mongoose');
 const passport = require('passport');
 const { GHUser } = require('../models/GHUser');
 const axios = require('axios');
+const { gitCheck, mailCheck } = require('../middlewares/middleware');
 const AuthRouter = express.Router();
 
-AuthRouter.get('/github',
+AuthRouter.get('/github', gitCheck,
   passport.authenticate('github', { scope: ['public_repo'], session: false }));
 
 AuthRouter.get(
-  '/github/callback',
+  '/github/callback', gitCheck,
   (req, res, next) => {
     passport.authenticate('github', { session: false }, async (err, user, info) => {
       try {
@@ -63,7 +64,7 @@ AuthRouter.get(
   }
 );
 
-AuthRouter.get('/email-verify', (req, res) => {
+AuthRouter.get('/email-verify', mailCheck, (req, res) => {
   return res.send('WIP');
 });
 
