@@ -85,13 +85,25 @@ const login = async (req, res) => {
           return res.status(401).redirect('/error?error_details=Incorrect_Password');
         } else {
 
-          req.session.userId = user._id;
+          if (user.verified) {
+            req.session.userId = user._id;
 
-          if (remember) {
-            req.session.cookie.maxAge = 24 * 60 * 60 * 1000;
+            if (remember) {
+              req.session.cookie.maxAge = 24 * 60 * 60 * 1000;
+            }
+
+            return res.status(200).redirect('/api/user');
           }
+          if (!user.github_id.verified) {
+            res.cookie('session', user._id, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === 'production',
+              signed: true,
+              sameSite: 'Lax'
+            });
 
-          return res.status(200).redirect('/api/user');
+            return res.status(201).redirect('/auth/github');
+          }
         }
       }
     }

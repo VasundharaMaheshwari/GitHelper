@@ -135,7 +135,7 @@ const AdminRouter = require('./routes/AdminRoutes');
 const ChatRouter = require('./routes/ChatRoutes');
 const AuthRouter = require('./routes/AuthRoutes');
 
-const { restrict, less_restrict, admin, query_check } = require('./middlewares/middleware');
+const { restrict, less_restrict, admin, query_check, ghAuth } = require('./middlewares/middleware');
 
 app.disable('x-powered-by');
 
@@ -161,7 +161,7 @@ app.set('view engine', 'handlebars');
 app.engine('handlebars', handlebars.engine({ defaultLayout: 'main' }));
 
 app.use('/api', UserRouter);
-app.use('/auth', AuthRouter);
+app.use('/auth', ghAuth, AuthRouter);
 app.use('/query', restrict, APIRouter);
 app.use('/query_work', query_check, QueryRouter);
 app.use('/home', less_restrict, HomeRouter);

@@ -2,6 +2,7 @@ const { ObjectId } = require('mongodb');
 const { Response } = require('../models/Response');
 const { GHUser } = require('../models/GHUser');
 const { OTP } = require('../models/OTP');
+const { default: mongoose } = require('mongoose');
 
 const restrict = async (req, res, next) => {
   if (!req.session.userId) {
@@ -146,4 +147,17 @@ const loggedInPass = async (req, res, next) => {
   }
 };
 
-module.exports = { restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut, loggedInPass };
+const ghAuth = async (req, res, next) => {
+  if (!req.signedCookies?.session) {
+    return res.status(400).redirect('/api/register');
+  }
+  const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.session));
+
+  if (user.verified) {
+    return res.status(400).redirect('/api/user');
+  }
+
+  next();
+};
+
+module.exports = { restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut, loggedInPass, ghAuth };
