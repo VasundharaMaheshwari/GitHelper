@@ -1,4 +1,4 @@
- Put your frontend stuff here ONLY
+Put your frontend stuff here ONLY
 
 Steps - 
 
@@ -11,8 +11,6 @@ Repeating the below Steps
 7) git commit -m "SOME BS HERE"
 8) git push origin main
 
-HAPPY HAPPY! hi.
+HAPPY HAPPY!
 
 IF ISSUE CONTACT ME DONT CRISIS CONTROL
-
-ONLY DONT TOUCH CHAT.HBS REMAINING YOU CAN DO FRONTEND NOW!!!!!!!!!
