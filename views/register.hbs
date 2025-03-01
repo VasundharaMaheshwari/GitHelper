@@ -552,8 +552,7 @@
       <div class="illustration-container">
         <i class="fas fa-user-plus illustration-icon" aria-hidden="true"></i>
       </div>
-      <form id="register-form" class="register-form" action="/api/register" method="post"
-        onsubmit="return validateForm()">
+      <form id="register-form" class="register-form" action="/api/register" method="post">
         <div class="form-group">
           <label for="username">Username</label>
           <div class="input-container">
@@ -619,6 +618,8 @@
 <script>
   document.getElementById("register-form").addEventListener("submit", function (e) {
     e.preventDefault(); // Prevent default form submission
+
+    if (!validateForm()) return;
 
     // Show the confirmation modal
     const modal = document.getElementById("confirmModal");

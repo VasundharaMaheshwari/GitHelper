@@ -137,7 +137,7 @@ const loggedInPass = async (req, res, next) => {
 
   const userCheck = ObjectId.isValid(id) ? await GHUser.findById(id) : res.status(400).redirect('/api/register');
 
-  const otpc = await OTP.findOne({ email: userCheck.email });
+  const otpc = await OTP.findOne({ email: userCheck.email.address });
 
   if (otpc) {
     req.user = user;
@@ -175,7 +175,6 @@ const mailCheck = async (req, res, next) => {
   const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.verify));
 
   if (user.email.verified) {
-    res.clearCookie('verify');
     return res.status(400).redirect('/api/login');
   }
 

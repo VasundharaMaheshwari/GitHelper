@@ -56,6 +56,13 @@ AuthRouter.get(
 
         await GHUser.findByIdAndUpdate(incomplete, { repos: repoUrls });
 
+        const verified = await GHUser.findById(incomplete);
+        if (verified.github_id.verified && verified.email.verified) {
+          await GHUser.findByIdAndUpdate(incomplete, {
+            'verified': true,
+          });
+        }
+
         return res.status(201).redirect('/auth/email-verify');
 
       } catch {
@@ -99,9 +106,8 @@ AuthRouter.get('/email-verify', mailCheck, async (req, res) => {
         await VerifyOTP.updateOne({ email: check_mail.email.address }, { otp: otp });
       }
 
-      return res.status(200).render('main.hbs', {
-        layout: 'verify.hbs'
-      });
+      return res.status(201).redirect('/auth/email-otp');
+
     } else {
       return res.status(404).redirect('/error?error_details=User_Not_Found');
     }
@@ -110,8 +116,38 @@ AuthRouter.get('/email-verify', mailCheck, async (req, res) => {
   }
 });
 
+AuthRouter.get('/email-otp', mailCheck, async (req, res) => {
+  return res.status(200).render('main.hbs', {
+    layout: 'verify.hbs'
+  });
+});
+
 AuthRouter.post('/email-verification', mailCheck, async (req, res) => {
-  res.send('WIP');
+  try {
+    const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.verify));
+    if (user) {
+      const otpc = await VerifyOTP.findOne({ email: user.email.address });
+      if (otpc) {
+        const { otp } = req.body;
+        if (otpc.otp === Number(otp)) {
+          const verified = await GHUser.findByIdAndUpdate(new mongoose.Types.ObjectId(req.signedCookies.verify), { 'email.verified': true });
+          const otpDel = await VerifyOTP.deleteOne({ email: user.email.address, otp: otpc.otp });
+          if (verified && otpDel && user.github_id.verified) {
+            await GHUser.findByIdAndUpdate(new mongoose.Types.ObjectId(req.signedCookies.verify), { 'verified': true });
+          }
+          return res.status(201).redirect('/auth/github');
+        } else {
+          return res.status(400).redirect('/error?error_details=Invalid_OTP');
+        }
+      } else {
+        return res.status(403).redirect('/api/login');
+      }
+    } else {
+      return res.status(404).redirect('/error?error_details=User_Not_Found');
+    }
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
+  }
 });
 
 module.exports = AuthRouter;

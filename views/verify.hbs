@@ -421,6 +421,9 @@
             <div class="login-form">
                 <form action="/auth/email-verification" method="POST" onsubmit="return validateForm()">
                     <div class="form-group">
+                        <div class="input-container">
+                            <input type="text" name="otp" id="otp" hidden>
+                        </div>
                         <br><br><br><br>
                         <label for="otp"><i class="fas fa-lock"></i> Enter OTP</label>
                         <div class="otp-container">
