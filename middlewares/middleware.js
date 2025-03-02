@@ -21,6 +21,17 @@ const restrict = async (req, res, next) => {
     return res.status(401).redirect('/error?error_details=Access_Denied');
   }
 
+  if (!user.verified) {
+    res.cookie('verify', user._id, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      signed: true,
+      sameSite: 'Lax'
+    });
+
+    return res.status(400).redirect('/auth/github');
+  }
+
   req.user = user;
   next();
 };
@@ -49,6 +60,17 @@ const admin = async (req, res, next) => {
 
   if (user.role !== 'Admin') {
     return res.status(401).redirect('/error?error_details=Access_Denied');
+  }
+
+  if (!user.verified) {
+    res.cookie('verify', user._id, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      signed: true,
+      sameSite: 'Lax'
+    });
+
+    return res.status(400).redirect('/auth/github');
   }
 
   req.user = user;
@@ -88,6 +110,16 @@ const query_check = async (req, res, next) => {
   if (user.role === 'Admin') {
     return res.status(403).redirect('/admin/home');
   }
+  if (!user.verified) {
+    res.cookie('verify', user._id, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      signed: true,
+      sameSite: 'Lax'
+    });
+
+    return res.status(400).redirect('/auth/github');
+  }
   const { queryId } = req.query;
   if (!ObjectId.isValid(queryId)) {
     return res.status(404).redirect('/query/list');
@@ -106,6 +138,16 @@ const chat_check = async (req, res, next) => {
   }
   if (user.role === 'Admin') {
     return res.status(403).redirect('/admin/home');
+  }
+  if (!user.verified) {
+    res.cookie('verify', user._id, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      signed: true,
+      sameSite: 'Lax'
+    });
+
+    return res.status(400).redirect('/auth/github');
   }
   const { resId } = req.query;
   if (!ObjectId.isValid(resId)) {
