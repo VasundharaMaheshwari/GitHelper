@@ -8,6 +8,7 @@ const { validationResult } = require('express-validator');
 const { Msg } = require('../models/Msg');
 const { default: mongoose } = require('mongoose');
 const { OTP } = require('../models/OTP');
+const { VerifyOTP } = require('../models/VerifyOTP')
 
 const loader = async (req, res) => {
   try {
@@ -105,6 +106,8 @@ const usermod = async (req, res) => {
           });
           const OTP_resp = await OTP.deleteMany({ email: user.email.address });
 
+          const OTP_verify = await VerifyOTP.deleteMany({ email: user.email.address });
+
           const trial2 = new Block({
             email: user.email.address,
             github_id: user.github_id.id
@@ -115,7 +118,7 @@ const usermod = async (req, res) => {
           const sessionCollection = mongoose.connection.collection('sessions');
           const sess_resp = await sessionCollection.deleteMany({ 'session.userId': user._id });
 
-          if (user_resp && issue_resp && resp_resp && con_resp && msg_resp && sess_resp && OTP_resp) {
+          if (user_resp && issue_resp && resp_resp && con_resp && msg_resp && sess_resp && OTP_resp && OTP_verify) {
             return res.status(200).redirect('/admin/userlist');
           } else {
             return res.status(403).redirect('/error?error_details=Unable_To_Delete_User');

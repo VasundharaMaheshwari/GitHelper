@@ -7,6 +7,7 @@ const { gitCheck, mailCheck } = require('../middlewares/middleware');
 const { generate } = require('otp-generator');
 const { mailGen, transporter } = require('../services/mail');
 const { VerifyOTP } = require('../models/VerifyOTP');
+const { verifyCheck } = require('../validators/AuthValidators');
 
 const AuthRouter = express.Router();
 
@@ -122,7 +123,7 @@ AuthRouter.get('/email-otp', mailCheck, async (req, res) => {
   });
 });
 
-AuthRouter.post('/email-verification', mailCheck, async (req, res) => {
+AuthRouter.post('/email-verification', mailCheck, verifyCheck, async (req, res) => {
   try {
     const user = await GHUser.findById(new mongoose.Types.ObjectId(req.signedCookies.verify));
     if (user) {

@@ -112,7 +112,7 @@ const convo_limit = limiter({
 
 const overall_limit = limiter({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 300,
   legacyHeaders: false,
   // requestWasSuccessful: (req, res) => res.status < 400,
   // skipFailedRequests: true,
