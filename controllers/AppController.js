@@ -12,7 +12,8 @@ const create = async (req, res) => {
         return res.status(200).render('main.hbs', {
           layout: 'create.hbs',
           _id: req.user._id,
-          github_id: req.user.github_id.id
+          github_id: req.user.github_id.id,
+          repo_links: req.user.repos
         });
       } else {
         return res.status(403).redirect('/error?error_details=Not_Allowed');

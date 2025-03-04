@@ -212,6 +212,36 @@
       width: 100%;
     }
 
+    .form-group select {
+      width: 100%;
+      padding: 14px 20px 14px 50px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      /* Removes default system styling */
+    }
+
+    .form-group select:focus {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .form-group select option {
+      background: #fff;
+      color: #333;
+      padding: 10px;
+    }
+
+    /* Hover effect for options */
+    .form-group select option:hover {
+      background: #007bff;
+      color: #fff;
+    }
+
     .form-group label {
       display: none;
     }
@@ -358,7 +388,12 @@
         </div>
         <div class="form-group">
           <i class="fas fa-link"></i>
-          <input type="url" id="repo_link" placeholder="Repository Link" name="repo_link" required>
+          <select id="repo_link" name="repo_link" required>
+            <option value="" selected>Select Github Repository Link</option>
+            {{#each repo_links}}
+              <option value="{{this}}">{{this}}</option>
+            {{/each}}
+          </select>
           <input type="hidden" id="id" name="id" value="{{_id}}">
         </div>
         <div class="form-group">
@@ -377,7 +412,7 @@
       var githubId = document.getElementById('github_id').value;
       var repoRegex = new RegExp(`^(https?:\/\/)?(www\.)?github\.com\/${githubId}\/[a-zA-Z0-9-_]+(\/)?$`);
       if (!repoRegex.test(repoLink)) {
-        document.getElementById("error-message").innerText = "Please enter a valid GitHub repository link of your own.";
+        document.getElementById("error-message").innerText = "Please select a valid GitHub repository.";
         return false;
       }
 
