@@ -5,6 +5,9 @@ const { OTP } = require('../models/OTP');
 const { default: mongoose } = require('mongoose');
 
 const restrict = async (req, res, next) => {
+  if (req.signedCookies?.refresh) {
+    res.clearCookie('refresh');
+  }
   if (!req.session.userId) {
     return res.status(401).redirect('/api/login');
   }
@@ -37,6 +40,9 @@ const restrict = async (req, res, next) => {
 };
 
 const less_restrict = async (req, res, next) => {
+  if (req.signedCookies?.refresh) {
+    res.clearCookie('refresh');
+  }
   const UserUID = req.session?.userId;
 
   const user = await GHUser.findById(UserUID);
@@ -46,6 +52,9 @@ const less_restrict = async (req, res, next) => {
 };
 
 const admin = async (req, res, next) => {
+  if (req.signedCookies?.refresh) {
+    res.clearCookie('refresh');
+  }
   if (!req.session.userId) {
     return res.status(401).redirect('/api/login');
   }
@@ -78,6 +87,9 @@ const admin = async (req, res, next) => {
 };
 
 const loggedIn = async (req, res, next) => {
+  if (req.signedCookies?.refresh) {
+    res.clearCookie('refresh');
+  }
   const UserUID = req.session?.userId;
   const user = await GHUser.findById(UserUID);
   if (user) {
@@ -89,6 +101,9 @@ const loggedIn = async (req, res, next) => {
 };
 
 const logOut = async (req, res, next) => {
+  if (req.signedCookies?.refresh) {
+    res.clearCookie('refresh');
+  }
   const UserUID = req.session?.userId;
   const user = await GHUser.findById(UserUID);
   if (!user) {
@@ -100,6 +115,9 @@ const logOut = async (req, res, next) => {
 };
 
 const query_check = async (req, res, next) => {
+  if (req.signedCookies?.refresh) {
+    res.clearCookie('refresh');
+  }
   if (!req.session.userId) {
     return res.status(401).redirect('/api/login');
   }
@@ -129,6 +147,9 @@ const query_check = async (req, res, next) => {
 };
 
 const chat_check = async (req, res, next) => {
+  if (req.signedCookies?.refresh) {
+    res.clearCookie('refresh');
+  }
   if (!req.session.userId) {
     return res.status(401).redirect('/api/login');
   }
@@ -190,6 +211,9 @@ const loggedInPass = async (req, res, next) => {
 };
 
 const ghAuth = async (req, res, next) => {
+  if (req.signedCookies?.refresh) {
+    res.clearCookie('refresh');
+  }
   if (!req.signedCookies?.verify) {
     return res.status(400).redirect('/api/register');
   }
@@ -223,4 +247,48 @@ const mailCheck = async (req, res, next) => {
   next();
 };
 
-module.exports = { restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut, loggedInPass, ghAuth, gitCheck, mailCheck };
+const gitRefreshCheck = async (req, res, next) => {
+  if (!req.session.userId) {
+    return res.status(401).redirect('/api/login');
+  }
+
+  if (!req.signedCookies.refresh) {
+    return res.status(400).redirect('/api/user');
+  }
+
+  const incomplete = new mongoose.Types.ObjectId(req.signedCookies.refresh);
+
+  if (!new mongoose.Types.ObjectId(req.session.userId).equals(incomplete)) {
+    return res.status(400).redirect('/api/user');
+  }
+
+  const user = await GHUser.findById(incomplete);
+
+  if (!user) {
+    return res.status(401).redirect('/api/login');
+  }
+
+  if (user.role === 'Admin') {
+    return res.status(403).redirect('/admin/home');
+  }
+
+  if (user.role !== 'User') {
+    return res.status(401).redirect('/error?error_details=Access_Denied');
+  }
+
+  if (!user.verified) {
+    res.cookie('verify', user._id, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      signed: true,
+      sameSite: 'Lax'
+    });
+
+    return res.status(400).redirect('/auth/github');
+  }
+
+  req.user = user;
+  next();
+};
+
+module.exports = { restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut, loggedInPass, ghAuth, gitCheck, mailCheck, gitRefreshCheck };

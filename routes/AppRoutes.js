@@ -14,4 +14,15 @@ APIRouter.post('/respond', saveRes, response_limit, save_response);
 
 APIRouter.get('/track', tracker);
 
+APIRouter.get('/links', (req, res) => {
+  res.cookie('refresh', req.session.userId, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    signed: true,
+    sameSite: 'Lax'
+  });
+
+  return res.status(201).redirect('/api/refresh');
+});
+
 module.exports = APIRouter;

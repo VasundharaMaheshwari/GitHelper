@@ -15,7 +15,7 @@ let sess = {
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false, sameSite: true, httpOnly: true, maxAge: 1000 * 60 * 60 * 2 },
+  cookie: { secure: false, sameSite: 'Lax', httpOnly: true, maxAge: 1000 * 60 * 60 * 2 },
   store: store
 };
 
@@ -238,13 +238,26 @@ async function (req, accessToken, refreshToken, profile, done) {
 ));
 
 passport.use('github-refresh', new GitHubStrategy({
-  clientID: process.env.GITHUB_CLIENT_ID,
-  clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: 'http://localhost:3000/auth/refresh/callback',
+  clientID: process.env.REFRESH_ID,
+  clientSecret: process.env.REFRESH_SECRET,
+  callbackURL: 'http://localhost:3000/api/refresh/callback',
   passReqToCallback: true
 },
 async function (req, accessToken, refreshToken, profile, done) {
-  try { } catch (error) {
+  try {
+    if (req.signedCookies.refresh) {
+      const incompleteId = req.signedCookies.refresh;
+      const incomplete = new mongoose.Types.ObjectId(incompleteId);
+      const user = await GHUser.findById(incomplete);
+      if (profile.username === user.github_id.id) {
+        profile.accessToken = accessToken;
+        return done(null, profile);
+      } else {
+        return done(null, false, { message: 'GitHub ID received not linked with account.' });
+      }
+    }
+    return done(null, false, { message: 'Session not found for user.' });
+  } catch (error) {
     return done(error);
   }
 }));
