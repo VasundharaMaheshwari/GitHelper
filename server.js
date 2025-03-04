@@ -236,3 +236,15 @@ async function (req, accessToken, refreshToken, profile, done) {
   }
 }
 ));
+
+passport.use('github-refresh', new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: 'http://localhost:3000/auth/refresh/callback',
+  passReqToCallback: true
+},
+async function (req, accessToken, refreshToken, profile, done) {
+  try { } catch (error) {
+    return done(error);
+  }
+}));
