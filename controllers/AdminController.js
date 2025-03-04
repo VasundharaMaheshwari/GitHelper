@@ -8,7 +8,7 @@ const { validationResult } = require('express-validator');
 const { Msg } = require('../models/Msg');
 const { default: mongoose } = require('mongoose');
 const { OTP } = require('../models/OTP');
-const { VerifyOTP } = require('../models/VerifyOTP')
+const { VerifyOTP } = require('../models/VerifyOTP');
 
 const loader = async (req, res) => {
   try {

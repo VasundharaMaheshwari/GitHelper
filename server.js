@@ -194,7 +194,7 @@ app.use(passport.initialize());
 //   cb(null, null);
 // });
 
-passport.use(new GitHubStrategy({
+passport.use('github', new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: 'http://localhost:3000/auth/github/callback',
