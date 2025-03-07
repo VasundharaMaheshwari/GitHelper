@@ -30,8 +30,8 @@ AuthRouter.get(
             res.clearCookie('verify');
           }
 
-          if (info && info.message === 'GitHub ID already taken.') {
-            return res.status(500).redirect('/error?error_details=GitHub_ID_Is_Already_In_Use');
+          if (info && info.message === 'GitHub ID received not linked with account.') {
+            return res.status(500).redirect('/error?error_details=GitHub_ID_Is_Incorrect_Please_Contact_Us');
           }
           if (info && (info.message === 'Incomplete user not found.' || info.message === 'Session not found for user.')) {
             return res.status(404).redirect('/error?error_details=User_Not_Found');

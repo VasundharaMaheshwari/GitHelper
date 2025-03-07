@@ -197,7 +197,7 @@ app.use(passport.initialize());
 passport.use('github', new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: 'https://githelper-r4a0.onrender.com/auth/github/callback',
+  callbackURL: 'http://githelper-r4a0.onrender.com/auth/github/callback',
   passReqToCallback: true
 },
 async function (req, accessToken, refreshToken, profile, done) {
@@ -208,23 +208,14 @@ async function (req, accessToken, refreshToken, profile, done) {
       const user = await GHUser.findById(incomplete);
 
       if (user) {
-        const githubCheck = await GHUser.findOne({ 'github_id.id': profile.username });
-
-        if (!githubCheck) {
-          await GHUser.findByIdAndUpdate(incomplete, {
-            'github_id.id': profile.username,
-            'github_id.verified': true,
-          });
-          profile.accessToken = accessToken;
-          return done(null, profile);
-        } else if (profile.username === user.github_id.id) {
+        if (profile.username === user.github_id.id) {
           await GHUser.findByIdAndUpdate(incomplete, {
             'github_id.verified': true,
           });
           profile.accessToken = accessToken;
           return done(null, profile);
         } else {
-          return done(null, false, { message: 'GitHub ID already taken.' });
+          return done(null, false, { message: 'GitHub ID received not linked with account.' });
         }
       } else {
         return done(null, false, { message: 'Incomplete user not found.' });
@@ -240,7 +231,7 @@ async function (req, accessToken, refreshToken, profile, done) {
 passport.use('github-refresh', new GitHubStrategy({
   clientID: process.env.REFRESH_ID,
   clientSecret: process.env.REFRESH_SECRET,
-  callbackURL: 'https://githelper-r4a0.onrender.com/api/refresh/callback',
+  callbackURL: 'http://githelper-r4a0.onrender.com/api/refresh/callback',
   passReqToCallback: true
 },
 async function (req, accessToken, refreshToken, profile, done) {
