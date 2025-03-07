@@ -12,7 +12,8 @@ const Response_Schema = new Schema({
       ref: 'GHUsers'
     },
     github_id: {
-      type: String
+      type: String,
+      required: true
     }
   },
   issue: {
