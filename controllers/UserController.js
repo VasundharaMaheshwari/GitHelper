@@ -56,7 +56,7 @@ const register = async (req, res) => {
 
           return res.status(201).redirect('/auth/github');
         } else {
-          return res.status(403).redirect('/error?error_details=Username_or_Email_or_GitHub_ID_Already_Taken');
+          return res.status(403).redirect('/error?error_details=Username_or_Email_or_GitHub_ID_Already_Taken_Please_Login');
         }
       } else {
         return res.status(403).redirect('/error?error_details=Blocked_Email_or_GitHub_ID');
