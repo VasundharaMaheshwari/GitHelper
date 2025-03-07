@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Tracking Board</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-image: url('/moon.jpg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-align: center;
+      width: 80%;
+      height: 90%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      color: white;
+    }
+
+    .board {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-grow: 1;
+    }
+
+    .column {
+      width: 425px;
+      background: white;
+      padding: 50px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 50px;
+      justify-content: center;
+      min-height: 400px; /* Ensures enough space for dropping */
+    }
+
+    .column h2 {
+      background: #0056b3;
+      color: white;
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    /* Make tasks square */
+    .task {
+      width: 130px;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      cursor: grab;
+      border-radius: 10px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    /* Sticky Note Colors */
+    .task:nth-child(1) { background: #ffeb3b; transform: rotate(-2deg); } /* Yellow */
+    .task:nth-child(2) { background: #ff9800; transform: rotate(2deg); } /* Orange */
+    .task:nth-child(3) { background: #4caf50; transform: rotate(-3deg); } /* Green */
+    .task:nth-child(4) { background: #03a9f4; transform: rotate(3deg); } /* Blue */
+    .task:nth-child(5) { background: #e91e63; transform: rotate(-1deg); } /* Pink */
+    .task:nth-child(6) { background: purple; transform: rotate(1deg); } /* Purple */
+
+    /* Hover Effect */
+    .task:hover {
+      transform: scale(1.05) rotate(0deg); /* Straightens on hover */
+    }
+
+    /* Dragging Effect */
+    .dragging {
+      opacity: 0.5;
+      transform: scale(1.1);
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>DASHBOARD</h1>
+        <p>Keep track of your operations.</p>
+    </header>
+
+    <div class="board">
+        <div class="column" id="todo">
+            <h2>To Do</h2>
+            <div class="task" draggable="true">Task 1</div>
+            <div class="task" draggable="true">Task 2</div>
+            <div class="task" draggable="true">Task 3</div>
+            <div class="task" draggable="true">Task 4</div>
+            <div class="task" draggable="true">Task 5</div>
+            <div class="task" draggable="true">Task 6</div>
+        </div>
+
+        <div class="column" id="working">
+            <h2>Working</h2>
+        </div>
+
+        <div class="column" id="completed">
+            <h2>Completed</h2>
+        </div>
+    </div>
+</div>
+
+<script>
+  // Drag and Drop Functionality
+  const tasks = document.querySelectorAll('.task');
+  const columns = document.querySelectorAll('.column');
+
+  tasks.forEach(task => {
+      task.addEventListener('dragstart', () => {
+          task.classList.add('dragging');
+      });
+
+      task.addEventListener('dragend', () => {
+          task.classList.remove('dragging');
+      });
+  });
+
+  columns.forEach(column => {
+      column.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          const dragging = document.querySelector('.dragging');
+          column.appendChild(dragging);
+      });
+  });
+
+</script>
+
+</body>
+</html>
