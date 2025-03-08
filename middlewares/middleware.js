@@ -185,7 +185,7 @@ const chat_check = async (req, res, next) => {
   const response_approved = await Response.findOne({ $or: [{ 'responder.uid': user._id }, { 'creator': user._id }], $nor: [{ 'status': 'Not Approved' }, { 'status': 'Accepted' }] });
 
   if (!response_approved) {
-    return res.status(404).redirect('/query/list');
+    return res.status(404).redirect('/error?error_details=Valid_Approved_Response_To_Query_Not_Found');
   }
 
   if (!response_approved.approved || (response_approved.status !== 'To Do' && response_approved.status !== 'Working' && response_approved.status !== 'Completed')) {

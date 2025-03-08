@@ -1,6 +1,6 @@
 const express = require('express');
 const APIRouter = express.Router();
-const { create, save, list, save_response, tracker } = require('../controllers/AppController');
+const { create, save, list, save_response, tracker, taskStatusUpdate } = require('../controllers/AppController');
 const { issue_limit, response_limit } = require('../middlewares/rate_limiter');
 const { saveIssue, saveRes } = require('../validators/AppValidators');
 
@@ -25,8 +25,6 @@ APIRouter.get('/links', (req, res) => {
   return res.status(201).redirect('/api/refresh');
 });
 
-APIRouter.get('/update/:id', (req, res) => {
-  res.json({ 'received': req.params.id });
-});
+APIRouter.get('/update/:id', taskStatusUpdate);
 
 module.exports = APIRouter;
