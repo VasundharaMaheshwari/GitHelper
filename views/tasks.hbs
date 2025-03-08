@@ -85,10 +85,6 @@
       text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
     }
 
-    .task-details {
-      margin-bottom: 20px;
-    }
-
     h2 {
       color: white;
       font-weight: bold;
@@ -98,21 +94,85 @@
       font-size: 20px;
     }
 
-    .task {
-      font-size: 16px;
-      margin-bottom: 20px;
+    .column {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.12);
       padding: 20px;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 15px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
+      min-height: 450px;
+      backdrop-filter: blur(15px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .column h2 {
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
       color: white;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 12px;
+      border-radius: 6px;
+      text-align: center;
+      margin-bottom: 10px;
+      text-shadow: 3px 3px 12px rgba(0, 114, 255, 0.8);
+    }
+
+    .task {
+      width: 220px;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 15px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 12px;
+      cursor: grab;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      text-align: left;
+      line-height: 1.5;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      margin-bottom: 15px;
+    }
+
+    .task span {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    /* Sticky Note Colors */
+    .task:nth-child(odd) {
+      background: linear-gradient(135deg, #ff7f50, #ffb347);
+    }
+
+    .task:nth-child(even) {
+      background: linear-gradient(135deg, #72d572, #4dd0e1);
+    }
+
+    .task:nth-child(5) {
+      background: linear-gradient(135deg, #ba68c8, #ff8a80);
     }
 
     .task:hover {
-      transform: scale(1.02);
-      background-color: rgba(0, 0, 0, 0.8);
+      transform: scale(1.08) rotate(2deg);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .dragging {
+      opacity: 0.7;
+      transform: scale(1.15) rotate(-2deg);
+    }
+
+    .board {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 0;
+      flex-wrap: wrap;
     }
 
     .task p {
@@ -146,25 +206,45 @@
       color: #ff8a00;
     }
 
-    .btn {
-      padding: 12px 24px;
-      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
-      color: #fff;
-      border-radius: 30px;
-      text-decoration: none;
-      transition: background-image 0.3s ease, transform 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    .buttons {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 12px;
-      font-size: 16px;
+      gap: 15px;
     }
 
-    .btn:hover {
+    .buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .buttons a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .buttons a:hover::after {
+      width: 100%;
+    }
+
+    .buttons a:hover {
       background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
-      transform: scale(1.02);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
     .scroll-top {
@@ -185,16 +265,6 @@
       background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
       transform: scale(1.15);
     }
-
-    .no-issues {
-      text-align: center;
-      /* Center align the text */
-      font-size: 20px;
-      /* Set font size to 20px */
-      margin: 20px 0;
-      /* Optional: Add some vertical spacing */
-      color: white;
-    }
   </style>
 </head>
 
@@ -205,30 +275,66 @@
       <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
       <span>Git Helper</span>
     </div>
+    <div class="buttons">
+      <a href="/api/user" class="btn"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
   </div>
   <div class="container">
     <h1>Task Tracking</h1>
-    <div class="task-details">
-      {{#if tasks.length}}
+    <div class="board">
+      <div class="column" id="todo">
+        <h2>To-Do List</h2>
         {{#each tasks}}
-          <div class="task">
-            <p><strong><i class="fas fa-calendar-alt"></i> Assigned at:</strong> {{assigned_at}}</p>
-            <p><strong><i class="fas fa-user-check"></i>Assigned by:</strong> {{assigned_by.username}} (GitHub: <a
-                class="github-id" href="https://github.com/{{assigned_by.github_id}}" target="_blank"><i
-                  class="fas fa-external-link-alt"></i>{{assigned_by.github_id}}</a>)</p>
-            <p><strong><i class="fas fa-user-edit"></i>Assigned to:</strong> {{assigned_to.username}} (GitHub: <a
-                class="github-id" href="https://github.com/{{assigned_to.github_id}}" target="_blank"><i
-                  class="fas fa-external-link-alt"></i>{{assigned_to.github_id}}</a>)</p>
-            <p><strong><i class="fas fa-tasks"></i> Task:</strong> {{description}}</p>
-            <p><strong><i class="fas fa-clock"></i> Status:</strong> {{status}}</p>
-          </div>
+          {{#ifCond status "To Do"}}
+            <div class="task" draggable="true">
+              <p><strong><i class="fas fa-calendar-alt"></i> Assigned at:</strong> {{assigned_at}}</p>
+              <p><strong><i class="fas fa-user-check"></i>Assigned by:</strong> {{assigned_by.username}} (GitHub: <a
+                  class="github-id" href="https://github.com/{{assigned_by.github_id}}" target="_blank"><i
+                    class="fas fa-external-link-alt"></i>{{assigned_by.github_id}}</a>)</p>
+              <p><strong><i class="fas fa-tasks"></i> Task:</strong> {{description}}</p>
+              <p><strong><a class="github-id" href={{repository_link}} target="_blank"><i
+                      class="fas fa-external-link-alt"></i>Link To Repository</strong></a></p>
+            </div>
+        {{else}}
+          {{/ifCond}}
         {{/each}}
-      {{else}}
-        <br>
-        <p class="no-issues">No tasks found.</p><br>
-      {{/if}}
+      </div>
+      <div class="column" id="working">
+        <h2>In Progress</h2>
+        {{#each tasks}}
+          {{#ifCond status "Working"}}
+            <div class="task" draggable="true">
+              <p><strong><i class="fas fa-calendar-alt"></i> Assigned at:</strong> {{assigned_at}}</p>
+              <p><strong><i class="fas fa-user-check"></i>Assigned by:</strong> {{assigned_by.username}} (GitHub: <a
+                  class="github-id" href="https://github.com/{{assigned_by.github_id}}" target="_blank"><i
+                    class="fas fa-external-link-alt"></i>{{assigned_by.github_id}}</a>)</p>
+              <p><strong><i class="fas fa-tasks"></i> Task:</strong> {{description}}</p>
+              <p><strong><a class="github-id" href={{repository_link}} target="_blank"><i
+                      class="fas fa-external-link-alt"></i>Link To Repository</strong></a></p>
+            </div>
+        {{else}}
+          {{/ifCond}}
+        {{/each}}
+      </div>
+      <div class="column" id="completed">
+        <h2>Completed</h2>
+        {{#each tasks}}
+          {{#ifCond status "Completed"}}
+            <div class="task" draggable="true">
+              <p><strong><i class="fas fa-calendar-alt"></i> Assigned at:</strong> {{assigned_at}}</p>
+              <p><strong><i class="fas fa-user-check"></i>Assigned by:</strong> {{assigned_by.username}} (GitHub: <a
+                  class="github-id" href="https://github.com/{{assigned_by.github_id}}" target="_blank"><i
+                    class="fas fa-external-link-alt"></i>{{assigned_by.github_id}}</a>)</p>
+              <p><strong><i class="fas fa-tasks"></i> Task:</strong> {{description}}</p>
+              <p><strong><a class="github-id" href={{repository_link}} target="_blank"><i
+                      class="fas fa-external-link-alt"></i>Link To Repository</strong></a></p>
+            </div>
+        {{else}}
+          {{/ifCond}}
+        {{/each}}
+      </div>
     </div>
-    <a href="/api/user" class="btn">Back to Dashboard</a>
+  </div>
   </div>
   <!-- Scroll-to-top button -->
   <div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
@@ -241,6 +347,70 @@
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tasks = document.querySelectorAll('.task');
+      const columns = document.querySelectorAll('.column');
+
+      tasks.forEach(task => {
+        task.addEventListener('dragstart', (e) => {
+          task.classList.add('dragging');
+          requestAnimationFrame(() => task.style.opacity = "0.5");
+        });
+
+        task.addEventListener('dragend', () => {
+          task.classList.remove('dragging');
+          task.style.opacity = "1";
+        });
+      });
+
+      columns.forEach(column => {
+        column.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          const dragging = document.querySelector('.dragging');
+          const afterElement = getDragAfterElement(column, e.clientY);
+
+          column.classList.add('active-drop');
+
+          if (afterElement) {
+            column.insertBefore(dragging, afterElement);
+          } else {
+            column.appendChild(dragging);
+          }
+        });
+
+        column.addEventListener('dragenter', () => {
+          column.classList.add('highlight');
+        });
+
+        column.addEventListener('dragleave', () => {
+          column.classList.remove('highlight', 'active-drop');
+        });
+
+        column.addEventListener('drop', () => {
+          column.classList.remove('highlight', 'active-drop');
+        });
+      });
+
+      function getDragAfterElement(column, y) {
+        const draggableElements = [...column.querySelectorAll('.task:not(.dragging)')];
+        let closest = null;
+        let minOffset = Number.NEGATIVE_INFINITY;
+
+        draggableElements.forEach(child => {
+          const box = child.getBoundingClientRect();
+          const offset = y - box.top - box.height / 2;
+
+          if (offset < 0 && offset > minOffset) {
+            minOffset = offset;
+            closest = child;
+          }
+        });
+
+        return closest;
       }
     });
   </script>

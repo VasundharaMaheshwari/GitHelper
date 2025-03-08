@@ -11,7 +11,7 @@ const chatload = async (req, res) => {
     const checker2 = ObjectId.isValid(req.user._id);
     if (checker2 && error.isEmpty()) {
       const { username, response } = req.body;
-      const checker = await Response.findOneAndUpdate({ '_id': response }, { 'approved': true, 'status': 'To Do' });
+      const checker = await Response.findOneAndUpdate({ '_id': response, approved: false, status: 'Not Approved' }, { 'approved': true, 'status': 'To Do' });
       if (checker) {
         return res.status(400).redirect(`/chat/chats?username=${username}`);
       } else {

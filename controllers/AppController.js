@@ -116,20 +116,19 @@ const save_response = async (req, res) => {
 const tracker = async (req, res) => {
   try {
     if (ObjectId.isValid(req.user._id)) {
-      const responses = await Response.find({ $or: [{ 'responder.uid': req.user._id }, { 'creator': req.user._id }], 'approved': true, $nor: [{ 'status': 'Accepted' }, { 'status': 'Not Approved' }] });
+      const responses = await Response.find({ 'responder.uid': req.user._id, 'approved': true, $nor: [{ 'status': 'Accepted' }, { 'status': 'Not Approved' }] });
       const tasks = [];
       for (const response of responses) {
         const issue_id = response.issue;
-        const responder_uid = response.responder.uid;
         const creator = response.creator;
         const assignedAt = response.updatedAt;
         const status = response.status;
 
         const issue = await Issue.findById(issue_id);
-        const assignedTo = await GHUser.findById(responder_uid);
         const assignedBy = await GHUser.findById(creator);
+        const repository = issue.repo_link;
 
-        if (!issue || !assignedBy || !assignedTo || !status) {
+        if (!issue || !assignedBy) {
           continue;
         }
 
@@ -138,12 +137,9 @@ const tracker = async (req, res) => {
             username: assignedBy.username,
             github_id: assignedBy.github_id.id
           },
-          assigned_to: {
-            username: assignedTo.username,
-            github_id: assignedTo.github_id.id
-          },
           description: issue.description,
           assigned_at: assignedAt,
+          repository_link: repository,
           status: status
         };
 
