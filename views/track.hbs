@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Task Tracking Board</title>
-
+  <title>User Page</title>
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     * {
       margin: 0;
@@ -26,124 +24,214 @@
       background-attachment: fixed;
       background-size: cover;
       color: white;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 20px;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      z-index: -1;
+    }
+
+        /* Navbar Styling */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    .logo span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .nav-buttons a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .nav-buttons a:hover::after {
+      width: 100%;
+    }
+
+    .nav-buttons a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
       padding: 30px;
       border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      text-align: center;
-      width: 80%;
-      height: 90%;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(15px);
+      width: 90%;
+      max-width: 1000px;
+      margin-top: 100px;
       display: flex;
       flex-direction: column;
     }
 
-    header {
-      text-align: left;
-      margin-bottom: 20px;
+    header h1 {
+      font-size: 36px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+      text-shadow: 3px 3px 12px rgba(0, 114, 255, 0.8);
     }
 
-    h1 {
-      font-size: 26px;
-      color: white;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 14px;
-      color: white;
+    header p {
+      font-size: 22px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.5);
     }
 
     .board {
       display: flex;
       justify-content: space-between;
       gap: 20px;
-      flex-grow: 1;
+      padding: 20px 0;
     }
 
     .column {
-      width: 425px;
-      background: white;
-      padding: 50px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 50px;
-      justify-content: center;
-      min-height: 400px; /* Ensures enough space for dropping */
+      flex: 1;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
+      min-height: 450px;
+      backdrop-filter: blur(15px);
     }
 
     .column h2 {
-      background: #0056b3;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
       color: white;
-      padding: 10px;
-      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
       text-align: center;
-      border-radius: 5px;
       margin-bottom: 10px;
+      text-shadow: 3px 3px 12px rgba(0, 114, 255, 0.8);
     }
 
-    /* Make tasks square */
     .task {
-      width: 130px;
-      height: 130px;
+      width: 140px;
+      height: 140px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       font-weight: bold;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-      cursor: grab;
       border-radius: 10px;
-      transition: transform 0.2s ease-in-out;
+      cursor: grab;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     /* Sticky Note Colors */
-    .task:nth-child(1) { background: #ffeb3b; transform: rotate(-2deg); } /* Yellow */
-    .task:nth-child(2) { background: #ff9800; transform: rotate(2deg); } /* Orange */
-    .task:nth-child(3) { background: #4caf50; transform: rotate(-3deg); } /* Green */
-    .task:nth-child(4) { background: #03a9f4; transform: rotate(3deg); } /* Blue */
-    .task:nth-child(5) { background: #e91e63; transform: rotate(-1deg); } /* Pink */
-    .task:nth-child(6) { background: purple; transform: rotate(1deg); } /* Purple */
+    .task:nth-child(odd) { background: linear-gradient(135deg, #ff7f50, #ffb347); }
+    .task:nth-child(even) { background: linear-gradient(135deg, #72d572, #4dd0e1); }
+    .task:nth-child(5) { background: linear-gradient(135deg, #ba68c8, #ff8a80); }
 
-    /* Hover Effect */
     .task:hover {
-      transform: scale(1.05) rotate(0deg); /* Straightens on hover */
+      transform: scale(1.1) rotate(2deg);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
     }
 
-    /* Dragging Effect */
     .dragging {
-      opacity: 0.5;
-      transform: scale(1.1);
+      opacity: 0.6;
+      transform: scale(1.2) rotate(-2deg);
     }
-
   </style>
 </head>
 <body>
 
+  <div class="navbar">
+    <div class="logo">
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <span>Git Helper</span>
+    </div>
+    <div class="nav-buttons">
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/api/user"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+
 <div class="container">
     <header>
-        <h1>DASHBOARD</h1>
-        <p>Keep track of your operations.</p>
+        <h1>YOUR DASHBOARD</h1>
+        <p>Manage and monitor your workflow with ease.</p>
     </header>
 
     <div class="board">
         <div class="column" id="todo">
-            <h2>To Do</h2>
+            <h2>To-Do List</h2>
             <div class="task" draggable="true">Task 1</div>
             <div class="task" draggable="true">Task 2</div>
             <div class="task" draggable="true">Task 3</div>
@@ -153,7 +241,7 @@
         </div>
 
         <div class="column" id="working">
-            <h2>Working</h2>
+            <h2>In Progress</h2>
         </div>
 
         <div class="column" id="completed">
@@ -163,28 +251,56 @@
 </div>
 
 <script>
-  // Drag and Drop Functionality
-  const tasks = document.querySelectorAll('.task');
-  const columns = document.querySelectorAll('.column');
+  document.addEventListener('DOMContentLoaded', () => {
+      const tasks = document.querySelectorAll('.task');
+      const columns = document.querySelectorAll('.column');
 
-  tasks.forEach(task => {
-      task.addEventListener('dragstart', () => {
-          task.classList.add('dragging');
+      tasks.forEach(task => {
+          task.addEventListener('dragstart', (e) => {
+              task.classList.add('dragging');
+              setTimeout(() => task.style.opacity = "0.5", 0); // Smooth transition
+          });
+
+          task.addEventListener('dragend', () => {
+              task.classList.remove('dragging');
+              task.style.opacity = "1";
+          });
       });
 
-      task.addEventListener('dragend', () => {
-          task.classList.remove('dragging');
+      columns.forEach(column => {
+          column.addEventListener('dragover', (e) => {
+              e.preventDefault();
+              const dragging = document.querySelector('.dragging');
+              const afterElement = getDragAfterElement(column, e.clientY);
+              if (afterElement) {
+                  column.insertBefore(dragging, afterElement);
+              } else {
+                  column.appendChild(dragging);
+              }
+          });
+
+          column.addEventListener('dragenter', () => {
+              column.classList.add('highlight');
+          });
+
+          column.addEventListener('dragleave', () => {
+              column.classList.remove('highlight');
+          });
+
+          column.addEventListener('drop', () => {
+              column.classList.remove('highlight');
+          });
       });
+
+      function getDragAfterElement(column, y) {
+          const draggableElements = [...column.querySelectorAll('.task:not(.dragging)')];
+          return draggableElements.reduce((closest, child) => {
+              const box = child.getBoundingClientRect();
+              const offset = y - box.top - box.height / 2;
+              return offset < 0 && offset > closest.offset ? { offset, element: child } : closest;
+          }, { offset: Number.NEGATIVE_INFINITY }).element;
+      }
   });
-
-  columns.forEach(column => {
-      column.addEventListener('dragover', (e) => {
-          e.preventDefault();
-          const dragging = document.querySelector('.dragging');
-          column.appendChild(dragging);
-      });
-  });
-
 </script>
 
 </body>
