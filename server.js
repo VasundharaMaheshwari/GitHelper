@@ -197,7 +197,7 @@ app.use(passport.initialize());
 passport.use('github', new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: 'http://localhost:3000/auth/github/callback',
+  callbackURL: 'https://githelper-r4a0.onrender.com/auth/github/callback',
   passReqToCallback: true
 },
 async function (req, accessToken, refreshToken, profile, done) {
@@ -231,7 +231,7 @@ async function (req, accessToken, refreshToken, profile, done) {
 passport.use('github-refresh', new GitHubStrategy({
   clientID: process.env.REFRESH_ID,
   clientSecret: process.env.REFRESH_SECRET,
-  callbackURL: 'http://localhost:3000/api/refresh/callback',
+  callbackURL: 'https://githelper-r4a0.onrender.com/api/refresh/callback',
   passReqToCallback: true
 },
 async function (req, accessToken, refreshToken, profile, done) {
