@@ -18,4 +18,3 @@ IF ISSUE CONTACT ME DONT CRISIS CONTROL
 Paths
 
 /api/redeem
-/api/track
