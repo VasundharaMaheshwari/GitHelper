@@ -127,6 +127,7 @@ const tracker = async (req, res) => {
         const issue = await Issue.findById(issue_id);
         const assignedBy = await GHUser.findById(creator);
         const repository = issue.repo_link;
+        const taskId = response._id;
 
         if (!issue || !assignedBy) {
           continue;
@@ -140,7 +141,8 @@ const tracker = async (req, res) => {
           description: issue.description,
           assigned_at: assignedAt,
           repository_link: repository,
-          status: status
+          status: status,
+          taskId: taskId
         };
 
         tasks.push(task);

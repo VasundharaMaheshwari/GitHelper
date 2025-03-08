@@ -108,13 +108,12 @@
     }
 
     .column h2 {
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
       color: white;
       padding: 12px;
       border-radius: 6px;
       text-align: center;
       margin-bottom: 10px;
-      text-shadow: 3px 3px 12px rgba(0, 114, 255, 0.8);
+      font-size: x-large;
     }
 
     .task {
@@ -151,10 +150,6 @@
 
     .task:nth-child(even) {
       background: linear-gradient(135deg, #72d572, #4dd0e1);
-    }
-
-    .task:nth-child(5) {
-      background: linear-gradient(135deg, #ba68c8, #ff8a80);
     }
 
     .task:hover {
@@ -260,6 +255,28 @@
       background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
       transform: scale(1.15);
     }
+
+    .mod-btn {
+      padding: 10px 21px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 12px;
+      font-size: 16px;
+    }
+
+    .mod-btn:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.02);
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -289,6 +306,7 @@
               <p><strong><i class="fas fa-tasks"></i> Task:</strong> {{description}}</p>
               <p><strong><a class="github-id" href="{{repository_link}}" target="_blank"><i
                       class="fas fa-external-link-alt"></i>Link To Repository</strong></a></p>
+              <button class="mod-btn" data-task-id="{{taskId}}">Move to In Progress</button>
             </div>
         {{else}}
           {{/ifCond}}
@@ -306,6 +324,7 @@
               <p><strong><i class="fas fa-tasks"></i> Task:</strong> {{description}}</p>
               <p><strong><a class="github-id" href="{{repository_link}}" target="_blank"><i
                       class="fas fa-external-link-alt"></i>Link To Repository</strong></a></p>
+              <button class="mod-btn" data-task-id="{{taskId}}">Move to Completed</button>
             </div>
         {{else}}
           {{/ifCond}}
@@ -343,6 +362,12 @@
       } else {
         navbar.classList.remove('scrolled');
       }
+    });
+    document.querySelectorAll('.mod-btn').forEach(button => {
+      button.addEventListener('click', function () {
+        const taskId = this.getAttribute('data-task-id'); // Get the task ID from the button
+        window.location.href = `/query/update/${taskId}`; // Redirect with task ID as a query parameter
+      });
     });
   </script>
 </body>
