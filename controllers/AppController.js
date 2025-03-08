@@ -34,7 +34,7 @@ const save = async (req, res) => {
       const regex = /^[a-zA-Z0-9_]+$/;
       const checker = regex.test(req.user.username);
       if (checker) {
-        const check = await Issue.findOne({ repo_link: repo_link });
+        const check = await Issue.findOne({ repo_link: repo_link, 'completed': false });
         if (check === null) {
           const trial = new Issue({
             username: req.user.username,
@@ -65,7 +65,7 @@ const list = async (req, res) => {
     const regex = /^[a-zA-Z0-9_]+$/;
     const checker = regex.test(req.user.username);
     if (checker) {
-      const issues = await Issue.find({ username: req.user.username }).lean().exec();
+      const issues = await Issue.find({ username: req.user.username, completed: false }).lean().exec();
       return res.status(200).render('main.hbs', {
         layout: 'issues.hbs',
         issues: issues
@@ -116,19 +116,20 @@ const save_response = async (req, res) => {
 const tracker = async (req, res) => {
   try {
     if (ObjectId.isValid(req.user._id)) {
-      const responses = await Response.find({ $or: [{ 'responder.uid': req.user._id }, { 'creator': req.user._id }], 'approved': true });
+      const responses = await Response.find({ $or: [{ 'responder.uid': req.user._id }, { 'creator': req.user._id }], 'approved': true, $nor: [{ 'status': 'Accepted' }, { 'status': 'Not Approved' }] });
       const tasks = [];
       for (const response of responses) {
         const issue_id = response.issue;
         const responder_uid = response.responder.uid;
         const creator = response.creator;
         const assignedAt = response.updatedAt;
+        const status = response.status;
 
         const issue = await Issue.findById(issue_id);
         const assignedTo = await GHUser.findById(responder_uid);
         const assignedBy = await GHUser.findById(creator);
 
-        if (!issue || !assignedBy || !assignedTo) {
+        if (!issue || !assignedBy || !assignedTo || !status) {
           continue;
         }
 
@@ -142,7 +143,8 @@ const tracker = async (req, res) => {
             github_id: assignedTo.github_id.id
           },
           description: issue.description,
-          assigned_at: assignedAt
+          assigned_at: assignedAt,
+          status: status
         };
 
         tasks.push(task);

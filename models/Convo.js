@@ -10,11 +10,6 @@ const Convo_Schema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'GHUser'
-  },
-  'response': {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'Response'
   }
 },
 { timestamps: true });

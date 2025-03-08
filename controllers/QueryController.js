@@ -11,7 +11,7 @@ const edit = async (req, res) => {
     if (errors.isEmpty()) {
       const { queryId } = req.query;
       if (ObjectId.isValid(queryId) && ObjectId.isValid(req.user._id)) {
-        const issue = await Issue.findOne({ '_id': queryId, 'createdBy': req.user._id });
+        const issue = await Issue.findOne({ '_id': queryId, 'createdBy': req.user._id, completed: false });
         if (issue === null) {
           return res.status(404).redirect('/error?error_details=Query_Does_Not_Exist');
         }
@@ -43,7 +43,7 @@ const delete_query = async (req, res) => {
       const regex = /^[a-zA-Z0-9_]+$/;
       const checker = regex.test(req.user.username);
       if (ObjectId.isValid(queryId) && checker) {
-        const issue = await Issue.findOneAndDelete({ '_id': queryId, 'username': req.user.username });
+        const issue = await Issue.findOneAndDelete({ '_id': queryId, 'username': req.user.username, 'completed': false });
         if (issue) {
           const responses = await Response.find({ 'issue': queryId }).lean();
 
@@ -80,7 +80,7 @@ const show_res = async (req, res) => {
     if (errors.isEmpty()) {
       const { queryId } = req.query;
       if (ObjectId.isValid(queryId) && ObjectId.isValid(req.user._id)) {
-        const responses = await Response.find({ 'issue': queryId, 'creator': req.user._id }).lean().exec();
+        const responses = await Response.find({ 'issue': queryId, 'creator': req.user._id, $nor: [{ 'status': 'Accepted' }] }).lean().exec();
         return res.status(200).render('main.hbs', {
           layout: 'responses.hbs',
           responses: responses
@@ -104,7 +104,7 @@ const save_edit = async (req, res) => {
       const regex = /^[a-zA-Z0-9_]+$/;
       const checker = regex.test(req.user.username);
       if (ObjectId.isValid(queryId) && checker) {
-        const second = await Issue.findOne({ 'repo_link': repo_link, 'createdBy': req.user._id });
+        const second = await Issue.findOne({ 'repo_link': repo_link, 'createdBy': req.user._id, completed: false });
         if (queryId.toString() === second._id.toString() && second.username === req.user.username) {
           const first = await Issue.findOneAndUpdate({ '_id': queryId }, {
             // username: req.user.username,

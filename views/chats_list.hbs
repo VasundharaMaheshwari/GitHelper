@@ -185,7 +185,7 @@
       <div class="user-list-container" id="userList">
         {{#if users.length}}
           {{#each users}}
-            <div class="user" data-username="{{this.username}}" data-resid="{{this.response}}">
+            <div class="user" data-username="{{this.username}}">
               <span class="username"><i class="fas fa-user-circle"></i>{{this.username}}</span>
             </div>
           {{/each}}
@@ -206,7 +206,7 @@
       user.addEventListener('click', () => {
         const username = user.getAttribute('data-username');
         const resId = user.getAttribute('data-resid');
-        window.location.href = `/chat/chats?username=${username}&resId=${resId}`;
+        window.location.href = `/chat/chats?username=${username}`;
       });
     });
   </script>

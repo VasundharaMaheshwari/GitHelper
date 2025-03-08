@@ -11,9 +11,9 @@ const chatload = async (req, res) => {
     const checker2 = ObjectId.isValid(req.user._id);
     if (checker2 && error.isEmpty()) {
       const { username, response } = req.body;
-      const checker = await Response.findOneAndUpdate({ '_id': response }, { 'approved': true });
+      const checker = await Response.findOneAndUpdate({ '_id': response }, { 'approved': true, 'status': 'To Do' });
       if (checker) {
-        return res.status(400).redirect(`/chat/chats?username=${username}&resId=${response}`);
+        return res.status(400).redirect(`/chat/chats?username=${username}`);
       } else {
         return res.status(400).redirect('/error?error_details=Invalid_URL');
       }
@@ -62,26 +62,25 @@ const chatlist = async (req, res) => {
 const chatting = async (req, res) => {
   try {
     if (ObjectId.isValid(req.user._id)) {
-      const { username, resId } = req.query;
+      const { username } = req.query;
       const receiver = await GHUser.findOne({ 'username': username });
       if (!receiver || receiver._id.toString() === req.user._id.toString()) {
         return res.status(404).redirect('/error?error_details=Receiver_Not_Found');
       }
-      const response_check = await Response.findOne({ '_id': resId, $or: [{ 'responder.uid': receiver._id }, { 'creator': receiver._id }] });
+      const response_check = await Response.findOne({ $or: [{ 'responder.uid': receiver._id }, { 'creator': receiver._id }] });
       if (!response_check) {
         return res.status(404).redirect('/error?error_details=Response_Not_Found');
       }
-      const convo_check = await Convo.findOne({ 'response': resId });
+      const convo_check = await Convo.findOne({ $or: [{ 'initiator': receiver._id }, { 'receiver': receiver._id }] });
       if (convo_check === null) {
         const convo_ = new Convo({
           initiator: req.user._id,
-          receiver: receiver._id,
-          response: resId
+          receiver: receiver._id
         });
         await convo_.save();
       }
 
-      const convo = await Convo.findOne({ 'response': resId });
+      const convo = await Convo.findOne({ $or: [{ 'initiator': receiver._id }, { 'receiver': receiver._id }] });
 
       const msg = await Msg.find({ convoId: convo._id }).sort({ createdAt: 1 });
 
