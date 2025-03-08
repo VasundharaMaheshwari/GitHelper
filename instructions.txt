@@ -6,10 +6,10 @@ Steps -
 
 Repeating the below Steps
 2) add files to this folder for everything except user pages and chatting --> do admin tho
-3) git pull origin main
+3) git pull origin frontend
 4) git add .
 5) git commit -m "SOME BS HERE"
-6) git push origin main
+6) git push origin frontend
 
 HAPPY HAPPY!
 
