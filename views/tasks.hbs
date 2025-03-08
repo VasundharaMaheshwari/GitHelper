@@ -162,11 +162,6 @@
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
     }
 
-    .dragging {
-      opacity: 0.7;
-      transform: scale(1.15) rotate(-2deg);
-    }
-
     .board {
       display: flex;
       justify-content: space-between;
@@ -286,7 +281,7 @@
         <h2>To-Do List</h2>
         {{#each tasks}}
           {{#ifCond status "To Do"}}
-            <div class="task" draggable="true">
+            <div class="task">
               <p><strong><i class="fas fa-calendar-alt"></i> Assigned at:</strong> {{assigned_at}}</p>
               <p><strong><i class="fas fa-user-check"></i>Assigned by:</strong> {{assigned_by.username}} (GitHub: <a
                   class="github-id" href="https://github.com/{{assigned_by.github_id}}" target="_blank"><i
@@ -303,7 +298,7 @@
         <h2>In Progress</h2>
         {{#each tasks}}
           {{#ifCond status "Working"}}
-            <div class="task" draggable="true">
+            <div class="task">
               <p><strong><i class="fas fa-calendar-alt"></i> Assigned at:</strong> {{assigned_at}}</p>
               <p><strong><i class="fas fa-user-check"></i>Assigned by:</strong> {{assigned_by.username}} (GitHub: <a
                   class="github-id" href="https://github.com/{{assigned_by.github_id}}" target="_blank"><i
@@ -320,7 +315,7 @@
         <h2>Completed</h2>
         {{#each tasks}}
           {{#ifCond status "Completed"}}
-            <div class="task" draggable="true">
+            <div class="task">
               <p><strong><i class="fas fa-calendar-alt"></i> Assigned at:</strong> {{assigned_at}}</p>
               <p><strong><i class="fas fa-user-check"></i>Assigned by:</strong> {{assigned_by.username}} (GitHub: <a
                   class="github-id" href="https://github.com/{{assigned_by.github_id}}" target="_blank"><i
@@ -347,70 +342,6 @@
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
-      }
-    });
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const tasks = document.querySelectorAll('.task');
-      const columns = document.querySelectorAll('.column');
-
-      tasks.forEach(task => {
-        task.addEventListener('dragstart', (e) => {
-          task.classList.add('dragging');
-          requestAnimationFrame(() => task.style.opacity = "0.5");
-        });
-
-        task.addEventListener('dragend', () => {
-          task.classList.remove('dragging');
-          task.style.opacity = "1";
-        });
-      });
-
-      columns.forEach(column => {
-        column.addEventListener('dragover', (e) => {
-          e.preventDefault();
-          const dragging = document.querySelector('.dragging');
-          const afterElement = getDragAfterElement(column, e.clientY);
-
-          column.classList.add('active-drop');
-
-          if (afterElement) {
-            column.insertBefore(dragging, afterElement);
-          } else {
-            column.appendChild(dragging);
-          }
-        });
-
-        column.addEventListener('dragenter', () => {
-          column.classList.add('highlight');
-        });
-
-        column.addEventListener('dragleave', () => {
-          column.classList.remove('highlight', 'active-drop');
-        });
-
-        column.addEventListener('drop', () => {
-          column.classList.remove('highlight', 'active-drop');
-        });
-      });
-
-      function getDragAfterElement(column, y) {
-        const draggableElements = [...column.querySelectorAll('.task:not(.dragging)')];
-        let closest = null;
-        let minOffset = Number.NEGATIVE_INFINITY;
-
-        draggableElements.forEach(child => {
-          const box = child.getBoundingClientRect();
-          const offset = y - box.top - box.height / 2;
-
-          if (offset < 0 && offset > minOffset) {
-            minOffset = offset;
-            closest = child;
-          }
-        });
-
-        return closest;
       }
     });
   </script>

@@ -2,6 +2,7 @@ const { Issue } = require('../models/Issue');
 const { ObjectId } = require('mongodb');
 const { validationResult } = require('express-validator');
 const { GHUser } = require('../models/GHUser');
+const { Response } = require('../models/Response');
 
 const refresh = async (req, res) => {
   try {
@@ -34,7 +35,8 @@ const details = async (req, res) => {
         const usernameRegex = /^[a-zA-Z0-9_]+$/;
         const usernameGH = (req) => usernameRegex.test(req.user?.username);
         const usercheck = usernameGH ? req.user?.username : null;
-        if (user?.role === 'Admin' || usercheck === issue_details.username) {
+        const resp_check = await Response.findOne({ 'responder.uid': req.user?._id, issue: issue_details._id });
+        if (user?.role === 'Admin' || usercheck === issue_details.username || resp_check) {
           user = null;
         }
         if (issue_details !== null) {
