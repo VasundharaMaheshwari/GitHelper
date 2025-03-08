@@ -159,4 +159,36 @@ const tracker = async (req, res) => {
   }
 };
 
-module.exports = { create, save, list, save_response, tracker };
+const taskStatusUpdate = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const taskId = req.params.id;
+      if (ObjectId.isValid(taskId) && ObjectId.isValid(req.user._id)) {
+        const resp_check = await Response.findOne({ 'responder.uid': req.user._id, '_id': taskId });
+        if (resp_check) {
+          switch (resp_check.status) {
+          case 'To Do':
+            await Response.findByIdAndUpdate(taskId, { status: 'Working' });
+            break;
+          case 'Working':
+            await Response.findByIdAndUpdate(taskId, { status: 'Completed' });
+            break;
+          default:
+            break;
+          }
+          return res.status(201).redirect('/query/track');
+        } else {
+          return res.status(404).redirect('/error?error_details=Task_Not_Found');
+        }
+      } else {
+        return res.status(403).redirect('/error?error_details=Not_Allowed');
+      }
+    }
+    return res.send('Oops! Error Occurred...');
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
+  }
+};
+
+module.exports = { create, save, list, save_response, tracker, taskStatusUpdate };
