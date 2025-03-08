@@ -25,4 +25,8 @@ APIRouter.get('/links', (req, res) => {
   return res.status(201).redirect('/api/refresh');
 });
 
+APIRouter.get('/update/:id', (req, res) => {
+  res.json({ 'received': req.params.id });
+});
+
 module.exports = APIRouter;

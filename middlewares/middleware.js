@@ -3,6 +3,7 @@ const { Response } = require('../models/Response');
 const { GHUser } = require('../models/GHUser');
 const { OTP } = require('../models/OTP');
 const { default: mongoose } = require('mongoose');
+const { Issue } = require('../models/Issue');
 
 const restrict = async (req, res, next) => {
   if (req.signedCookies?.refresh) {
@@ -142,6 +143,12 @@ const query_check = async (req, res, next) => {
   if (!ObjectId.isValid(queryId)) {
     return res.status(404).redirect('/query/list');
   }
+
+  const query = await Issue.findOne({ _id: queryId, completed: false });
+  if (!query) {
+    return res.status(404).redirect('/query/list');
+  }
+
   req.user = user;
   next();
 };
@@ -170,19 +177,19 @@ const chat_check = async (req, res, next) => {
 
     return res.status(400).redirect('/auth/github');
   }
-  const { resId } = req.query;
-  if (!ObjectId.isValid(resId)) {
-    return res.status(404).redirect('/query/list');
-  }
+  // const { resId } = req.query;
+  // if (!ObjectId.isValid(resId)) {
+  //   return res.status(404).redirect('/query/list');
+  // }
 
-  const response_approved = await Response.findOne({ '_id': resId, $or: [{ 'responder.uid': user._id }, { 'creator': user._id }] });
+  const response_approved = await Response.findOne({ $or: [{ 'responder.uid': user._id }, { 'creator': user._id }], $nor: [{ 'status': 'Not Approved' }, { 'status': 'Accepted' }] });
 
   if (!response_approved) {
     return res.status(404).redirect('/query/list');
   }
 
-  if (!response_approved.approved) {
-    return res.status(404).redirect('/error?error_details=Not_Allowed_Response_Approval_Pending');
+  if (!response_approved.approved || (response_approved.status !== 'To Do' && response_approved.status !== 'Working' && response_approved.status !== 'Completed')) {
+    return res.status(404).redirect('/error?error_details=Not_Allowed_Response_Approval_Missing');
   }
 
   req.user = user;

@@ -34,7 +34,7 @@ const save = async (req, res) => {
       const regex = /^[a-zA-Z0-9_]+$/;
       const checker = regex.test(req.user.username);
       if (checker) {
-        const check = await Issue.findOne({ repo_link: repo_link });
+        const check = await Issue.findOne({ repo_link: repo_link, 'completed': false });
         if (check === null) {
           const trial = new Issue({
             username: req.user.username,
@@ -65,7 +65,7 @@ const list = async (req, res) => {
     const regex = /^[a-zA-Z0-9_]+$/;
     const checker = regex.test(req.user.username);
     if (checker) {
-      const issues = await Issue.find({ username: req.user.username }).lean().exec();
+      const issues = await Issue.find({ username: req.user.username, completed: false }).lean().exec();
       return res.status(200).render('main.hbs', {
         layout: 'issues.hbs',
         issues: issues
@@ -99,7 +99,7 @@ const save_response = async (req, res) => {
             approved: false
           });
           await response_.save();
-          return res.status(201).redirect('/home#queries');
+          return res.status(201).redirect(`/home/view?_id=${issue_id}`);
         } else {
           return res.status(403).redirect('/error?error_details=Already_Responded');
         }
@@ -116,19 +116,20 @@ const save_response = async (req, res) => {
 const tracker = async (req, res) => {
   try {
     if (ObjectId.isValid(req.user._id)) {
-      const responses = await Response.find({ $or: [{ 'responder.uid': req.user._id }, { 'creator': req.user._id }], 'approved': true });
+      const responses = await Response.find({ 'responder.uid': req.user._id, 'approved': true, $nor: [{ 'status': 'Accepted' }, { 'status': 'Not Approved' }] });
       const tasks = [];
       for (const response of responses) {
         const issue_id = response.issue;
-        const responder_uid = response.responder.uid;
         const creator = response.creator;
         const assignedAt = response.updatedAt;
+        const status = response.status;
 
         const issue = await Issue.findById(issue_id);
-        const assignedTo = await GHUser.findById(responder_uid);
         const assignedBy = await GHUser.findById(creator);
+        const repository = issue.repo_link;
+        const taskId = response._id;
 
-        if (!issue || !assignedBy || !assignedTo) {
+        if (!issue || !assignedBy) {
           continue;
         }
 
@@ -137,12 +138,11 @@ const tracker = async (req, res) => {
             username: assignedBy.username,
             github_id: assignedBy.github_id.id
           },
-          assigned_to: {
-            username: assignedTo.username,
-            github_id: assignedTo.github_id.id
-          },
           description: issue.description,
-          assigned_at: assignedAt
+          assigned_at: assignedAt,
+          repository_link: repository,
+          status: status,
+          taskId: taskId
         };
 
         tasks.push(task);

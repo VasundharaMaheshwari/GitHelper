@@ -48,6 +48,16 @@ const GHUser_Schema = new Schema({
   repos: {
     type: [String],
     default: []
+  },
+  total_points: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  balance: {
+    type: Number,
+    required: true,
+    default: 0
   }
 },
 { timestamps: true });

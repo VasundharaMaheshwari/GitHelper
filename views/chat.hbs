@@ -251,7 +251,8 @@
 
 <body>
   <div class="header">
-    <button class="back-btn" onclick="window.history.back()"><i class="fas fa-arrow-left"></i></button>
+    <button class="back-btn" onclick="window.location.href = document.referrer"><i
+        class="fas fa-arrow-left"></i></button>
     <i class="fas fa-comments"></i> Chat with {{receiverUsername}}
   </div>
   <div class="chat-container" id="chat-container">

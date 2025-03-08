@@ -30,6 +30,11 @@ const Response_Schema = new Schema({
     type: Boolean,
     required: true,
     default: false
+  },
+  status: {
+    type: String,
+    enum: ['Not Approved', 'To Do', 'Working', 'Completed', 'Accepted'],
+    default: 'Not Approved'
   }
 }, { timestamps: true });
 

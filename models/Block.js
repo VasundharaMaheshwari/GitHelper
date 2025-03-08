@@ -10,6 +10,11 @@ const Block_Schema = new Schema({
     type: String,
     required: true,
     unique: true
+  },
+  'blocked': {
+    type: Boolean,
+    required: true,
+    default: true
   }
 },
 { timestamps: true });
