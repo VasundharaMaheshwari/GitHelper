@@ -81,4 +81,10 @@ UserRouter.get('/refresh/callback', gitRefreshCheck,
     })(req, res, next);
   });
 
+//temporary
+
+UserRouter.get('/redeem', (req, res) => {
+  return res.render('redeem.hbs');
+});
+
 module.exports = UserRouter;

@@ -13,3 +13,7 @@ Repeating the below Steps
 HAPPY HAPPY!
 
 IF ISSUE CONTACT ME DONT CRISIS CONTROL
+
+Paths
+
+/api/redeem
