@@ -14,7 +14,7 @@ const loader = async (req, res) => {
   try {
     if (ObjectId.isValid(req.user._id)) {
       const user = await GHUser.findOne({ '_id': req.user._id });
-      const issues = await Issue.find().lean().exec();
+      const issues = await Issue.find({ completed: false }).lean().exec();
       return res.status(200).render('main.hbs', {
         layout: 'home_admin.hbs',
         user: user,
@@ -35,19 +35,21 @@ const deleter = async (req, res) => {
       const { _id } = req.query;
       if (ObjectId.isValid(_id)) {
 
-        const stat = await Issue.findOneAndDelete({ '_id': _id });
+        const stat = await Issue.findOneAndDelete({ '_id': _id, completed: false });
 
-        const responses = await Response.find({ 'issue': _id }).lean();
-        const respDelete = await Response.deleteMany({ 'issue': _id }).lean().exec();
+        // const responses = await Response.find({ 'issue': _id, 'status': { $nin: ['Accepted'] } }).lean();
+        const extra = await Response.updateMany({ 'issue': _id, status: 'Accepted' }, { extra: stat }).lean().exec();
 
-        const responseIds = responses.map(resp => resp._id);
-        const convos = await Convo.find({ 'response': { $in: responseIds } }).lean();
-        const conDelete = await Convo.deleteMany({ 'response': { $in: responseIds } }).lean().exec();
+        const respDeleteStatus = await Response.deleteMany({ 'issue': _id, status: { $nin: ['Accepted'] } }).lean().exec();
 
-        const convoIds = convos.map(con => con._id);
-        const msgDelete = await Msg.deleteMany({ 'convoId': { $in: convoIds } }).lean().exec();
+        // const responseIds = responses.map(resp => resp._id);
+        // const convos = await Convo.find({ 'response': { $in: responseIds } }).lean();
+        // const conDelete = await Convo.deleteMany({ 'response': { $in: responseIds } }).lean().exec();
 
-        if (stat && respDelete && conDelete && msgDelete) {
+        // const convoIds = convos.map(con => con._id);
+        // const msgDelete = await Msg.deleteMany({ 'convoId': { $in: convoIds } }).lean().exec();
+
+        if (stat && extra && respDeleteStatus) {
           return res.status(200).redirect('/admin/home');
         } else {
           return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query');
@@ -88,12 +90,18 @@ const usermod = async (req, res) => {
         const user = await GHUser.findOne({ '_id': _id });
         if (user.role !== 'Admin') {
           const user_resp = await GHUser.findOneAndDelete({ '_id': _id });
-          const issue_resp = await Issue.deleteMany({ 'createdBy': _id });
-          const resp_resp = await Response.deleteMany({
-            $or: [
-              { 'responder.uid': _id }, { 'creator': _id }
-            ]
+          const resp_resp = await Response.deleteMany({ 'responder.uid': _id });
+          const responses = await Response.find({ 'creator': _id, status: 'Accepted' });
+          for (const response of responses) {
+            const issue = await Issue.findOne({ '_id': response.issue });
+            if (issue) {
+              await Response.findByIdAndUpdate(response._id, { extra: issue });
+            }
+          }
+          const resp = await Response.deleteMany({
+            'creator': _id, status: { $nin: ['Accepted'] }
           });
+          const issue_resp = await Issue.deleteMany({ 'createdBy': _id, completed: false });
           const con_resp = await Convo.deleteMany({
             $or: [
               { 'initiator': _id }, { 'receiver': _id }
@@ -118,7 +126,7 @@ const usermod = async (req, res) => {
           const sessionCollection = mongoose.connection.collection('sessions');
           const sess_resp = await sessionCollection.deleteMany({ 'session.userId': user._id });
 
-          if (user_resp && issue_resp && resp_resp && con_resp && msg_resp && sess_resp && OTP_resp && OTP_verify) {
+          if (user_resp && issue_resp && resp_resp && con_resp && msg_resp && sess_resp && OTP_resp && OTP_verify && resp) {
             return res.status(200).redirect('/admin/userlist');
           } else {
             return res.status(403).redirect('/error?error_details=Unable_To_Delete_User');

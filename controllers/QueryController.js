@@ -2,8 +2,6 @@ const { ObjectId } = require('mongodb');
 const { Issue } = require('../models/Issue');
 const { Response } = require('../models/Response');
 const { validationResult } = require('express-validator');
-const { Convo } = require('../models/Convo');
-const { Msg } = require('../models/Msg');
 
 const edit = async (req, res) => {
   try {
@@ -45,17 +43,19 @@ const delete_query = async (req, res) => {
       if (ObjectId.isValid(queryId) && checker) {
         const issue = await Issue.findOneAndDelete({ '_id': queryId, 'username': req.user.username, 'completed': false });
         if (issue) {
-          const responses = await Response.find({ 'issue': queryId }).lean();
+          // const responses = await Response.find({ 'issue': queryId }).lean();
 
-          const responseIds = responses.map(response => response._id);
+          // const responseIds = responses.map(response => response._id);
 
-          const respDeleteStatus = await Response.deleteMany({ 'issue': queryId }).lean().exec();
+          const extra = await Response.updateMany({ 'issue': queryId, status: 'Accepted' }, { extra: issue }).lean().exec();
 
-          const conDeleteStatus = await Convo.deleteMany({ 'response': { $in: responseIds } }).lean().exec();
+          const respDeleteStatus = await Response.deleteMany({ 'issue': queryId, status: { $nin: ['Accepted'] } }).lean().exec();
 
-          const msgDeleteStatus = await Msg.deleteMany({ 'issue': queryId }).lean().exec();
+          // const conDeleteStatus = await Convo.deleteMany({ 'response': { $in: responseIds } }).lean().exec();
 
-          if (respDeleteStatus && conDeleteStatus && msgDeleteStatus) {
+          // const msgDeleteStatus = await Msg.deleteMany({ 'issue': queryId }).lean().exec();
+
+          if (respDeleteStatus && extra) {
             return res.status(200).redirect('/query/list');
           } else {
             return res.status(403).redirect('/error?error_details=Unable_To_Delete_Query');

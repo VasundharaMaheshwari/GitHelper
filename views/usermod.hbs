@@ -358,8 +358,8 @@
         {{#each users}}
           <div class="user">
             <p><i class="fas fa-user"></i><strong>Username:</strong> {{username}}</p>
-            <p><i class="fas fa-envelope"></i><strong>Email:</strong> {{email}}</p>
-            <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> {{github_id}}</p>
+            <p><i class="fas fa-envelope"></i><strong>Email:</strong> {{email.address}}</p>
+            <p><i class="fab fa-github"></i><strong>GitHub ID:</strong> {{github_id.id}}</p>
             <p><i class="fas fa-calendar-alt"></i><strong>Registered At:</strong> {{createdAt}}</p>
             <div class="btn-container">
               <form action="/admin/delete-user" method="GET">

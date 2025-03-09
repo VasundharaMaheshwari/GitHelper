@@ -14,6 +14,8 @@ const restrict = async (req, res, next) => {
   }
   const user = await GHUser.findById(req.session.userId);
   if (!user) {
+    req.session.destroy();
+    res.clearCookie('session');
     return res.status(401).redirect('/api/login');
   }
 
@@ -61,6 +63,8 @@ const admin = async (req, res, next) => {
   }
   const user = await GHUser.findById(req.session.userId);
   if (!user) {
+    req.session.destroy();
+    res.clearCookie('session');
     return res.status(401).redirect('/api/login');
   }
 
@@ -108,6 +112,8 @@ const logOut = async (req, res, next) => {
   const UserUID = req.session?.userId;
   const user = await GHUser.findById(UserUID);
   if (!user) {
+    req.session.destroy();
+    res.clearCookie('session');
     return res.status(400).redirect('/api/login');
   }
 
@@ -124,6 +130,8 @@ const query_check = async (req, res, next) => {
   }
   const user = await GHUser.findById(req.session.userId);
   if (!user) {
+    req.session.destroy();
+    res.clearCookie('session');
     return res.status(401).redirect('/api/login');
   }
   if (user.role === 'Admin') {
@@ -162,6 +170,8 @@ const chat_check = async (req, res, next) => {
   }
   const user = await GHUser.findById(req.session.userId);
   if (!user) {
+    req.session.destroy();
+    res.clearCookie('session');
     return res.status(401).redirect('/api/login');
   }
   if (user.role === 'Admin') {
@@ -272,6 +282,8 @@ const gitRefreshCheck = async (req, res, next) => {
   const user = await GHUser.findById(incomplete);
 
   if (!user) {
+    req.session.destroy();
+    res.clearCookie('session');
     return res.status(401).redirect('/api/login');
   }
 
