@@ -1,6 +1,8 @@
 const { validationResult } = require('express-validator');
 const { Contact } = require('../models/Contact');
 const { transporter, emessage } = require('../services/mail');
+const { GHUser } = require('../models/GHUser');
+const { startOfMonth, endOfMonth } = require('date-fns');
 
 const error = (req, res) => {
   const errors = validationResult(req);
@@ -43,4 +45,24 @@ const contactus = async (req, res) => {
   }
 };
 
-module.exports = { error, contactus };
+const leaderboard = async (req, res) => {
+  try {
+    const startDate = startOfMonth(new Date());
+    const endDate = endOfMonth(new Date());
+
+    const topTenAll = await GHUser.find({ role: 'User' }).sort({ total_points: -1 }).limit(10).lean();
+    const topTenIds = topTenAll.map(user => user._id);
+
+    const topTenUpcoming = await GHUser.find({ createdAt: { $gte: startDate, $lte: endDate }, _id: { $nin: topTenIds }, role: 'User' }).sort({ total_points: -1 }).limit(10).lean();
+
+    return res.status(200).render('main.hbs', {
+      layout: 'leaderboard.hbs',
+      topTenAll: topTenAll,
+      topTenUpcoming: topTenUpcoming
+    });
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
+  }
+}
+
+module.exports = { error, contactus, leaderboard };
