@@ -175,7 +175,7 @@ const taskStatusUpdate = async (req, res) => {
             await Response.findByIdAndUpdate(taskId, { status: 'Completed' });
             break;
           default:
-            break;
+            return res.status(403).redirect('/error?error_details=Invalid_Status_Transition_Encountered');
           }
           return res.status(201).redirect('/query/track');
         } else {
