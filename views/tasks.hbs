@@ -205,7 +205,6 @@
       box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
     }
 
-
     .task span {
       display: block;
       margin-bottom: 8px;
@@ -215,7 +214,7 @@
       color: #f8f8f8;
       text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
     }
-    
+
     .task {
       background: linear-gradient(135deg, #66cdaa, #36b6e2);
       box-shadow: 0 6px 15px rgba(54, 182, 226, 0.4);
@@ -231,31 +230,29 @@
     }
 
     .task p {
-  margin-bottom: 8px;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.95);
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
-}
-
+      margin-bottom: 8px;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.95);
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+    }
 
     .task p i {
-  margin-right: 8px;
-  color: #f0f0f0;
-}
-
+      margin-right: 8px;
+      color: #f0f0f0;
+    }
 
     .task p a.github-id i {
-  margin-right: 0;
-}
+      margin-right: 0;
+    }
 
     .github-id {
-  color: #e3efff;
-  text-decoration: none;
-  font-weight: 700;
-  transition: color 0.3s ease, transform 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-}
+      color: #e3efff;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.3s ease, transform 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+    }
 
     .github-id i {
       margin-left: 5px;
@@ -266,24 +263,24 @@
     }
 
     .buttons {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
 
-.buttons a {
-  display: inline-block;
-  padding: 10px 22px;
-  background-image: linear-gradient(45deg, #5a0eb2, #1d5ae6);
-  color: #fff;
-  text-decoration: none;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: bold;
-  transition: background-image 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
-  position: relative;
-}
+    .buttons a {
+      display: inline-block;
+      padding: 10px 22px;
+      background-image: linear-gradient(45deg, #5a0eb2, #1d5ae6);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
 
     .buttons a::after {
       content: '';
@@ -307,30 +304,30 @@
     }
 
     .scroll-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-image: linear-gradient(45deg, #6a11cb, #2575fc);
-    color: white;
-    padding: 14px 20px;
-    border-radius: 50%;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    z-index: 1001;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 14px 20px;
+      border-radius: 50%;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .scroll-top:hover {
-    transform: scale(1.15);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
-  }
+    .scroll-top:hover {
+      transform: scale(1.15);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    }
 
-  .scroll-top:active {
-    transform: scale(1.05);
-  }
+    .scroll-top:active {
+      transform: scale(1.05);
+    }
 
     .mod-btn {
       padding: 12px 24px;
@@ -370,8 +367,6 @@
       <a href="/api/user"><i class="fas fa-arrow-left"></i> Back</a>
     </div>
   </div>
-
-
   <div class="container">
     <h1>Task Tracking</h1>
     <div class="board">
@@ -434,33 +429,32 @@
   <!-- Scroll-to-top button -->
   <div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
     <i class="fas fa-arrow-up"></i>
-</div>
+  </div>
+  <script>
+    // Optimized Scroll Event for Navbar
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+      let lastScrollY = 0;
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50 && lastScrollY <= 50) {
+          navbar.classList.add('scrolled');
+        } else if (window.scrollY <= 50 && lastScrollY > 50) {
+          navbar.classList.remove('scrolled');
+        }
+        lastScrollY = window.scrollY;
+      });
+    }
 
-<script>
-  // Optimized Scroll Event for Navbar
-  const navbar = document.getElementById('navbar');
-  if (navbar) {
-    let lastScrollY = 0;
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50 && lastScrollY <= 50) {
-        navbar.classList.add('scrolled');
-      } else if (window.scrollY <= 50 && lastScrollY > 50) {
-        navbar.classList.remove('scrolled');
-      }
-      lastScrollY = window.scrollY;
+    // Attach click event to buttons safely
+    document.querySelectorAll('.mod-btn').forEach(button => {
+      button.addEventListener('click', function () {
+        const taskId = this.dataset.taskId; // Cleaner way to get data attribute
+        if (taskId) {
+          window.location.href = `/query/update/${taskId}`;
+        }
+      });
     });
-  }
-
-  // Attach click event to buttons safely
-  document.querySelectorAll('.mod-btn').forEach(button => {
-    button.addEventListener('click', function () {
-      const taskId = this.dataset.taskId; // Cleaner way to get data attribute
-      if (taskId) {
-        window.location.href = `/query/update/${taskId}`;
-      }
-    });
-  });
-</script>
+  </script>
 </body>
 
 </html>

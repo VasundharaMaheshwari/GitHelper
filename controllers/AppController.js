@@ -191,4 +191,50 @@ const taskStatusUpdate = async (req, res) => {
   }
 };
 
-module.exports = { create, save, list, save_response, tracker, taskStatusUpdate };
+const reviewer = async (req, res) => {
+  try {
+    if (ObjectId.isValid(req.user._id)) {
+      const responses = await Response.find({ 'creator': req.user._id, 'approved': true, $nor: [{ 'status': 'Accepted' }, { 'status': 'Not Approved' }] });
+      const tasks = [];
+      for (const response of responses) {
+        const issue_id = response.issue;
+        const responder = response.responder.uid;
+        const assignedAt = response.updatedAt;
+        const status = response.status;
+
+        const issue = await Issue.findById(issue_id);
+        const assignedTo = await GHUser.findById(responder);
+        const repository = issue.repo_link;
+        const taskId = response._id;
+
+        if (!issue || !assignedTo) {
+          continue;
+        }
+
+        const task = {
+          assigned_to: {
+            username: assignedTo.username,
+            github_id: assignedTo.github_id.id
+          },
+          description: issue.description,
+          assigned_at: assignedAt,
+          repository_link: repository,
+          status: status,
+          taskId: taskId
+        };
+
+        tasks.push(task);
+      }
+      return res.status(200).render('main.hbs', {
+        layout: 'review_tasks.hbs',
+        tasks: tasks
+      });
+    } else {
+      return res.status(403).redirect('/error?error_details=Not_Allowed');
+    }
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
+  }
+};
+
+module.exports = { create, save, list, save_response, tracker, taskStatusUpdate, reviewer };
