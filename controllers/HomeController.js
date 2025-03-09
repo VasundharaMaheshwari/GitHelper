@@ -11,7 +11,7 @@ const refresh = async (req, res) => {
     if (user && user.role === 'Admin') {
       return res.status(403).redirect('/admin/home');
     }
-    const issues = await Issue.find({ 'completed': false }).lean().exec();
+    const issues = await Issue.find().lean().exec();
     res.status(200).render('main.hbs', {
       layout: 'home.hbs',
       user: user,
@@ -29,7 +29,7 @@ const details = async (req, res) => {
       const { _id } = req.query;
       if (ObjectId.isValid(_id)) {
 
-        const issue_details = await Issue.findOne({ '_id': _id, 'completed': false });
+        const issue_details = await Issue.findOne({ '_id': _id });
         const userGH = ObjectId.isValid(req.user?._id) ? req.user?._id : null;
         let user = await GHUser.findOne({ '_id': userGH });
         const usernameRegex = /^[a-zA-Z0-9_]+$/;

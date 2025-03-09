@@ -152,7 +152,7 @@ const query_check = async (req, res, next) => {
     return res.status(404).redirect('/query/list');
   }
 
-  const query = await Issue.findOne({ _id: queryId, completed: false });
+  const query = await Issue.findOne({ _id: queryId });
   if (!query) {
     return res.status(404).redirect('/query/list');
   }

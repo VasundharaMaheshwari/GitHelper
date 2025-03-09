@@ -34,7 +34,7 @@ const save = async (req, res) => {
       const regex = /^[a-zA-Z0-9_]+$/;
       const checker = regex.test(req.user.username);
       if (checker) {
-        const check = await Issue.findOne({ repo_link: repo_link, 'completed': false });
+        const check = await Issue.findOne({ repo_link: repo_link });
         if (check === null) {
           const trial = new Issue({
             username: req.user.username,
@@ -65,7 +65,7 @@ const list = async (req, res) => {
     const regex = /^[a-zA-Z0-9_]+$/;
     const checker = regex.test(req.user.username);
     if (checker) {
-      const issues = await Issue.find({ username: req.user.username, completed: false }).lean().exec();
+      const issues = await Issue.find({ username: req.user.username }).lean().exec();
       return res.status(200).render('main.hbs', {
         layout: 'issues.hbs',
         issues: issues

@@ -27,11 +27,6 @@ const Issue_Schema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'GHUsers',
     required: true
-  },
-  completed: {
-    type: Boolean,
-    required: true,
-    default: false
   }
 }, { timestamps: true });
 

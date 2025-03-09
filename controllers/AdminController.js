@@ -14,7 +14,7 @@ const loader = async (req, res) => {
   try {
     if (ObjectId.isValid(req.user._id)) {
       const user = await GHUser.findOne({ '_id': req.user._id });
-      const issues = await Issue.find({ completed: false }).lean().exec();
+      const issues = await Issue.find().lean().exec();
       return res.status(200).render('main.hbs', {
         layout: 'home_admin.hbs',
         user: user,
@@ -35,7 +35,7 @@ const deleter = async (req, res) => {
       const { _id } = req.query;
       if (ObjectId.isValid(_id)) {
 
-        const stat = await Issue.findOneAndDelete({ '_id': _id, completed: false });
+        const stat = await Issue.findOneAndDelete({ '_id': _id });
 
         // const responses = await Response.find({ 'issue': _id, 'status': { $nin: ['Accepted'] } }).lean();
         const extra = await Response.updateMany({ 'issue': _id, status: 'Accepted' }, { extra: stat }).lean().exec();
@@ -101,7 +101,7 @@ const usermod = async (req, res) => {
           const resp = await Response.deleteMany({
             'creator': _id, status: { $nin: ['Accepted'] }
           });
-          const issue_resp = await Issue.deleteMany({ 'createdBy': _id, completed: false });
+          const issue_resp = await Issue.deleteMany({ 'createdBy': _id });
           const con_resp = await Convo.deleteMany({
             $or: [
               { 'initiator': _id }, { 'receiver': _id }
