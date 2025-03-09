@@ -63,6 +63,6 @@ const leaderboard = async (req, res) => {
   } catch {
     return res.status(500).redirect('/error?error_details=Error_Occurred');
   }
-}
+};
 
 module.exports = { error, contactus, leaderboard };
