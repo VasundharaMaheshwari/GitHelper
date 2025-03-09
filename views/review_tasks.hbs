@@ -296,8 +296,10 @@
                     class="fas fa-external-link-alt"></i>Link To Repository</strong></a></p>
             <!-- Accept and Reject Buttons -->
             <div class="task-actions">
-              <button class="accept-btn" data-task-id="{{taskId}}">Accept</button>
-              <button class="reject-btn" data-task-id="{{taskId}}">Reject</button>
+              <a href="/query/finish/{{taskId}}/accept"><button class="accept-btn"
+                  data-task-id="{{taskId}}">Accept</button></a>
+              <a href="/query/finish/{{taskId}}/reject"><button class="reject-btn"
+                  data-task-id="{{taskId}}">Reject</button></a>
             </div>
           </div>
         {{/ifCond}}
@@ -314,23 +316,6 @@
         document.getElementById(this.dataset.category).classList.add("active");
       });
     });
-
-    document.querySelectorAll(".accept-btn").forEach(button => {
-      button.addEventListener("click", function () {
-        const taskId = this.getAttribute("data-task-id");
-        alert(`Task ${taskId} accepted!`);
-        // Add AJAX or fetch request here to update backend
-      });
-    });
-
-    document.querySelectorAll(".reject-btn").forEach(button => {
-      button.addEventListener("click", function () {
-        const taskId = this.getAttribute("data-task-id");
-        alert(`Task ${taskId} rejected!`);
-        // Add AJAX or fetch request here to update backend
-      });
-    });
-
   </script>
 </body>
 
