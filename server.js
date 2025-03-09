@@ -116,6 +116,10 @@ hbs.registerHelper('ifCond', function (v1, v2, options) {
   return (v1.toString() === v2.toString()) ? options.fn(this) : options.inverse(this);
 });
 
+hbs.registerHelper('ifCondGTE', function (v1, v2, options) {
+  return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+});
+
 app.use(express.static('public', {
   setHeaders: (res, path) => {
     if (path.endsWith('.png')) {
