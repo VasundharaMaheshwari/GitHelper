@@ -237,4 +237,44 @@ const reviewer = async (req, res) => {
   }
 };
 
-module.exports = { create, save, list, save_response, tracker, taskStatusUpdate, reviewer };
+const responseUpdate = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const taskId = req.params.id;
+      const action = req.params.action;
+      if (ObjectId.isValid(taskId) && ObjectId.isValid(req.user._id)) {
+        const resp_check = await Response.findOne({ 'creator': req.user._id, '_id': taskId });
+        if (resp_check) {
+          let responder;
+          switch (action) {
+          case 'accept':
+            await Response.findByIdAndUpdate(taskId, { status: 'Accepted' });
+            responder = await GHUser.findById(resp_check.responder.uid);
+            if (responder) {
+              await GHUser.findByIdAndUpdate(resp_check.responder.uid, { $inc: { total_points: 100, balance: 100 } });
+            } else {
+              return res.status(404).redirect('/error?error_details=Responder_Not_Found');
+            }
+            break;
+          case 'reject':
+            await Response.findByIdAndUpdate(taskId, { status: 'To Do' });
+            break;
+          default:
+            return res.status(403).redirect('/error?error_details=Invalid_Status_Transition_Encountered');
+          }
+          return res.status(201).redirect('/query/review');
+        } else {
+          return res.status(404).redirect('/error?error_details=Task_Not_Found');
+        }
+      } else {
+        return res.status(403).redirect('/error?error_details=Not_Allowed');
+      }
+    }
+    return res.send('Oops! Error Occurred...');
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
+  }
+};
+
+module.exports = { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate };

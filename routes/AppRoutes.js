@@ -1,6 +1,6 @@
 const express = require('express');
 const APIRouter = express.Router();
-const { create, save, list, save_response, tracker, taskStatusUpdate, reviewer } = require('../controllers/AppController');
+const { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate } = require('../controllers/AppController');
 const { issue_limit, response_limit } = require('../middlewares/rate_limiter');
 const { saveIssue, saveRes } = require('../validators/AppValidators');
 
@@ -28,5 +28,7 @@ APIRouter.get('/links', (req, res) => {
 });
 
 APIRouter.get('/update/:id', taskStatusUpdate);
+
+APIRouter.get('/finish/:id/:action', responseUpdate);
 
 module.exports = APIRouter;
