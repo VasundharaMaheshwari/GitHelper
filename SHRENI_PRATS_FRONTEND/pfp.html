@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Page</title>
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-image: url("/public/Home1.jpg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 80px auto 20px;
+      display: flex;
+      gap: 50px;
+    }
+
+    /* Left Section - User Info */
+    .left-section {
+      flex: 0 0 35%;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .profile-picture:hover {
+      transform: scale(1.1);
+      border-color: #6a11cb;
+    }
+
+    .user-details h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Right Section - Project History */
+    .right-section {
+      flex: 0 0 65%;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .history-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .project-list {
+      list-style: none;
+    }
+
+    .project-item {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s ease;
+    }
+
+    .project-item:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .project-name {
+      font-size: 16px;
+    }
+
+    .repo-link {
+      color: #ff8a00;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .repo-link:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Left Section - User Profile -->
+    <div class="left-section">
+      <img src="/public/pfp.jpeg" alt="Default Profile Picture" class="profile-picture">
+      <div class="user-details">
+        <h3><strong>Username: </strong></h3>
+        <h3><strong>Email: </strong></h3>
+        <h3><strong>GitHub ID: </strong></h3>
+      </div>
+    </div>
+
+    <!-- Right Section - Project History -->
+    <div class="right-section">
+      <p class="history-title">📜 Project History</p>
+      <ul class="project-list">
+        <li class="project-item">
+          <span class="project-name">Expense Tracker</span>
+          <a class="repo-link" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View Repo</a>
+        </li>
+        <li class="project-item">
+          <span class="project-name">Dental Clinic Website</span>
+          <a class="repo-link" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View Repo</a>
+        </li>
+        <li class="project-item">
+          <span class="project-name">Git Helper</span>
+          <a class="repo-link" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View Repo</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+</html>
