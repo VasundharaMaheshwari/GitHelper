@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-image: url("/public/1329272.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      color: #f0f0f0;
+      overflow: hidden;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    }
+
+    .container {
+  max-width: 1000px; /* Bigger container */
+  width: 90%;
+  padding: 60px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  margin-top: 100px;
+  text-align: center;
+}
+
+/* Grid for 3 columns */
+.form-group {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr; /* Title, Input, Button */
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* Labels (First Column) */
+.form-group label {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  text-align: left;
+}
+
+/* Inputs (Second Column) */
+.form-group input {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Buttons (Third Column) */
+.form-group button {
+  white-space: nowrap;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.form-group button:hover {
+  background: linear-gradient(45deg, #5d09b1, #1f65e3);
+  transform: translateY(-2px);
+}
+
+/* "Save Changes" button */
+.save-button {
+  margin-top: 30px;
+  padding: 16px 24px;
+  font-size: 18px;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #ff6a00, #ee0979);
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.save-button:hover {
+  background: linear-gradient(45deg, #e65c00, #d6076e);
+  transform: translateY(-2px);
+}
+
+
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-small {
+      width: auto;
+      padding: 10px 15px;
+      font-size: 14px;
+      margin-left: 10px;
+    }
+
+    .form-group-flex {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .btn-small {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 5px;
+      }
+
+      .form-group-flex {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2><i class="fas fa-user-edit"></i> Edit Profile</h2>
+    <form id="edit-profile-form">
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter your username">
+            <button>Check Availability</button>
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div></div> <!-- Empty space for password row -->
+            <button>Change Password</button>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email">
+            <button>Verify Email</button>
+          </div>
+          
+          <div class="form-group">
+            <label for="github">GitHub ID</label>
+            <input type="text" id="github" placeholder="Enter GitHub ID">
+            <button>Verify GitHub ID</button>
+          </div>
+          
+          <!-- Save Changes Button -->
+          <button class="save-button">Save Changes</button>
+          
+    </form>
+  </div>
+
+  <script>
+    function checkUsername() {
+      let username = document.getElementById('username').value;
+      if (username.trim() === "") {
+        alert("Please enter a username.");
+        return;
+      }
+      alert("Checking username availability... (Implement API call here)");
+    }
+
+    function verifyEmail() {
+      let email = document.getElementById('email').value;
+      if (email.trim() === "") {
+        alert("Please enter an email.");
+        return;
+      }
+      window.location.href = "/verify-email?email=" + encodeURIComponent(email);
+    }
+
+    function verifyGitHub() {
+      let github = document.getElementById('github').value;
+      if (github.trim() === "") {
+        alert("Please enter a GitHub username.");
+        return;
+      }
+      window.location.href = "/verify-github?username=" + encodeURIComponent(github);
+    }
+  </script>
+</body>
+
+</html>
