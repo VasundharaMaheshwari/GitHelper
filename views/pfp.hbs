@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <style>
     * {
       box-sizing: border-box;
@@ -20,7 +19,7 @@
     }
 
     body {
-      background-image: url("/public/Home1.jpg");
+      background-image: url("/Home1.jpg");
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
@@ -117,7 +116,6 @@
     .repo-link:hover {
       text-decoration: underline;
     }
-
   </style>
 </head>
 
@@ -126,33 +124,35 @@
   <div class="container">
     <!-- Left Section - User Profile -->
     <div class="left-section">
-      <img src="/public/pfp.jpeg" alt="Default Profile Picture" class="profile-picture">
+      <img src="/pfp.jpeg" alt="Default Profile Picture" class="profile-picture">
       <div class="user-details">
-        <h3><strong>Username: </strong></h3>
-        <h3><strong>Email: </strong></h3>
-        <h3><strong>GitHub ID: </strong></h3>
+        <h3><strong>Username: {{username}} </strong></h3>
+        <h3><strong>Email: {{emailAddress}} </strong></h3>
+        <h3><strong>GitHub ID: {{githubId}} </strong></h3>
       </div>
     </div>
-
     <!-- Right Section - Project History -->
     <div class="right-section">
       <p class="history-title">📜 Project History</p>
-      <ul class="project-list">
-        <li class="project-item">
-          <span class="project-name">Expense Tracker</span>
-          <a class="repo-link" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View Repo</a>
-        </li>
-        <li class="project-item">
-          <span class="project-name">Dental Clinic Website</span>
-          <a class="repo-link" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View Repo</a>
-        </li>
-        <li class="project-item">
-          <span class="project-name">Git Helper</span>
-          <a class="repo-link" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View Repo</a>
-        </li>
-      </ul>
+      {{#if projects.length}}
+        <ul class="project-list">
+          {{#each projects}}
+            <li class="project-item">
+              <div>
+                <span class="project-name">Assigned By: {{this.name}}</span>
+                <p class="project-description">Work Done: {{this.description}}</p>
+              </div>
+              <a class="repo-link" href="{{this.repoLink}}" target="_blank">
+                <i class="fas fa-external-link-alt"></i> View Repo
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        <p>No projects found.</p>
+      {{/if}}
     </div>
   </div>
-
 </body>
+
 </html>
