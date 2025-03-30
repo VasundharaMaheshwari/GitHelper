@@ -209,6 +209,28 @@
       border-color: #6a11cb;
     }
 
+    /* Floating Edit Profile Button */
+    .edit-profile-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, #ff4b5c, #d63344);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+    }
+
+    .edit-profile-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
+    }
+
     /* Animations */
     @keyframes fadeIn {
       from {
@@ -273,6 +295,9 @@
           <p><strong>Email: </strong>{{email}}</p>
           <p><strong>GitHub ID: </strong>{{github_id}}</p>
         </div>
+        <a href="/chat/editProfile">
+          <button class="edit-profile-btn">Edit Profile</button>
+        </a>
       </div>
     </div>
   </div>

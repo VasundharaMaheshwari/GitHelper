@@ -13,7 +13,20 @@ ChatRouter.get('/list', chatlist);
 ChatRouter.get('/chats', checkchat, chat_check, chatting);
 
 ChatRouter.post('/chats', (req, res) => {
-  return res.status(200).send('Dynamic loading for much content... Add input size validation everywhere... Task Tracking... See ongoing responses and closing responses == delete convo and messages from either side and vice versa if initiator...');
+  return res.status(200).send('Dynamic loading for much content... Add input size validation everywhere...');
+});
+
+ChatRouter.get('/editProfile', (req, res) => {
+  try {
+    return res.status(200).render('main.hbs', {
+      layout: 'profile_edit.hbs',
+      username: req.user.username,
+      githubId: req.user.github_id.id,
+      emailAddress: req.user.email.address
+    });
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
+  }
 });
 
 module.exports = ChatRouter;
