@@ -298,8 +298,19 @@ const profileUpdater = async (req, res) => {
     if (github !== req.user.github_id.id) {
       const unavailable = await GHUser.findOne({ 'github_id.id': github });
       if (unavailable) return res.status(403).redirect('/error?error_details=GitHub_ID_Unavailable');
+
+      const userRepos = req.user.repos;
+      const issues = await Issue.find({ repo_link: { $in: userRepos } });
+
+      for (const issue of issues) {
+        await Response.updateMany({ 'issue': issue._id, status: 'Accepted' }, { extra: issue }).lean().exec();
+        await Response.deleteMany({ 'issue': issue._id, status: { $nin: ['Accepted'] } }).lean().exec();
+        await Issue.findOneAndDelete({ '_id': issue._id });
+      }
+
       updates.github_id = { id: github, verified: false };
       updates.verified = false;
+      updates.repos = [];
     }
 
     if (Object.keys(updates).length > 0) {
