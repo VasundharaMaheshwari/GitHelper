@@ -108,8 +108,7 @@ UserRouter.get('/refresh/callback', gitRefreshCheck,
         res.clearCookie('refresh');
 
         return res.status(201).redirect('/query/create');
-      } catch (error) {
-        console.log(error);
+      } catch {
         res.status(500).redirect('/error?error_details=Unexpected_Error');
       }
     })(req, res, next);
