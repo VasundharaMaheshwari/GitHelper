@@ -95,7 +95,7 @@ UserRouter.get('/refresh/callback', gitRefreshCheck,
             const mailer = {
               from: process.env.EMAIL,
               to: oldUserData.email.address,
-              subject: 'Deletion of issue.',
+              subject: 'Deletion of Issue.',
               html: forgotMsg
             };
 
