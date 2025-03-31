@@ -6,9 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Profile</title>
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -19,153 +17,100 @@
     }
 
     body {
-      background-image: url("/1329272.png");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed;
-      background-size: cover;
+      background: #121212;
+      color: #f0f0f0;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      position: relative;
-      color: #f0f0f0;
-      overflow: hidden;
-    }
-
-    h2 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #ffffff;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+      justify-content: center;
     }
 
     .container {
-      max-width: 1000px;
-      /* Bigger container */
-      width: 90%;
-      padding: 60px;
-      border-radius: 20px;
+      width: 400px;
+      padding: 40px;
+      border-radius: 10px;
       background: rgba(0, 0, 0, 0.6);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(5px);
-      margin-top: 100px;
       text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
 
-    /* Grid for 3 columns */
-    .form-group {
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      /* Title, Input, Button */
-      align-items: center;
-      gap: 20px;
+    h2 {
       margin-bottom: 20px;
-    }
-
-    /* Labels (First Column) */
-    .form-group label {
-      font-size: 18px;
-      font-weight: bold;
       color: #fff;
-      text-align: left;
     }
 
-    /* Inputs (Second Column) */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-size: 16px;
+      margin-bottom: 5px;
+      color: #fff;
+    }
+
     .form-group input {
       width: 100%;
-      padding: 14px 20px;
+      padding: 10px;
       font-size: 16px;
+      border-radius: 5px;
       border: none;
-      border-radius: 10px;
       background: rgba(255, 255, 255, 0.2);
       color: #fff;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
+      outline: none;
     }
 
-    /* Buttons (Third Column) */
-    .form-group button {
-      white-space: nowrap;
-      padding: 14px 18px;
-      border-radius: 10px;
+    .form-group input:focus {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-group .btn {
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .check-username {
       background: linear-gradient(45deg, #6a11cb, #2575fc);
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
     }
 
-    .form-group button:hover {
-      background: linear-gradient(45deg, #5d09b1, #1f65e3);
-      transform: translateY(-2px);
+    .check-username.disabled {
+      background: gray;
+      cursor: not-allowed;
     }
 
-    /* "Save Changes" button */
+    .check-username.available {
+      background: #28a745;
+    }
+
+    .check-username.unavailable {
+      background: #dc3545;
+    }
+
     .save-button {
-      margin-top: 30px;
-      padding: 16px 24px;
-      font-size: 18px;
-      border-radius: 10px;
-      background: linear-gradient(45deg, #ff6a00, #ee0979);
-      color: white;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-
-    .save-button:hover {
-      background: linear-gradient(45deg, #e65c00, #d6076e);
-      transform: translateY(-2px);
-    }
-
-    .btn {
       width: 100%;
       padding: 12px;
-      margin-bottom: 20px;
-      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
-      color: #fff;
+      margin-top: 10px;
+      background: linear-gradient(45deg, #ff6a00, #ee0979);
+      color: white;
+      font-size: 18px;
       border: none;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: bold;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
     }
 
-    .btn:hover {
-      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
-    }
-
-    .btn-small {
-      width: auto;
-      padding: 10px 15px;
-      font-size: 14px;
-      margin-left: 10px;
-    }
-
-    .form-group-flex {
-      display: flex;
-      align-items: center;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .btn-small {
-        margin-left: 0;
-        width: 100%;
-        margin-top: 5px;
-      }
-
-      .form-group-flex {
-        flex-direction: column;
-      }
+    .save-button:disabled {
+      background: gray;
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -177,56 +122,138 @@
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" placeholder="Enter your username" value="{{username}}" required>
-        <button onclick="checkUsername()">Check Availability</button>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <div></div> <!-- Empty space for password row -->
-        <button>Change Password</button>
+        <button class="btn check-username disabled" disabled>Check Availability</button>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" placeholder="Enter your email" value="{{emailAddress}}" required>
-        <button onclick="verifyEmail()">Verify Email</button>
       </div>
       <div class="form-group">
         <label for="github">GitHub ID</label>
         <input type="text" id="github" placeholder="Enter GitHub ID" value="{{githubId}}" required>
-        <button onclick="verifyGitHub()">Verify GitHub ID</button>
       </div>
-      <!-- Save Changes Button -->
-      <button class="save-button">Save Changes</button>
+      <button class="save-button" disabled>Save Changes</button>
     </form>
   </div>
   <script>
-    function checkUsername() {
-      let username = document.getElementById('username').value;
-      if (username.trim() === "") {
-        alert("Please enter a username.");
-        return;
-      }
-      alert("Checking username availability... (Implement API call here)");
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+      const usernameInput = document.getElementById("username");
+      const emailInput = document.getElementById("email");
+      const githubInput = document.getElementById("github");
+      const checkUsernameBtn = document.querySelector(".check-username");
+      const saveBtn = document.querySelector(".save-button");
 
-    function verifyEmail() {
-      let email = document.getElementById('email').value;
-      if (email.trim() === "") {
-        alert("Please enter an email.");
-        return;
-      }
-      //window.location.href = "/verify-email?email=" + encodeURIComponent(email);
-      alert("Checking username availability... (Implement API call here)");
-    }
+      // Store initial values
+      const initialData = {
+        username: usernameInput.value.trim(),
+        email: emailInput.value.trim(),
+        github: githubInput.value.trim()
+      };
 
-    function verifyGitHub() {
-      let github = document.getElementById('github').value;
-      if (github.trim() === "") {
-        alert("Please enter a GitHub username.");
-        return;
+      let usernameValid = true;
+      let usernameChecked = false;
+
+      function validateUsername() {
+        const usernameRegex = /^[a-zA-Z0-9_]+$/;
+        return usernameRegex.test(usernameInput.value.trim());
       }
-      //window.location.href = "/verify-github?username=" + encodeURIComponent(github);
-      alert("Checking username availability... (Implement API call here)");
-    }
+
+      function validateEmail() {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(emailInput.value.trim());
+      }
+
+      function validateGitHub() {
+        const githubRegex = /^[a-zA-Z0-9-]{1,39}$/;
+        return githubRegex.test(githubInput.value.trim());
+      }
+
+      function isFormChanged() {
+        return (
+          usernameInput.value.trim() !== initialData.username ||
+          emailInput.value.trim() !== initialData.email ||
+          githubInput.value.trim() !== initialData.github
+        );
+      }
+
+      function enableSaveButton() {
+        if (isFormChanged() && validateUsername() && validateEmail() && validateGitHub() && usernameValid) {
+          saveBtn.disabled = false;
+        } else {
+          saveBtn.disabled = true;
+        }
+      }
+
+      usernameInput.addEventListener("input", function () {
+        if (usernameInput.value !== initialData.username && usernameInput.value !== '') {
+          checkUsernameBtn.disabled = false;
+          checkUsernameBtn.classList.remove("disabled", "available", "unavailable");
+          checkUsernameBtn.textContent = "Check Availability";
+          usernameValid = false;
+          usernameChecked = false;
+        } else {
+          checkUsernameBtn.disabled = true;
+          checkUsernameBtn.classList.add("disabled");
+          usernameValid = true;
+          usernameChecked = true;
+        }
+        enableSaveButton();
+      });
+
+      checkUsernameBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (!validateUsername()) {
+          alert("Username can only contain letters, numbers, and underscores.");
+          return;
+        }
+
+        fetch(`/query/check-username?username=${usernameInput.value}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.available) {
+              usernameValid = true;
+              checkUsernameBtn.classList.add("available");
+              checkUsernameBtn.classList.remove("unavailable");
+              checkUsernameBtn.textContent = "✔ Available";
+            } else {
+              usernameValid = false;
+              checkUsernameBtn.classList.add("unavailable");
+              checkUsernameBtn.classList.remove("available");
+              checkUsernameBtn.textContent = "❌ Not Available";
+            }
+            usernameChecked = true;
+            enableSaveButton();
+          })
+          .catch(error => {
+            alert("Error checking username. Please try again.");
+          });
+      });
+
+      emailInput.addEventListener("input", enableSaveButton);
+      githubInput.addEventListener("input", enableSaveButton);
+
+      // Prevent "Enter" key from submitting username check when in other fields
+      document.getElementById("edit-profile-form").addEventListener("keypress", function (event) {
+        if (event.key === "Enter" && document.activeElement !== usernameInput) {
+          event.preventDefault();
+        }
+      });
+
+      document.getElementById("edit-profile-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!saveBtn.disabled) {
+          fetch("/update-profile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: usernameInput.value.trim(),
+              email: emailInput.value.trim(),
+              github: githubInput.value.trim()
+            })
+          });
+        }
+      });
+    });
   </script>
 </body>
 
