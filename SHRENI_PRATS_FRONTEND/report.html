@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Misbehavior</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-image: url("/public/image.jpg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 15px;
+      max-width: 600px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    i{
+        margin-right: 5px;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #f5d8b3;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    select {
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  font-size: 16px;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  appearance: none; /* Hide default dropdown arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  padding-right: 40px; /* Make space for the icon */
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-container::after {
+  content: "\f078"; /* Font Awesome caret-down */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 15px; /* Adjust position */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #333;
+  pointer-events: none;
+}
+
+
+    input[type="text"],
+    textarea,
+    select {
+      padding: 12px;
+      border-radius: 5px;
+      border: none;
+      width: 100%;
+      font-size: 16px;
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #333;
+    }
+
+    textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    .file-input {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      background: #f5d8b3;
+      color: #1c3879;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .btn:hover {
+      background: #ebd0ad;
+      transform: translateY(-2px);
+    }
+
+    .error-message {
+      color: #ff4b2b;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    #back-btn {
+      margin-top: 30px;
+    }
+
+    #back-btn a {
+      padding: 10px 24px;
+      background: #f5d8b3;
+      color: #1c3879;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    #back-btn a:hover {
+      background: #ebd0ad;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+        margin-top: 60px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+  </style>
+  <script>
+    function validateReportForm() {
+      var username = document.getElementById("username").value.trim();
+      var violation = document.getElementById("violation").value;
+      var description = document.getElementById("description").value.trim();
+      var fileInput = document.getElementById("file");
+      var errorMessage = document.getElementById("error-message");
+
+      if (username === "") {
+        errorMessage.innerText = "Please enter the username of the user you are reporting.";
+        return false;
+      }
+
+      if (violation === "select") {
+        errorMessage.innerText = "Please select a violation type.";
+        return false;
+      }
+
+      if (description.length < 10) {
+        errorMessage.innerText = "Description should be at least 10 characters long.";
+        return false;
+      }
+
+      if (fileInput.files.length === 0) {
+        errorMessage.innerText = "Please upload an image as proof.";
+        return false;
+      }
+
+      errorMessage.innerText = "";
+      return true;
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <h1><i class="fas fa-flag icon-large"></i> Report Misbehavior</h1>
+    <p>Help us keep the community safe by reporting inappropriate behavior.</p>
+
+    <form action="/report/send" method="POST" enctype="multipart/form-data" onsubmit="return validateReportForm()">
+      <input type="text" id="username" name="username" placeholder="Username of the reported user" required>
+      
+      <div class="dropdown-container">
+        <select id="violation" name="violation" required>
+          <option value="select">Select Violation Type</option>
+          <option value="impersonation">Impersonation</option>
+          <option value="spam">Spam</option>
+          <option value="self-harm">Self-harm</option>
+          <option value="illegal">Illegal Activity</option>
+          <option value="adult">18+ Content</option>
+          <option value="hate">Hate Speech or Symbols</option>
+          <option value="harassment">Bullying or Harassment</option>
+          <option value="violence">Violence</option>
+          <option value="scam">Scam or Fraud</option>
+          <option value="misinformation">False Information</option>
+          <option value="privacy">Privacy Violation</option>
+        </select>
+      </div>
+
+      <textarea name="description" id="description" placeholder="Describe what happened (at least 10 characters)" required></textarea>
+
+      <label for="file" class="file-input">
+        <i class="fas fa-upload"></i> Upload Proof (Image)
+      </label>
+      <input type="file" id="file" name="file" accept="image/*" style="display: none;" required>
+
+      <p id="error-message" class="error-message"></p>
+
+      <button type="submit" class="btn"><i class="fas fa-paper-plane icon"></i> Submit Report</button>
+    </form>
+
+    <div id="back-btn">
+      <a href="/home#report"><i class="fas fa-arrow-left icon"></i> Back</a>
+    </div>
+  </div>
+</body>
+
+</html>
