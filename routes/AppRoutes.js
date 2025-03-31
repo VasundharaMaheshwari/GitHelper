@@ -1,6 +1,6 @@
 const express = require('express');
 const APIRouter = express.Router();
-const { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate } = require('../controllers/AppController');
+const { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate, profileUpdater } = require('../controllers/AppController');
 const { issue_limit, response_limit } = require('../middlewares/rate_limiter');
 const { saveIssue, saveRes } = require('../validators/AppValidators');
 const { GHUser } = require('../models/GHUser');
@@ -58,5 +58,7 @@ APIRouter.get('/check-username', async (req, res) => {
     return res.status(500).redirect('/error?error_details=Error_Occurred');
   }
 });
+
+APIRouter.post('/update-profile', profileUpdater);
 
 module.exports = APIRouter;

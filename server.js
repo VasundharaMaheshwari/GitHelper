@@ -2,6 +2,8 @@ const express = require('express');
 const connectDB = require('./databases/db');
 const app = express();
 
+// const cors = require('cors');
+
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
@@ -161,6 +163,11 @@ const { Msg } = require('./models/Msg');
 const { overall_limit } = require('./middlewares/rate_limiter');
 
 app.use(overall_limit);
+
+// app.use(cors({
+//   origin: 'http://localhost:3000', // Adjust to your frontend's origin
+//   credentials: true // Allow cookies to be sent with requests
+// }));
 
 app.set('view engine', 'handlebars');
 app.engine('handlebars', handlebars.engine({ defaultLayout: 'main' }));

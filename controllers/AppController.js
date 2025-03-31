@@ -277,4 +277,41 @@ const responseUpdate = async (req, res) => {
   }
 };
 
-module.exports = { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate };
+const profileUpdater = async (req, res) => {
+  try {
+    const { username, email, github } = req.body;
+    const updates = {};
+
+    if (username !== req.user.username) {
+      const unavailable = await GHUser.findOne({ username });
+      if (unavailable) return res.status(403).redirect('/error?error_details=Username_Unavailable');
+      updates.username = username;
+    }
+
+    if (email !== req.user.email.address) {
+      const unavailable = await GHUser.findOne({ 'email.address': email });
+      if (unavailable) return res.status(403).redirect('/error?error_details=Email_Unavailable');
+      updates.email = { address: email, verified: false };
+      updates.verified = false;
+    }
+
+    if (github !== req.user.github_id.id) {
+      const unavailable = await GHUser.findOne({ 'github_id.id': github });
+      if (unavailable) return res.status(403).redirect('/error?error_details=GitHub_ID_Unavailable');
+      updates.github_id = { id: github, verified: false };
+      updates.verified = false;
+    }
+
+    if (Object.keys(updates).length > 0) {
+      await GHUser.findByIdAndUpdate(req.user._id, updates);
+    }
+
+    // return console.log(updated, updates, req.user, req.body);
+    return res.status(201).redirect('/api/user');
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
+  }
+};
+
+
+module.exports = { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate, profileUpdater };
