@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Misbehavior</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-image: url("/public/image.jpg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 15px;
+      max-width: 600px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #f5d8b3;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    select,
+    input,
+    textarea {
+      padding: 12px;
+      border-radius: 5px;
+      border: none;
+      width: 100%;
+      font-size: 16px;
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #333;
+    }
+
+    textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    .file-input {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      background: #f5d8b3;
+      color: #1c3879;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .btn:hover {
+      background: #ebd0ad;
+      transform: translateY(-2px);
+    }
+
+    .error-message {
+      color: #ff4b2b;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    #back-btn {
+      margin-top: 30px;
+    }
+
+    #back-btn a {
+      padding: 10px 24px;
+      background: #f5d8b3;
+      color: #1c3879;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    #back-btn a:hover {
+      background: #ebd0ad;
+    }
+  </style>
+  <script>
+    async function uploadImage(file) {
+      try {
+        const response = await fetch("/chat/generate-signed-url");
+        const data = await response.json();
+        console.log(data);
+        if (!response.ok) throw new Error("Failed to get signed URL");
+
+        // Upload to Cloudinary
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("api_key", data.api_key);
+        formData.append("timestamp", data.timestamp);
+        formData.append("signature", data.signature);
+        formData.append("upload_preset", data.upload_preset);
+
+        const uploadResponse = await fetch(
+          `https://api.cloudinary.com/v1_1/${data.cloud_name}/image/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const cloudinaryData = await uploadResponse.json();
+
+        if (!cloudinaryData.secure_url) {
+          document.getElementById("error-message").innerText = "Image upload failed. Try again.";
+          return null;
+        }
+
+        return cloudinaryData.secure_url;
+
+      } catch (error) {
+        console.error("Upload error:", error);
+        document.getElementById("error-message").innerText = "Image upload failed. Try again.";
+        return null;
+      }
+    }
+
+    async function validateReportForm(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const username = document.getElementById("username").value.trim();
+      const violation = document.getElementById("violation").value;
+      const description = document.getElementById("description").value.trim();
+      const fileInput = document.getElementById("file");
+      const errorMessage = document.getElementById("error-message");
+
+      if (username === "") {
+        errorMessage.innerText = "Please enter the username.";
+        return;
+      }
+      if (violation === "select") {
+        errorMessage.innerText = "Please select a violation type.";
+        return;
+      }
+      if (description.length < 10) {
+        errorMessage.innerText = "Description must be at least 10 characters.";
+        return;
+      }
+      if (fileInput.files.length === 0) {
+        errorMessage.innerText = "Please upload an image as proof.";
+        return;
+      }
+
+      errorMessage.innerText = "Validating username...";
+      const usernameResponse = await fetch(`/chat/check-username?username=${username}`);
+      const usernameData = await usernameResponse.json();
+
+      if (!usernameData.valid) {
+        errorMessage.innerText = "Invalid username. Please check again.";
+        return;
+      }
+
+      errorMessage.innerText = "Uploading image...";
+      const uploadedImageUrl = await uploadImage(fileInput.files[0]);
+      if (!uploadedImageUrl) return;
+
+      errorMessage.innerText = "Submitting report...";
+
+      const reportResponse = await fetch("/chat/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          violation,
+          description,
+          secure_url: uploadedImageUrl
+        })
+      });
+
+      const reportData = await reportResponse.json();
+
+      if (reportData.success) {
+        alert("Report submitted successfully!");
+        window.location.href = "/api/user";
+      } else {
+        errorMessage.innerText = "Error submitting report.";
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <h1><i class="fas fa-flag"></i> Report Misbehavior</h1>
+    <p>Help keep the community safe.</p>
+    <form id="reportForm" onsubmit="validateReportForm(event)">
+      <input type="text" id="username" name="username" placeholder="Username" required>
+      <select id="violation" name="violation" required>
+        <option value="select">Select Violation Type</option>
+        <option value="impersonation">Impersonation</option>
+        <option value="spam">Spam</option>
+        <option value="self-harm">Self-harm</option>
+        <option value="illegal">Illegal Activity</option>
+        <option value="adult">18+ Content</option>
+        <option value="hate">Hate Speech or Symbols</option>
+        <option value="harassment">Bullying or Harassment</option>
+        <option value="violence">Violence</option>
+        <option value="scam">Scam or Fraud</option>
+        <option value="misinformation">False Information</option>
+        <option value="privacy">Privacy Violation</option>
+      </select>
+      <textarea id="description" placeholder="Describe the incident" required></textarea>
+      <input type="file" id="file" name="file" accept="image/*" required>
+      <p id="error-message" class="error-message"></p>
+      <button class="btn">Submit Report</button>
+    </form>
+  </div>
+</body>
+
+</html>

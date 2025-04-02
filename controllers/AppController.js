@@ -285,6 +285,9 @@ const profileUpdater = async (req, res) => {
     if (username !== req.user.username) {
       const unavailable = await GHUser.findOne({ username });
       if (unavailable) return res.status(403).redirect('/error?error_details=Username_Unavailable');
+
+      await Issue.updateMany({ createdBy: req.user._id }, { username });
+      await Response.updateMany({ 'responder.uid': req.user._id }, { 'responder.username': username });
       updates.username = username;
     }
 
@@ -301,6 +304,7 @@ const profileUpdater = async (req, res) => {
 
       const userRepos = req.user.repos;
       const issues = await Issue.find({ repo_link: { $in: userRepos } });
+      await Response.updateMany({ 'responder.uid': req.user._id }, { 'responder.github_id': github });
 
       for (const issue of issues) {
         await Response.updateMany({ 'issue': issue._id, status: 'Accepted' }, { extra: issue }).lean().exec();
