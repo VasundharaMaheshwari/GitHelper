@@ -307,7 +307,7 @@ const profileUpdater = async (req, res) => {
       await Response.updateMany({ 'responder.uid': req.user._id }, { 'responder.github_id': github });
 
       for (const issue of issues) {
-        await Response.updateMany({ 'issue': issue._id, status: 'Accepted' }, { extra: issue }).lean().exec();
+        await Response.updateMany({ 'issue': issue._id, status: 'Accepted' }, { extra: { ...issue, unavailable: true } }).lean().exec();
         await Response.deleteMany({ 'issue': issue._id, status: { $nin: ['Accepted'] } }).lean().exec();
         await Issue.findOneAndDelete({ '_id': issue._id });
       }
