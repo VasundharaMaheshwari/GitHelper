@@ -197,6 +197,42 @@
       /* Optional: Add some vertical spacing */
       color: white;
     }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+      z-index: 1001;
+      color: white;
+      text-align: center;
+    }
+
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal-actions {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="date"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 80%;
+      margin-top: 10px;
+      font-size: 16px;
+    }
   </style>
 </head>
 
@@ -219,6 +255,9 @@
               <p><i class="fab fa-github"></i> <strong>GitHub ID:</strong> <a class="github-id"
                   href="https://github.com/{{responder.github_id}}" target="_blank"><i
                     class="fas fa-external-link-alt"></i>{{responder.github_id}}</a></p>
+              {{#if approved}}
+                <p><i class="fas fa-calendar-alt"></i> <strong>Deadline:</strong> {{deadline}}</p>
+              {{/if}}
             </div>
             <div class="action-buttons">
               <form id="convo" action="/chat/start" method="POST">
@@ -245,6 +284,17 @@
   <div class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
     <i class="fas fa-arrow-up"></i>
   </div>
+  <div id="deadline-modal" class="modal">
+    <div class="modal-content">
+      <h2>Select Deadline</h2>
+      <p>Deadline must be at least 7 days from today.</p>
+      <input type="date" id="modal-deadline">
+      <div class="modal-actions">
+        <button id="confirm-btn" class="btn">Confirm</button>
+        <button id="cancel-btn" class="btn">Cancel</button>
+      </div>
+    </div>
+  </div>
   <script>
     window.addEventListener('scroll', function () {
       const navbar = document.getElementById('navbar');
@@ -253,6 +303,46 @@
       } else {
         navbar.classList.remove('scrolled');
       }
+    });
+  </script>
+  <script>
+    document.querySelectorAll("form[id='convo']").forEach(form => {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent immediate submission
+
+        const modal = document.getElementById("deadline-modal");
+        const modalDeadlineInput = document.getElementById("modal-deadline");
+        modal.style.display = "block"; // Show modal
+
+        // Confirm button click
+        document.getElementById("confirm-btn").onclick = function () {
+          const selectedDate = new Date(modalDeadlineInput.value);
+          const minDate = new Date();
+          minDate.setDate(minDate.getDate() + 7);
+
+          if (selectedDate < minDate) {
+            alert("Deadline must be at least 7 days from today.");
+          } else {
+            // Append deadline as a hidden input field before submitting
+            let deadlineInput = form.querySelector("input[name='deadline']");
+            if (!deadlineInput) {
+              deadlineInput = document.createElement("input");
+              deadlineInput.type = "hidden";
+              deadlineInput.name = "deadline";
+              form.appendChild(deadlineInput);
+            }
+            deadlineInput.value = modalDeadlineInput.value;
+
+            modal.style.display = "none"; // Hide modal
+            form.submit(); // Submit the form
+          }
+        };
+
+        // Cancel button click
+        document.getElementById("cancel-btn").onclick = function () {
+          modal.style.display = "none"; // Close modal without submitting
+        };
+      });
     });
   </script>
 </body>

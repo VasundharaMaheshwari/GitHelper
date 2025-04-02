@@ -142,7 +142,8 @@ const tracker = async (req, res) => {
           assigned_at: assignedAt,
           repository_link: repository,
           status: status,
-          taskId: taskId
+          taskId: taskId,
+          deadline: response.deadline
         };
 
         tasks.push(task);
@@ -220,7 +221,8 @@ const reviewer = async (req, res) => {
           assigned_at: assignedAt,
           repository_link: repository,
           status: status,
-          taskId: taskId
+          taskId: taskId,
+          deadline: response.deadline
         };
 
         tasks.push(task);
@@ -252,7 +254,22 @@ const responseUpdate = async (req, res) => {
             await Response.findByIdAndUpdate(taskId, { status: 'Accepted' });
             responder = await GHUser.findById(resp_check.responder.uid);
             if (responder) {
-              await GHUser.findByIdAndUpdate(resp_check.responder.uid, { $inc: { total_points: 100, balance: 100 } });
+              if (resp_check.deadline) {
+                const deadlineDate = new Date(resp_check.deadline);
+                const currentDate = new Date();
+
+                // Award 100 points if within deadline, else 50 points
+                const points = currentDate <= deadlineDate ? 100 : 50;
+
+                await GHUser.findByIdAndUpdate(resp_check.responder.uid, {
+                  $inc: { total_points: points, balance: points }
+                });
+              } else {
+                // Default to 50 points if no deadline exists
+                await GHUser.findByIdAndUpdate(resp_check.responder.uid, {
+                  $inc: { total_points: 50, balance: 50 }
+                });
+              }
             } else {
               return res.status(404).redirect('/error?error_details=Responder_Not_Found');
             }
