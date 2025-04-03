@@ -199,6 +199,7 @@
                             <th>Proof</th>
                             <th>Reported By</th>
                             <th>Date</th>
+                            <th hidden>ID</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -208,7 +209,6 @@
                                 <td>{{this.createdAgainst.username}}</td>
                                 <td>{{this.type}}</td>
                                 <td>{{this.description}}</td>
-                                <td hidden>{{this._id}}</td>
                                 <td>
                                     <a href="{{this.proofUrl}}" target="_blank"
                                         style="color: #1c3879; text-decoration: underline;">View Proof</a>
@@ -216,9 +216,14 @@
                                 <td>{{this.createdBy.username}}</td>
                                 <td>{{this.createdAt}}</td>
                                 <td>
-                                    <div class="action-buttons">
-                                        <button class="btn approve"><i class="fas fa-check"></i> Close</button>
-                                    </div>
+                                    <form method="POST" action="/admin/closeReport">
+                                        <input type="text" readonly required name="reportId" value="{{this._id}}">
+                                        <div class="action-buttons">
+                                            <button type="submit" class="btn approve">
+                                                <i class="fas fa-check"></i> Close
+                                            </button>
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                         {{/each}}
