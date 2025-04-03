@@ -22,6 +22,10 @@ const Report_Schema = new Schema({
   'description': {
     type: String,
     required: true
+  },
+  closed_by: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'GHUser'
   }
 
 },

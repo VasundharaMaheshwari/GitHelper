@@ -90,6 +90,8 @@ ChatRouter.get('/check-username', async (req, res) => {
 
   if (!createdAgainst) return res.status(400).json({ valid: false });
 
+  if (createdAgainst.role !== 'User') return res.status(400).json({ valid: false });
+
   return res.status(201).json({ valid: true });
 });
 
