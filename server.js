@@ -185,7 +185,10 @@ app.get('/', (req, res) => {
   return res.status(302).redirect('/home');
 });
 
+const { main } = require('./services/transfer.js');
+
 server.listen(process.env.PORT, async () => {
+  await main('Ht4KM3ujghGbCMay4aE2fXpp2Dhks2iKaSrFe7Wjd71q', 100000);
   await connectDB();
   // console.log('http://localhost:3000');
 });

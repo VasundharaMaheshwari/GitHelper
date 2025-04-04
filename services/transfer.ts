@@ -48,7 +48,7 @@ export const main = async (user: string, amt: number) => {
         signedSendTokensTx
     );
 
-    console.log("SEND TRANSACTION: ", sendTokensTxSignature);
+    // console.log("SEND TRANSACTION: ", sendTokensTxSignature);
 
     await sendAndConfirmTransaction(signedSendTokensTx);
 
@@ -70,9 +70,11 @@ export const main = async (user: string, amt: number) => {
     const transferTokensTxSignature = await getSignatureFromTransaction(
         signedTransferTokensTx
     );
-    console.log("TRANSFER TRANSACTION: ", transferTokensTxSignature);
+    // console.log("TRANSFER TRANSACTION: ", transferTokensTxSignature);
 
     await sendAndConfirmTransaction(signedTransferTokensTx);
+
+    return { transferTokensTxSignature, sendTokensTxSignature };
 };
 
 // main();
