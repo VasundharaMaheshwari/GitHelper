@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Redeem Token</title>
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+</head>
+
+<body>
+    <button id="redeem">Redeem Token</button>
+    <p id="status"></p>
+    <script>
+        async function redeem() {
+            const status = document.getElementById("status");
+
+            if (!window.solana?.isPhantom) {
+                alert("Install Phantom Wallet");
+                return;
+            }
+
+            try {
+                const connectRes = await window.solana.connect();
+                const sender = connectRes.publicKey.toString();
+
+                const response = await fetch('http://localhost:3000/prepare-transaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sender })
+                });
+
+                const { transaction } = await response.json();
+                const txBuffer = Uint8Array.from(atob(transaction), c => c.charCodeAt(0));
+
+                const tx = solanaWeb3.Transaction.from(txBuffer);
+                console.log(tx);
+                const signed = await window.solana.signAndSendTransaction(tx);
+
+                status.innerText = "✅ Transaction sent: " + signed.signature;
+            } catch (err) {
+                console.error(err);
+                status.innerText = "❌ Error: " + err.message;
+            }
+        }
+
+        document.getElementById("redeem").onclick = redeem;
+    </script>
+</body>
+
+</html>

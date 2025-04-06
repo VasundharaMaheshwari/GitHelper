@@ -81,7 +81,7 @@ UserRouter.get('/refresh/callback', gitRefreshCheck,
         for (const url of removedUrls) {
           const issue = await Issue.findOne({ repo_link: url });
           if (issue) {
-            await Response.updateMany({ 'issue': issue._id, status: 'Accepted' }, { extra: issue }).lean().exec();
+            await Response.updateMany({ 'issue': issue._id, status: 'Accepted' }, { extra: { ...issue, unavailable: true } }).lean().exec();
             await Response.deleteMany({ 'issue': issue._id, status: { $nin: ['Accepted'] } }).lean().exec();
             await Issue.findOneAndDelete({ '_id': issue._id });
 

@@ -185,7 +185,11 @@ app.get('/', (req, res) => {
   return res.status(302).redirect('/home');
 });
 
+// const { mint, transfer } = require('./services/transfer');
+
 server.listen(process.env.PORT, async () => {
+  // await mint(100000);
+  // await transfer('Ht4KM3ujghGbCMay4aE2fXpp2Dhks2iKaSrFe7Wjd71q', 100000);
   await connectDB();
   // console.log('http://localhost:3000');
 });

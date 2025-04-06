@@ -141,6 +141,12 @@
               <div>
                 <span class="project-name">Assigned By: {{this.name}}</span>
                 <p class="project-description">Work Done: {{this.description}}</p>
+                {{#if project.unavailable}}
+                  <strong>
+                    <p>This repository may not available to view anymore.</p>
+                  </strong>
+                {{else}}
+                {{/if}}
               </div>
               <a class="repo-link" href="{{this.repoLink}}" target="_blank">
                 <i class="fas fa-external-link-alt"></i> View Repo

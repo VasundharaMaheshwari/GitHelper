@@ -38,6 +38,12 @@ const Response_Schema = new Schema({
   },
   extra: {
     type: Object
+  },
+  deadline: {
+    type: Date,
+    required: function () {
+      return this.approved;
+    }
   }
 }, { timestamps: true });
 

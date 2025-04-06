@@ -38,7 +38,7 @@ const deleter = async (req, res) => {
         const stat = await Issue.findOneAndDelete({ '_id': _id });
 
         // const responses = await Response.find({ 'issue': _id, 'status': { $nin: ['Accepted'] } }).lean();
-        const extra = await Response.updateMany({ 'issue': _id, status: 'Accepted' }, { extra: stat }).lean().exec();
+        const extra = await Response.updateMany({ 'issue': _id, status: 'Accepted' }, { extra: { ...stat, unavailable: true } }).lean().exec();
 
         const respDeleteStatus = await Response.deleteMany({ 'issue': _id, status: { $nin: ['Accepted'] } }).lean().exec();
 
@@ -95,7 +95,7 @@ const usermod = async (req, res) => {
           for (const response of responses) {
             const issue = await Issue.findOne({ '_id': response.issue });
             if (issue) {
-              await Response.findByIdAndUpdate(response._id, { extra: issue });
+              await Response.findByIdAndUpdate(response._id, { extra: { ...issue, unavailable: true } });
             }
           }
           const resp = await Response.deleteMany({
