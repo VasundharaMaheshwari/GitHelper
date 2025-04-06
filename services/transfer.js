@@ -9,8 +9,8 @@ let __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
   });
 };
 let __generator = (this && this.__generator) || function (thisArg, body) {
-  let _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === 'function' ? Iterator : Object).prototype);
-  return g.next = verb(0), g['throw'] = verb(1), g['return'] = verb(2), typeof Symbol === 'function' && (g[Symbol.iterator] = function() { return this; }), g;
+  let _ = { label: 0, sent: function () { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === 'function' ? Iterator : Object).prototype);
+  return g.next = verb(0), g['throw'] = verb(1), g['return'] = verb(2), typeof Symbol === 'function' && (g[Symbol.iterator] = function () { return this; }), g;
   function verb(n) { return function (v) { return step([n, v]); }; }
   function step(op) {
     if (f) throw new TypeError('Generator is already executing.');
@@ -36,79 +36,124 @@ let __generator = (this && this.__generator) || function (thisArg, body) {
   }
 };
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.main = void 0;
+exports.transfer = exports.mint = void 0;
 let gill_1 = require('gill');
 let node_1 = require('gill/node');
 let token_1 = require('gill/programs/token');
 let _a = (0, gill_1.createSolanaClient)({
     urlOrMoniker: 'https://api.devnet.solana.com',
   }), rpc = _a.rpc, sendAndConfirmTransaction = _a.sendAndConfirmTransaction;
-let main = function (user, amt) { return __awaiter(void 0, void 0, void 0, function () {
-  let deployer, mint, latestBlockhash, sendTokensTx, signedSendTokensTx, sendTokensTxSignature, transferTokensTx, signedTransferTokensTx, transferTokensTxSignature;
-  return __generator(this, function (_a) {
-    switch (_a.label) {
-    case 0: return [4 /*yield*/, (0, node_1.loadKeypairSignerFromFile)('bosnrvc58UhxDbFb3dnjZ9rpQtepfncDmwQwCZPfd7b.json')];
-    case 1:
-      deployer = _a.sent();
-      return [4 /*yield*/, (0, node_1.loadKeypairSignerFromFile)('mntNcRwhpaBPUGggG1c4os4ZSKqpZTPWMHWWQnR6WKy.json')];
-    case 2:
-      mint = _a.sent();
-      return [4 /*yield*/, rpc.getLatestBlockhash().send()];
-    case 3:
-      latestBlockhash = (_a.sent()).value;
-      return [4 /*yield*/, (0, token_1.buildMintTokensTransaction)({
-        feePayer: deployer,
-        latestBlockhash: latestBlockhash,
-        mint: mint,
-        mintAuthority: deployer,
-        // amount: 100000, // note: be sure to consider the mint's `decimals` value
-        amount: amt,
-        // if decimals=2 => this will mint 10.00 tokens
-        // if decimals=4 => this will mint 0.100 tokens
-        destination: deployer,
-        // use the correct token program for the `mint`
-        tokenProgram: token_1.TOKEN_2022_PROGRAM_ADDRESS, // default=TOKEN_PROGRAM_ADDRESS
-      })];
-    case 4:
-      sendTokensTx = _a.sent();
-      return [4 /*yield*/, (0, gill_1.signTransactionMessageWithSigners)(sendTokensTx)];
-    case 5:
-      signedSendTokensTx = _a.sent();
-      return [4 /*yield*/, (0, gill_1.getSignatureFromTransaction)(signedSendTokensTx)];
-    case 6:
-      sendTokensTxSignature = _a.sent();
-      // console.log("SEND TRANSACTION: ", sendTokensTxSignature);
-      return [4 /*yield*/, sendAndConfirmTransaction(signedSendTokensTx)];
-    case 7:
-      // console.log("SEND TRANSACTION: ", sendTokensTxSignature);
-      _a.sent();
-      return [4 /*yield*/, (0, token_1.buildTransferTokensTransaction)({
-        feePayer: deployer, //bos
-        latestBlockhash: latestBlockhash,
-        mint: mint, //mnt
-        authority: deployer, //bos
-        // amount: 100000, // note: be sure to consider the mint's `decimals` value
-        amount: amt,
-        destination: (0, gill_1.address)(user),
-        // use the correct token program for the `mint`
-        tokenProgram: token_1.TOKEN_2022_PROGRAM_ADDRESS, // default=TOKEN_PROGRAM_ADDRESS
-      })];
-    case 8:
-      transferTokensTx = _a.sent();
-      return [4 /*yield*/, (0, gill_1.signTransactionMessageWithSigners)(transferTokensTx)];
-    case 9:
-      signedTransferTokensTx = _a.sent();
-      return [4 /*yield*/, (0, gill_1.getSignatureFromTransaction)(signedTransferTokensTx)];
-    case 10:
-      transferTokensTxSignature = _a.sent();
-      // console.log("TRANSFER TRANSACTION: ", transferTokensTxSignature);
-      return [4 /*yield*/, sendAndConfirmTransaction(signedTransferTokensTx)];
-    case 11:
-      // console.log("TRANSFER TRANSACTION: ", transferTokensTxSignature);
-      _a.sent();
-      return [2 /*return*/, { transferTokensTxSignature: transferTokensTxSignature, sendTokensTxSignature: sendTokensTxSignature }];
-    }
+let mint = function (amt) {
+  return __awaiter(void 0, void 0, void 0, function () {
+    let deployer, mint, latestBlockhash, sendTokensTx, signedSendTokensTx, sendTokensTxSignature, postMintBalance, _a, _b;
+    return __generator(this, function (_c) {
+      switch (_c.label) {
+      case 0: return [4 /*yield*/, (0, node_1.loadKeypairSignerFromFile)('bosnrvc58UhxDbFb3dnjZ9rpQtepfncDmwQwCZPfd7b.json')];
+      case 1:
+        deployer = _c.sent();
+        return [4 /*yield*/, (0, node_1.loadKeypairSignerFromFile)('mntNcRwhpaBPUGggG1c4os4ZSKqpZTPWMHWWQnR6WKy.json')];
+      case 2:
+        mint = _c.sent();
+        return [4 /*yield*/, rpc.getLatestBlockhash().send()];
+      case 3:
+        latestBlockhash = (_c.sent()).value;
+        return [4 /*yield*/, (0, token_1.buildMintTokensTransaction)({
+          feePayer: deployer,
+          latestBlockhash: latestBlockhash,
+          mint: mint,
+          mintAuthority: deployer,
+          // amount: 100000, // note: be sure to consider the mint's `decimals` value
+          amount: amt,
+          // if decimals=2 => this will mint 10.00 tokens
+          // if decimals=4 => this will mint 0.100 tokens
+          destination: deployer,
+          // use the correct token program for the `mint`
+          tokenProgram: token_1.TOKEN_2022_PROGRAM_ADDRESS, // default=TOKEN_PROGRAM_ADDRESS
+        })];
+      case 4:
+        sendTokensTx = _c.sent();
+        return [4 /*yield*/, (0, gill_1.signTransactionMessageWithSigners)(sendTokensTx)];
+      case 5:
+        signedSendTokensTx = _c.sent();
+        return [4 /*yield*/, (0, gill_1.getSignatureFromTransaction)(signedSendTokensTx)];
+      case 6:
+        sendTokensTxSignature = _c.sent();
+        // console.log("SEND TRANSACTION: ", sendTokensTxSignature);
+        return [4 /*yield*/, sendAndConfirmTransaction(signedSendTokensTx)];
+      case 7:
+        // console.log("SEND TRANSACTION: ", sendTokensTxSignature);
+        _c.sent();
+        _b = (_a = rpc)
+          .getTokenAccountBalance;
+        return [4 /*yield*/, (0, token_1.getAssociatedTokenAccountAddress)(mint, deployer, token_1.TOKEN_2022_PROGRAM_ADDRESS)];
+      case 8: return [4 /*yield*/, _b.apply(_a, [_c.sent()])
+        .send()];
+      case 9:
+        postMintBalance = (_c.sent()).value;
+        return [2 /*return*/, { sendTokensTxSignature: sendTokensTxSignature, postMintBalance: postMintBalance }];
+      }
+    });
   });
-}); };
-exports.main = main;
+};
+exports.mint = mint;
+let transfer = function (user, amt) {
+  return __awaiter(void 0, void 0, void 0, function () {
+    let deployer, mint, latestBlockhash, transferTokensTx, signedTransferTokensTx, transferTokensTxSignature, sourceAta, updatedBalance, destinationAta, destinationWalletBalance;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+      case 0: return [4 /*yield*/, (0, node_1.loadKeypairSignerFromFile)('bosnrvc58UhxDbFb3dnjZ9rpQtepfncDmwQwCZPfd7b.json')];
+      case 1:
+        deployer = _a.sent();
+        return [4 /*yield*/, (0, node_1.loadKeypairSignerFromFile)('mntNcRwhpaBPUGggG1c4os4ZSKqpZTPWMHWWQnR6WKy.json')];
+      case 2:
+        mint = _a.sent();
+        return [4 /*yield*/, rpc.getLatestBlockhash().send()];
+      case 3:
+        latestBlockhash = (_a.sent()).value;
+        return [4 /*yield*/, (0, token_1.buildTransferTokensTransaction)({
+          feePayer: deployer, //bos
+          latestBlockhash: latestBlockhash,
+          mint: mint, //mnt
+          authority: deployer, //bos
+          // amount: 100000, // note: be sure to consider the mint's `decimals` value
+          amount: amt,
+          destination: (0, gill_1.address)(user),
+          // use the correct token program for the `mint`
+          tokenProgram: token_1.TOKEN_2022_PROGRAM_ADDRESS, // default=TOKEN_PROGRAM_ADDRESS
+        })];
+      case 4:
+        transferTokensTx = _a.sent();
+        return [4 /*yield*/, (0, gill_1.signTransactionMessageWithSigners)(transferTokensTx)];
+      case 5:
+        signedTransferTokensTx = _a.sent();
+        return [4 /*yield*/, (0, gill_1.getSignatureFromTransaction)(signedTransferTokensTx)];
+      case 6:
+        transferTokensTxSignature = _a.sent();
+        // console.log("TRANSFER TRANSACTION: ", transferTokensTxSignature);
+        return [4 /*yield*/, sendAndConfirmTransaction(signedTransferTokensTx)];
+      case 7:
+        // console.log("TRANSFER TRANSACTION: ", transferTokensTxSignature);
+        _a.sent();
+        return [4 /*yield*/, (0, token_1.getAssociatedTokenAccountAddress)(mint, deployer, token_1.TOKEN_2022_PROGRAM_ADDRESS)];
+      case 8:
+        sourceAta = _a.sent();
+        return [4 /*yield*/, rpc
+          .getTokenAccountBalance(sourceAta)
+          .send()];
+      case 9:
+        updatedBalance = (_a.sent()).value;
+        return [4 /*yield*/, (0, token_1.getAssociatedTokenAccountAddress)(mint, (0, gill_1.address)(user), token_1.TOKEN_2022_PROGRAM_ADDRESS)];
+      case 10:
+        destinationAta = _a.sent();
+        return [4 /*yield*/, rpc
+          .getTokenAccountBalance(destinationAta)
+          .send()];
+      case 11:
+        destinationWalletBalance = (_a.sent()).value;
+        return [2 /*return*/, { transferTokensTxSignature: transferTokensTxSignature, updatedBalance: updatedBalance, destinationWalletBalance: destinationWalletBalance }];
+      }
+    });
+  });
+};
+exports.transfer = transfer;
 // main();
