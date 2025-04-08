@@ -9,4 +9,10 @@ BlockChainRouter.get('/wallet-display', (req, res) => {
   });
 });
 
+BlockChainRouter.get('/connect-wallet', (req, res) => {
+  return res.status(200).render('main.hbs', {
+    layout: 'connectWallet.hbs'
+  });
+});
+
 module.exports = BlockChainRouter;

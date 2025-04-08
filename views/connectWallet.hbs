@@ -3,7 +3,12 @@
 
 <head>
     <title>Phantom Wallet Connection</title>
-    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script> 
+    <link rel="icon" href="/logo.jpeg" type="image/icon type">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -89,8 +94,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -105,42 +115,29 @@
             <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="Disconnected Icon">
             Not Connected
         </p>
-        <p id="balance" class="info">
-            <img src="https://cdn-icons-png.flaticon.com/512/483/483188.png" alt="Balance Icon">
-            Balance: ---
-        </p>
+        <form id="wallet-form" action="/api/save-wallet" method="POST" style="display: none;">
+            <input type="hidden" name="walletAddress" id="walletAddress">
+        </form>
     </div>
-
     <script>
         async function connectPhantom() {
             if (window.solana && window.solana.isPhantom) {
                 try {
                     const response = await window.solana.connect();
                     const walletAddress = response.publicKey.toString();
-                    document.getElementById("wallet-status").innerHTML = 
+                    document.getElementById("wallet-status").innerHTML =
                         `<img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Connected Icon">
                         Connected: ${walletAddress}`;
 
-                    await getWalletBalance(walletAddress);
+                    // Fill the hidden form and submit it
+                    document.getElementById("walletAddress").value = walletAddress;
+                    document.getElementById("wallet-form").submit();
+
                 } catch (err) {
                     console.error("Wallet connection failed", err);
                 }
             } else {
                 alert("Phantom Wallet not found! Install it first.");
-            }
-        }
-
-        async function getWalletBalance(walletAddress) {
-            try {
-                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"), "confirmed");
-                const publicKey = new solanaWeb3.PublicKey(walletAddress);
-                const balance = await connection.getBalance(publicKey);
-                document.getElementById("balance").innerHTML = 
-                    `<img src="https://cdn-icons-png.flaticon.com/512/483/483188.png" alt="Balance Icon">
-                    Balance: ${(balance / 1e9).toFixed(4)} SOL`;
-            } catch (error) {
-                console.error("Error fetching balance:", error);
-                document.getElementById("balance").innerHTML = "Error fetching balance!";
             }
         }
 
