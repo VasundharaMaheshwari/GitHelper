@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Phantom Wallet Connection</title>
+    <link rel="icon" href="/logo.jpeg" type="image/icon type">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-image: url("/public/1329272.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .btn {
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 24px;
+            font-size: 18px;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #5d09b1, #1f65e3);
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .info {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .info img {
+            width: 24px;
+            height: 24px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Connect to Phantom Wallet</h2>
+        <button id="connect" class="btn">
+            🔗 Connect Wallet
+        </button>
+        <p id="wallet-status" class="info">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="Disconnected Icon">
+            Not Connected
+        </p>
+        <form id="wallet-form" action="/api/save-wallet" method="POST" style="display: none;">
+            <input type="hidden" name="walletAddress" id="walletAddress">
+        </form>
+    </div>
+    <script>
+        async function connectPhantom() {
+            if (window.solana && window.solana.isPhantom) {
+                try {
+                    const response = await window.solana.connect();
+                    const walletAddress = response.publicKey.toString();
+                    document.getElementById("wallet-status").innerHTML =
+                        `<img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Connected Icon">
+                        Connected: ${walletAddress}`;
+
+                    // Fill the hidden form and submit it
+                    document.getElementById("walletAddress").value = walletAddress;
+                    document.getElementById("wallet-form").submit();
+
+                } catch (err) {
+                    console.error("Wallet connection failed", err);
+                }
+            } else {
+                alert("Phantom Wallet not found! Install it first.");
+            }
+        }
+
+        document.getElementById("connect").addEventListener("click", connectPhantom);
+    </script>
+</body>
+
+</html>
