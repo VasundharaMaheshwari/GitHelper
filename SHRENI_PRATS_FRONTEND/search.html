@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Query Search</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      background-image: url("/public/1329272.png");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      color: white;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 32px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+
+    .search-bar {
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .search-bar input {
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      width: 70%;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .search-bar input::placeholder {
+      color: #ddd;
+    }
+
+    .query {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    .query h3 {
+      margin-bottom: 10px;
+      color: #00ffe0;
+    }
+
+    .skills {
+      margin-top: 10px;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      margin-right: 10px;
+      margin-top: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      font-size: 14px;
+      color: white;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Search Queries by Skill</h2>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by skill (e.g., JavaScript, Python, React)" oninput="filterQueries()" />
+    </div>
+
+    <div id="queryList">
+      <!-- Sample queries -->
+      <div class="query" data-skills="javascript react nodejs">
+        <h3>Build a Chat App</h3>
+        <p>Looking for collaborators to build a real-time chat app using MERN stack.</p>
+        <div class="skills">
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">NodeJS</span>
+        </div>
+      </div>
+
+      <div class="query" data-skills="python flask api">
+        <h3>REST API for Blog</h3>
+        <p>Need help building a blog API in Flask with basic authentication.</p>
+        <div class="skills">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Flask</span>
+          <span class="skill-tag">API</span>
+        </div>
+      </div>
+
+      <div class="query" data-skills="blockchain solidity">
+        <h3>Smart Contract Development</h3>
+        <p>Want to write and test ERC-20 contracts using Solidity.</p>
+        <div class="skills">
+          <span class="skill-tag">Blockchain</span>
+          <span class="skill-tag">Solidity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function filterQueries() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const queries = document.querySelectorAll('.query');
+
+      queries.forEach(query => {
+        const skills = query.getAttribute('data-skills');
+        if (skills.toLowerCase().includes(input)) {
+          query.style.display = "block";
+        } else {
+          query.style.display = "none";
+        }
+      });
+    }
+  </script>
+</body>
+</html>
