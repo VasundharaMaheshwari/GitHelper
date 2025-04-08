@@ -2,7 +2,7 @@ const express = require('express');
 const connectDB = require('./databases/db');
 const app = express();
 
-// const cors = require('cors');
+const cors = require('cors');
 
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
@@ -161,13 +161,11 @@ app.use((req, res, next) => {
 const handlebars = require('express-handlebars');
 const { Msg } = require('./models/Msg');
 const { overall_limit } = require('./middlewares/rate_limiter');
+const BlockChainRouter = require('./routes/BlockChainRoutes');
 
 app.use(overall_limit);
 
-// app.use(cors({
-//   origin: 'http://localhost:3000', // Adjust to your frontend's origin
-//   credentials: true // Allow cookies to be sent with requests
-// }));
+app.use(cors());
 
 app.set('view engine', 'handlebars');
 app.engine('handlebars', handlebars.engine({ defaultLayout: 'main' }));
@@ -180,6 +178,7 @@ app.use('/home', less_restrict, HomeRouter);
 app.use('/error', ErrorRouter);
 app.use('/admin', admin, AdminRouter);
 app.use('/chat', restrict, ChatRouter);
+app.use('/points', restrict, BlockChainRouter);
 
 app.get('/', (req, res) => {
   return res.status(302).redirect('/home');
@@ -189,7 +188,7 @@ app.get('/', (req, res) => {
 
 server.listen(process.env.PORT, async () => {
   // await mint(100000);
-  // await transfer('Ht4KM3ujghGbCMay4aE2fXpp2Dhks2iKaSrFe7Wjd71q', 100000);
+  // await claimTokens('Ht4KM3ujghGbCMay4aE2fXpp2Dhks2iKaSrFe7Wjd71q', 300000);
   await connectDB();
   // console.log('http://localhost:3000');
 });
@@ -197,6 +196,7 @@ server.listen(process.env.PORT, async () => {
 const passport = require('passport');
 const { default: mongoose } = require('mongoose');
 const { GHUser } = require('./models/GHUser');
+// const { claimTokens } = require('./services/claim');
 const GitHubStrategy = require('passport-github2').Strategy;
 
 app.use(passport.initialize());
