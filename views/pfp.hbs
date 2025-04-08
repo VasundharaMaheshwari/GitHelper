@@ -4,12 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Page</title>
+  <title>Profile - Git Helper</title>
   <link rel="icon" href="/logo.jpeg" type="image/icon type">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
   <style>
     * {
       box-sizing: border-box;
@@ -19,121 +22,243 @@
     }
 
     body {
-      background-image: url("/Home1.jpg");
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-attachment: fixed;
-      background-size: cover;
-      height: 100vh;
-      color: white;
-      overflow-x: hidden;
+    background: url("/Home1.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    overflow-x: hidden;
+    animation: fadeInBody 1.5s ease;
+  }
+
+  @keyframes fadeInBody {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-section img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-section img:hover {
+      transform: rotate(10deg);
+    }
+
+    .logo-section span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Navbar buttons */
+    .buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .buttons a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .buttons a:hover::after {
+      width: 100%;
+    }
+
+    .buttons a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
     .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 80px auto 20px;
-      display: flex;
-      gap: 50px;
-    }
+    max-width: 1300px;
+    margin: 130px auto 50px;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+  }
 
-    /* Left Section - User Info */
-    .left-section {
-      flex: 0 0 35%;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-      text-align: center;
-    }
+    .left-section, .right-section {
+    animation: fadeUp 1s ease forwards;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    padding: 30px;
+    position: relative;
+  }
+
+  .left-section {
+    flex: 0 0 32%;
+    text-align: center;
+  }
+
+  .right-section {
+    flex: 0 0 62%;
+  }
+
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
 
     .profile-picture {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 15px;
-      transition: transform 0.3s ease, border-color 0.3s ease;
-    }
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 3px solid #fff;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  }
 
     .profile-picture:hover {
-      transform: scale(1.1);
-      border-color: #6a11cb;
-    }
+    transform: scale(1.1);
+    border-color: #6a11cb;
+    box-shadow: 0 0 25px rgba(106, 17, 203, 0.7);
+  }
 
     .user-details h3 {
-      font-size: 20px;
-      margin-bottom: 15px;
-      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Right Section - Project History */
-    .right-section {
-      flex: 0 0 65%;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    }
+    font-size: 20px;
+    margin: 10px 0;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.6);
+  }
 
     .history-title {
-      font-size: 20px;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);
+    border-left: 4px solid #ff8a00;
+    padding-left: 12px;
+  }
 
     .project-list {
       list-style: none;
     }
 
     .project-item {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: background 0.3s ease;
-    }
+    background: rgba(0, 0, 0, 0.6);
+    padding: 16px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s ease;
+    border: 1px solid transparent;
+  }
 
     .project-item:hover {
-      background: rgba(0, 0, 0, 0.8);
-    }
+    background: rgba(0, 0, 0, 0.85);
+    border-color: #ff8a00;
+    box-shadow: 0 0 12px rgba(255, 138, 0, 0.4);
+  }
 
     .project-name {
-      font-size: 16px;
-    }
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .project-description {
+    font-size: 14px;
+    color: #ccc;
+  }
 
     .repo-link {
-      color: #ff8a00;
-      text-decoration: none;
-      font-weight: bold;
-    }
+    color: #ff8a00;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 15px;
+  }
 
     .repo-link:hover {
-      text-decoration: underline;
-    }
+    text-decoration: underline;
+    color: #ffc107;
+  }
+
   </style>
 </head>
 
 <body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo-section">
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <span>Git Helper</span>
+    </div>
+    <div class="buttons">
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/error/leaderboard"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+
   <!-- Main Container -->
   <div class="container">
-    <!-- Left Section - User Profile -->
-    <div class="left-section">
+    <!-- Left - Profile Card -->
+    <div class="left-section glass-box animate-fade-up">
       <img src="/pfp.jpeg" alt="Default Profile Picture" class="profile-picture">
       <div class="user-details">
-        <h3><strong>Username: {{username}} </strong></h3>
-        <h3><strong>Email: {{emailAddress}} </strong></h3>
-        <h3><strong>GitHub ID: {{githubId}} </strong></h3>
+        <h3><strong>Username:</strong> {{username}}</h3>
+        <h3><strong>Email:</strong> {{emailAddress}}</h3>
+        <h3><strong>GitHub ID:</strong> {{githubId}}</h3>
       </div>
     </div>
-    <!-- Right Section - Project History -->
-    <div class="right-section">
+
+    <!-- Right - Project History -->
+    <div class="right-section glass-box animate-fade-up delay-1">
       <p class="history-title">📜 Project History</p>
+
       {{#if projects.length}}
         <ul class="project-list">
           {{#each projects}}
@@ -142,23 +267,21 @@
                 <span class="project-name">Assigned By: {{this.name}}</span>
                 <p class="project-description">Work Done: {{this.description}}</p>
                 {{#if project.unavailable}}
-                  <strong>
-                    <p>This repository may not available to view anymore.</p>
-                  </strong>
-                {{else}}
+                  <strong><p>This repository may not be available to view anymore.</p></strong>
                 {{/if}}
               </div>
-              <a class="repo-link" href="{{this.repoLink}}" target="_blank">
+              <a class="repo-link" href="{{this.repoLink}}" target="_blank" title="Open GitHub Repo">
                 <i class="fas fa-external-link-alt"></i> View Repo
               </a>
             </li>
           {{/each}}
         </ul>
       {{else}}
-        <p>No projects found.</p>
+        <p class="no-projects">No projects found.</p>
       {{/if}}
     </div>
   </div>
+
 </body>
 
 </html>
