@@ -1,4 +1,6 @@
 const express = require('express');
+const { connectWallet } = require('../controllers/BlockChainController');
+const { walletNotConnected } = require('../middlewares/middleware');
 const BlockChainRouter = express.Router();
 
 BlockChainRouter.get('/wallet-display', (req, res) => {
@@ -9,10 +11,12 @@ BlockChainRouter.get('/wallet-display', (req, res) => {
   });
 });
 
-BlockChainRouter.get('/connect-wallet', (req, res) => {
+BlockChainRouter.get('/connect-wallet', walletNotConnected, (req, res) => {
   return res.status(200).render('main.hbs', {
     layout: 'connectWallet.hbs'
   });
 });
+
+BlockChainRouter.post('/save-wallet', walletNotConnected, connectWallet);
 
 module.exports = BlockChainRouter;

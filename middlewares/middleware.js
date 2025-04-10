@@ -4,6 +4,7 @@ const { GHUser } = require('../models/GHUser');
 const { OTP } = require('../models/OTP');
 const { default: mongoose } = require('mongoose');
 const { Issue } = require('../models/Issue');
+const { Wallet } = require('../models/Wallet');
 
 const restrict = async (req, res, next) => {
   if (req.signedCookies?.refresh) {
@@ -310,4 +311,12 @@ const gitRefreshCheck = async (req, res, next) => {
   next();
 };
 
-module.exports = { restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut, loggedInPass, ghAuth, gitCheck, mailCheck, gitRefreshCheck };
+const walletNotConnected = async (req, res, next) => {
+  const connected = await Wallet({ userId: req.user._id });
+
+  if (connected) return res.status(400).redirect('/points/wallet-display');
+
+  next();
+};
+
+module.exports = { walletNotConnected, restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut, loggedInPass, ghAuth, gitCheck, mailCheck, gitRefreshCheck };
