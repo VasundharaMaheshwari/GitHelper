@@ -7,4 +7,10 @@ BlockChainRouter.get('/wallet-display', walletConnected, displayWallet);
 
 BlockChainRouter.post('/save-wallet', walletNotConnected, connectWallet);
 
+//temporary
+
+BlockChainRouter.get('/redeem', (req, res) => {
+  return res.render('redeem.hbs');
+});
+
 module.exports = BlockChainRouter;
