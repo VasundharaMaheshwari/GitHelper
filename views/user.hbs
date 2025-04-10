@@ -336,27 +336,32 @@
     async function connectPhantom() {
       const previousWalletAddress = document.getElementById("wallet-data").dataset.wallet;
 
-      if (window.solana && window.solana.isPhantom) {
-        try {
-          const response = await window.solana.connect();
-          const walletAddress = response.publicKey.toString();
-          //document.getElementById("wallet-status").innerHTML =
-          //`<img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Connected Icon">
-          //          Connected: ${walletAddress}`;
+      if (!previousWalletAddress) {
+        if (window.solana && window.solana.isPhantom) {
+          try {
+            const response = await window.solana.connect();
+            const walletAddress = response.publicKey.toString();
+            //document.getElementById("wallet-status").innerHTML =
+            //`<img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Connected Icon">
+            //          Connected: ${walletAddress}`;
 
-          // Fill the hidden form and submit it
-          if (!previousWalletAddress || walletAddress === previousWalletAddress) {
+            // Fill the hidden form and submit it
+            //if (!previousWalletAddress || walletAddress === previousWalletAddress) {
             document.getElementById("walletAddress").value = walletAddress;
             document.getElementById("wallet-form").submit();
-          } else {
-            alert("Connected wallet does not match the one on record. Please connect the correct wallet.");
-          }
+            //} else {
+            //  alert("Connected wallet does not match the one on record. Please connect the correct wallet.");
+            //}
 
-        } catch (err) {
-          console.error("Wallet connection failed", err);
+          } catch (err) {
+            console.error("Wallet connection failed", err);
+          }
+        } else {
+          alert("Phantom Wallet not found! Install it first.");
         }
       } else {
-        alert("Phantom Wallet not found! Install it first.");
+        document.getElementById("walletAddress").value = previousWalletAddress;
+        document.getElementById("wallet-form").submit();
       }
     }
 

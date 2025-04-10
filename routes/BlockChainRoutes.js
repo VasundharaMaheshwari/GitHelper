@@ -1,15 +1,9 @@
 const express = require('express');
-const { connectWallet } = require('../controllers/BlockChainController');
-const { walletNotConnected } = require('../middlewares/middleware');
+const { connectWallet, displayWallet } = require('../controllers/BlockChainController');
+const { walletNotConnected, walletConnected } = require('../middlewares/middleware');
 const BlockChainRouter = express.Router();
 
-BlockChainRouter.get('/wallet-display', (req, res) => {
-  return res.status(200).render('main.hbs', {
-    layout: 'walletBalance.hbs',
-    balance: 1000,
-    walletBalance: 0.001
-  });
-});
+BlockChainRouter.get('/wallet-display', walletConnected, displayWallet);
 
 BlockChainRouter.post('/save-wallet', walletNotConnected, connectWallet);
 

@@ -319,4 +319,12 @@ const walletNotConnected = async (req, res, next) => {
   next();
 };
 
-module.exports = { walletNotConnected, restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut, loggedInPass, ghAuth, gitCheck, mailCheck, gitRefreshCheck };
+const walletConnected = async (req, res, next) => {
+  const connected = await Wallet.findOne({ userID: req.user._id });
+
+  if (!connected) return res.status(400).redirect('/api/user');
+
+  next();
+};
+
+module.exports = { walletConnected, walletNotConnected, restrict, less_restrict, admin, loggedIn, query_check, chat_check, logOut, loggedInPass, ghAuth, gitCheck, mailCheck, gitRefreshCheck };
