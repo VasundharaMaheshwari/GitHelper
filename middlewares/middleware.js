@@ -312,7 +312,7 @@ const gitRefreshCheck = async (req, res, next) => {
 };
 
 const walletNotConnected = async (req, res, next) => {
-  const connected = await Wallet({ userId: req.user._id });
+  const connected = await Wallet.findOne({ userID: req.user._id });
 
   if (connected) return res.status(400).redirect('/points/wallet-display');
 

@@ -3,6 +3,7 @@ const { Block } = require('../models/Block');
 const CryptoJS = require('crypto-js');
 const { ObjectId } = require('mongodb');
 const { validationResult } = require('express-validator');
+const { Wallet } = require('../models/Wallet');
 
 require('dotenv').config();
 
@@ -121,12 +122,15 @@ const load = async (req, res) => {
   try {
     if (ObjectId.isValid(req.user._id)) {
       const user = await GHUser.findOne({ '_id': req.user._id });
+      const wallet = await Wallet.findOne({ 'userID': req.user._id });
       if (user && user.role === 'User') {
         res.status(200).render('main.hbs', {
           layout: 'user.hbs',
           username: user.username,
           email: user.email.address,
-          github_id: user.github_id.id
+          github_id: user.github_id.id,
+          wallet: wallet ? false : true,
+          walletAddress: wallet?.walletAddress
         });
       } else {
         if (user && user.role === 'Admin') {
