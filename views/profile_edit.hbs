@@ -9,181 +9,312 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Roboto', sans-serif;
-    }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+  }
 
-    body {
-      background: #121212;
-      color: #f0f0f0;
-      min-height: 100vh;
+  body {
+    background-image: url("/1329272.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100vh;
+    color: white;
+    overflow-x: hidden;
+  }
+
+  .navbar {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-    }
-
-    .container {
-      width: 400px;
-      padding: 40px;
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.6);
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    h2 {
-      margin-bottom: 20px;
-      color: #fff;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      font-size: 16px;
-      margin-bottom: 5px;
-      color: #fff;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 5px;
-      border: none;
-      background: rgba(255, 255, 255, 0.2);
-      color: #fff;
-      outline: none;
-    }
-
-    .form-group input:focus {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    .form-group .btn {
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-      color: white;
-      font-size: 14px;
-      transition: 0.3s;
-    }
-
-    .check-username {
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
-    }
-
-    .check-username.disabled {
-      background: gray;
-      cursor: not-allowed;
-    }
-
-    .check-username.available {
-      background: #28a745;
-    }
-
-    .check-username.unavailable {
-      background: #dc3545;
-    }
-
-    .save-button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      background: linear-gradient(45deg, #ff6a00, #ee0979);
-      color: white;
-      font-size: 18px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .save-button:disabled {
-      background: gray;
-      cursor: not-allowed;
-    }
-
-    .modal {
-      display: none;
-      /* Hidden by default */
+      padding: 15px 30px;
+      background: transparent;
       position: fixed;
-      z-index: 1002;
-      left: 0;
-      top: 0;
       width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.7);
+      top: 0;
+      z-index: 1000;
     }
 
-    .modal-content {
-      background-color: #00000081;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 400px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: white;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .btn-container {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      justify-content: center;
-    }
-
-    .btn {
-      padding: 12px 22px;
-      background-image: linear-gradient(45deg, #ff416c, #ff4b2b);
-      color: #fff;
-      border: none;
-      border-radius: 25px;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-image 0.3s ease, transform 0.3s ease;
-      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+    .logo-section {
       display: flex;
       align-items: center;
-      gap: 6px;
     }
 
-    .btn:hover {
-      background-image: linear-gradient(45deg, #e60039, #e63900);
-      transform: translateY(-6px);
+    .logo-section img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-section img:hover {
+      transform: rotate(10deg);
+    }
+
+    .logo-section span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Navbar buttons */
+    .buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .buttons a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .buttons a:hover::after {
+      width: 100%;
+    }
+
+    .buttons a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
-  </style>
+
+  .container {
+    max-width: 540px;
+    margin: 140px auto 50px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 20px;
+    padding: 40px 35px;
+    text-align: center;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    animation: fadeIn 1.5s ease-out;
+}
+
+
+  h2 {
+    margin-bottom: 30px;
+    color: #fff;
+    font-size: 30px;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #fff;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    backdrop-filter: blur(10px);
+  }
+
+  .form-group input:focus {
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  }
+
+  .form-group .btn {
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+
+  .check-username {
+    margin-top: 10px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    font-size: 15px;
+    border-radius: 10px;
+    padding: 10px 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: 0.3s ease-in-out;
+  }
+
+  .check-username.disabled {
+    background: gray;
+    cursor: not-allowed;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .check-username.available {
+    background: #28a745;
+  }
+
+  .check-username.unavailable {
+    background: #dc3545;
+  }
+
+  .save-button {
+    width: 100%;
+    padding: 16px;
+    margin-top: 30px;
+    background: linear-gradient(135deg, #fc466b, #3f5efb);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+  }
+
+  .save-button:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #f7336e, #3456f3);
+    box-shadow: 0 10px 30px rgba(255, 0, 128, 0.5);
+  }
+
+  .save-button:disabled {
+    background: gray;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    animation: fadeIn 0.4s ease-in-out;
+  }
+
+  .modal-content {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    margin: 15% auto;
+    padding: 35px 25px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 80%;
+    max-width: 400px;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.6s ease;
+    color: white;
+    text-align: center;
+  }
+
+  .close {
+    color: #bbb;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .btn-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+    justify-content: center;
+  }
+
+  .btn {
+    padding: 12px 22px;
+    background-image: linear-gradient(135deg, #fc466b, #3f5efb);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+  }
+
+  .btn:hover {
+    background-image: linear-gradient(135deg, #f7336e, #3456f3);
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 0, 128, 0.5);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+</style>
+
 </head>
 
 <body>
+  <!-- Navbar -->
+  <div class="navbar glass">
+    <div class="logo-section">
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <span class="logo-text">Git Helper</span>
+    </div>
+    <div class="buttons">
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/api/user"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
   <div class="container">
     <h2><i class="fas fa-user-edit"></i> Edit Profile</h2>
     <form id="edit-profile-form" action="/query/update-profile" method="POST">
