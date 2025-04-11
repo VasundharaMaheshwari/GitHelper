@@ -22,18 +22,23 @@
                 const connectRes = await window.solana.connect();
                 const sender = connectRes.publicKey.toString();
 
-                const response = await fetch('http://localhost:3000/prepare-transaction', {
+                let response = await fetch('http://localhost:3000/prepare-transaction', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ sender })
-                });
+                })
 
-                const { transaction } = await response.json();
-                const txBuffer = Uint8Array.from(atob(transaction), c => c.charCodeAt(0));
+                response = await response.json();
 
-                const tx = solanaWeb3.Transaction.from(txBuffer);
-                console.log(tx);
-                const signed = await window.solana.signAndSendTransaction(tx);
+                if (response.message) return;
+
+                // const tx = transactionFromBase64(transaction);
+                // console.log(tx);
+                // const txBuffer = Uint8Array.from(tx);
+                // console.log(txBuffer)
+                const txBuffer = Uint8Array.from(atob(response.transaction), c => c.charCodeAt(0));
+                const newtx = solanaWeb3.Transaction.from(txBuffer);
+                const signed = await window.solana.signAndSendTransaction(newtx);
 
                 status.innerText = "✅ Transaction sent: " + signed.signature;
             } catch (err) {

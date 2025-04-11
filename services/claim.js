@@ -36,7 +36,7 @@ let __generator = (this && this.__generator) || function (thisArg, body) {
   }
 };
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.claimTokens = exports.mintTokens = exports.checkUserBalance = exports.checkDeployerBalance = void 0;
+exports.redeemRewards = exports.claimTokens = exports.mintTokens = exports.checkUserBalance = exports.checkDeployerBalance = void 0;
 let gill_1 = require('gill');
 let node_1 = require('gill/node');
 let token_1 = require('gill/programs/token');
@@ -179,3 +179,48 @@ let claimTokens = function (user, amt) { return __awaiter(void 0, void 0, void 0
   });
 }); };
 exports.claimTokens = claimTokens;
+let gill_2 = require('gill');
+let token_2 = require('gill/programs/token');
+let redeemRewards = function (user, amt) { return __awaiter(void 0, void 0, void 0, function () {
+  let deployer, mint, destinationAta, sourceAta, senderBalance, latestBlockhash, transaction;
+  return __generator(this, function (_a) {
+    switch (_a.label) {
+    case 0: return [4 /*yield*/, (0, node_1.loadKeypairSignerFromEnvironment)('DEPLOYER')];
+    case 1:
+      deployer = _a.sent();
+      return [4 /*yield*/, (0, node_1.loadKeypairSignerFromEnvironment)('MINT')];
+    case 2:
+      mint = _a.sent();
+      return [4 /*yield*/, (0, token_1.getAssociatedTokenAccountAddress)(mint, deployer, token_1.TOKEN_2022_PROGRAM_ADDRESS)];
+    case 3:
+      destinationAta = _a.sent();
+      return [4 /*yield*/, (0, token_1.getAssociatedTokenAccountAddress)(mint, (0, gill_1.address)(user), token_1.TOKEN_2022_PROGRAM_ADDRESS)];
+    case 4:
+      sourceAta = _a.sent();
+      return [4 /*yield*/, (0, exports.checkUserBalance)(user)];
+    case 5:
+      senderBalance = _a.sent();
+      if (Number(senderBalance.amount) < amt) {
+        return [2 /*return*/, new Error('Insufficient Balance')];
+      }
+      return [4 /*yield*/, rpc.getLatestBlockhash().send()];
+    case 6:
+      latestBlockhash = (_a.sent()).value;
+      transaction = (0, gill_2.createTransaction)({
+        feePayer: (0, gill_1.address)(user),
+        version: 'legacy',
+        instructions: [
+          (0, token_2.getTransferInstruction)({
+            source: sourceAta,
+            authority: (0, gill_1.address)(user),
+            destination: destinationAta,
+            amount: amt,
+          }, { programAddress: token_1.TOKEN_2022_PROGRAM_ADDRESS }),
+        ],
+        latestBlockhash: latestBlockhash,
+      });
+      return [2 /*return*/, transaction];
+    }
+  });
+}); };
+exports.redeemRewards = redeemRewards;

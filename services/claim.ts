@@ -119,3 +119,50 @@ export const claimTokens = async (user: string, amt: number) => {
     await sendAndConfirmTransaction(signedTransferTokensTx);
     return { transferTokensTxSignature };
 };
+
+import { createTransaction } from "gill";
+import { getTransferInstruction } from "gill/programs/token";
+
+export const redeemRewards = async (user: string, amt: number) => {
+    const deployer = await loadKeypairSignerFromEnvironment("DEPLOYER");
+    const mint = await loadKeypairSignerFromEnvironment("MINT");
+
+    const destinationAta = await getAssociatedTokenAccountAddress(
+        mint,
+        deployer,
+        TOKEN_2022_PROGRAM_ADDRESS,
+    );
+
+    const sourceAta = await getAssociatedTokenAccountAddress(
+        mint,
+        address(user),
+        TOKEN_2022_PROGRAM_ADDRESS,
+    );
+
+    const senderBalance = await checkUserBalance(user);
+
+    if (Number(senderBalance.amount) < amt) {
+        return new Error('Insufficient Balance');
+    }
+
+    let { value: latestBlockhash } = await rpc.getLatestBlockhash().send();
+
+    const transaction = createTransaction({
+        feePayer: address(user),
+        version: "legacy",
+        instructions: [
+            getTransferInstruction(
+                {
+                    source: sourceAta,
+                    authority: address(user),
+                    destination: destinationAta,
+                    amount: amt,
+                },
+                { programAddress: TOKEN_2022_PROGRAM_ADDRESS },
+            ),
+        ],
+        latestBlockhash,
+    });
+
+    return transaction;
+};

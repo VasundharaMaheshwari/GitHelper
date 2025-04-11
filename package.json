@@ -11,8 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@solana/spl-token": "^0.4.13",
-    "@solana/web3.js": "^1.98.0",
     "axios": "^1.7.8",
     "cloudinary": "^2.6.0",
     "connect-mongodb-session": "^5.0.0",
