@@ -58,6 +58,9 @@ const GHUser_Schema = new Schema({
     type: Number,
     required: true,
     default: 0
+  },
+  lastRedeem: {
+    type: Date
   }
 },
 { timestamps: true });

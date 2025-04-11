@@ -30,6 +30,7 @@
     "mailgen": "^2.0.28",
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.2",
+    "ms": "^2.1.3",
     "nodemailer": "^6.9.16",
     "otp-generator": "^4.0.1",
     "passport": "^0.7.0",

@@ -92,7 +92,7 @@
       vertical-align: middle;
     }
 
-    .wallet-column button {
+    #claimBtn {
       width: 100%;
       background: linear-gradient(45deg, #6a11cb, #2575fc);
       color: white;
@@ -105,11 +105,11 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
-    .wallet-column button i {
+    #claimBtn i {
       margin-right: 8px;
     }
 
-    .wallet-column button:hover {
+    #claimBtn:hover {
       background: linear-gradient(45deg, #5d09b1, #1f65e3);
       transform: scale(1.05);
     }
@@ -264,6 +264,12 @@
       background: linear-gradient(45deg, #5d09b1, #1f65e3);
       transform: scale(1.05);
     }
+
+    .claim-btn-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
@@ -280,25 +286,30 @@
         <div class="points">
           Points: <strong>{{balance}}</strong>
         </div>
-        <button id="claimBtn"><i class="fas fa-coins"></i> Claim</button>
       </div>
       <div class="wallet-column">
         <div class="gh-token">
           <img src="/logo.png" alt="GitHelper Token">
           <span>GH Token: <strong>{{walletBalance}}</strong></span>
         </div>
-        <a href="/points/redeem"><button><i class="fas fa-hand-holding-usd"></i> Redeem</button></a>
+        {{!-- <a href="/points/redeem"><button><i class="fas fa-hand-holding-usd"></i> Redeem</button></a> --}}
       </div>
     </div>
+    <div class="claim-btn-container">
+      <button id="claimBtn"><i class="fas fa-coins"></i> Claim</button>
+    </div>
+    <form id="point-form" action="/points/claim" method="POST" style="display: none;">
+      <input type="hidden" name="pointsClaimed" id="pointsClaimed">
+    </form>
     <!-- Claim Modal -->
     <div class="modal" id="claimModal">
       <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
         <h3>Select how many points you'd like to claim</h3>
         <div class="input-control">
-          <button onclick="changeAmount(-100)">-</button>
-          <input type="number" id="claimAmount" value="100" readonly />
-          <button onclick="changeAmount(100)">+</button>
+          <button onclick="changeAmount(-50)">-</button>
+          <input type="number" id="claimAmount" value="50" readonly />
+          <button onclick="changeAmount(50)">+</button>
         </div>
         <div class="modal-buttons">
           <button class="confirm-btn" onclick="confirmClaim()">Confirm</button>
@@ -324,6 +335,8 @@
     </div>
   </div> -->
     <script>
+      let currentBalance;
+
       // Open Modal on Claim button click
       document.getElementById('claimBtn').addEventListener('click', () => {
         document.getElementById('claimModal').style.display = 'block';
@@ -345,8 +358,13 @@
 
       function confirmClaim() {
         const points = document.getElementById('claimAmount').value;
-        alert(`You've claimed ${points} points!`);
+        if (currentBalance < points) {
+          alert('Insufficient balance');
+          return;
+        }
         closeModal();
+        document.getElementById("pointsClaimed").value = points;
+        document.getElementById("point-form").submit();
       }
 
       // Optional: Close modal if user clicks outside
@@ -356,6 +374,19 @@
           closeModal();
         }
       }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const claimBtn = document.getElementById('claimBtn');
+        const balanceText = document.querySelector('.points strong');
+        const claimingAmount = 50; // Set your claim threshold here
+
+        currentBalance = parseInt(balanceText.textContent, 10);
+
+        if (currentBalance < claimingAmount) {
+          claimBtn.disabled = true;
+          claimBtn.textContent = `You need at least ${claimingAmount} points to claim.`;
+        }
+      });
     </script>
 </body>
 
