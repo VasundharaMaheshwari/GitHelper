@@ -3,6 +3,7 @@ import {
     signTransactionMessageWithSigners,
     getSignatureFromTransaction,
     address,
+    transactionToBase64WithSigners,
 } from "gill";
 
 import { loadKeypairSignerFromEnvironment } from "gill/node";
@@ -164,5 +165,7 @@ export const redeemRewards = async (user: string, amt: number) => {
         latestBlockhash,
     });
 
-    return transaction;
+    const finalTransaction = await transactionToBase64WithSigners(transaction);
+
+    return finalTransaction;
 };

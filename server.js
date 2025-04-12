@@ -196,25 +196,24 @@ server.listen(process.env.PORT, async () => {
 const passport = require('passport');
 const { default: mongoose } = require('mongoose');
 const { GHUser } = require('./models/GHUser');
-const { redeemRewards } = require('./services/claim');
-const { transactionToBase64WithSigners } = require('gill');
+//const { redeemRewards } = require('./services/claim');
 // const { claimTokens } = require('./services/claim');
 const GitHubStrategy = require('passport-github2').Strategy;
 
 app.use(passport.initialize());
 
-app.post('/prepare-transaction', async (req, res) => {
-  try {
-    const { sender } = req.body;
-    let transaction;
-    try {
-      transaction = await redeemRewards(sender, 5 * 1e9);
-    } catch {
-      return res.json({ message: 'Insufficient Balance' });
-    }
-    return res.json({ transaction: await transactionToBase64WithSigners(transaction) });
-  } catch { }
-});
+// app.post('/prepare-transaction', async (req, res) => {
+//   try {
+//     const { sender } = req.body;
+//     let transaction;
+//     try {
+//       transaction = await redeemRewards(sender, 5 * 1e9);
+//     } catch {
+//       return res.json({ message: 'Insufficient Balance' });
+//     }
+//     return res.json({ transaction });
+//   } catch { }
+// });
 
 // passport.serializeUser(function (user, cb) {
 //   cb(null, user);
