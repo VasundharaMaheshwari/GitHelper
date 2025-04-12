@@ -30,6 +30,8 @@ BlockChainRouter.post('/prepare-transaction', walletConnected, async (req, res) 
   }
 });
 
+//basic checks and coding structured more left too
+
 BlockChainRouter.post('/confirm-transaction', walletConnected, async (req, res) => {
   const { transaction, queryId } = req.body;
   if (await confirmTransaction(transaction)) {
