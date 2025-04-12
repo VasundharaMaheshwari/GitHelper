@@ -450,6 +450,12 @@
         if (confirm.ok) {
           alert('Pushed Request Successfully');
           window.location.reload();
+        } else {
+          confirm = await confirm.json();
+          if (confirm.message) {
+            alert(confirm.message);
+            return;
+          }
         }
       } catch (error) {
         if (error.message.includes('User rejected the request.')) {
@@ -462,6 +468,12 @@
           if (reject.ok) {
             alert('Transaction Has Been Cancelled.');
             return;
+          } else {
+            reject = await reject.json();
+            if (reject.message) {
+              alert(reject.message);
+              return;
+            }
           }
         }
         alert('Error Occurred While Processing Request.');

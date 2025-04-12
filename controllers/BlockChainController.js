@@ -1,7 +1,8 @@
 const { GHUser } = require('../models/GHUser');
 const { Wallet } = require('../models/Wallet');
-const { checkUserBalance } = require('../services/claim');
-const { claimTokens } = require('../services/claim');
+const { redeemRewards, confirmTransaction, checkUserBalance, claimTokens } = require('../services/claim');
+const { ObjectId } = require('mongodb');
+const { Issue } = require('../models/Issue');
 const ms = require('ms');
 
 const connectWallet = async (req, res) => {
@@ -79,4 +80,48 @@ const tokenConversion = async (req, res) => {
   };
 };
 
-module.exports = { connectWallet, displayWallet, tokenConversion };
+const pushRequests = async (req, res) => {
+  try {
+    const { sender, queryId } = req.body;
+    const queryCheck = await Issue.findOne({ _id: queryId, createdBy: req.user._id, priority: 0 });
+    if (!ObjectId.isValid(queryId) || !queryCheck) return res.json({ message: 'Valid Query Not Found' });
+    let transaction;
+    try {
+      transaction = await redeemRewards(sender, 5 * 1e9);
+      await Issue.findByIdAndUpdate(queryId, { inProgress: true });
+    } catch {
+      return res.json({ message: 'Insufficient Balance' });
+    }
+    return res.json({ transaction });
+  } catch {
+    return res.status(500).send('Internal Server Error');
+  }
+};
+
+const confirmed = async (req, res) => {
+  try {
+    const { transaction, queryId } = req.body;
+    if (await confirmTransaction(transaction) && ObjectId.isValid(queryId)) {
+      await Issue.findOneAndUpdate({ _id: queryId, inProgress: true }, { priority: 1, inProgress: false });
+      return res.json({ message: 'Successfully updated' });
+    }
+    return res.status(404).json({ message: 'Failed to update' });
+  } catch {
+    return res.status(500).send('Internal Server Error');
+  };
+};
+
+const rejected = async (req, res) => {
+  try {
+    const { queryId } = req.body;
+    if (ObjectId.isValid(queryId)) {
+      await Issue.findOneAndUpdate({ _id: queryId, inProgress: true }, { inProgress: false });
+      return res.json({ message: 'Successfully cancelled transaction' });
+    }
+    return res.status(404).json({ message: 'Failed to revert' });
+  } catch {
+    return res.status(500).send('Internal Server Error');
+  };
+};
+
+module.exports = { connectWallet, displayWallet, tokenConversion, pushRequests, confirmed, rejected };
