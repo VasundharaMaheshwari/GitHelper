@@ -261,8 +261,19 @@ const responseUpdate = async (req, res) => {
                 const deadlineDate = new Date(resp_check.deadline);
                 const currentDate = new Date();
 
+                let points;
+
                 // Award 100 points if within deadline, else 50 points
-                const points = currentDate <= deadlineDate ? 100 : 50;
+                if (currentDate <= deadlineDate) {
+                  const issue = await Issue.findById(resp_check.issue);
+                  if (issue.priority === 1) {
+                    points = 150;
+                  } else {
+                    points = 100;
+                  }
+                } else {
+                  points = 50;
+                }
 
                 await GHUser.findByIdAndUpdate(resp_check.responder.uid, {
                   $inc: { total_points: points, balance: points }
