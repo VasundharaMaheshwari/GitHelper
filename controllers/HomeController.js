@@ -11,7 +11,7 @@ const refresh = async (req, res) => {
     if (user && user.role === 'Admin') {
       return res.status(403).redirect('/admin/home');
     }
-    const issues = await Issue.find().lean().exec();
+    const issues = await Issue.find().sort({ priority: -1 }).lean().exec();
     res.status(200).render('main.hbs', {
       layout: 'home.hbs',
       user: user,

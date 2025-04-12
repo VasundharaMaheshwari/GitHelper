@@ -143,7 +143,7 @@ export const redeemRewards = async (user: string, amt: number) => {
     const senderBalance = await checkUserBalance(user);
 
     if (Number(senderBalance.amount) < amt) {
-        return new Error('Insufficient Balance');
+        throw new Error('Insufficient Balance');
     }
 
     let { value: latestBlockhash } = await rpc.getLatestBlockhash().send();
@@ -169,3 +169,15 @@ export const redeemRewards = async (user: string, amt: number) => {
 
     return finalTransaction;
 };
+
+import { getExplorerLink } from "gill";
+
+export const confirmTransaction = async (transaction: string) => {
+    const link: string = getExplorerLink({
+        transaction
+    });
+
+    if (link) return true;
+
+    return false;
+}

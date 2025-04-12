@@ -27,6 +27,17 @@ const Issue_Schema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'GHUsers',
     required: true
+  },
+  priority: {
+    type: Number,
+    enum: [0, 1],
+    required: true,
+    default: 0
+  },
+  inProgress: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 }, { timestamps: true });
 

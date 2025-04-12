@@ -3,6 +3,7 @@ const { Response } = require('../models/Response');
 const { GHUser } = require('../models/GHUser');
 const { ObjectId } = require('mongodb');
 const { validationResult } = require('express-validator');
+const { Wallet } = require('../models/Wallet');
 
 const create = async (req, res) => {
   try {
@@ -66,9 +67,11 @@ const list = async (req, res) => {
     const checker = regex.test(req.user.username);
     if (checker) {
       const issues = await Issue.find({ username: req.user.username }).lean().exec();
+      const wallet = await Wallet.findOne({ userID: req.user._id });
       return res.status(200).render('main.hbs', {
         layout: 'issues.hbs',
-        issues: issues
+        issues: issues,
+        walletAddress: wallet.walletAddress
       });
     } else {
       return res.status(400).redirect('/error?error_details=Invalid_URL');

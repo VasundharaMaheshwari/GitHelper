@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -317,6 +318,12 @@
               <button class="response-button" onclick="responseQuery('{{_id}}')">
                 <i class="fas fa-comment"></i>Show Responses
               </button>
+              {{#ifCond priority 0}}
+                <button id="pushBtn" class="response-button" onclick="redeem('{{_id}}')">
+                  <i class="fas fa-arrow-up"></i>Push Request
+                </button>
+        {{else}}
+              {{/ifCond}}
             </div>
             <p><strong>Skillset:</strong> {{skillset}}</p>
             <p><strong>GitHub ID:</strong> {{github_id}}</p>
@@ -329,6 +336,7 @@
         <br>
         <p class="no-issues">No open queries found.</p><br>
       {{/if}}
+      <div id="wallet-data" data-wallet="{{walletAddress}}" hidden></div>
     </div>
     <div id="home-btn">
       <a href="/api/user" class="btn">Back To Dashboard</a>
@@ -387,6 +395,78 @@
 
     function responseQuery(queryId) {
       window.location.href = `/query_work/response?queryId=${queryId}`;
+    }
+
+    async function redeem(queryId) {
+      const previousWalletAddress = document.getElementById("wallet-data").dataset.wallet;
+
+      if (!previousWalletAddress) {
+        alert('Wallet Not Connected');
+        return;
+      }
+
+      if (!window.solana?.isPhantom) {
+        alert("Install Phantom Wallet");
+        return;
+      }
+
+      try {
+        const connectRes = await window.solana.connect();
+        const sender = connectRes.publicKey.toString();
+
+        if (sender !== previousWalletAddress) {
+          alert("Current Wallet & Linked Wallet Don't Match.");
+          return;
+        }
+
+        let response = await fetch('http://localhost:3000/points/prepare-transaction', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sender, queryId })
+        })
+
+        response = await response.json();
+
+        if (response.message) {
+          alert(response.message);
+          return;
+        }
+
+        // const tx = transactionFromBase64(transaction);
+        // console.log(tx);
+        // const txBuffer = Uint8Array.from(tx);
+        // console.log(txBuffer)
+        const txBuffer = Uint8Array.from(atob(response.transaction), c => c.charCodeAt(0));
+        const newtx = solanaWeb3.Transaction.from(txBuffer);
+        const signed = await window.solana.signAndSendTransaction(newtx);
+
+        //status.innerText = "✅ Transaction sent: " + signed.signature;
+        let confirm = await fetch('http://localhost:3000/points/confirm-transaction', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transaction: signed.signature, queryId })
+        })
+
+        if (confirm.ok) {
+          alert('Pushed Request Successfully');
+          window.location.reload();
+        }
+      } catch (error) {
+        if (error.message.includes('User rejected the request.')) {
+          let reject = await fetch('http://localhost:3000/points/reject-transaction', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ queryId })
+          })
+
+          if (reject.ok) {
+            alert('Transaction Has Been Cancelled.');
+            return;
+          }
+        }
+        alert('Error Occurred While Processing Request.');
+        return;
+      }
     }
   </script>
 </body>

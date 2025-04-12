@@ -36,7 +36,7 @@ let __generator = (this && this.__generator) || function (thisArg, body) {
   }
 };
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.redeemRewards = exports.claimTokens = exports.mintTokens = exports.checkUserBalance = exports.checkDeployerBalance = void 0;
+exports.confirmTransaction = exports.redeemRewards = exports.claimTokens = exports.mintTokens = exports.checkUserBalance = exports.checkDeployerBalance = void 0;
 let gill_1 = require('gill');
 let node_1 = require('gill/node');
 let token_1 = require('gill/programs/token');
@@ -201,7 +201,7 @@ let redeemRewards = function (user, amt) { return __awaiter(void 0, void 0, void
     case 5:
       senderBalance = _a.sent();
       if (Number(senderBalance.amount) < amt) {
-        return [2 /*return*/, new Error('Insufficient Balance')];
+        throw new Error('Insufficient Balance');
       }
       return [4 /*yield*/, rpc.getLatestBlockhash().send()];
     case 6:
@@ -227,3 +227,16 @@ let redeemRewards = function (user, amt) { return __awaiter(void 0, void 0, void
   });
 }); };
 exports.redeemRewards = redeemRewards;
+let gill_3 = require('gill');
+let confirmTransaction = function (transaction) { return __awaiter(void 0, void 0, void 0, function () {
+  let link;
+  return __generator(this, function (_a) {
+    link = (0, gill_3.getExplorerLink)({
+      transaction: transaction
+    });
+    if (link)
+      return [2 /*return*/, true];
+    return [2 /*return*/, false];
+  });
+}); };
+exports.confirmTransaction = confirmTransaction;
