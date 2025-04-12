@@ -220,7 +220,8 @@
                                 <td>{{this.createdAt}}</td>
                                 <td>
                                     <form method="POST" action="/admin/closeReport">
-                                        <input type="text" readonly required name="reportId" value="{{this._id}}">
+                                        <input type="text" readonly hidden required name="reportId"
+                                            value="{{this._id}}">
                                         <div class="action-buttons">
                                             <button type="submit" class="btn approve">
                                                 <i class="fas fa-check"></i> Close
