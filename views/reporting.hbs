@@ -153,7 +153,6 @@
       try {
         const response = await fetch("/chat/generate-signed-url");
         const data = await response.json();
-        console.log(data);
         if (!response.ok) throw new Error("Failed to get signed URL");
 
         // Upload to Cloudinary
