@@ -267,7 +267,7 @@ const responseUpdate = async (req, res) => {
                 if (currentDate <= deadlineDate) {
                   const issue = await Issue.findById(resp_check.issue);
                   if (issue.priority === 1) {
-                    points = 150;
+                    points = 200;
                   } else {
                     points = 100;
                   }
