@@ -10,7 +10,7 @@ const Issue_Schema = new Schema({
     required: true
   },
   skillset: {
-    type: [String]
+    type: String
   },
   github_id: {
     type: String
