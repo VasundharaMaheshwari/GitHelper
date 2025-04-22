@@ -376,7 +376,7 @@
   <div class="container">
     <div class="form-container">
       <h2><i class="fas fa-file-alt"></i> Create a New Query</h2>
-      <form id="issue-form" action="/query/save" method="post" onsubmit="return handleSubmit(event)">
+      <form id="issue-form" action="/query/save" method="post" onsubmit="return validateForm()">
         <div class="form-group">
           <i class="fas fa-phone-alt"></i>
           <input type="tel" id="contact_info" placeholder="Contact Info (10 digits)" name="contact_info" required>
@@ -447,37 +447,6 @@
 
       document.getElementById("error-message").innerText = "";
       return true;
-    }
-
-    async function handleSubmit(event) {
-      event.preventDefault(); // Prevent default form submission
-
-      // Validate form first
-      if (!validateForm()) {
-        return false; // Stop submission if validation fails
-      }
-
-      const skillset = document.getElementById('skillset').value;
-      const description = document.getElementById('description').value;
-
-      let response = await fetch('http://localhost:3000/points/validate-task', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ skillset, description })
-      })
-
-      response = await response.json();
-
-      console.log(response);
-
-      if (!response.valid) {
-        document.getElementById("error-message").innerText = response.reason;
-        return false;
-      }
-
-      document.getElementById('issue-form').submit();
-
-      //return true;
     }
   </script>
 </body>
