@@ -332,81 +332,6 @@
       }
     }
 
-    .issue {
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 12px;
-      background-color: rgba(23, 49, 101, 0.9);
-      box-shadow: 6px 6px 12px rgba(71, 71, 71, 0.2);
-      transition: transform 0.6s ease-in-out, background-color 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .issue:hover {
-      transform: translateY(-6px);
-      background-color: rgba(18, 37, 81, 0.9);
-    }
-
-    .issue::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: rgba(255, 255, 255, 0.1);
-      transform: rotate(45deg);
-      transition: all 0.6s ease-in-out;
-    }
-
-    .issue:hover::before {
-      top: -100%;
-      left: 100%;
-    }
-
-    .issue h2 {
-      font-size: 24px;
-      margin-bottom: 12px;
-      color: #9f9d9d;
-      display: flex;
-      align-items: center;
-    }
-
-    .issue h2 i {
-      margin-right: 10px;
-      color: #ffdc47;
-    }
-
-    .issue p {
-      font-size: 16px;
-      margin-bottom: 6px;
-      color: #dbdada;
-    }
-
-    .issue span {
-      font-weight: bold;
-      color: #d1d1d1;
-    }
-
-    .repo-link {
-      color: #1e90ff;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s ease;
-    }
-
-    .repo-link:hover {
-      color: #ffb300;
-    }
-
-    .no-issues {
-      text-align: center;
-      font-size: 21px;
-      color: #b5b5b5;
-      padding: 50px 0;
-    }
-
     .btn {
       display: inline-block;
       padding: 10px 20px;
@@ -548,14 +473,6 @@
         font-size: 28px;
       }
 
-      .issue h2 {
-        font-size: 20px;
-      }
-
-      .issue p {
-        font-size: 14px;
-      }
-
       .features .feature-grid,
       .testimonials .testimonial-grid {
         flex-direction: column;
@@ -612,7 +529,7 @@
   <section class="hero">
     <h1>Welcome to Git Helper</h1>
     <p>Your one-stop solution for managing Git queries and enhancing your development workflow.</p>
-    <a href="#queries" class="btn scroll-btn"><i class="fas fa-rocket"></i> Get Started</a>
+    <a href="/home/search" class="btn scroll-btn"><i class="fas fa-rocket"></i> Get Started</a>
   </section>
   <!-- Features Section -->
   <section class="features" id="features">
@@ -673,29 +590,6 @@
       </div>
     </div>
   </section>
-  <!-- Container for Open Queries -->
-  <div class="container" id="queries">
-    <h1>Current Open Queries</h1>
-    {{#if issues.length}}
-      {{#each issues}}
-        <div class="issue">
-          <h2><i class="fas fa-issue-opened"></i> {{title}}</h2>
-          <p><span>Username:</span> {{username}}</p>
-          <p><span>Skill Set:</span> {{skillset}}</p>
-          <p><span>GitHub ID:</span> {{github_id}}</p>
-          <p><span>Repository Link:</span> <a href="{{repo_link}}" class="repo-link" target="_blank"><i
-                class="fas fa-external-link-alt"></i> {{repo_link}}</a></p>
-          <form action="/home/view" method="GET">
-            <input type="hidden" name="_id" value="{{_id}}" required readonly hidden>
-            <button type="submit" class="btn"><i class="fas fa-eye"></i> View Query</button>
-          </form>
-        </div>
-      {{/each}}
-    {{else}}
-      <p class="no-issues">No open queries found.</p>
-    {{/if}}
-  </div>
-  <!-- Footer -->
   <div class="footer">
     <p>&copy; 2024 Git Helper. All rights reserved.</p>
     <p class="footer-link">
@@ -716,16 +610,6 @@
       } else {
         navbar.classList.remove('scrolled');
       }
-    });
-  </script>
-  <script>
-    document.querySelector('.scroll-btn').addEventListener('click', function (e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href');
-      document.querySelector(targetId).scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
     });
   </script>
 </body>

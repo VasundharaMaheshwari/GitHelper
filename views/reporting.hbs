@@ -12,23 +12,23 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-  }
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
 
     body {
-    background: url("/1329272.png") no-repeat center center fixed;
-    background-size: cover;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 100px;
-    color: #fff;
-  }
+      background: url("/1329272.png") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 100px;
+      color: #fff;
+    }
 
     .navbar {
       display: flex;
@@ -107,57 +107,61 @@
     }
 
     .container {
-    background: rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    padding: 50px 40px;
-    width: 90%;
-    max-width: 600px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    animation: fadeIn 1s ease-in-out;
-    text-align: center;
-  }
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 50px 40px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 1s ease-in-out;
+      text-align: center;
+    }
 
     h1 {
-    font-size: 34px;
-    margin-bottom: 15px;
-    color: #ffe2b0;
-    text-shadow: 0 0 10px rgba(255, 226, 176, 0.6);
-  }
+      font-size: 34px;
+      margin-bottom: 15px;
+      color: #ffe2b0;
+      text-shadow: 0 0 10px rgba(255, 226, 176, 0.6);
+    }
 
     p {
-    font-size: 15px;
-    color: #e0e0e0;
-    margin-bottom: 25px;
-  }
+      font-size: 15px;
+      color: #e0e0e0;
+      margin-bottom: 25px;
+    }
 
     form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
 
-    input, select, textarea {
-    padding: 12px;
-    font-size: 15px;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    background: rgba(255, 255, 255, 0.95);
-    color: #333;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-  }
+    input,
+    select,
+    textarea {
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
 
-    input:focus, select:focus, textarea:focus {
-    transform: scale(1.02);
-    border: 2px solid #6a11cb;
-  }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      transform: scale(1.02);
+      border: 2px solid #6a11cb;
+    }
 
-  textarea {
-    height: 120px;
-    resize: none;
-  }
+    textarea {
+      height: 120px;
+      resize: none;
+    }
 
     .file-input {
       display: flex;
@@ -173,60 +177,61 @@
     }
 
     .btn {
-    background: linear-gradient(135deg, #f5d8b3, #ffbb73);
-    color: #1c3879;
-    border: none;
-    border-radius: 25px;
-    padding: 12px;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-  }
+      background: linear-gradient(135deg, #f5d8b3, #ffbb73);
+      color: #1c3879;
+      border: none;
+      border-radius: 25px;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
 
     .btn:hover {
-    background: linear-gradient(135deg, #ebd0ad, #f9a860);
-    transform: scale(1.05);
-  }
+      background: linear-gradient(135deg, #ebd0ad, #f9a860);
+      transform: scale(1.05);
+    }
 
     .error-message {
-    color: #ff4b2b;
-    font-weight: bold;
-    margin-top: -10px;
-    margin-bottom: 5px;
-    font-size: 14px;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    #back-btn {
-      margin-top: 30px;
-    }
-
-    #back-btn a {
-      padding: 10px 24px;
-      background: #f5d8b3;
-      color: #1c3879;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: background 0.3s ease;
-      display: inline-flex;
-      align-items: center;
+      color: #ff4b2b;
       font-weight: bold;
+      margin-top: -10px;
+      margin-bottom: 5px;
+      font-size: 14px;
     }
 
-    #back-btn a:hover {
-      background: #ebd0ad;
-    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      #back-btn {
+        margin-top: 30px;
+      }
+
+      #back-btn a {
+        padding: 10px 24px;
+        background: #f5d8b3;
+        color: #1c3879;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: background 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        font-weight: bold;
+      }
+
+      #back-btn a:hover {
+        background: #ebd0ad;
+      }
   </style>
   <script>
     async function uploadImage(file) {

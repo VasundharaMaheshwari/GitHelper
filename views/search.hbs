@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Query Search</title>
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-image: url("/Home1.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      color: white;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 32px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+
+    .search-bar {
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .search-bar input {
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      width: 70%;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .search-bar input::placeholder {
+      color: #ddd;
+    }
+
+    .query {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+    }
+
+    .skills {
+      margin-top: 10px;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      margin-right: 10px;
+      margin-top: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      font-size: 14px;
+      color: white;
+    }
+
+    .repo-link {
+      color: #ff8a00;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      font-size: 15px;
+    }
+
+    .repo-link:hover {
+      text-decoration: underline;
+      color: #ffc107;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Search Queries by Skill</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by skill (e.g., JavaScript, Python, React)" />
+    </div>
+    <div id="queryList">
+      {{#if queries.length}}
+        {{#each queries}}
+          <div class="query" data-skills="{{skills}}">
+            <h2>PRIORITY REQUEST</h2>
+            <p><span>Username:</span> {{username}}</p>
+            <p><span>GitHub ID:</span> {{github_id}}</p>
+            <p><span>Repository Link:</span> <a href="{{repo_link}}" class="repo-link" target="_blank"><i
+                  class="fas fa-external-link-alt"></i> {{repo_link}}</a></p>
+            <p><span>Description:</span> {{description}}</p>
+            <div class="skills">
+              {{#each skillset}}
+                <span class="skill-tag">{{this}}</span>
+              {{/each}}
+              <form action="/home/view" method="GET">
+                <input type="hidden" name="_id" value="{{_id}}" required readonly hidden>
+                <button type="submit" class="btn"><i class="fas fa-eye"></i> View Query</button>
+              </form>
+            </div>
+          </div>
+        {{/each}}
+      {{else}}
+        <br>
+        <p>No open queries found.</p><br>
+      {{/if}}
+    </div>
+  </div>
+  <script>
+    document.getElementById("searchInput").addEventListener("keydown", async function (e) {
+      if (e.key === "Enter") {
+        const searchTerm = this.value.trim().toLowerCase();
+        if (!searchTerm) return;
+
+        const res = await fetch(`/home/search`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ searchTerm })
+        });
+        const data = await res.json();
+
+        const queryList = document.getElementById("queryList");
+        queryList.innerHTML = "";
+
+        if (data.length === 0) {
+          queryList.innerHTML = "<p>No queries found for this skill.</p>";
+          return;
+        }
+
+        data.forEach(query => {
+          const div = document.createElement("div");
+          div.className = "query";
+          div.setAttribute("data-skills", query.skillset);
+
+          const priorityHeading = query.priority === 1 ? `<h2>PRIORITY REQUEST</h2>` : "";
+
+          div.innerHTML = `
+    ${priorityHeading}
+          <p><span>Username:</span> ${query.username}</p>
+          <p><span>GitHub ID:</span> ${query.github_id}</p>
+          <p><span>Repository Link:</span> <a href=${query.repo_link} class="repo-link" target="_blank"><i
+                class="fas fa-external-link-alt"></i> ${query.repo_link}</a></p>
+          <p><span>Description:</span> ${query.description}</p>
+    <div class="skills">
+      ${query.skillset.split(/[\s,]+/).map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+    </div>
+            <form action="/home/view" method="GET">
+              <input type="hidden" name="_id" value=${query._id} required readonly hidden>
+              <button type="submit" class="btn"><i class="fas fa-eye"></i> View Query</button>
+            </form>
+  `;
+
+          queryList.appendChild(div);
+        });
+
+      }
+    });
+  </script>
+</body>
+
+</html>

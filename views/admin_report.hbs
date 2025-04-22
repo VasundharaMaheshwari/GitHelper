@@ -3,30 +3,30 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - View Reports</title>
-    <link rel="icon" href="/logo.jpeg" type="image/icon type">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - View Reports</title>
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: 'Roboto', sans-serif;
     }
 
-        body {
+    body {
       background: url("/image.jpg") no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       padding: 40px 20px;
     }
 
-        .container {
+    .container {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       padding: 40px;
@@ -38,11 +38,18 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-        h1 {
+    h1 {
       text-align: center;
       font-size: 32px;
       margin-bottom: 30px;
@@ -77,7 +84,7 @@
       box-shadow: 0 0 8px rgba(245, 216, 179, 0.8);
     }
 
-        .table-container {
+    .table-container {
       overflow-x: auto;
     }
 
@@ -90,7 +97,8 @@
       color: #333;
     }
 
-        th, td {
+    th,
+    td {
       padding: 16px;
       text-align: left;
       border-bottom: 1px solid #ccc;
@@ -101,7 +109,7 @@
       color: white;
     }
 
-        tr:hover {
+    tr:hover {
       background: rgba(245, 216, 179, 0.2);
     }
 
@@ -111,7 +119,7 @@
       gap: 8px;
     }
 
-        .btn {
+    .btn {
       padding: 8px 14px;
       border: none;
       border-radius: 8px;
@@ -123,10 +131,10 @@
 
     .btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
-        .approve {
+    .approve {
       background: linear-gradient(to right, #28a745, #42d36b);
       color: white;
     }
@@ -141,7 +149,7 @@
       color: #1c3879;
     }
 
-        .no-issues {
+    .no-issues {
       text-align: center;
       font-size: 20px;
       color: white;
@@ -174,109 +182,107 @@
     #back-btn a:hover {
       background: linear-gradient(to right, #f0cfa2, #e0b78a);
     }
-
-    </style>
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1><i class="fas fa-exclamation-triangle"></i> Admin - View Reports</h1>
-        {{#if reports.length}}
-            <div class="search-bar">
-                <input type="text" id="searchUser" placeholder="Search by Username...">
-                <select id="filterViolation">
-                    <option value="">Filter by Violation</option>
-                    <option value="impersonation">Impersonation</option>
-                    <option value="spam">Spam</option>
-                    <option value="self-harm">Self-harm</option>
-                    <option value="illegal">Illegal Activity</option>
-                    <option value="adult">18+ Content</option>
-                    <option value="hate">Hate Speech</option>
-                    <option value="harassment">Bullying</option>
-                    <option value="violence">Violence</option>
-                    <option value="scam">Scam</option>
-                    <option value="misinformation">False Information</option>
-                    <option value="privacy">Privacy Violation</option>
-                </select>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Reported User</th>
-                            <th>Violation Type</th>
-                            <th>Description</th>
-                            <th>Proof</th>
-                            <th>Reported By</th>
-                            <th>Date</th>
-                            <th hidden>ID</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each reports}}
-                            <tr>
-                                <td>{{this.createdAgainst.username}}</td>
-                                <td>{{this.type}}</td>
-                                <td>{{this.description}}</td>
-                                <td>
-                                    <a href="{{this.proofUrl}}" target="_blank"
-                                        style="color: #1c3879; text-decoration: underline;">View Proof</a>
-                                </td>
-                                <td>{{this.createdBy.username}}</td>
-                                <td>{{this.createdAt}}</td>
-                                <td>
-                                    <form method="POST" action="/admin/closeReport">
-                                        <input type="text" readonly hidden required name="reportId"
-                                            value="{{this._id}}">
-                                        <div class="action-buttons">
-                                            <button type="submit" class="btn approve">
-                                                <i class="fas fa-check"></i> Close
-                                            </button>
-                                        </div>
-                                    </form>
-                                </td>
-                            </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-        {{else}}
-            <p class="no-issues">No responses found.</p>
-        {{/if}}
-        <div id="back-btn">
-            <a href="/admin/home"><i class="fas fa-arrow-left"></i>  Back to Dashboard</a>
-        </div>
+  <div class="container">
+    <h1><i class="fas fa-exclamation-triangle"></i> Admin - View Reports</h1>
+    {{#if reports.length}}
+      <div class="search-bar">
+        <input type="text" id="searchUser" placeholder="Search by Username...">
+        <select id="filterViolation">
+          <option value="">Filter by Violation</option>
+          <option value="impersonation">Impersonation</option>
+          <option value="spam">Spam</option>
+          <option value="self-harm">Self-harm</option>
+          <option value="illegal">Illegal Activity</option>
+          <option value="adult">18+ Content</option>
+          <option value="hate">Hate Speech</option>
+          <option value="harassment">Bullying</option>
+          <option value="violence">Violence</option>
+          <option value="scam">Scam</option>
+          <option value="misinformation">False Information</option>
+          <option value="privacy">Privacy Violation</option>
+        </select>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Reported User</th>
+              <th>Violation Type</th>
+              <th>Description</th>
+              <th>Proof</th>
+              <th>Reported By</th>
+              <th>Date</th>
+              <th hidden>ID</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each reports}}
+              <tr>
+                <td>{{this.createdAgainst.username}}</td>
+                <td>{{this.type}}</td>
+                <td>{{this.description}}</td>
+                <td>
+                  <a href="{{this.proofUrl}}" target="_blank" style="color: #1c3879; text-decoration: underline;">View
+                    Proof</a>
+                </td>
+                <td>{{this.createdBy.username}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                  <form method="POST" action="/admin/closeReport">
+                    <input type="text" readonly hidden required name="reportId" value="{{this._id}}">
+                    <div class="action-buttons">
+                      <button type="submit" class="btn approve">
+                        <i class="fas fa-check"></i> Close
+                      </button>
+                    </div>
+                  </form>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+    {{else}}
+      <p class="no-issues">No responses found.</p>
+    {{/if}}
+    <div id="back-btn">
+      <a href="/admin/home"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const searchUser = document.getElementById("searchUser");
-            const filterViolation = document.getElementById("filterViolation");
-            const tableRows = document.querySelectorAll("tbody tr");
+  </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const searchUser = document.getElementById("searchUser");
+      const filterViolation = document.getElementById("filterViolation");
+      const tableRows = document.querySelectorAll("tbody tr");
 
-            function filterTable() {
-                const searchText = searchUser.value.toLowerCase();
-                const selectedViolation = filterViolation.value.toLowerCase();
+      function filterTable() {
+        const searchText = searchUser.value.toLowerCase();
+        const selectedViolation = filterViolation.value.toLowerCase();
 
-                tableRows.forEach(row => {
-                    const username = row.children[0].textContent.toLowerCase();
-                    const violationType = row.children[1].textContent.toLowerCase();
+        tableRows.forEach(row => {
+          const username = row.children[0].textContent.toLowerCase();
+          const violationType = row.children[1].textContent.toLowerCase();
 
-                    const matchesSearch = searchText === "" || username.includes(searchText);
-                    const matchesFilter = selectedViolation === "" || violationType.includes(selectedViolation);
+          const matchesSearch = searchText === "" || username.includes(searchText);
+          const matchesFilter = selectedViolation === "" || violationType.includes(selectedViolation);
 
-                    if (matchesSearch && matchesFilter) {
-                        row.style.display = "table-row";
-                    } else {
-                        row.style.display = "none";
-                    }
-                });
-            }
-
-            searchUser.addEventListener("input", filterTable);
-            filterViolation.addEventListener("change", filterTable);
+          if (matchesSearch && matchesFilter) {
+            row.style.display = "table-row";
+          } else {
+            row.style.display = "none";
+          }
         });
-    </script>
+      }
+
+      searchUser.addEventListener("input", filterTable);
+      filterViolation.addEventListener("change", filterTable);
+    });
+  </script>
 </body>
 
 </html>

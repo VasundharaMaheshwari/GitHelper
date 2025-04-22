@@ -11,11 +11,9 @@ const refresh = async (req, res) => {
     if (user && user.role === 'Admin') {
       return res.status(403).redirect('/admin/home');
     }
-    const issues = await Issue.find().sort({ priority: -1 }).lean().exec();
     res.status(200).render('main.hbs', {
       layout: 'home.hbs',
       user: user,
-      issues: issues
     });
   } catch {
     return res.status(500).redirect('/error?error_details=Error_Occurred');
@@ -76,4 +74,57 @@ const logout = (req, res) => {
   }
 };
 
-module.exports = { refresh, details, logout };
+function splitSkillset(input) {
+  let skills = input.includes(',')
+    ? input.split(',')
+    : input.split(' ');
+
+  return skills.map(skill => skill.trim()).filter(skill => skill.length > 0);
+};
+
+const searchLoad = async (req, res) => {
+  const issues = await Issue.find({ priority: 1 });
+  let queries = [];
+  for (let query of issues) {
+    const skills = splitSkillset(query.skillset);
+    let modifiedQuery = {
+      skillset: skills,
+      repo_link: query.repo_link,
+      github_id: query.github_id,
+      username: query.username,
+      _id: query._id,
+      description: query.description
+    };
+    queries.push(modifiedQuery);
+  }
+  return res.status(200).render('main.hbs', {
+    layout: 'search.hbs',
+    queries
+  });
+};
+
+const searchPost = async (req, res) => {
+  const { searchTerm } = req.body;
+  const searchSkills = splitSkillset(searchTerm.toLowerCase());
+
+  const seen = new Set(); // to avoid duplicates
+  const finalResults = [];
+
+  for (const skill of searchSkills) {
+    const issues = await Issue.find({
+      skillset: { $regex: new RegExp(skill, 'i') }
+    });
+
+    for (const issue of issues) {
+      if (!seen.has(issue._id.toString())) {
+        seen.add(issue._id.toString());
+        finalResults.push(issue);
+      }
+    }
+    finalResults.sort((a, b) => b.priority - a.priority);
+  }
+
+  return res.status(200).json(finalResults);
+};
+
+module.exports = { refresh, details, logout, searchLoad, searchPost };

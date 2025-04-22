@@ -40,7 +40,7 @@ const save = async (req, res) => {
           const trial = new Issue({
             username: req.user.username,
             contact_info: contact_info,
-            skillset: skillset,
+            skillset: skillset.toLowerCase(),
             github_id: req.user.github_id.id,
             repo_link: repo_link,
             description: description,

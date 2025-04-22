@@ -109,7 +109,7 @@ const save_edit = async (req, res) => {
           const first = await Issue.findOneAndUpdate({ '_id': queryId }, {
             // username: req.user.username,
             contact_info: contact_info,
-            skillset: skillset,
+            skillset: skillset.toLowerCase(),
             // github_id: github_id,
             // repo_link: repo_link,
             description: description

@@ -26,7 +26,6 @@
       padding-top: 100px;
     }
 
-
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -104,21 +103,24 @@
     }
 
     .header-icon {
-  font-size: 42px;
-  color: #00ffe0;
-  margin-bottom: 10px;
-  text-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
-  animation: pulseGlow 2s infinite;
-}
+      font-size: 42px;
+      color: #00ffe0;
+      margin-bottom: 10px;
+      text-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+      animation: pulseGlow 2s infinite;
+    }
 
-@keyframes pulseGlow {
-  0%, 100% {
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
-  }
-  50% {
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
-  }
-}
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+      }
+
+      50% {
+        text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+      }
+    }
 
     .wallet-container {
       max-width: 900px;
@@ -132,8 +134,15 @@
     }
 
     @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .wallet-header {
@@ -142,11 +151,11 @@
     }
 
     .wallet-header h2 {
-  font-size: 36px;
-  color: #fff;
-  text-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
-  animation: pulseGlow 3s infinite;
-}
+      font-size: 36px;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+      animation: pulseGlow 3s infinite;
+    }
 
     .wallet-header .address {
       font-size: 15px;
@@ -169,53 +178,55 @@
       min-width: 250px;
     }
 
+    .points,
+    .gh-token {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
+    .points::before,
+    .gh-token::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(0, 255, 255, 0.15), transparent 70%);
+      animation: floatPulse 4s infinite ease-in-out;
+    }
 
-    .points, .gh-token {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #fff;
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  background: rgba(255, 255, 255, 0.06);
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
+    @keyframes floatPulse {
 
-.points::before, .gh-token::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at center, rgba(0,255,255,0.15), transparent 70%);
-  animation: floatPulse 4s infinite ease-in-out;
-}
+      0%,
+      100% {
+        transform: translate(0%, 0%);
+      }
 
-@keyframes floatPulse {
-  0%, 100% {
-    transform: translate(0%, 0%);
-  }
-  50% {
-    transform: translate(10%, 10%);
-  }
-}
+      50% {
+        transform: translate(10%, 10%);
+      }
+    }
 
-.points:hover, .gh-token:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 35px rgba(0, 255, 255, 0.4);
-}
-
-
+    .points:hover,
+    .gh-token:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 35px rgba(0, 255, 255, 0.4);
+    }
 
     .gh-token img {
       height: 28px;
@@ -235,13 +246,16 @@
     }
 
     @keyframes floatBtn {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-}
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-4px);
+      }
+    }
 
     #claimBtn i {
       margin-right: 8px;
@@ -318,66 +332,72 @@
 
     /* Modal Background */
     .modal {
-  display: none;
-  position: fixed;
-  z-index: 100;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(6px);
-  background-color: rgba(0, 0, 0, 0.6);
-  justify-content: center;
-  align-items: center;
-}
-
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(6px);
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
 
     .modal-content {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  margin: 10% auto;
-  padding: 35px 30px;
-  border-radius: 20px;
-  max-width: 400px;
-  backdrop-filter: blur(20px);
-  text-align: center;
-  position: relative;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-  animation: fadeInScale 0.4s ease-out;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      margin: 10% auto;
+      padding: 35px 30px;
+      border-radius: 20px;
+      max-width: 400px;
+      backdrop-filter: blur(20px);
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      animation: fadeInScale 0.4s ease-out;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-@keyframes fadeInScale {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
+    @keyframes fadeInScale {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
 
-.modal-content h3 {
-  font-size: 20px;
-  margin-bottom: 20px;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
-}
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-content h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+    }
 
     /* Close Button */
     .close-btn {
-  position: absolute;
-  right: 15px;
-  top: 15px;
-  font-size: 26px;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  text-align: center;
-  transition: transform 0.2s ease, background 0.3s;
-}
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      font-size: 26px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      transition: transform 0.2s ease, background 0.3s;
+    }
 
-.close-btn:hover {
-  transform: scale(1.1);
-  background: rgba(255, 255, 255, 0.3);
-}
+    .close-btn:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.3);
+    }
 
     .input-control {
       display: flex;
@@ -430,7 +450,7 @@
       cursor: pointer;
       transition: 0.3s ease;
     }
-    
+
     .confirm-btn:hover {
       background: linear-gradient(45deg, #5d09b1, #1f65e3);
       transform: scale(1.05);
@@ -448,22 +468,25 @@
     }
 
     .divider {
-  height: 2px;
-  background: linear-gradient(to right, transparent, #00ffe0, transparent);
-  margin: 40px 0;
-  border-radius: 2px;
-  animation: pulseDivider 2.5s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-}
+      height: 2px;
+      background: linear-gradient(to right, transparent, #00ffe0, transparent);
+      margin: 40px 0;
+      border-radius: 2px;
+      animation: pulseDivider 2.5s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
 
-@keyframes pulseDivider {
-  0%, 100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-}
+    @keyframes pulseDivider {
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 
@@ -485,14 +508,12 @@
         {{walletAddress}}
       </div>
     </div>
-
     <div class="wallet-section">
       <div class="wallet-column">
         <div class="points">
           <i class="fas fa-star"></i> Points: <strong>{{balance}}</strong>
         </div>
       </div>
-
       <div class="wallet-column">
         <div class="gh-token">
           <i class="fas fa-coins"></i>
@@ -501,9 +522,7 @@
         {{!-- <a href="/points/redeem"><button><i class="fas fa-hand-holding-usd"></i> Redeem</button></a> --}}
       </div>
     </div>
-
     <div class="divider"></div>
-
     <div class="claim-btn-container">
       <button id="claimBtn"><i class="fas fa-coins"></i> Claim</button>
     </div>
