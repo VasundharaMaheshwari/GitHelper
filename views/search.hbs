@@ -10,117 +10,223 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
-      background-image: url("/Home1.jpg");
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      font-family: 'Roboto', sans-serif;
       margin: 0;
-      padding: 40px 20px;
-      color: white;
+      font-family: 'Roboto', sans-serif;
+      background: url("/Home1.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      padding-top: 80px;
     }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    .logo span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .nav-buttons a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .nav-buttons a:hover::after {
+      width: 100%;
+    }
+
+    .nav-buttons a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
 
     .container {
       max-width: 1000px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(15px);
       padding: 40px;
       border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      animation: fadeIn 1s ease;
     }
 
     h1 {
       text-align: center;
+      font-size: 36px;
       margin-bottom: 30px;
-      font-size: 32px;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
     }
 
     .search-bar {
-      margin-bottom: 30px;
       display: flex;
       justify-content: center;
-      gap: 10px;
+      margin-bottom: 40px;
     }
 
     .search-bar input {
-      padding: 12px 20px;
-      border-radius: 10px;
-      border: none;
-      font-size: 16px;
       width: 70%;
-      background: rgba(255, 255, 255, 0.2);
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
       color: white;
+      font-size: 16px;
+      transition: box-shadow 0.3s ease;
     }
 
+    .search-bar input:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+
+
     .search-bar input::placeholder {
-      color: #ddd;
+      color: #ccc;
     }
 
     .query {
       background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 0.5s ease-in;
+      border-radius: 16px;
+      padding: 25px 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.6s ease;
     }
 
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      text-decoration: none;
+    .query:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+    }
+
+    .query h2 {
+      margin-top: 0;
+      color: #ffcc00;
+    }
+
+    .query p {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+
+    .repo-link {
+      color: #ff9800;
       font-weight: bold;
-      cursor: pointer;
-      transition: background-image 0.3s ease, transform 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
     }
 
-    .btn:hover {
-      transform: scale(1.05);
-      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+    .repo-link:hover {
+      color: #ffc107;
+      text-decoration: underline;
     }
 
     .skills {
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     .skill-tag {
       display: inline-block;
-      margin-right: 10px;
-      margin-top: 6px;
-      padding: 6px 12px;
-      border-radius: 8px;
       background: linear-gradient(45deg, #6a11cb, #2575fc);
+      padding: 6px 12px;
+      margin: 5px 6px 0 0;
+      border-radius: 8px;
       font-size: 14px;
       color: white;
     }
 
-    .repo-link {
-      color: #ff8a00;
-      text-decoration: none;
+    .btn {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 10px 20px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      border: none;
+      border-radius: 25px;
+      color: white;
       font-weight: bold;
+      cursor: pointer;
       transition: all 0.3s ease;
-      font-size: 15px;
     }
 
-    .repo-link:hover {
-      text-decoration: underline;
-      color: #ffc107;
+    .btn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #5d09b1, #1f65e3);
     }
 
     @keyframes fadeIn {
-      from {
+      0% {
         opacity: 0;
         transform: translateY(10px);
       }
 
-      to {
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      100% {
         opacity: 1;
         transform: translateY(0);
       }
@@ -129,6 +235,17 @@
 </head>
 
 <body>
+  <div class="navbar">
+    <div class="logo">
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <span>Git Helper</span>
+    </div>
+    <div class="nav-buttons">
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/home"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+  
   <div class="container">
     <h1>Search Queries by Skill</h1>
     <div class="search-bar">
