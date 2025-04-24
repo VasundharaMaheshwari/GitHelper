@@ -24,7 +24,7 @@ ChatRouter.get('/list', chatlist);
 ChatRouter.get('/chats', checkchat, chat_check, chatting);
 
 ChatRouter.post('/chats', (req, res) => {
-  return res.status(200).send('Dynamic loading for much content... Add input size validation everywhere...');
+  return res.status(200).send('Dynamic loading for much content... Add input size validation everywhere... Allow cancellation of work till 3 times then ban');
 });
 
 ChatRouter.get('/generate-signed-url', async (req, res) => {
