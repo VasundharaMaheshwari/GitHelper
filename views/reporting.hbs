@@ -282,12 +282,22 @@
         errorMessage.innerText = "Please enter the username.";
         return;
       }
+      var usernameRegex = /^[a-zA-Z0-9_]+$/;
+      if (!usernameRegex.test(username)) {
+        errorMessage.innerText = "Username can only contain letters, numbers, and underscores.";
+        return;
+      }
       if (violation === "select") {
         errorMessage.innerText = "Please select a violation type.";
         return;
       }
       if (description.length < 10) {
         errorMessage.innerText = "Description must be at least 10 characters.";
+        return;
+      }
+      var descriptionRegex = /^[a-zA-Z0-9.,!?;:\s]+$/;
+      if (!descriptionRegex.test(description)) {
+        errorMessage.innerText = "Description can only contain letters, numbers, and standard punctuation.";
         return;
       }
       if (fileInput.files.length === 0) {
