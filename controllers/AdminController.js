@@ -9,6 +9,7 @@ const { Msg } = require('../models/Msg');
 const { default: mongoose } = require('mongoose');
 const { OTP } = require('../models/OTP');
 const { VerifyOTP } = require('../models/VerifyOTP');
+const { Report } = require('../models/Report');
 
 const loader = async (req, res) => {
   try {
@@ -204,4 +205,48 @@ const bannedUsers = async (req, res) => {
   }
 };
 
-module.exports = { loader, deleter, userlist, usermod, viewer, detailsBan, bannedUsers };
+const reportViewer = async (req, res) => {
+  try {
+    const reports = await Report.find({ closed_by: null })
+      .sort({ createdAt: -1 })
+      .populate('createdBy', 'username')
+      .populate('createdAgainst', 'username')
+      .lean();
+
+    return res.status(200).render('main.hbs', {
+      layout: 'admin_report.hbs',
+      reports: reports
+    });
+  } catch {
+    return res.status(500).send('Internal Server Error');
+  }
+};
+
+const reportCloser = async (req, res) => {
+  try {
+    const error = validationResult(req);
+    if (error.isEmpty()) {
+      let { reportId } = req.body;
+
+      reportId = new mongoose.Types.ObjectId(reportId);
+
+      if (!ObjectId.isValid(reportId)) return res.status(400).redirect('/error?error_details=Invalid');
+
+      const available = await Report.findById(reportId);
+      if (!available) return res.status(400).redirect('/error?error_details=Report_Not_Found');
+
+      if (req.user.role === 'Admin') {
+        await Report.findByIdAndUpdate(reportId, { closed_by: req.user._id });
+      } else {
+        return res.status(401).redirect('/error?error_details=Only_Admins_Can_Close_Queries');
+      }
+
+      return res.status(201).redirect('/admin/reported');
+    }
+    return res.send('Oops! Error Occurred...');
+  } catch {
+    return res.status(500).send('Internal Server Error');
+  }
+};
+
+module.exports = { loader, deleter, userlist, usermod, viewer, detailsBan, bannedUsers, reportViewer, reportCloser };
