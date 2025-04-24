@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb');
 const { Issue } = require('../models/Issue');
 const ms = require('ms');
 
-//add disconnect wallet, profile picture, emails for edits and acceptance and approval, logging of login and activities with ip and user, seo, gemini based decriptions and reports checking, chat features of delete and pin, close query instead of delete and have a history page of that, feedback of work and reports status
+//add disconnect wallet, profile picture, emails for edits and acceptance and approval and close reports, logging of login and activities with ip and user, seo, gemini based decriptions and reports checking, chat features of delete and pin, close query instead of delete and have a history page of that, feedback of work and reports status
 
 const connectWallet = async (req, res) => {
   try {

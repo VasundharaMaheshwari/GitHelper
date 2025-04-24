@@ -220,6 +220,19 @@
   <script>
     async function uploadImage(file) {
       try {
+        if (file) {
+          const isImage = file.type.startsWith('image/');
+          const isSizeOk = file.size <= 2 * 1024 * 1024; // 2MB in bytes
+          if (!isImage) {
+            document.getElementById("error-message").innerText = "Please upload a valid image file.";
+            return;
+          }
+          if (!isSizeOk) {
+            document.getElementById("error-message").innerText = "File size must be less than 2MB.";
+            return;
+          }
+        }
+
         const response = await fetch("/chat/generate-signed-url");
         const data = await response.json();
         if (!response.ok) throw new Error("Failed to get signed URL");
