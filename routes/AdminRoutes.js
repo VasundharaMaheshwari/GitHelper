@@ -1,9 +1,10 @@
 const { loader, deleter, userlist, usermod, viewer, detailsBan, bannedUsers } = require('../controllers/AdminController');
 const express = require('express');
-const { idcheck } = require('../validators/AdminValidators');
+const { idcheck, reportidcheck } = require('../validators/AdminValidators');
 const { Report } = require('../models/Report');
 const { ObjectId } = require('mongodb');
 const { default: mongoose } = require('mongoose');
+const { close_report_ip } = require('../middlewares/rate_limiter2');
 
 const AdminRouter = express.Router();
 
@@ -38,7 +39,7 @@ AdminRouter.get('/reported', async (req, res) => {
   }
 });
 
-AdminRouter.post('/closeReport', async (req, res) => {
+AdminRouter.post('/closeReport', reportidcheck, close_report_ip, async (req, res) => {
   try {
     let { reportId } = req.body;
 
