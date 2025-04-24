@@ -1,9 +1,8 @@
 const express = require('express');
 const APIRouter = express.Router();
-const { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate, profileUpdater } = require('../controllers/AppController');
+const { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate, profileUpdater, checkName } = require('../controllers/AppController');
 const { issue_limit, response_limit } = require('../middlewares/rate_limiter');
-const { saveIssue, saveRes } = require('../validators/AppValidators');
-const { GHUser } = require('../models/GHUser');
+const { saveIssue, saveRes, checkuser } = require('../validators/AppValidators');
 
 APIRouter.get('/create', create);
 
@@ -45,19 +44,7 @@ APIRouter.get('/editProfile', (req, res) => {
   }
 });
 
-APIRouter.get('/check-username', async (req, res) => {
-  try {
-    const { username } = req.query;
-    if (username === req.user.username) return res.status(400).redirect('/error?error_details=Username_Already_Yours');
-
-    const user = await GHUser.findOne({ username });
-
-    if (user) return res.status(403).send({ available: false });
-    else return res.status(201).send({ available: true });
-  } catch {
-    return res.status(500).redirect('/error?error_details=Error_Occurred');
-  }
-});
+APIRouter.get('/check-username', checkuser, checkName);
 
 APIRouter.post('/update-profile', profileUpdater);
 

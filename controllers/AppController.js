@@ -359,5 +359,22 @@ const profileUpdater = async (req, res) => {
   }
 };
 
+const checkName = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const { username } = req.query;
+      if (username === req.user.username) return res.status(400).send({ available: false, message: 'New Username Cannot Be Same As Old Username' });
 
-module.exports = { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate, profileUpdater };
+      const user = await GHUser.findOne({ username });
+
+      if (user) return res.status(403).send({ available: false });
+      else return res.status(201).send({ available: true });
+    }
+    return res.status(400).json({ available: false, message: 'Validation Check Failed' });
+  } catch {
+    return res.status(500).send({ available: false, message: 'Internal Server Error' });
+  }
+};
+
+module.exports = { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate, profileUpdater, checkName };

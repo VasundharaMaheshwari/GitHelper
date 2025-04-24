@@ -1,4 +1,4 @@
-const { body } = require('express-validator');
+const { body, query } = require('express-validator');
 
 const saveIssue = [body('contact_info').trim().notEmpty().matches(/^[0-9]{10}$/),
   body('skillset').trim().notEmpty().matches(/^[a-zA-Z0-9,.\s]+$/),
@@ -19,4 +19,6 @@ const saveRes = [body('issue_id').trim().notEmpty().matches(/^[a-fA-F0-9]{24}$/)
   // body('github_id').trim().notEmpty().matches(/^[a-zA-Z0-9-]{1,39}$/)
 ];
 
-module.exports = { saveIssue, saveRes };
+const checkuser = [query('username').trim().notEmpty().matches(/^[a-zA-Z0-9_]+$/)];
+
+module.exports = { saveIssue, saveRes, checkuser };

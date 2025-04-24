@@ -111,4 +111,26 @@ const chatting = async (req, res) => {
   }
 };
 
-module.exports = { chatload, chatlist, chatting };
+const checkUsername = async (req, res) => {
+  try {
+    const error = validationResult(req);
+    if (error.isEmpty()) {
+      const { username } = req.query;
+
+      if (username === req.user.username) return res.status(400).json({ valid: false });
+
+      const createdAgainst = await GHUser.findOne({ username });
+
+      if (!createdAgainst) return res.status(400).json({ valid: false });
+
+      if (createdAgainst.role !== 'User') return res.status(400).json({ valid: false });
+
+      return res.status(201).json({ valid: true });
+    }
+    return res.status(400).json({ valid: false, message: 'Validation Check Failed' });
+  } catch {
+    return res.status(500).json({ valid: false, message: 'Internal Server Error' });
+  }
+};
+
+module.exports = { chatload, chatlist, chatting, checkUsername };

@@ -462,6 +462,9 @@
               checkUsernameBtn.classList.add("unavailable");
               checkUsernameBtn.classList.remove("available");
               checkUsernameBtn.textContent = "❌ Not Available";
+              if (data.message) {
+                alert(data.message);
+              }
             }
             usernameChecked = true;
             enableSaveButton();

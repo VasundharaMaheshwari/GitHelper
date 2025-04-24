@@ -1,5 +1,5 @@
 const express = require('express');
-const { chatload, chatlist, chatting } = require('../controllers/ChatController');
+const { chatload, chatlist, chatting, checkUsername } = require('../controllers/ChatController');
 const { checkchat, checkchat2 } = require('../validators/ChatValidators');
 const { convo_limit } = require('../middlewares/rate_limiter');
 const { chat_check } = require('../middlewares/middleware');
@@ -81,18 +81,6 @@ ChatRouter.get('/reports', (req, res) => {
   });
 });
 
-ChatRouter.get('/check-username', async (req, res) => {
-  const { username } = req.query;
-
-  if (username === req.user.username) return res.status(400).json({ valid: false });
-
-  const createdAgainst = await GHUser.findOne({ username });
-
-  if (!createdAgainst) return res.status(400).json({ valid: false });
-
-  if (createdAgainst.role !== 'User') return res.status(400).json({ valid: false });
-
-  return res.status(201).json({ valid: true });
-});
+ChatRouter.get('/check-username', checkchat, checkUsername);
 
 module.exports = ChatRouter;

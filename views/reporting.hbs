@@ -299,6 +299,11 @@
       const usernameResponse = await fetch(`/chat/check-username?username=${username}`);
       const usernameData = await usernameResponse.json();
 
+      if (!usernameData.valid && usernameData.message) {
+        errorMessage.innerText = usernameData.message;
+        return;
+      }
+
       if (!usernameData.valid) {
         errorMessage.innerText = "Invalid username. Please check again.";
         return;
