@@ -1,4 +1,4 @@
-const { query, body } = require('express-validator');
+const { query, body, param } = require('express-validator');
 
 const ErrorCheck = query('error_details')
   .trim()
@@ -10,4 +10,6 @@ const msgCheck = [body('name').trim().notEmpty().matches(/^[A-Za-z]+(?: [A-Za-z]
   body('message').trim().notEmpty().matches(/^[A-Za-z0-9\s.,!?']*$/)
 ];
 
-module.exports = { ErrorCheck, msgCheck };
+const profileCheck = param('username').trim().notEmpty().matches(/^[a-zA-Z0-9_]+$/);
+
+module.exports = { ErrorCheck, msgCheck, profileCheck };
