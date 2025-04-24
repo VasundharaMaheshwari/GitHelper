@@ -123,6 +123,16 @@
       border-radius: 20px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
       animation: fadeIn 1s ease;
+      max-height: 80%;
+      overflow-y: scroll;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    .container::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+      /* Optional: Hide scrollbar background */
     }
 
     h1 {
