@@ -72,6 +72,8 @@ const tokenConversion = async (req, res) => {
 
     const user = await Wallet.findOne({ userID: req.user._id });
 
+    if (!user) return res.status(400).redirect('/error?error_details=Wallet_Address_Not_Found');
+
     await GHUser.findByIdAndUpdate(req.user._id, { $inc: { balance: -pointsClaimed }, lastRedeem: new Date() });
 
     await claimTokens(user.walletAddress, amt); //add revert
@@ -89,8 +91,8 @@ const pushRequests = async (req, res) => {
     if (!ObjectId.isValid(queryId) || !queryCheck) return res.json({ message: 'Valid Query Not Found' });
     let transaction;
     try {
-      transaction = await redeemRewards(sender, 5 * 1e9);
       await Issue.findByIdAndUpdate(queryId, { inProgress: true });
+      transaction = await redeemRewards(sender, 5 * 1e9);
     } catch {
       return res.json({ message: 'Insufficient Balance' });
     }
@@ -104,7 +106,7 @@ const confirmed = async (req, res) => {
   try {
     const { transaction, queryId } = req.body;
     if (await confirmTransaction(transaction) && ObjectId.isValid(queryId)) {
-      await Issue.findOneAndUpdate({ _id: queryId, inProgress: true }, { priority: 1, inProgress: false });
+      await Issue.findOneAndUpdate({ _id: queryId, inProgress: true, priority: 0 }, { priority: 1, inProgress: false });
       return res.json({ message: 'Successfully updated' });
     }
     return res.status(404).json({ message: 'Failed to update' });
@@ -117,7 +119,7 @@ const rejected = async (req, res) => {
   try {
     const { queryId } = req.body;
     if (ObjectId.isValid(queryId)) {
-      await Issue.findOneAndUpdate({ _id: queryId, inProgress: true }, { inProgress: false });
+      await Issue.findOneAndUpdate({ _id: queryId, inProgress: true, priority: 0 }, { inProgress: false });
       return res.json({ message: 'Successfully cancelled transaction' });
     }
     return res.status(404).json({ message: 'Failed to revert' });
