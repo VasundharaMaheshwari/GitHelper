@@ -5,6 +5,8 @@ const { ObjectId } = require('mongodb');
 const { Issue } = require('../models/Issue');
 const ms = require('ms');
 
+//add disconnect wallet, profile picture, emails for edits and acceptance and approval, logging of login and activities with ip and user, seo, gemini based decriptions and reports checking, chat features of delete and pin, close query instead of delete and have a history page of that, feedback of work and reports status
+
 const connectWallet = async (req, res) => {
   try {
     const { walletAddress } = req.body;
@@ -70,9 +72,9 @@ const tokenConversion = async (req, res) => {
 
     const user = await Wallet.findOne({ userID: req.user._id });
 
-    await claimTokens(user.walletAddress, amt);
-
     await GHUser.findByIdAndUpdate(req.user._id, { $inc: { balance: -pointsClaimed }, lastRedeem: new Date() });
+
+    await claimTokens(user.walletAddress, amt); //add revert
 
     return res.status(200).redirect('/points/wallet-display');
   } catch {
