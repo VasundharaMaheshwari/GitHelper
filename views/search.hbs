@@ -311,6 +311,12 @@
         const searchTerm = this.value.trim().toLowerCase();
         if (!searchTerm) return;
 
+        var searchTermRegex = /^[a-zA-Z0-9,.\s]+$/;
+        if (!searchTermRegex.test(searchTerm)) {
+          alert('Search terms can only contain letters, numbers, commas, periods, and spaces.');
+          return false;
+        }
+
         const res = await fetch(`/home/search`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
