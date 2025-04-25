@@ -89,6 +89,11 @@ const pushRequests = async (req, res) => {
     const { sender, queryId } = req.body;
     const queryCheck = await Issue.findOne({ _id: queryId, createdBy: req.user._id, priority: 0 });
     if (!ObjectId.isValid(queryId) || !queryCheck) return res.json({ message: 'Valid Query Not Found' });
+
+    const walletCheck = await Wallet.findOne({ userID: req.user._id, walletAddress: sender });
+
+    if (!walletCheck) return res.json({ message: 'Wallet Not Found' });
+
     let transaction;
     try {
       await Issue.findByIdAndUpdate(queryId, { inProgress: true });
