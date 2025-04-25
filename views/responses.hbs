@@ -317,6 +317,11 @@
         // Confirm button click
         document.getElementById("confirm-btn").onclick = function () {
           const selectedDate = new Date(modalDeadlineInput.value);
+
+          if (isNaN(selectedDate.getTime())) {
+            alert("Invalid date input detected.");
+          }
+
           const minDate = new Date();
           minDate.setDate(minDate.getDate() + 7);
 
