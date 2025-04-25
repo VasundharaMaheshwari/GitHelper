@@ -11,6 +11,19 @@ const chatload = async (req, res) => {
     const checker2 = ObjectId.isValid(req.user._id);
     if (checker2 && error.isEmpty()) {
       const { username, response, deadline } = req.body;
+
+      const selectedDate = new Date(deadline);
+      const minDate = new Date();
+      minDate.setDate(minDate.getDate() + 7);
+
+      if (isNaN(selectedDate.getTime())) {
+        return res.status(400).redirect('/error?error_details=Invalid_Deadline_Format');
+      }
+
+      if (selectedDate < minDate) {
+        return res.status(400).redirect('/error?error_details=Deadline_Must_Be_At_Least_7_Days_From_Now');
+      }
+
       const checker = await Response.findOneAndUpdate({ '_id': response, approved: false, status: 'Not Approved' }, { 'approved': true, 'status': 'To Do', 'deadline': deadline });
       if (checker) {
         return res.status(200).redirect(`/chat/chats?username=${username}`);
