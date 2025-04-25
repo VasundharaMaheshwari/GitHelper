@@ -59,6 +59,8 @@ const rateLimiter = new RateLimiterMemory({
 io.on('connection', (socket) => {
   const { userId, receiverId } = socket.handshake.auth;
 
+  if (!ObjectId.isValid(userId) || !ObjectId.isValid(receiverId)) socket.emit('error', { message: 'Invalid_IDs_Received' });
+
   if (!getid(userId, receiverId)) {
     setid(userId, receiverId, socket.id);
   } else {
@@ -68,7 +70,10 @@ io.on('connection', (socket) => {
   socket.on('user-message', async (message) => {
     const { sender, receiver, msg, convoId, ip } = message;
 
-    if (typeof msg !== 'string' || !msg.trim() || !ObjectId.isValid(sender) || !ObjectId.isValid(receiver) || !ObjectId.isValid(convoId)) {
+    const ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/;
+
+    if (typeof msg !== 'string' || !msg.trim() || !ObjectId.isValid(sender) || !ObjectId.isValid(receiver) || !ObjectId.isValid(convoId) ||
+      typeof ip !== 'string' || !ipRegex.test(ip)) {
       socket.emit('chat_rule', { type: 'type', message: 'Invalid message format' });
       return;
     }
