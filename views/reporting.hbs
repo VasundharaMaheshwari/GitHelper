@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Misbehavior</title>
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: url("/1329272.png") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 100px;
+      color: #fff;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    .logo span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .nav-buttons a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .nav-buttons a:hover::after {
+      width: 100%;
+    }
+
+    .nav-buttons a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 50px 40px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 1s ease-in-out;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 34px;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    p {
+      font-size: 15px;
+      color: #fff;
+      margin-bottom: 25px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      transform: scale(1.02);
+    }
+
+    textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    .file-input {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .btn {
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .error-message {
+      color: #ff4b2b;
+      font-weight: bold;
+      margin-top: -10px;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      #back-btn {
+        margin-top: 30px;
+      }
+    }
+  </style>
+  <script>
+    async function uploadImage(file) {
+      try {
+        const response = await fetch("/chat/generate-signed-url");
+        const data = await response.json();
+        if (!response.ok) throw new Error("Failed to get signed URL");
+
+        // Upload to Cloudinary
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("api_key", data.api_key);
+        formData.append("timestamp", data.timestamp);
+        formData.append("signature", data.signature);
+        formData.append("upload_preset", data.upload_preset);
+
+        const uploadResponse = await fetch(
+          `https://api.cloudinary.com/v1_1/${data.cloud_name}/image/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const cloudinaryData = await uploadResponse.json();
+
+        if (!cloudinaryData.secure_url) {
+          document.getElementById("error-message").innerText = "Image upload failed. Try again.";
+          return null;
+        }
+
+        return cloudinaryData.secure_url;
+
+      } catch (error) {
+        console.error("Upload error:", error);
+        document.getElementById("error-message").innerText = "Image upload failed. Try again.";
+        return null;
+      }
+    }
+
+    async function validateReportForm(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const username = document.getElementById("username").value.trim();
+      const violation = document.getElementById("violation").value;
+      const description = document.getElementById("description").value.trim();
+      const fileInput = document.getElementById("file");
+      const errorMessage = document.getElementById("error-message");
+
+      if (username === "") {
+        errorMessage.innerText = "Please enter the username.";
+        return;
+      }
+      if (violation === "select") {
+        errorMessage.innerText = "Please select a violation type.";
+        return;
+      }
+      if (description.length < 10) {
+        errorMessage.innerText = "Description must be at least 10 characters.";
+        return;
+      }
+      if (fileInput.files.length === 0) {
+        errorMessage.innerText = "Please upload an image as proof.";
+        return;
+      }
+
+      errorMessage.innerText = "Validating username...";
+      const usernameResponse = await fetch(`/chat/check-username?username=${username}`);
+      const usernameData = await usernameResponse.json();
+
+      if (!usernameData.valid) {
+        errorMessage.innerText = "Invalid username. Please check again.";
+        return;
+      }
+
+      errorMessage.innerText = "Uploading image...";
+      const uploadedImageUrl = await uploadImage(fileInput.files[0]);
+      if (!uploadedImageUrl) return;
+
+      errorMessage.innerText = "Submitting report...";
+
+      const reportResponse = await fetch("/chat/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          violation,
+          description,
+          secure_url: uploadedImageUrl
+        })
+      });
+
+      const reportData = await reportResponse.json();
+
+      if (reportData.success) {
+        alert("Report submitted successfully!");
+        window.location.href = "/api/user";
+      } else {
+        errorMessage.innerText = "Error submitting report.";
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="logo">
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <span>Git Helper</span>
+    </div>
+    <div class="nav-buttons">
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/api/user"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+  <div class="container">
+    <h1><i class="fas fa-flag"></i> Report Misbehavior</h1>
+    <p>Help keep the community safe.</p>
+    <form id="reportForm" onsubmit="validateReportForm(event)">
+      <input type="text" id="username" name="username" placeholder="Username" required>
+      <select id="violation" name="violation" required>
+        <option value="select">Select Violation Type</option>
+        <option value="impersonation">Impersonation</option>
+        <option value="spam">Spam</option>
+        <option value="self-harm">Self-harm</option>
+        <option value="illegal">Illegal Activity</option>
+        <option value="adult">18+ Content</option>
+        <option value="hate">Hate Speech or Symbols</option>
+        <option value="harassment">Bullying or Harassment</option>
+        <option value="violence">Violence</option>
+        <option value="scam">Scam or Fraud</option>
+        <option value="misinformation">False Information</option>
+        <option value="privacy">Privacy Violation</option>
+      </select>
+      <textarea id="description" placeholder="Describe the incident" required></textarea>
+      <input type="file" id="file" name="file" accept="image/*" required>
+      <p id="error-message" class="error-message"></p>
+      <button class="btn">Submit Report</button>
+    </form>
+  </div>
+</body>
+
+</html>

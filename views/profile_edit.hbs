@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-image: url("/1329272.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-section img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-section img:hover {
+      transform: rotate(10deg);
+    }
+
+    .logo-section span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Navbar buttons */
+    .buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .buttons a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
+
+    .buttons a:hover::after {
+      width: 100%;
+    }
+
+    .buttons a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 140px auto 50px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 20px;
+      padding: 40px 35px;
+      text-align: center;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      color: #fff;
+      font-size: 30px;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-size: 16px;
+      margin-bottom: 5px;
+      color: #fff;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      outline: none;
+      transition: all 0.3s ease-in-out;
+      backdrop-filter: blur(10px);
+    }
+
+    .form-group input:focus {
+      background: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    }
+
+    .form-group .btn {
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .check-username {
+      margin-top: 10px;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      font-size: 15px;
+      border-radius: 10px;
+      padding: 10px 18px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: 0.3s ease-in-out;
+    }
+
+    .check-username.disabled {
+      background: gray;
+      cursor: not-allowed;
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .check-username.available {
+      background: #28a745;
+    }
+
+    .check-username.unavailable {
+      background: #dc3545;
+    }
+
+    .check-username.available:hover {
+      background: #28a745;
+      transform: scale(1.1);
+    }
+
+    .check-username.unavailable:hover {
+      background: #dc3545;
+      transform: scale(1.1);
+    }
+
+    .check-username.disabled:hover {
+      background: gray;
+      cursor: not-allowed;
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .save-button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 30px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .save-button:hover {
+      transform: translateY(-3px);
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .save-button:disabled {
+      background: gray;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1002;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px);
+      margin: 15% auto;
+      padding: 35px 25px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 80%;
+      max-width: 400px;
+      border-radius: 14px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      animation: fadeIn 0.6s ease;
+      color: white;
+      text-align: center;
+    }
+
+    .close {
+      color: #bbb;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="navbar glass">
+    <div class="logo-section">
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <span class="logo-text">Git Helper</span>
+    </div>
+    <div class="buttons">
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/api/user"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+  <div class="container">
+    <h2><i class="fas fa-user-edit"></i> Edit Profile</h2>
+    <form id="edit-profile-form" action="/query/update-profile" method="POST">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter your username" name="username" value="{{username}}"
+          required>
+        <button class="btn check-username disabled" disabled>Check Availability</button>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" name="email" value="{{emailAddress}}" required>
+      </div>
+      <div class="form-group">
+        <label for="github">GitHub ID</label>
+        <input type="text" id="github" placeholder="Enter GitHub ID" name="github" value="{{githubId}}" required>
+      </div>
+      <button class="save-button" disabled>Save Changes</button>
+    </form>
+  </div>
+  <div id="confirmModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Confirm Submission</h2><br>
+      <p>Are the details filled in by you correct?</p><br>
+      <p>In case of updation to GitHub ID all previous queries opened via old ID will be deleted. In case of any issues,
+        feel free to contact us.</p>
+      <div class="btn-container">
+        <button id="confirmDelete" class="btn">Confirm</button>
+        <button id="cancelDelete" class="btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const usernameInput = document.getElementById("username");
+      const emailInput = document.getElementById("email");
+      const githubInput = document.getElementById("github");
+      const checkUsernameBtn = document.querySelector(".check-username");
+      const saveBtn = document.querySelector(".save-button");
+
+      // Store initial values
+      const initialData = {
+        username: usernameInput.value.trim(),
+        email: emailInput.value.trim(),
+        github: githubInput.value.trim()
+      };
+
+      let usernameValid = true;
+      let usernameChecked = false;
+
+      function validateUsername() {
+        const usernameRegex = /^[a-zA-Z0-9_]+$/;
+        return usernameRegex.test(usernameInput.value.trim());
+      }
+
+      function validateEmail() {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(emailInput.value.trim());
+      }
+
+      function validateGitHub() {
+        const githubRegex = /^[a-zA-Z0-9-]{1,39}$/;
+        return githubRegex.test(githubInput.value.trim());
+      }
+
+      function isFormChanged() {
+        return (
+          usernameInput.value.trim() !== initialData.username ||
+          emailInput.value.trim() !== initialData.email ||
+          githubInput.value.trim() !== initialData.github
+        );
+      }
+
+      function enableSaveButton() {
+        if (isFormChanged() && validateUsername() && validateEmail() && validateGitHub() && usernameValid) {
+          saveBtn.disabled = false;
+        } else {
+          saveBtn.disabled = true;
+        }
+      }
+
+      usernameInput.addEventListener("input", function () {
+        if (usernameInput.value !== initialData.username && usernameInput.value !== '') {
+          checkUsernameBtn.disabled = false;
+          checkUsernameBtn.classList.remove("disabled", "available", "unavailable");
+          checkUsernameBtn.textContent = "Check Availability";
+          usernameValid = false;
+          usernameChecked = false;
+        } else {
+          checkUsernameBtn.disabled = true;
+          checkUsernameBtn.classList.add("disabled");
+          usernameValid = true;
+          usernameChecked = true;
+        }
+        enableSaveButton();
+      });
+
+      checkUsernameBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (!validateUsername()) {
+          alert("Username can only contain letters, numbers, and underscores.");
+          return;
+        }
+
+        fetch(`/query/check-username?username=${usernameInput.value}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.available) {
+              usernameValid = true;
+              checkUsernameBtn.classList.add("available");
+              checkUsernameBtn.classList.remove("unavailable");
+              checkUsernameBtn.textContent = "✔ Available";
+            } else {
+              usernameValid = false;
+              checkUsernameBtn.classList.add("unavailable");
+              checkUsernameBtn.classList.remove("available");
+              checkUsernameBtn.textContent = "❌ Not Available";
+            }
+            usernameChecked = true;
+            enableSaveButton();
+          })
+          .catch(error => {
+            alert("Error checking username. Please try again.");
+          });
+      });
+
+      emailInput.addEventListener("input", enableSaveButton);
+      githubInput.addEventListener("input", enableSaveButton);
+
+      // Prevent "Enter" key from submitting username check when in other fields
+      document.getElementById("edit-profile-form").addEventListener("keypress", function (event) {
+        if (event.key === "Enter" && document.activeElement !== usernameInput) {
+          event.preventDefault();
+        }
+      });
+
+      document.getElementById("edit-profile-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (saveBtn.disabled) {
+          return;
+        }
+        const modal = document.getElementById("confirmModal");
+        modal.style.display = "block";
+
+        const closeModal = document.querySelector(".close");
+
+        // When the user clicks on <span> (x), close the modal
+        closeModal.onclick = function () {
+          modal.style.display = "none";
+        };
+
+        // Handle the "Yes" button
+        document.getElementById("confirmDelete").addEventListener("click", function () {
+          modal.style.display = "none";
+          event.target.submit(); // Programmatically submit the form
+        });
+
+        // Handle the "No" button
+        document.getElementById("cancelDelete").addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

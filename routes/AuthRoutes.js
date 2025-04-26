@@ -19,22 +19,22 @@ AuthRouter.get(
       try {
         if (err || !user) {
           if (req.signedCookies.verify) {
-            const incompleteId = req.signedCookies.verify;
-            const incomplete = new mongoose.Types.ObjectId(incompleteId);
+            // const incompleteId = req.signedCookies.verify;
+            // const incomplete = new mongoose.Types.ObjectId(incompleteId);
 
-            const foundUser = await GHUser.findById(incomplete);
-            if (foundUser) {
-              await GHUser.findByIdAndDelete(incomplete);
-            }
+            // const foundUser = await GHUser.findById(incomplete);
+            // if (foundUser) {
+            //   await GHUser.findByIdAndDelete(incomplete);
+            // }
 
             res.clearCookie('verify');
           }
 
           if (info && info.message === 'GitHub ID received not linked with account.') {
-            return res.status(500).redirect('/error?error_details=GitHub_ID_Is_Incorrect_Please_Register_Again');
+            return res.status(500).redirect('/error?error_details=GitHub_ID_Is_Incorrect_Please_Login_To_Complete_Verification');
           }
           if (info && (info.message === 'Incomplete user not found.' || info.message === 'Session not found for user.')) {
-            return res.status(404).redirect('/error?error_details=User_Not_Found');
+            return res.status(404).redirect('/error?error_details=User_Not_Found_Please_Login_To_Complete_Verification');
           }
 
           return res.status(403).redirect('/api/register');

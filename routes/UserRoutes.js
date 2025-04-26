@@ -10,6 +10,9 @@ const passport = require('passport');
 const { default: mongoose } = require('mongoose');
 const { GHUser } = require('../models/GHUser');
 const { default: axios } = require('axios');
+const { Issue } = require('../models/Issue');
+const { mailGen, transporter } = require('../services/mail');
+const { Response } = require('../models/Response');
 
 UserRouter.post('/login', loginCheck, login_limit_ip, login_limit, loggedIn, login);
 
@@ -70,6 +73,36 @@ UserRouter.get('/refresh/callback', gitRefreshCheck,
         const incompleteId = req.signedCookies.refresh;
         const incomplete = new mongoose.Types.ObjectId(incompleteId);
 
+        const oldUserData = await GHUser.findById(incomplete);
+        const oldRepoUrls = oldUserData.repos;
+
+        const removedUrls = oldRepoUrls.filter(url => !repoUrls.includes(url));
+
+        for (const url of removedUrls) {
+          const issue = await Issue.findOne({ repo_link: url });
+          if (issue) {
+            await Response.updateMany({ 'issue': issue._id, status: 'Accepted' }, { extra: { ...issue, unavailable: true } }).lean().exec();
+            await Response.deleteMany({ 'issue': issue._id, status: { $nin: ['Accepted'] } }).lean().exec();
+            await Issue.findOneAndDelete({ '_id': issue._id });
+
+            const forgot = {
+              body: {
+                name: 'User',
+                intro: `The issue and responses for the following repository link has been been deleted due to inconsistencies - ${url}.`
+              }
+            };
+            const forgotMsg = mailGen.generate(forgot);
+            const mailer = {
+              from: process.env.EMAIL,
+              to: oldUserData.email.address,
+              subject: 'Deletion of Issue.',
+              html: forgotMsg
+            };
+
+            await transporter.sendMail(mailer);
+          }
+        }
+
         await GHUser.findByIdAndUpdate(incomplete, { repos: repoUrls });
 
         res.clearCookie('refresh');
@@ -80,11 +113,5 @@ UserRouter.get('/refresh/callback', gitRefreshCheck,
       }
     })(req, res, next);
   });
-
-//temporary
-
-UserRouter.get('/redeem', (req, res) => {
-  return res.render('redeem.hbs');
-});
 
 module.exports = UserRouter;

@@ -2,6 +2,8 @@ const { validationResult } = require('express-validator');
 const { Contact } = require('../models/Contact');
 const { transporter, emessage } = require('../services/mail');
 const { GHUser } = require('../models/GHUser');
+const { Response } = require('../models/Response');
+const { Issue } = require('../models/Issue');
 const { startOfMonth, endOfMonth } = require('date-fns');
 
 const error = (req, res) => {
@@ -65,4 +67,46 @@ const leaderboard = async (req, res) => {
   }
 };
 
-module.exports = { error, contactus, leaderboard };
+const profileLoad = async (req, res) => {
+  try {
+    const { username } = req.params;
+    if (!username) return res.status(400).redirect('/error?error_details=Invalid_URL');
+
+    const user = await GHUser.findOne({ username });
+    if (!user) return res.status(404).redirect('/error?error_details=User_Not_Found');
+
+    const responses = await Response.find({ 'responder.uid': user._id, status: 'Accepted' });
+
+    let projects = [];
+
+    for (const response of responses) {
+      const issue = await Issue.findOne({ _id: response.issue });
+      let project = {};
+      if (!issue) {
+        project = {
+          name: response.extra.username,
+          description: response.extra.description,
+          repoLink: response.extra.repo_link
+        };
+      } else {
+        project = {
+          name: issue.username,
+          description: issue.description,
+          repoLink: issue.repo_link
+        };
+      }
+      projects.push(project);
+    }
+    return res.status(200).render('main.hbs', {
+      layout: 'pfp.hbs',
+      projects,
+      username,
+      emailAddress: user.email.address,
+      githubId: user.github_id.id
+    });
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
+  }
+};
+
+module.exports = { error, contactus, leaderboard, profileLoad };

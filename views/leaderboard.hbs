@@ -2,300 +2,529 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard</title>
+  <link rel="icon" href="/logo.jpeg" type="image/icon type">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
 
-        body {
-            background-image: url("/Home1.jpg");
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: brightness(0.8);
-            color: #f0f0f0;
-        }
+    body {
+      background: url('/Home1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 100px;
+      color: #f0f0f0;
+    }
 
-        /* Container to Center Everything */
-        .container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
-            text-align: center;
-            width: 450px;
-        }
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
 
-        h1 {
-            margin-bottom: 20px;
-        }
+    .logo-section {
+      display: flex;
+      align-items: center;
+    }
 
-        /* Tabs */
-        .tab-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
+    .logo-section img {
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
 
-        .tab {
-            background-color: #444;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+    .logo-section img:hover {
+      transform: rotate(10deg);
+    }
 
-        .tab.active {
-            background-color: #007bff;
-            color: black;
-            font-weight: bold;
-        }
+    .logo-section span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
 
-        /* Leaderboard Sections */
-        .leaderboard-section {
-            display: none;
-        }
+    /* Navbar buttons */
+    .buttons {
+      display: flex;
+      gap: 15px;
+    }
 
-        .leaderboard-section.active {
-            display: block;
-        }
+    .buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-left: 15px;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-image 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
 
-        /* Top 3 Users */
-        .top-three {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            /* Ensures same baseline */
-            margin-bottom: 20px;
-        }
+    .buttons a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s;
+    }
 
-        /* User Containers */
-        .user {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #2a2a3c;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
+    .buttons a:hover::after {
+      width: 100%;
+    }
 
-        /* Container Sizes */
-        .first {
-            height: 170px;
-            width: 130px;
-        }
+    .buttons a:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
 
-        /* 🥇 1st - Tallest */
-        .second {
-            height: 150px;
-            width: 110px;
-        }
+    /* Container to Center Everything */
+    .container {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.08));
+      background-size: 200% 200%;
+      backdrop-filter: blur(25px);
+      padding: 60px 50px;
+      border-radius: 30px;
+      width: 650px;
+      animation: gradientMove 8s ease infinite;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      margin-bottom: 60px;
+      position: relative;
+    }
 
-        /* 🥈 2nd - Medium */
-        .third {
-            height: 130px;
-            width: 100px;
-        }
+    .leaderboard-title {
+      font-size: 52px;
+      margin-bottom: 50px;
+      text-align: center;
+      color: #fff;
+      font-weight: 900;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+      animation: glow 2s ease-in-out infinite alternate;
+      letter-spacing: 1.5px;
+    }
 
-        /* 🥉 3rd - Shortest */
-        /* Profile Pictures */
-        .user img {
-            border-radius: 50%;
-            margin-bottom: 8px;
-            /* Creates spacing below the pfp */
-        }
+    /* Tabs */
+    .tab-container {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 30px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    }
 
-        .first img {
-            height: 90px;
-            width: 90px;
-        }
+    .tab {
+      padding: 14px 30px;
+      font-weight: bold;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      margin: 0 15px;
+      border-radius: 20px 20px 0 0;
+      transition: all 0.3s ease cursor: pointer;
+      position: relative;
+      color: #eee;
+    }
 
-        /* 🥇 1st - Largest */
-        .second img {
-            height: 75px;
-            width: 75px;
-        }
+    .tab:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
 
-        /* 🥈 2nd - Medium */
-        .third img {
-            height: 60px;
-            width: 60px;
-        }
+    .tab.active {
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(37, 117, 252, 0.5);
+      transform: translateY(-2px);
+    }
 
-        /* 🥉 3rd - Smallest */
-        /* Name & Score */
-        .user p {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
+    /* Sections */
+    .leaderboard-section {
+      display: none;
+      animation: fadeIn 0.8s ease-in-out;
+    }
 
-        .user span {
-            font-size: 14px;
-            color: #ffd700;
-        }
+    .leaderboard-section.active {
+      display: block;
+    }
 
-        /* Rest 7 Contributors */
-        .rank-list {
-            background-color: #2a2a3c;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-        }
+    .top-three {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 40px;
+      margin-bottom: 50px;
+      animation: float 4s ease-in-out infinite;
+    }
 
-        .rank-list p {
-            text-align: left;
-            margin-left: 10px;
-        }
+    .user {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 22px;
+      padding: 22px 20px;
+      text-align: center;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+      transition: all 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      min-width: 120px;
+    }
 
-        .rank {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #444;
-        }
+    .user:hover {
+      transform: scale(1.05) translateY(-8px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    }
 
-        .rank:last-child {
-            border-bottom: none;
-        }
+    .user img {
+      border-radius: 50%;
+      border: 4px solid #fff;
+      margin-bottom: 12px;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
 
-        .rank img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
+    .first img {
+      width: 110px;
+      height: 110px;
+    }
 
-        .rank p {
-            flex-grow: 1;
-            font-size: 16px;
-        }
+    .second img {
+      width: 90px;
+      height: 90px;
+    }
 
-        .rank span {
-            font-weight: bold;
-            color: #007bff;
-        }
-    </style>
+    .third img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .first {
+      border: 2px solid #ffd700;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    }
+
+    .second {
+      border: 2px solid #c0c0c0;
+      box-shadow: 0 0 20px rgba(192, 192, 192, 0.6);
+    }
+
+    .third {
+      border: 2px solid #cd7f32;
+      box-shadow: 0 0 20px rgba(205, 127, 50, 0.6);
+    }
+
+    .user p {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .user .golden {
+      color: #ffd700;
+      text-shadow: 0 0 8px #ffd700, 0 0 20px #fff;
+      font-size: 18px;
+      margin-left: 6px;
+    }
+
+    .user .badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 20px;
+      background: #000;
+      padding: 5px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #fff;
+      animation: pulse 2s infinite;
+    }
+
+    .user span {
+      font-size: 15px;
+      color: #00e6e6;
+      font-weight: bold;
+    }
+
+    /* Remaining Ranks */
+    .rank-list {
+      background: rgba(255, 255, 255, 0.07);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      animation: slideIn 0.6s ease both;
+    }
+
+    .rank {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease border-radius: 12px;
+      animation: slideIn 0.6s ease both;
+    }
+
+    .rank:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 255, 255, 0.2);
+    }
+
+    .rank img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .rank p {
+      flex-grow: 1;
+      font-size: 17px;
+      color: #fff;
+    }
+
+    .rank span {
+      font-weight: bold;
+      color: #00ffe6;
+    }
+
+    /* Animations */
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 8px #fff, 0 0 15px #6a11cb;
+      }
+
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #2575fc;
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-5px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Leaderboard</h1>
-        <!-- Toggle Buttons -->
-        <div class="tab-container">
-            <div class="tab active" onclick="showLeaderboard('all-time')">Top 10 Contributors of All Time</div>
-            <div class="tab" onclick="showLeaderboard('upcoming')">Top 10 Upcoming Contributors</div>
-        </div>
-        <!-- Top 10 Contributors of All Time -->
-        <div id="all-time" class="leaderboard-section active">
-            <div class="top-three">
-                {{#each topTenAll}}
-                    {{#ifCond @index 0}}
-                        <div class="user first">
-                            <img src="/pfp.jpeg" alt="{{this.username}}">
-                            <p>{{this.username}} <i class="fas fa-crown"></i></p>
-                            <span>{{this.total_points}}</span>
-                        </div>
-                    {{/ifCond}}
-                    {{#ifCond @index 1}}
-                        <div class="user second">
-                            <img src="/pfp.jpeg" alt="{{this.username}}">
-                            <p>{{this.username}}</p>
-                            <span>{{this.total_points}}</span>
-                        </div>
-                    {{/ifCond}}
-                    {{#ifCond @index 2}}
-                        <div class="user third">
-                            <img src="/pfp.jpeg" alt="{{this.username}}">
-                            <p>{{this.username}}</p>
-                            <span>{{this.total_points}}</span>
-                        </div>
-                    {{/ifCond}}
-                {{/each}}
-            </div>
-            <div class="rank-list">
-                {{#each topTenAll}}
-                    {{#ifCondGTE @index 3}}
-                        <div class="rank">
-                            <img src="/pfp.jpeg" alt="{{this.username}}">
-                            <p>{{this.username}}</p>
-                            <span>{{this.total_points}}</span>
-                        </div>
-                    {{/ifCondGTE}}
-                {{/each}}
-            </div>
-        </div>
-        <!-- Top 10 Upcoming Contributors -->
-        <div id="upcoming" class="leaderboard-section">
-            <div class="top-three">
-                {{#each topTenUpcoming}}
-                    {{#ifCond @index 0}}
-                        <div class="user first">
-                            <img src="/pfp.jpeg" alt="{{this.username}}">
-                            <p>{{this.username}} <i class="fas fa-crown"></i></p>
-                            <span>{{this.total_points}}</span>
-                        </div>
-                    {{/ifCond}}
-                    {{#ifCond @index 1}}
-                        <div class="user second">
-                            <img src="/pfp.jpeg" alt="{{this.username}}">
-                            <p>{{this.username}}</p>
-                            <span>{{this.total_points}}</span>
-                        </div>
-                    {{/ifCond}}
-                    {{#ifCond @index 2}}
-                        <div class="user third">
-                            <img src="/pfp.jpeg" alt="{{this.username}}">
-                            <p>{{this.username}}</p>
-                            <span>{{this.total_points}}</span>
-                        </div>
-                    {{/ifCond}}
-                {{/each}}
-            </div>
-            <div class="rank-list">
-                {{#each topTenUpcoming}}
-                    {{#ifCondGTE @index 3}}
-                        <div class="rank">
-                            <img src="/pfp.jpeg" alt="{{this.username}}">
-                            <p>{{this.username}}</p>
-                            <span>{{this.total_points}}</span>
-                        </div>
-                    {{/ifCondGTE}}
-                {{/each}}
-            </div>
-        </div>
+  <!-- Navbar -->
+  <div class="navbar glass">
+    <div class="logo-section">
+      <a href="/"><img src="/logo.jpeg" alt="Git Helper Logo"></a>
+      <span class="logo-text">Git Helper</span>
     </div>
-    <script>
-        function showLeaderboard(type) {
-            document.querySelectorAll('.leaderboard-section').forEach(section => {
-                section.classList.remove('active');
-            });
+    <div class="buttons">
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/home"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+  <div class="container">
+    <h1 class="leaderboard-title">Leaderboard</h1>
+    <!-- Toggle Buttons -->
+    <div class="tab-container">
+      <div class="tab active" onclick="showLeaderboard('all-time')">Top 10 Contributors of All Time</div>
+      <div class="tab" onclick="showLeaderboard('upcoming')">Top 10 Upcoming Contributors</div>
+    </div>
+    <!-- All-Time Section -->
+    <div id="all-time" class="leaderboard-section active glass fade-in">
+      <div class="top-three">
+        {{#each topTenAll}}
+          {{#ifCond @index 0}}
+            <div class="user first">
+              <span class="badge">🥇</span>
+              <img src="/pfp.jpeg" alt="{{this.username}}">
+              <a href="/error/profile/{{this.username}}">
+                <p>{{this.username}} <i class="fas fa-crown golden"></i></p>
+              </a>
+              <span>{{this.total_points}}</span>
+            </div>
+          {{/ifCond}}
+          {{#ifCond @index 1}}
+            <div class="user second">
+              <span class="badge">🥈</span>
+              <img src="/pfp.jpeg" alt="{{this.username}}">
+              <a href="/error/profile/{{this.username}}">
+                <p>{{this.username}}</p>
+              </a>
+              <span>{{this.total_points}}</span>
+            </div>
+          {{/ifCond}}
+          {{#ifCond @index 2}}
+            <div class="user third">
+              <span class="badge">🥉</span>
+              <img src="/pfp.jpeg" alt="{{this.username}}">
+              <a href="/error/profile/{{this.username}}">
+                <p>{{this.username}}</p>
+              </a>
+              <span>{{this.total_points}}</span>
+            </div>
+          {{/ifCond}}
+        {{/each}}
+      </div>
+      <div class="rank-list">
+        {{#each topTenAll}}
+          {{#ifCondGTE @index 3}}
+            <div class="rank animated">
+              <img src="/pfp.jpeg" alt="{{this.username}}">
+              <a href="/error/profile/{{this.username}}">
+                <p>{{this.username}}</p>
+              </a>
+              <span>{{this.total_points}}</span>
+            </div>
+          {{/ifCondGTE}}
+        {{/each}}
+      </div>
+    </div>
+    <!-- Upcoming Section -->
+    <div id="upcoming" class="leaderboard-section glass fade-in">
+      <div class="top-three">
+        {{#each topTenUpcoming}}
+          {{#ifCond @index 0}}
+            <div class="user first animated">
+              <img src="/pfp.jpeg" alt="{{this.username}}">
+              <a href="/error/profile/{{this.username}}">
+                <p>{{this.username}} <i class="fas fa-crown golden"></i></p>
+              </a>
+              <span>{{this.total_points}}</span>
+            </div>
+          {{/ifCond}}
+          {{#ifCond @index 1}}
+            <div class="user second animated">
+              <img src="/pfp.jpeg" alt="{{this.username}}">
+              <a href="/error/profile/{{this.username}}">
+                <p>{{this.username}}</p>
+              </a>
+              <span>{{this.total_points}}</span>
+            </div>
+          {{/ifCond}}
+          {{#ifCond @index 2}}
+            <div class="user third animated">
+              <img src="/pfp.jpeg" alt="{{this.username}}">
+              <a href="/error/profile/{{this.username}}">
+                <p>{{this.username}}</p>
+              </a>
+              <span>{{this.total_points}}</span>
+            </div>
+          {{/ifCond}}
+        {{/each}}
+      </div>
+      <div class="rank-list">
+        {{#each topTenUpcoming}}
+          {{#ifCondGTE @index 3}}
+            <div class="rank animated">
+              <img src="/pfp.jpeg" alt="{{this.username}}">
+              <a href="/error/profile/{{this.username}}">
+                <p>{{this.username}}</p>
+              </a>
+              <span>{{this.total_points}}</span>
+            </div>
+          {{/ifCondGTE}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <script>
+    function showLeaderboard(type) {
+      document.querySelectorAll('.leaderboard-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(type).classList.add('active');
 
-            document.getElementById(type).classList.add('active');
-
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            event.target.classList.add('active');
-        }
-    </script>
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+  </script>
 </body>
 
 </html>

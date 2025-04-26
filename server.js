@@ -2,6 +2,8 @@ const express = require('express');
 const connectDB = require('./databases/db');
 const app = express();
 
+const cors = require('cors');
+
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
@@ -159,8 +161,11 @@ app.use((req, res, next) => {
 const handlebars = require('express-handlebars');
 const { Msg } = require('./models/Msg');
 const { overall_limit } = require('./middlewares/rate_limiter');
+const BlockChainRouter = require('./routes/BlockChainRoutes');
 
 app.use(overall_limit);
+
+app.use(cors());
 
 app.set('view engine', 'handlebars');
 app.engine('handlebars', handlebars.engine({ defaultLayout: 'main' }));
@@ -173,12 +178,17 @@ app.use('/home', less_restrict, HomeRouter);
 app.use('/error', ErrorRouter);
 app.use('/admin', admin, AdminRouter);
 app.use('/chat', restrict, ChatRouter);
+app.use('/points', restrict, BlockChainRouter);
 
 app.get('/', (req, res) => {
   return res.status(302).redirect('/home');
 });
 
+// const { mint, transfer } = require('./services/transfer');
+
 server.listen(process.env.PORT, async () => {
+  // await mint(100000);
+  // await claimTokens('Ht4KM3ujghGbCMay4aE2fXpp2Dhks2iKaSrFe7Wjd71q', 300000);
   await connectDB();
   // console.log('http://localhost:3000');
 });
@@ -186,9 +196,24 @@ server.listen(process.env.PORT, async () => {
 const passport = require('passport');
 const { default: mongoose } = require('mongoose');
 const { GHUser } = require('./models/GHUser');
+//const { redeemRewards } = require('./services/claim');
+// const { claimTokens } = require('./services/claim');
 const GitHubStrategy = require('passport-github2').Strategy;
 
 app.use(passport.initialize());
+
+// app.post('/prepare-transaction', async (req, res) => {
+//   try {
+//     const { sender } = req.body;
+//     let transaction;
+//     try {
+//       transaction = await redeemRewards(sender, 5 * 1e9);
+//     } catch {
+//       return res.json({ message: 'Insufficient Balance' });
+//     }
+//     return res.json({ transaction });
+//   } catch { }
+// });
 
 // passport.serializeUser(function (user, cb) {
 //   cb(null, user);

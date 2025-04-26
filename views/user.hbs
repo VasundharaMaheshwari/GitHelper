@@ -209,6 +209,54 @@
       border-color: #6a11cb;
     }
 
+    /* Floating Edit Profile Button */
+    .edit-profile-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff;
+      background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: background-image 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      z-index: 10;
+    }
+
+    .edit-profile-btn:hover {
+      background-image: linear-gradient(45deg, #5d09b1, #1f65e3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn {
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
     /* Animations */
     @keyframes fadeIn {
       from {
@@ -243,6 +291,7 @@
     </div>
     <div class="buttons">
       <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/chat/reports"><i class="fas fa-warning"></i> Report Misbehaviour</a>
       <a href="/home/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
   </div>
@@ -273,9 +322,59 @@
           <p><strong>Email: </strong>{{email}}</p>
           <p><strong>GitHub ID: </strong>{{github_id}}</p>
         </div>
+        <a href="/query/editProfile">
+          <button class="edit-profile-btn">Edit Profile</button>
+        </a>
+        <div id="wallet-data" data-wallet="{{walletAddress}}" hidden></div>
+        <form id="wallet-form" action="/points/save-wallet" method="POST" style="display: none;">
+          <input type="hidden" name="walletAddress" id="walletAddress">
+        </form>
+        <button id="connect" onclick="connectPhantom()" class="btn">
+          {{#if wallet}} Connect Wallet {{else}} View Wallet {{/if}}
+        </button>
       </div>
     </div>
   </div>
+  <script>
+    async function connectPhantom() {
+      const previousWalletAddress = document.getElementById("wallet-data").dataset.wallet;
+
+      if (!previousWalletAddress) {
+        if (window.solana && window.solana.isPhantom) {
+          try {
+            const response = await window.solana.connect();
+            const walletAddress = response.publicKey.toString();
+            //document.getElementById("wallet-status").innerHTML =
+            //`<img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Connected Icon">
+            //          Connected: ${walletAddress}`;
+
+            // Fill the hidden form and submit it
+            //if (!previousWalletAddress || walletAddress === previousWalletAddress) {
+            document.getElementById("walletAddress").value = walletAddress;
+            document.getElementById("wallet-form").submit();
+            //} else {
+            //  alert("Connected wallet does not match the one on record. Please connect the correct wallet.");
+            //}
+
+          } catch (err) {
+            console.error("Wallet connection failed", err);
+          }
+        } else {
+          alert("Phantom Wallet not found! Install it first.");
+        }
+      } else {
+        document.getElementById("walletAddress").value = previousWalletAddress;
+        document.getElementById("wallet-form").submit();
+      }
+    }
+
+    window.addEventListener('pageshow', function (event) {
+      if (event.persisted || performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
+        window.location.reload();
+      }
+    });
+
+  </script>
 </body>
 
 </html>

@@ -3,6 +3,7 @@ const { Response } = require('../models/Response');
 const { GHUser } = require('../models/GHUser');
 const { ObjectId } = require('mongodb');
 const { validationResult } = require('express-validator');
+const { Wallet } = require('../models/Wallet');
 
 const create = async (req, res) => {
   try {
@@ -39,7 +40,7 @@ const save = async (req, res) => {
           const trial = new Issue({
             username: req.user.username,
             contact_info: contact_info,
-            skillset: skillset,
+            skillset: skillset.toLowerCase(),
             github_id: req.user.github_id.id,
             repo_link: repo_link,
             description: description,
@@ -66,9 +67,11 @@ const list = async (req, res) => {
     const checker = regex.test(req.user.username);
     if (checker) {
       const issues = await Issue.find({ username: req.user.username }).lean().exec();
+      const wallet = await Wallet.findOne({ userID: req.user._id });
       return res.status(200).render('main.hbs', {
         layout: 'issues.hbs',
-        issues: issues
+        issues: issues,
+        walletAddress: wallet.walletAddress
       });
     } else {
       return res.status(400).redirect('/error?error_details=Invalid_URL');
@@ -142,7 +145,8 @@ const tracker = async (req, res) => {
           assigned_at: assignedAt,
           repository_link: repository,
           status: status,
-          taskId: taskId
+          taskId: taskId,
+          deadline: response.deadline
         };
 
         tasks.push(task);
@@ -220,7 +224,8 @@ const reviewer = async (req, res) => {
           assigned_at: assignedAt,
           repository_link: repository,
           status: status,
-          taskId: taskId
+          taskId: taskId,
+          deadline: response.deadline
         };
 
         tasks.push(task);
@@ -252,7 +257,33 @@ const responseUpdate = async (req, res) => {
             await Response.findByIdAndUpdate(taskId, { status: 'Accepted' });
             responder = await GHUser.findById(resp_check.responder.uid);
             if (responder) {
-              await GHUser.findByIdAndUpdate(resp_check.responder.uid, { $inc: { total_points: 100, balance: 100 } });
+              if (resp_check.deadline) {
+                const deadlineDate = new Date(resp_check.deadline);
+                const currentDate = new Date();
+
+                let points;
+
+                // Award 100 points if within deadline, else 50 points
+                if (currentDate <= deadlineDate) {
+                  const issue = await Issue.findById(resp_check.issue);
+                  if (issue.priority === 1) {
+                    points = 200;
+                  } else {
+                    points = 100;
+                  }
+                } else {
+                  points = 50;
+                }
+
+                await GHUser.findByIdAndUpdate(resp_check.responder.uid, {
+                  $inc: { total_points: points, balance: points }
+                });
+              } else {
+                // Default to 50 points if no deadline exists
+                await GHUser.findByIdAndUpdate(resp_check.responder.uid, {
+                  $inc: { total_points: 50, balance: 50 }
+                });
+              }
             } else {
               return res.status(404).redirect('/error?error_details=Responder_Not_Found');
             }
@@ -277,4 +308,56 @@ const responseUpdate = async (req, res) => {
   }
 };
 
-module.exports = { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate };
+const profileUpdater = async (req, res) => {
+  try {
+    const { username, email, github } = req.body;
+    const updates = {};
+
+    if (username !== req.user.username) {
+      const unavailable = await GHUser.findOne({ username });
+      if (unavailable) return res.status(403).redirect('/error?error_details=Username_Unavailable');
+
+      await Issue.updateMany({ createdBy: req.user._id }, { username });
+      await Response.updateMany({ 'responder.uid': req.user._id }, { 'responder.username': username });
+      updates.username = username;
+    }
+
+    if (email !== req.user.email.address) {
+      const unavailable = await GHUser.findOne({ 'email.address': email });
+      if (unavailable) return res.status(403).redirect('/error?error_details=Email_Unavailable');
+      updates.email = { address: email, verified: false };
+      updates.verified = false;
+    }
+
+    if (github !== req.user.github_id.id) {
+      const unavailable = await GHUser.findOne({ 'github_id.id': github });
+      if (unavailable) return res.status(403).redirect('/error?error_details=GitHub_ID_Unavailable');
+
+      const userRepos = req.user.repos;
+      const issues = await Issue.find({ repo_link: { $in: userRepos } });
+      await Response.updateMany({ 'responder.uid': req.user._id }, { 'responder.github_id': github });
+
+      for (const issue of issues) {
+        await Response.updateMany({ 'issue': issue._id, status: 'Accepted' }, { extra: { ...issue, unavailable: true } }).lean().exec();
+        await Response.deleteMany({ 'issue': issue._id, status: { $nin: ['Accepted'] } }).lean().exec();
+        await Issue.findOneAndDelete({ '_id': issue._id });
+      }
+
+      updates.github_id = { id: github, verified: false };
+      updates.verified = false;
+      updates.repos = [];
+    }
+
+    if (Object.keys(updates).length > 0) {
+      await GHUser.findByIdAndUpdate(req.user._id, updates);
+    }
+
+    // return console.log(updated, updates, req.user, req.body);
+    return res.status(201).redirect('/api/user');
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
+  }
+};
+
+
+module.exports = { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate, profileUpdater };

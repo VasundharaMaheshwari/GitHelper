@@ -498,6 +498,7 @@
       var email = document.getElementById("email").value;
       var password = document.getElementById("password").value;
       var confirmPassword = document.getElementById("confirm-password").value;
+      var github = document.getElementById("github_id").value;
 
       if (password !== confirmPassword) {
         document.getElementById("error-message").innerText = "Passwords do not match.";
@@ -507,6 +508,12 @@
       var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(email)) {
         document.getElementById("error-message").innerText = "Invalid email address.";
+        return false;
+      }
+
+      var githubPattern = /^[a-zA-Z0-9-]{1,39}$/;
+      if (!githubPattern.test(github)) {
+        document.getElementById("error-message").innerText = "Invalid GitHub ID.";
         return false;
       }
 
