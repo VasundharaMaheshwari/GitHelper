@@ -44,6 +44,12 @@ const Response_Schema = new Schema({
     required: function () {
       return this.approved;
     }
+  },
+  statusUpdateTime: {
+    type: Date,
+    required: function () {
+      return this.approved;
+    }
   }
 }, { timestamps: true });
 

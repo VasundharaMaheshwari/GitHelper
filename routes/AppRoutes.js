@@ -2,7 +2,7 @@ const express = require('express');
 const APIRouter = express.Router();
 const { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate, profileUpdater, checkName } = require('../controllers/AppController');
 const { issue_limit, response_limit } = require('../middlewares/rate_limiter');
-const { saveIssue, saveRes, checkuser } = require('../validators/AppValidators');
+const { saveIssue, saveRes, checkuser, taskChecker, finishChecker } = require('../validators/AppValidators');
 
 APIRouter.get('/create', create);
 
@@ -27,9 +27,9 @@ APIRouter.get('/links', (req, res) => {
   return res.status(201).redirect('/api/refresh');
 });
 
-APIRouter.get('/update/:id', taskStatusUpdate);
+APIRouter.get('/update/:id', taskChecker, taskStatusUpdate);
 
-APIRouter.get('/finish/:id/:action', responseUpdate);
+APIRouter.get('/finish/:id/:action', finishChecker, responseUpdate);
 
 APIRouter.get('/editProfile', (req, res) => {
   try {

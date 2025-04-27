@@ -174,10 +174,11 @@ const taskStatusUpdate = async (req, res) => {
         if (resp_check) {
           switch (resp_check.status) {
           case 'To Do':
-            await Response.findByIdAndUpdate(taskId, { status: 'Working' });
+            await Response.findByIdAndUpdate(taskId, { status: 'Working', statusUpdateTime: new Date() });
             break;
           case 'Working':
-            await Response.findByIdAndUpdate(taskId, { status: 'Completed' });
+            if (Date.now() - new Date(resp_check.statusUpdateTime) < 60 * 60 * 1000) return res.status(403).redirect('/error?error_details=Time_Taken_To_Complete_Work_Must_Exceed_1_Hour');
+            await Response.findByIdAndUpdate(taskId, { status: 'Completed', statusUpdateTime: new Date() });
             break;
           default:
             return res.status(403).redirect('/error?error_details=Invalid_Status_Transition_Encountered');
@@ -255,7 +256,7 @@ const responseUpdate = async (req, res) => {
           let responder;
           switch (action) {
           case 'accept':
-            await Response.findByIdAndUpdate(taskId, { status: 'Accepted' });
+            await Response.findByIdAndUpdate(taskId, { status: 'Accepted', statusUpdateTime: new Date() });
             responder = await GHUser.findById(resp_check.responder.uid);
             if (responder) {
               if (resp_check.deadline) {
@@ -290,7 +291,7 @@ const responseUpdate = async (req, res) => {
             }
             break;
           case 'reject':
-            await Response.findByIdAndUpdate(taskId, { status: 'To Do' });
+            await Response.findByIdAndUpdate(taskId, { status: 'To Do', statusUpdateTime: new Date() });
             break;
           default:
             return res.status(403).redirect('/error?error_details=Invalid_Status_Transition_Encountered');

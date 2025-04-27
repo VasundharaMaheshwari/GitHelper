@@ -1,4 +1,4 @@
-const { body, query } = require('express-validator');
+const { body, query, param } = require('express-validator');
 
 const saveIssue = [body('contact_info').trim().notEmpty().matches(/^[0-9]{10}$/),
   body('skillset').trim().notEmpty().matches(/^[a-zA-Z0-9,.\s]+$/),
@@ -21,4 +21,13 @@ const saveRes = [body('issue_id').trim().notEmpty().matches(/^[a-fA-F0-9]{24}$/)
 
 const checkuser = [query('username').trim().notEmpty().matches(/^[a-zA-Z0-9_]+$/)];
 
-module.exports = { saveIssue, saveRes, checkuser };
+const taskChecker = param('id').trim().notEmpty().matches(/^[a-fA-F0-9]{24}$/);
+
+const finishChecker = [param('id').trim().notEmpty().matches(/^[a-fA-F0-9]{24}$/),
+  param('action').trim().notEmpty().isIn([
+    'accept',
+    'reject'
+  ])
+];
+
+module.exports = { saveIssue, saveRes, checkuser, taskChecker, finishChecker };
