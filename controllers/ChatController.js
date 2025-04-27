@@ -146,4 +146,33 @@ const checkUsername = async (req, res) => {
   }
 };
 
-module.exports = { chatload, chatlist, chatting, checkUsername };
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+});
+
+const genUrls = async (req, res) => {
+  try {
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const upload_preset = 'githelper';
+    const signature = cloudinary.utils.api_sign_request(
+      { timestamp, upload_preset },
+      process.env.CLOUDINARY_SECRET
+    );
+
+    res.json({
+      cloud_name: process.env.CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_KEY,
+      upload_preset,
+      timestamp,
+      signature,
+    });
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
+  }
+};
+
+module.exports = { chatload, chatlist, chatting, checkUsername, genUrls };

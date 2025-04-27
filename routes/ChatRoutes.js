@@ -1,19 +1,13 @@
 const express = require('express');
-const { chatload, chatlist, chatting, checkUsername } = require('../controllers/ChatController');
+const { chatload, chatlist, chatting, checkUsername, genUrls } = require('../controllers/ChatController');
 const { checkchat, checkchat2 } = require('../validators/ChatValidators');
 const { convo_limit } = require('../middlewares/rate_limiter');
 const { chat_check } = require('../middlewares/middleware');
 const { GHUser } = require('../models/GHUser');
 const { Report } = require('../models/Report');
-const cloudinary = require('cloudinary').v2;
+const { gen_url_ip } = require('../middlewares/rate_limiter2');
 
 require('dotenv').config();
-
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
-});
 
 const ChatRouter = express.Router();
 
@@ -27,28 +21,9 @@ ChatRouter.post('/chats', (req, res) => {
   return res.status(200).send('Dynamic loading for much content... Add input size validation everywhere... Allow cancellation of work till 3 times then ban');
 });
 
-ChatRouter.get('/generate-signed-url', async (req, res) => {
-  try {
-    const timestamp = Math.round(new Date().getTime() / 1000);
-    const upload_preset = 'githelper';
-    const signature = cloudinary.utils.api_sign_request(
-      { timestamp, upload_preset },
-      process.env.CLOUDINARY_SECRET
-    );
+ChatRouter.get('/generate-signed-url', gen_url_ip, genUrls);
 
-    res.json({
-      cloud_name: process.env.CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_KEY,
-      upload_preset,
-      timestamp,
-      signature,
-    });
-  } catch {
-    return res.status(500).redirect('/error?error_details=Error_Occurred');
-  }
-});
-
-ChatRouter.post('/send', async (req, res) => {
+ChatRouter.post('/send', gen_url_ip, async (req, res) => {
   const { username, violation, description, secure_url } = req.body;
 
   if (!secure_url) {
