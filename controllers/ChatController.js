@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator');
 const { Convo } = require('../models/Convo');
 const { GHUser } = require('../models/GHUser');
 const { Msg } = require('../models/Msg');
+const { Report } = require('../models/Report');
 
 const chatload = async (req, res) => {
   try {
@@ -175,4 +176,39 @@ const genUrls = async (req, res) => {
   }
 };
 
-module.exports = { chatload, chatlist, chatting, checkUsername, genUrls };
+const reportSave = async (req, res) => {
+  try {
+    const error = validationResult(req);
+    if (error.isEmpty()) {
+      const { username, violation, description, secure_url } = req.body;
+
+      if (!secure_url) {
+        return res.status(400).redirect('/error?error_details=Secure_URL_Not_Found');
+      }
+
+      if (username === req.user.username) return res.status(400).redirect('/error?error_details=Cannot_Register_Report_Against_Self');
+
+
+      const createdAgainst = await GHUser.findOne({ username });
+
+      if (!createdAgainst) return res.status(400).redirect('/error?error_details=Offender_Not_Found');
+
+      const report = new Report({
+        createdAgainst: createdAgainst._id,
+        createdBy: req.user._id,
+        type: violation,
+        description,
+        proofUrl: secure_url
+      });
+
+      await report.save();
+
+      res.status(201).json({ success: true, message: 'Report submitted successfully!' });
+    }
+    return res.status(400).json({ success: false, message: 'Validation Check Failed' });
+  } catch {
+    return res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
+
+module.exports = { chatload, chatlist, chatting, checkUsername, genUrls, reportSave };
