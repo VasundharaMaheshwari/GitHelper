@@ -37,6 +37,7 @@ const save = async (req, res) => {
       if (checker) {
         const check = await Issue.findOne({ repo_link: repo_link });
         if (check === null) {
+          if (!req.user.repos.includes(repo_link)) return res.status(400).redirect('/error?error_details=Invalid_URL');
           const trial = new Issue({
             username: req.user.username,
             contact_info: contact_info,
