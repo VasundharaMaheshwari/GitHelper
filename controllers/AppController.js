@@ -316,7 +316,7 @@ const profileUpdater = async (req, res) => {
     const updates = {};
 
     if (username !== req.user.username) {
-      const unavailable = await GHUser.findOne({ username });
+      const unavailable = await GHUser.findOne({ _id: req.user._id, username });
       if (unavailable) return res.status(403).redirect('/error?error_details=Username_Unavailable');
 
       await Issue.updateMany({ createdBy: req.user._id }, { username });
@@ -325,14 +325,14 @@ const profileUpdater = async (req, res) => {
     }
 
     if (email !== req.user.email.address) {
-      const unavailable = await GHUser.findOne({ 'email.address': email });
+      const unavailable = await GHUser.findOne({ _id: req.user._id, 'email.address': email });
       if (unavailable) return res.status(403).redirect('/error?error_details=Email_Unavailable');
       updates.email = { address: email, verified: false };
       updates.verified = false;
     }
 
     if (github !== req.user.github_id.id) {
-      const unavailable = await GHUser.findOne({ 'github_id.id': github });
+      const unavailable = await GHUser.findOne({ _id: req.user._id, 'github_id.id': github });
       if (unavailable) return res.status(403).redirect('/error?error_details=GitHub_ID_Unavailable');
 
       const userRepos = req.user.repos;

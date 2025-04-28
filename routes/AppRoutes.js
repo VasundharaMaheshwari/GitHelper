@@ -2,7 +2,8 @@ const express = require('express');
 const APIRouter = express.Router();
 const { create, save, list, save_response, tracker, taskStatusUpdate, reviewer, responseUpdate, profileUpdater, checkName } = require('../controllers/AppController');
 const { issue_limit, response_limit } = require('../middlewares/rate_limiter');
-const { saveIssue, saveRes, checkuser, taskChecker, finishChecker } = require('../validators/AppValidators');
+const { saveIssue, saveRes, checkuser, taskChecker, finishChecker, updateChecker } = require('../validators/AppValidators');
+const { updater_ip } = require('../middlewares/rate_limiter2');
 
 APIRouter.get('/create', create);
 
@@ -46,6 +47,6 @@ APIRouter.get('/editProfile', (req, res) => {
 
 APIRouter.get('/check-username', checkuser, checkName);
 
-APIRouter.post('/update-profile', profileUpdater);
+APIRouter.post('/update-profile', updateChecker, updater_ip, profileUpdater);
 
 module.exports = APIRouter;

@@ -30,4 +30,8 @@ const finishChecker = [param('id').trim().notEmpty().matches(/^[a-fA-F0-9]{24}$/
   ])
 ];
 
-module.exports = { saveIssue, saveRes, checkuser, taskChecker, finishChecker };
+const updateChecker = [body('username').trim().notEmpty().matches(/^[a-zA-Z0-9_]+$/),
+  body('email').trim().notEmpty().matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+  body('github_id').trim().notEmpty().matches(/^[a-zA-Z0-9-]{1,39}$/)];
+
+module.exports = { saveIssue, saveRes, checkuser, taskChecker, finishChecker, updateChecker };

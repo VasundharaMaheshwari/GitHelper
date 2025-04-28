@@ -100,4 +100,24 @@ const gen_url_ip = limiter({
   }
 });
 
-module.exports = { forget_limit_ip, verify_limit_ip, close_report_ip, delete_admin_ip, gen_url_ip };
+const updater_ip = limiter({
+  windowMs: 24 * 60 * 60 * 1000,
+  max: 5,
+  legacyHeaders: false,
+  // requestWasSuccessful: (req, res) => res.status < 400,
+  // skipSuccessfulRequests: true,
+  handler: (req, res) => {
+    const date = new Date(req.rateLimit.resetTime);
+    req.rateLimit.resetTime = date.toLocaleString();
+    return res.status(429).redirect(`/error?error_details=Too_Many_Requests_To_Update_Details_Please_Wait_Till_${req.rateLimit.resetTime}`);
+  },
+  keyGenerator: (req) => {
+    const xForwardedFor = req.headers['x-forwarded-for'];
+    if (xForwardedFor) {
+      return xForwardedFor.split(',')[0].trim();
+    }
+    return req.ip;
+  }
+});
+
+module.exports = { forget_limit_ip, verify_limit_ip, close_report_ip, delete_admin_ip, gen_url_ip, updater_ip };
