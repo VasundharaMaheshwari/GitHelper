@@ -26,7 +26,13 @@ const connectWallet = async (req, res) => {
 const displayWallet = async (req, res) => {
   try {
     const user = await GHUser.findById(req.user._id);
+
+    if (!user) return res.status(400).redirect('/error?error_details=User_Not_Found');
+
     const wallet = await Wallet.findOne({ userID: req.user._id });
+
+    if (!wallet) return res.status(400).redirect('/error?error_details=Wallet_Not_Found');
+
     let userBalance = {};
     try {
       userBalance = await checkUserBalance(wallet.walletAddress);
