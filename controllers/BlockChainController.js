@@ -128,12 +128,16 @@ const pushRequests = async (req, res) => {
 
 const confirmed = async (req, res) => {
   try {
-    const { transaction, queryId } = req.body;
-    if (await confirmTransaction(transaction) && ObjectId.isValid(queryId)) {
-      await Issue.findOneAndUpdate({ _id: queryId, inProgress: true, priority: 0 }, { priority: 1, inProgress: false });
-      return res.json({ message: 'Successfully updated' });
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const { transaction, queryId } = req.body;
+      if (await confirmTransaction(transaction) && ObjectId.isValid(queryId)) {
+        await Issue.findOneAndUpdate({ _id: queryId, inProgress: true, priority: 0 }, { priority: 1, inProgress: false });
+        return res.json({ message: 'Successfully updated' });
+      }
+      return res.status(404).json({ message: 'Failed to update' });
     }
-    return res.status(404).json({ message: 'Failed to update' });
+    return res.status(400).json({ message: 'Failed to update' });
   } catch {
     return res.status(500).send('Internal Server Error');
   };
@@ -141,12 +145,16 @@ const confirmed = async (req, res) => {
 
 const rejected = async (req, res) => {
   try {
-    const { queryId } = req.body;
-    if (ObjectId.isValid(queryId)) {
-      await Issue.findOneAndUpdate({ _id: queryId, inProgress: true, priority: 0 }, { inProgress: false });
-      return res.json({ message: 'Successfully cancelled transaction' });
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const { queryId } = req.body;
+      if (ObjectId.isValid(queryId)) {
+        await Issue.findOneAndUpdate({ _id: queryId, inProgress: true, priority: 0 }, { inProgress: false });
+        return res.json({ message: 'Successfully cancelled transaction' });
+      }
+      return res.status(404).json({ message: 'Failed to revert' });
     }
-    return res.status(404).json({ message: 'Failed to revert' });
+    return res.status(400).json({ message: 'Failed to revert' });
   } catch {
     return res.status(500).send('Internal Server Error');
   };

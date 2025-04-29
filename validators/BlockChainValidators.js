@@ -9,4 +9,10 @@ const prepTrans = [body('sender').trim().notEmpty().matches(/^[1-9A-HJ-NP-Za-km-
   body('queryId').trim().notEmpty().matches(/^[a-fA-F0-9]{24}$/)
 ];
 
-module.exports = { walletCheckAddress, pointsCheck, prepTrans };
+const rejectedCheck = body('queryId').trim().notEmpty().matches(/^[a-fA-F0-9]{24}$/);
+
+const acceptedCheck = [body('queryId').trim().notEmpty().matches(/^[a-fA-F0-9]{24}$/),
+  body('transaction').trim().notEmpty().matches(/^[1-9A-HJ-NP-Za-km-z]{88}$/)
+];
+
+module.exports = { walletCheckAddress, pointsCheck, prepTrans, rejectedCheck, acceptedCheck };
