@@ -4,20 +4,25 @@ const { redeemRewards, confirmTransaction, checkUserBalance, claimTokens } = req
 const { ObjectId } = require('mongodb');
 const { Issue } = require('../models/Issue');
 const ms = require('ms');
+const { validationResult } = require('express-validator');
 
 //add disconnect wallet, profile picture, emails for edits and acceptance and approval and close reports, logging of login and activities with ip and user, seo, gemini based decriptions and reports checking, chat features of delete and pin, close query instead of delete and have a history page of that, feedback of work and reports status
 
 const connectWallet = async (req, res) => {
   try {
-    const { walletAddress } = req.body;
-    const unavailable = await Wallet.findOne({ $or: [{ walletAddress }, { userID: req.user._id }] });
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const { walletAddress } = req.body;
+      const unavailable = await Wallet.findOne({ $or: [{ walletAddress }, { userID: req.user._id }] });
 
-    if (unavailable) return res.status(400).redirect('/error?error_details=Wallet_Already_Linked');
+      if (unavailable) return res.status(400).redirect('/error?error_details=Wallet_Already_Linked');
 
-    const newWallet = new Wallet({ walletAddress, userID: req.user._id });
-    await newWallet.save();
+      const newWallet = new Wallet({ walletAddress, userID: req.user._id });
+      await newWallet.save();
 
-    return res.status(200).redirect('/points/wallet-display');
+      return res.status(200).redirect('/points/wallet-display');
+    }
+    return res.send('Oops! Error Occurred...');
   } catch {
     return res.status(500).redirect('/error?error_details=Error_Occurred');
   };
@@ -67,24 +72,28 @@ function convertPointsToTokenUnits(points) {
 
 const tokenConversion = async (req, res) => {
   try {
-    const { pointsClaimed } = req.body;
-    const amt = convertPointsToTokenUnits(pointsClaimed);
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const { pointsClaimed } = req.body;
+      const amt = convertPointsToTokenUnits(pointsClaimed);
 
-    const userCheck = await GHUser.findById(req.user._id);
+      const userCheck = await GHUser.findById(req.user._id);
 
-    if (userCheck.balance < pointsClaimed) return res.status(400).redirect('/error?error_details=Insufficient_Balance');
+      if (userCheck.balance < pointsClaimed) return res.status(400).redirect('/error?error_details=Insufficient_Balance');
 
-    if (Date.now() - new Date(userCheck.lastRedeem) < ms('24h')) return res.status(400).redirect('/error?error_details=Claim_Allowed_Only_Once_Per_Day');
+      if (Date.now() - new Date(userCheck.lastRedeem) < ms('24h')) return res.status(400).redirect('/error?error_details=Claim_Allowed_Only_Once_Per_Day');
 
-    const user = await Wallet.findOne({ userID: req.user._id });
+      const user = await Wallet.findOne({ userID: req.user._id });
 
-    if (!user) return res.status(400).redirect('/error?error_details=Wallet_Address_Not_Found');
+      if (!user) return res.status(400).redirect('/error?error_details=Wallet_Address_Not_Found');
 
-    await GHUser.findByIdAndUpdate(req.user._id, { $inc: { balance: -pointsClaimed }, lastRedeem: new Date() });
+      await GHUser.findByIdAndUpdate(req.user._id, { $inc: { balance: -pointsClaimed }, lastRedeem: new Date() });
 
-    await claimTokens(user.walletAddress, amt); //add revert
+      await claimTokens(user.walletAddress, amt); //add revert
 
-    return res.status(200).redirect('/points/wallet-display');
+      return res.status(200).redirect('/points/wallet-display');
+    }
+    return res.send('Oops! Error Occurred...');
   } catch {
     return res.status(500).redirect('/error?error_details=Error_Occurred');
   };
