@@ -101,22 +101,26 @@ const tokenConversion = async (req, res) => {
 
 const pushRequests = async (req, res) => {
   try {
-    const { sender, queryId } = req.body;
-    const queryCheck = await Issue.findOne({ _id: queryId, createdBy: req.user._id, priority: 0 });
-    if (!ObjectId.isValid(queryId) || !queryCheck) return res.json({ message: 'Valid Query Not Found' });
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const { sender, queryId } = req.body;
+      const queryCheck = await Issue.findOne({ _id: queryId, createdBy: req.user._id, priority: 0 });
+      if (!ObjectId.isValid(queryId) || !queryCheck) return res.json({ message: 'Valid Query Not Found' });
 
-    const walletCheck = await Wallet.findOne({ userID: req.user._id, walletAddress: sender });
+      const walletCheck = await Wallet.findOne({ userID: req.user._id, walletAddress: sender });
 
-    if (!walletCheck) return res.json({ message: 'Wallet Not Found' });
+      if (!walletCheck) return res.json({ message: 'Wallet Not Found' });
 
-    let transaction;
-    try {
-      await Issue.findByIdAndUpdate(queryId, { inProgress: true });
-      transaction = await redeemRewards(sender, 5 * 1e9);
-    } catch {
-      return res.json({ message: 'Insufficient Balance' });
+      let transaction;
+      try {
+        await Issue.findByIdAndUpdate(queryId, { inProgress: true });
+        transaction = await redeemRewards(sender, 5 * 1e9);
+      } catch {
+        return res.json({ message: 'Insufficient Balance' });
+      }
+      return res.json({ transaction });
     }
-    return res.json({ transaction });
+    return res.send('Oops! Error Occurred...');
   } catch {
     return res.status(500).send('Internal Server Error');
   }
