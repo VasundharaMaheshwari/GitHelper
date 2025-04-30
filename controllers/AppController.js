@@ -125,7 +125,7 @@ const tracker = async (req, res) => {
       for (const response of responses) {
         const issue_id = response.issue;
         const creator = response.creator;
-        const assignedAt = response.updatedAt;
+        const assignedAt = response.assignedTime;
         const status = response.status;
 
         const issue = await Issue.findById(issue_id);
