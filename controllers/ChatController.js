@@ -203,7 +203,7 @@ const reportSave = async (req, res) => {
 
       await report.save();
 
-      res.status(201).json({ success: true, message: 'Report submitted successfully!' });
+      return res.status(201).json({ success: true, message: 'Report submitted successfully!' });
     }
     return res.status(400).json({ success: false, message: 'Validation Check Failed' });
   } catch {
