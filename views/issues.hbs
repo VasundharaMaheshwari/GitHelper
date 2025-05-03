@@ -434,7 +434,7 @@
         const signed = await window.solana.signAndSendTransaction(newtx);
 
         //status.innerText = "✅ Transaction sent: " + signed.signature;
-        let confirm = await fetch('http://localhost:3000/points/confirm-transaction', {
+        let confirm = await fetch('https://githelper-r4a0.onrender.com/points/confirm-transaction', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ transaction: signed.signature, queryId })
@@ -452,7 +452,7 @@
         }
       } catch (error) {
         if (error.message.includes('User rejected the request.')) {
-          let reject = await fetch('http://localhost:3000/points/reject-transaction', {
+          let reject = await fetch('https://githelper-r4a0.onrender.com/points/reject-transaction', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ queryId })

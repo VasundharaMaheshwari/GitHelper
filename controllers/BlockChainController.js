@@ -122,9 +122,8 @@ const pushRequests = async (req, res) => {
       return res.json({ transaction });
     }
     return res.send('Oops! Error Occurred...');
-  } catch (error) {
-    return res.status(500).send({ message: error });
-    //return res.status(500).send('Internal Server Error');
+  } catch {
+    return res.status(500).send({ message: 'Internal Server Error' });
   }
 };
 
