@@ -122,7 +122,7 @@ const updater_ip = limiter({
 
 const wallet_ip = limiter({
   windowMs: 24 * 60 * 60 * 1000,
-  max: 2,
+  max: 3,
   legacyHeaders: false,
   // requestWasSuccessful: (req, res) => res.status < 400,
   // skipSuccessfulRequests: true,
