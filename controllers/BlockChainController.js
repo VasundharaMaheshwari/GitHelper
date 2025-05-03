@@ -57,7 +57,7 @@ const displayWallet = async (req, res) => {
       walletBalance: userBalance.uiAmount
     });
   } catch (error) {
-    return res.status(500).redirect(`/error?error_details=${error}`);
+    return res.status(500).redirect(`/error?error_details=${error.message}`);
   };
 };
 
