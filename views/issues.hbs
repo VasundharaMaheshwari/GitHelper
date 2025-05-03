@@ -412,7 +412,7 @@
           return;
         }
 
-        let response = await fetch('http://localhost:3000/points/prepare-transaction', {
+        let response = await fetch('https://githelper-r4a0.onrender.com/points/prepare-transaction', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sender, queryId })
