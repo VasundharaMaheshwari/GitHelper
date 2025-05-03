@@ -43,6 +43,7 @@ const displayWallet = async (req, res) => {
       userBalance = await checkUserBalance(wallet.walletAddress);
     } catch (error) {
       if (
+        error.message.includes('Solana error') ||
         error.message.includes('could not find account') ||
         error.message.includes('Invalid method parameter')
       ) {
@@ -56,8 +57,8 @@ const displayWallet = async (req, res) => {
       balance: user.balance,
       walletBalance: userBalance.uiAmount
     });
-  } catch (error) {
-    return res.status(500).redirect(`/error?error_details=${error.message}`);
+  } catch {
+    return res.status(500).redirect('/error?error_details=Error_Occurred');
   };
 };
 
