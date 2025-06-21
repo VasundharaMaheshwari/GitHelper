@@ -14,9 +14,10 @@ Team Members of the Project:
    Profile Links:
    - https://www.linkedin.com/in/pratiksha-samal/
    - https://github.com/pratikshasamal
-5. Krishna Yadav
+4. Krishna Yadav
    Profile Links:
    - https://github.com/crabbyjumping
+Special thanks to [Aniket Teredesai](https://github.com/icy-comet) for helping out as well
 
 About:
 -----------------------------------------------------------------------------------------------------------------
