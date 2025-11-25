@@ -18,7 +18,7 @@ Team Members of the Project:
    Profile Links:
    - https://github.com/crabbyjumping
 
-Special thanks to [Aniket Teredesai](https://github.com/icy-comet) for helping out as well.
+Special thanks to [Aniket Teredesai](https://github.com/icy-comet) and [Riya Alle](https://github.com/riyaalle10) for helping out as well.
 
 About:
 -----------------------------------------------------------------------------------------------------------------
